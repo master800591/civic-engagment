@@ -149,7 +149,116 @@
           ]
         }
       ]
+    },
+    {
+      "id": "youth_civics_basics",
+      "title": "Youth Civics Basics",
+      "description": "Introduction to civic responsibility and democratic participation for young citizens",
+      "required_for_roles": [
+        "Prospect Contract Citizen"
+      ],
+      "age_appropriate": true,
+      "modules": [
+        {
+          "id": "youth_democracy_intro",
+          "title": "What is Democracy?",
+          "content": "Understanding democratic principles and citizen participation in an age-appropriate way",
+          "quiz": [
+            {
+              "question": "What is the most important right in a democracy?",
+              "options": [
+                "The right to vote",
+                "The right to free speech",
+                "The right to participate",
+                "All of the above"
+              ],
+              "correct_answer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constitutional_law",
+      "title": "Constitutional Law Fundamentals",
+      "description": "Understanding the constitutional framework governing civic participation",
+      "required_for_roles": [
+        "Contract Citizen"
+      ],
+      "modules": [
+        {
+          "id": "constitution_overview",
+          "title": "Constitutional Framework",
+          "content": "Overview of constitutional principles, separation of powers, and checks and balances",
+          "quiz": [
+            {
+              "question": "What are the three branches of government?",
+              "options": [
+                "Executive, Legislative, Judicial",
+                "Federal, State, Local",
+                "Senate, House, Courts",
+                "President, Congress, Supreme Court"
+              ],
+              "correct_answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civic_responsibilities",
+      "title": "Civic Responsibilities and Rights",
+      "description": "Understanding the duties and rights of citizens in democratic governance",
+      "required_for_roles": [
+        "Contract Citizen"
+      ],
+      "modules": [
+        {
+          "id": "citizen_duties",
+          "title": "Duties of Citizens",
+          "content": "Learning about civic duties including voting, jury service, and community participation",
+          "quiz": [
+            {
+              "question": "Which is NOT a civic duty?",
+              "options": [
+                "Voting in elections",
+                "Serving on juries",
+                "Paying taxes",
+                "Joining political parties"
+              ],
+              "correct_answer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform_governance",
+      "title": "Platform Governance System",
+      "description": "Understanding how this civic engagement platform operates and democratic participation rules",
+      "required_for_roles": [
+        "Contract Citizen"
+      ],
+      "modules": [
+        {
+          "id": "platform_rules",
+          "title": "Platform Democratic Rules",
+          "content": "Learning about the platform's governance structure, voting systems, and participation guidelines",
+          "quiz": [
+            {
+              "question": "What is required before creating debate topics?",
+              "options": [
+                "Being a Contract Citizen",
+                "Completing all training",
+                "Having 100 karma points",
+                "Being elected to office"
+              ],
+              "correct_answer": 1
+            }
+          ]
+        }
+      ]
     }
   ],
-  "last_updated": "2025-09-23T16:52:02.051167+00:00"
+  "last_updated": "2025-09-23T18:54:54.882195+00:00"
 }

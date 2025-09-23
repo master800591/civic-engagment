@@ -587,3 +587,149 @@ class TrainingBackend:
         except Exception as e:
             print(f"Error retrieving lesson content from blockchain: {e}")
             return None
+
+    @staticmethod
+    def is_course_completed(user_email: str, course_id: str) -> bool:
+        """Check if a user has completed a specific course"""
+        try:
+            user_progress = TrainingBackend.load_user_progress()
+            user_data = user_progress.get("user_progress", {}).get(user_email, {})
+            course_progress = user_data.get("courses", {}).get(course_id, {})
+            
+            return course_progress.get("completed", False)
+            
+        except Exception as e:
+            print(f"Error checking course completion: {e}")
+            return False
+
+    @staticmethod
+    def get_mandatory_courses_for_rank(rank: str) -> List[str]:
+        """Get list of mandatory courses required for a specific rank"""
+        from ..users.constants import MANDATORY_TRAINING_PATHS
+        
+        mandatory_courses = []
+        
+        # Map rank transitions to course requirements
+        if rank == "Contract Citizen":
+            # Courses required for promotion from Probation to Contract Citizen
+            mandatory_courses = MANDATORY_TRAINING_PATHS.get("Probation_to_Citizen", [])
+        elif rank == "Probation Contract Citizen":
+            # Courses required for promotion from Prospect to Probation
+            mandatory_courses = MANDATORY_TRAINING_PATHS.get("Prospect_to_Probation", [])
+        elif rank == "Prospect Contract Citizen":
+            # Courses required for promotion from Junior to Prospect
+            mandatory_courses = MANDATORY_TRAINING_PATHS.get("Junior_to_Prospect", [])
+        
+        return mandatory_courses
+
+    @staticmethod
+    def add_mandatory_courses_to_system():
+        """Add mandatory courses for preliminary ranks to the training system"""
+        training_data = TrainingBackend.load_training_data()
+        courses = training_data.get("courses", [])
+        
+        # Define mandatory courses for the rank system
+        mandatory_courses = [
+            {
+                "id": "youth_civics_basics",
+                "title": "Youth Civics Basics",
+                "description": "Introduction to civic responsibility and democratic participation for young citizens",
+                "required_for_roles": ["Prospect Contract Citizen"],
+                "age_appropriate": True,
+                "modules": [
+                    {
+                        "id": "youth_democracy_intro",
+                        "title": "What is Democracy?",
+                        "content": "Understanding democratic principles and citizen participation in an age-appropriate way",
+                        "quiz": [
+                            {
+                                "question": "What is the most important right in a democracy?",
+                                "options": ["The right to vote", "The right to free speech", "The right to participate", "All of the above"],
+                                "correct_answer": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "constitutional_law",
+                "title": "Constitutional Law Fundamentals",
+                "description": "Understanding the constitutional framework governing civic participation",
+                "required_for_roles": ["Contract Citizen"],
+                "modules": [
+                    {
+                        "id": "constitution_overview",
+                        "title": "Constitutional Framework",
+                        "content": "Overview of constitutional principles, separation of powers, and checks and balances",
+                        "quiz": [
+                            {
+                                "question": "What are the three branches of government?",
+                                "options": ["Executive, Legislative, Judicial", "Federal, State, Local", "Senate, House, Courts", "President, Congress, Supreme Court"],
+                                "correct_answer": 0
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "civic_responsibilities",
+                "title": "Civic Responsibilities and Rights",
+                "description": "Understanding the duties and rights of citizens in democratic governance",
+                "required_for_roles": ["Contract Citizen"],
+                "modules": [
+                    {
+                        "id": "citizen_duties",
+                        "title": "Duties of Citizens",
+                        "content": "Learning about civic duties including voting, jury service, and community participation",
+                        "quiz": [
+                            {
+                                "question": "Which is NOT a civic duty?",
+                                "options": ["Voting in elections", "Serving on juries", "Paying taxes", "Joining political parties"],
+                                "correct_answer": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "platform_governance",
+                "title": "Platform Governance System",
+                "description": "Understanding how this civic engagement platform operates and democratic participation rules",
+                "required_for_roles": ["Contract Citizen"],
+                "modules": [
+                    {
+                        "id": "platform_rules",
+                        "title": "Platform Democratic Rules",
+                        "content": "Learning about the platform's governance structure, voting systems, and participation guidelines",
+                        "quiz": [
+                            {
+                                "question": "What is required before creating debate topics?",
+                                "options": ["Being a Contract Citizen", "Completing all training", "Having 100 karma points", "Being elected to office"],
+                                "correct_answer": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+        
+        # Add courses if they don't already exist
+        existing_course_ids = {course.get("id", "") for course in courses}
+        
+        for mandatory_course in mandatory_courses:
+            if mandatory_course["id"] not in existing_course_ids:
+                courses.append(mandatory_course)
+        
+        training_data["courses"] = courses
+        TrainingBackend.save_training_data(training_data)
+
+    @staticmethod
+    def check_all_mandatory_training_complete(user_email: str, target_rank: str) -> bool:
+        """Check if user has completed all mandatory training for target rank"""
+        required_courses = TrainingBackend.get_mandatory_courses_for_rank(target_rank)
+        
+        for course_id in required_courses:
+            if not TrainingBackend.is_course_completed(user_email, course_id):
+                return False
+        
+        return True

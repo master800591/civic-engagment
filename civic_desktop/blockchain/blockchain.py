@@ -983,3 +983,255 @@ class BlockchainIntegrator:
             health_report['recommendations'].append("Recruit more blockchain validators")
         
         return health_report
+
+    # --- User Data Blockchain Methods ---
+    
+    @staticmethod
+    def store_user_data(user_email: str, user_data: Dict[str, Any], action_type: str = "user_data_update") -> bool:
+        """Store complete user data on blockchain"""
+        try:
+            blockchain_data = {
+                'action': action_type,
+                'user_email': user_email,
+                'user_data': user_data,
+                'timestamp': dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+            }
+            
+            return Blockchain.add_page(
+                data=blockchain_data,
+                validator=user_email if ValidatorRegistry.is_validator(user_email) else "SYSTEM"
+            )
+        except Exception as e:
+            print(f"Error storing user data on blockchain: {e}")
+            return False
+
+    @staticmethod
+    def get_user_data_from_blockchain(user_email: str) -> Optional[Dict[str, Any]]:
+        """Retrieve latest user data from blockchain"""
+        try:
+            chain = Blockchain.load_chain()
+            pages = chain.get('pages', [])
+            
+            # Search from most recent to oldest
+            for page in reversed(pages):
+                data = page.get('data', {})
+                if (data.get('action') in ['register_user', 'user_data_update'] and 
+                    data.get('user_email') == user_email):
+                    return data.get('user_data', {})
+            
+            return None
+        except Exception as e:
+            print(f"Error retrieving user data from blockchain: {e}")
+            return None
+
+    @staticmethod
+    def store_rank_change(user_email: str, old_rank: str, new_rank: str, reason: str) -> bool:
+        """Store rank change on blockchain"""
+        try:
+            blockchain_data = {
+                'action': 'rank_change',
+                'user_email': user_email,
+                'old_rank': old_rank,
+                'new_rank': new_rank,
+                'reason': reason,
+                'timestamp': dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+            }
+            
+            return Blockchain.add_page(
+                data=blockchain_data,
+                validator=user_email if ValidatorRegistry.is_validator(user_email) else "SYSTEM"
+            )
+        except Exception as e:
+            print(f"Error storing rank change on blockchain: {e}")
+            return False
+
+    @staticmethod
+    def get_user_rank_history(user_email: str) -> List[Dict[str, Any]]:
+        """Get user's rank change history from blockchain"""
+        try:
+            chain = Blockchain.load_chain()
+            pages = chain.get('pages', [])
+            
+            rank_history = []
+            for page in pages:
+                data = page.get('data', {})
+                if (data.get('action') == 'rank_change' and 
+                    data.get('user_email') == user_email):
+                    rank_history.append({
+                        'old_rank': data.get('old_rank'),
+                        'new_rank': data.get('new_rank'),
+                        'reason': data.get('reason'),
+                        'timestamp': data.get('timestamp'),
+                        'block_hash': page.get('hash')
+                    })
+            
+            return sorted(rank_history, key=lambda x: x['timestamp'])
+        except Exception as e:
+            print(f"Error retrieving rank history from blockchain: {e}")
+            return []
+
+    @staticmethod
+    def store_verification_status(user_email: str, verification_type: str, status: bool, verifier: str = "SYSTEM") -> bool:
+        """Store verification status change on blockchain"""
+        try:
+            blockchain_data = {
+                'action': 'verification_status_change',
+                'user_email': user_email,
+                'verification_type': verification_type,
+                'status': status,
+                'verifier': verifier,
+                'timestamp': dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+            }
+            
+            return Blockchain.add_page(
+                data=blockchain_data,
+                validator=verifier
+            )
+        except Exception as e:
+            print(f"Error storing verification status on blockchain: {e}")
+            return False
+
+    @staticmethod
+    def get_user_verification_status(user_email: str) -> Dict[str, Any]:
+        """Get user's current verification status from blockchain"""
+        try:
+            chain = Blockchain.load_chain()
+            pages = chain.get('pages', [])
+            
+            verification_status = {
+                'identity_verified': False,
+                'address_verified': False,
+                'email_verified': False
+            }
+            
+            # Get latest status for each verification type
+            for page in reversed(pages):
+                data = page.get('data', {})
+                if (data.get('action') == 'verification_status_change' and 
+                    data.get('user_email') == user_email):
+                    
+                    verification_type = data.get('verification_type')
+                    if verification_type in verification_status:
+                        verification_status[f'{verification_type}_verified'] = data.get('status', False)
+            
+            return verification_status
+        except Exception as e:
+            print(f"Error retrieving verification status from blockchain: {e}")
+            return {'identity_verified': False, 'address_verified': False, 'email_verified': False}
+
+    @staticmethod
+    def store_training_completion(user_email: str, course_id: str, completion_data: Dict[str, Any]) -> bool:
+        """Store training completion on blockchain"""
+        try:
+            blockchain_data = {
+                'action': 'training_completion',
+                'user_email': user_email,
+                'course_id': course_id,
+                'completion_data': completion_data,
+                'timestamp': dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+            }
+            
+            return Blockchain.add_page(
+                data=blockchain_data,
+                validator=user_email if ValidatorRegistry.is_validator(user_email) else "SYSTEM"
+            )
+        except Exception as e:
+            print(f"Error storing training completion on blockchain: {e}")
+            return False
+
+    @staticmethod
+    def get_user_training_completions(user_email: str) -> List[str]:
+        """Get list of completed courses from blockchain"""
+        try:
+            chain = Blockchain.load_chain()
+            pages = chain.get('pages', [])
+            
+            completed_courses = []
+            for page in pages:
+                data = page.get('data', {})
+                if (data.get('action') == 'training_completion' and 
+                    data.get('user_email') == user_email):
+                    course_id = data.get('course_id')
+                    if course_id and course_id not in completed_courses:
+                        completed_courses.append(course_id)
+            
+            return completed_courses
+        except Exception as e:
+            print(f"Error retrieving training completions from blockchain: {e}")
+            return []
+
+    @staticmethod
+    def get_all_users_from_blockchain() -> List[Dict[str, Any]]:
+        """Get all users from blockchain (latest data for each user)"""
+        try:
+            chain = Blockchain.load_chain()
+            pages = chain.get('pages', [])
+            
+            users_data = {}
+            
+            # Process all user-related pages
+            for page in pages:
+                data = page.get('data', {})
+                user_email = data.get('user_email')
+                
+                if not user_email:
+                    continue
+                
+                # Initialize user data if not exists
+                if user_email not in users_data:
+                    users_data[user_email] = {
+                        'email': user_email,
+                        'registration_data': {},
+                        'current_rank': 'Prospect Contract Citizen',
+                        'verification_status': {'identity_verified': False, 'address_verified': False, 'email_verified': False},
+                        'training_completed': [],
+                        'rank_history': []
+                    }
+                
+                # Update based on action type
+                action = data.get('action', '')
+                
+                if action in ['register_user', 'user_data_update']:
+                    user_registration_data = data.get('user_data', {})
+                    users_data[user_email]['registration_data'].update(user_registration_data)
+                    
+                elif action == 'rank_change':
+                    new_rank = data.get('new_rank')
+                    if new_rank:
+                        users_data[user_email]['current_rank'] = new_rank
+                    users_data[user_email]['rank_history'].append({
+                        'old_rank': data.get('old_rank'),
+                        'new_rank': new_rank,
+                        'reason': data.get('reason'),
+                        'timestamp': data.get('timestamp')
+                    })
+                    
+                elif action == 'verification_status_change':
+                    verification_type = data.get('verification_type')
+                    if verification_type:
+                        users_data[user_email]['verification_status'][f'{verification_type}_verified'] = data.get('status', False)
+                        
+                elif action == 'training_completion':
+                    course_id = data.get('course_id')
+                    if course_id and course_id not in users_data[user_email]['training_completed']:
+                        users_data[user_email]['training_completed'].append(course_id)
+            
+            # Convert to list and merge data
+            users_list = []
+            for user_email, user_data in users_data.items():
+                merged_user = user_data['registration_data'].copy()
+                merged_user.update({
+                    'email': user_email,
+                    'role': user_data['current_rank'],
+                    'roles': [user_data['current_rank']],
+                    'rank_history': user_data['rank_history'],
+                    'training_completed': user_data['training_completed']
+                })
+                merged_user.update(user_data['verification_status'])
+                users_list.append(merged_user)
+            
+            return users_list
+            
+        except Exception as e:
+            print(f"Error retrieving all users from blockchain: {e}")
+            return []

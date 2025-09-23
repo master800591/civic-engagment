@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import (
-	QWidget, QVBoxLayout, QFormLayout, QGroupBox, QLineEdit, QLabel, QPushButton, QHBoxLayout, QFileDialog, QMessageBox, QSizePolicy, QSpacerItem
+	QWidget, QVBoxLayout, QFormLayout, QGroupBox, QLineEdit, QLabel, QPushButton, 
+	QHBoxLayout, QFileDialog, QMessageBox, QSizePolicy, QSpacerItem, QDateEdit, 
+	QComboBox, QCheckBox
 )
+from PyQt5.QtCore import QDate
 from civic_desktop.users.backend import UserBackend
 from civic_desktop.utils.validation import DataValidator
 from civic_desktop.contracts.contract_ui import show_contract_acceptance_dialog
@@ -33,9 +36,13 @@ class RegistrationForm(QWidget):
 		form_layout.addRow("Legal First Name", self.first_name_field)
 		self.fields["first_name"] = self.first_name_field
 
-		# Date of Birth
-		self.gov_dob_field = QLineEdit()
-		form_layout.addRow("Date of Birth (YYYY-MM-DD)", self.gov_dob_field)
+		# Date of Birth with proper date picker
+		self.birth_date_edit = QDateEdit()
+		self.birth_date_edit.setDisplayFormat("yyyy-MM-dd")
+		self.birth_date_edit.setMaximumDate(QDate.currentDate())
+		self.birth_date_edit.setMinimumDate(QDate(1900, 1, 1))
+		self.birth_date_edit.dateChanged.connect(self.on_birth_date_changed)
+		form_layout.addRow("Date of Birth", self.birth_date_edit)
 
 		# Address fields
 		self.address_field = QLineEdit()
@@ -52,10 +59,29 @@ class RegistrationForm(QWidget):
 		self.fields["country"] = self.country_field
 
 		# Government ID fields
-		self.gov_id_type_field = QLineEdit()
-		form_layout.addRow("Government ID Type", self.gov_id_type_field)
-		self.gov_id_number_field = QLineEdit()
-		form_layout.addRow("Government ID Number", self.gov_id_number_field)
+		self.id_type_combo = QComboBox()
+		self.id_type_combo.addItems(["Passport", "Driver's License", "State ID", "Military ID"])
+		form_layout.addRow("Government ID Type", self.id_type_combo)
+		
+		self.id_number_field = QLineEdit()
+		form_layout.addRow("Government ID Number", self.id_number_field)
+
+		# Parental consent section (initially hidden)
+		self.parental_consent_group = QGroupBox("Parental Consent (Required for under 18)")
+		self.parental_consent_group.setVisible(False)
+		parental_layout = QFormLayout()
+		
+		self.parent_name_field = QLineEdit()
+		parental_layout.addRow("Parent/Guardian Name", self.parent_name_field)
+		
+		self.parent_email_field = QLineEdit()
+		parental_layout.addRow("Parent/Guardian Email", self.parent_email_field)
+		
+		self.consent_checkbox = QCheckBox("I am the parent/guardian and consent to my child's participation")
+		parental_layout.addRow("Consent", self.consent_checkbox)
+		
+		self.parental_consent_group.setLayout(parental_layout)
+		form_layout.addRow(self.parental_consent_group)
 
 		# Contact fields
 		self.email_field = QLineEdit()
@@ -105,6 +131,16 @@ class RegistrationForm(QWidget):
 		self.register_button.clicked.connect(self.register)
 		main_vbox.addWidget(self.register_button)
 		self.setLayout(main_vbox)
+
+	def on_birth_date_changed(self):
+		"""Show/hide parental consent based on age"""
+		birth_date = self.birth_date_edit.date().toString("yyyy-MM-dd")
+		valid, message, age = DataValidator.validate_birth_date(birth_date)
+		
+		if valid and age < 18:
+			self.parental_consent_group.setVisible(True)
+		else:
+			self.parental_consent_group.setVisible(False)
 
 	def upload_id(self):
 		"""Upload ID document with security validation"""
@@ -165,14 +201,55 @@ class RegistrationForm(QWidget):
 			self.review_contracts_button.setText("Review & Accept Contracts")
 
 	def register(self):
-		# Example validation and backend call
+		# Collect data from all fields
 		data = {k: f.text().strip() for k, f in self.fields.items()}
-		data["dob"] = self.gov_dob_field.text().strip()
-		data["gov_id_type"] = self.gov_id_type_field.text().strip()
-		data["gov_id_number"] = self.gov_id_number_field.text().strip()
+		
+		# Add new fields for preliminary ranks system
+		data["birth_date"] = self.birth_date_edit.date().toString("yyyy-MM-dd")
+		data["id_type"] = self.id_type_combo.currentText()
+		data["id_number"] = self.id_number_field.text().strip()
 		data["id_document_path"] = self.id_document_path
+		
+		# Check if parental consent is required and provided
+		birth_date = data["birth_date"]
+		valid, message, age = DataValidator.validate_birth_date(birth_date)
+		if valid and age < 18:
+			if not self.consent_checkbox.isChecked():
+				QMessageBox.warning(self, "Parental Consent Required", 
+					"Parental consent is required for users under 18.")
+				return
+			
+			# Validate parental consent fields
+			parent_name = self.parent_name_field.text().strip()
+			parent_email = self.parent_email_field.text().strip()
+			
+			valid_consent, consent_message = DataValidator.validate_parental_consent(
+				parent_email, parent_name, data["email"]
+			)
+			if not valid_consent:
+				QMessageBox.warning(self, "Invalid Parental Information", consent_message)
+				return
+			
+			data["parental_consent"] = True
+			data["parent_name"] = parent_name
+			data["parent_email"] = parent_email
+		else:
+			data["parental_consent"] = False
+			data["parent_name"] = ""
+			data["parent_email"] = ""
+		
+		# Validate government ID
+		valid_id, id_result = DataValidator.validate_government_id(
+			data["id_number"], data["id_type"]
+		)
+		if not valid_id:
+			QMessageBox.warning(self, "Invalid Government ID", id_result)
+			return
+		
+		# Other existing validations...
 		if not self.contracts_accepted:
-			QMessageBox.warning(self, "Contracts Required", "You must accept the governance contracts before registering.")
+			QMessageBox.warning(self, "Contracts Required", 
+				"You must accept the governance contracts before registering.")
 			return
 		if not self.id_document_path:
 			QMessageBox.warning(self, "ID Document Required", "Please upload your government ID document before registering.")
@@ -191,9 +268,17 @@ class RegistrationForm(QWidget):
 	def clear_form(self):
 		for f in self.fields.values():
 			f.clear()
-		self.gov_dob_field.clear()
-		self.gov_id_type_field.clear()
-		self.gov_id_number_field.clear()
+		
+		# Clear new fields
+		self.birth_date_edit.setDate(QDate.currentDate())
+		self.id_type_combo.setCurrentIndex(0)
+		self.id_number_field.clear()
+		self.parent_name_field.clear()
+		self.parent_email_field.clear()
+		self.consent_checkbox.setChecked(False)
+		self.parental_consent_group.setVisible(False)
+		
+		self.id_document_path = None
 		self.id_label.setText("ID Document: Not selected")
 		self.contracts_accepted = False
 		self.contracts_status_label.setText("⚠ Contracts not yet accepted")

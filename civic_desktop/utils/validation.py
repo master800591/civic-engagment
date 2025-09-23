@@ -345,3 +345,70 @@ class DataValidator:
             return False, "Data too large for blockchain storage"
         
         return True, "Data is valid"
+    
+    @staticmethod
+    def validate_birth_date(birth_date: str) -> Tuple[bool, str, int]:
+        """Validate birth date and calculate age"""
+        from datetime import datetime
+        
+        if not birth_date:
+            return False, "Birth date is required", 0
+        
+        try:
+            birth = datetime.strptime(birth_date, "%Y-%m-%d")
+            today = datetime.now()
+            age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+            
+            # Basic validation
+            if age < 0:
+                return False, "Birth date cannot be in the future", 0
+            if age > 120:
+                return False, "Please enter a valid birth date", 0
+            
+            return True, f"Age: {age} years", age
+        except ValueError:
+            return False, "Invalid date format (use YYYY-MM-DD)", 0
+
+    @staticmethod
+    def validate_parental_consent(parent_email: str, parent_name: str, minor_email: str) -> Tuple[bool, str]:
+        """Validate parental consent for minors"""
+        if not parent_email or not parent_name:
+            return False, "Parent email and name are required"
+        
+        # Validate parent email format
+        valid, result = DataValidator.validate_email(parent_email)
+        if not valid:
+            return False, f"Invalid parent email: {result}"
+        
+        # Validate parent name
+        valid, result = DataValidator.validate_name(parent_name, "Parent name")
+        if not valid:
+            return False, f"Invalid parent name: {result}"
+        
+        # Check that parent and minor emails are different
+        if parent_email.lower() == minor_email.lower():
+            return False, "Parent and minor cannot use the same email address"
+        
+        return True, "Parental consent validation passed"
+
+    @staticmethod
+    def validate_government_id(id_number: str, id_type: str) -> Tuple[bool, str]:
+        """Validate government ID numbers"""
+        if not id_number or not id_type:
+            return False, "ID number and type are required"
+        
+        # Remove spaces and special characters
+        clean_id = re.sub(r'[^a-zA-Z0-9]', '', id_number)
+        
+        if len(clean_id) < 5:
+            return False, "ID number too short"
+        
+        if len(clean_id) > 20:
+            return False, "ID number too long"
+        
+        # Validate based on ID type
+        valid_types = ['passport', 'drivers_license', 'state_id', 'military_id']
+        if id_type.lower().replace(' ', '_').replace("'", '') not in valid_types:
+            return False, f"Invalid ID type. Accepted: {', '.join(valid_types)}"
+        
+        return True, clean_id
