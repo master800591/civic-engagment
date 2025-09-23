@@ -1,0 +1,282 @@
+{
+  "pages": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-13T01:59:11.961619Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-13T01:59:11.961619Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "e3195bce648c5e83f6a295ad72b79a5017f393d8fe65a8e503c40ffe49dac5c0"
+    },
+    {
+      "index": 1,
+      "previous_hash": "e3195bce648c5e83f6a295ad72b79a5017f393d8fe65a8e503c40ffe49dac5c0",
+      "timestamp": "2025-09-13T02:01:30.329319Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-13T02:01:30.329319Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "d920e9db52f9f02adb36f29fc0e77c0a08826cffd96b69d29c20fcf884ffdf22"
+    },
+    {
+      "index": 2,
+      "previous_hash": "d920e9db52f9f02adb36f29fc0e77c0a08826cffd96b69d29c20fcf884ffdf22",
+      "timestamp": "2025-09-13T02:02:48.870605Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-13T02:02:48.870605Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "b89673a757a4a946c6d333ccc10c8317501094fed711df78ab6f2179892276ef"
+    },
+    {
+      "index": 3,
+      "previous_hash": "b89673a757a4a946c6d333ccc10c8317501094fed711df78ab6f2179892276ef",
+      "timestamp": "2025-09-13T02:06:17.531405Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-13T02:06:17.530867Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "5c030142e754de40de8b88634d8225c30097eb29be53c975c29724c0f22420d3"
+    },
+    {
+      "index": 4,
+      "previous_hash": "5c030142e754de40de8b88634d8225c30097eb29be53c975c29724c0f22420d3",
+      "timestamp": "2025-09-13T02:10:40.216772Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-13T02:10:40.216772Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "9960f00bf922d08301ec4b9848b8f4bf15c77d568497aaa6d798ed717f25e6d8"
+    },
+    {
+      "index": 5,
+      "previous_hash": "9960f00bf922d08301ec4b9848b8f4bf15c77d568497aaa6d798ed717f25e6d8",
+      "timestamp": "2025-09-13T02:11:10.229999Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-13T02:11:10.229999Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "d7df9d81ada4dda716974097b693e778de354b980d8a1b3b6ef0fa800a6abb88"
+    },
+    {
+      "index": 6,
+      "previous_hash": "d7df9d81ada4dda716974097b693e778de354b980d8a1b3b6ef0fa800a6abb88",
+      "timestamp": "2025-09-13T02:11:38.864647Z",
+      "data": {
+        "action": "register_user",
+        "user_email": "stevewc1234@gmail.com",
+        "first_name": "steve",
+        "last_name": "cornell",
+        "city": "phoenix",
+        "state": "az",
+        "country": "usa",
+        "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi5E3P/6HAJjCZ1JiF9GV\nf1orAC6LmBErSyccwZn8G/MDjKSuHvHf2V6CTCu065B19YriZ+uN4guVFHG85RYx\ne45IHsCK6C3YpMKi/gMYKCXkE/I4o2qODr9li9EAecyTLQ6QqPJ6VUGWC8viI8VZ\nyaev7O2XU3du/9ksBVC3BK5ODXrECWyXtkBgSuZmWUwy42Tud/4xmg7VZkTKtPQS\nMYKTIazXNlFYyMla5oH04JepfxlOijfC+RxWr/yTtyoOJX4DYP97uGs8p1y48wMw\nbSsHdsPiTjSzBDUFtfGHeDsrfoBhPH70e1KUhYDGRRRov62/c4RRZeU/XCEoYuWT\nbQIDAQAB\n-----END PUBLIC KEY-----\n",
+        "roles": [
+          "founder",
+          "city_rep",
+          "state_rep",
+          "country_rep"
+        ],
+        "password_hash": "4018b621cdbe0e15d77eb54fdc2550ebc80ac7967600a8ceafe7490b7e586f3e",
+        "timestamp": "2025-09-13T02:11:38.863643Z"
+      },
+      "validator": "stevewc1234@gmail.com",
+      "signature": "GENESIS",
+      "hash": "b1dbb6fe1a62ddbe826eb567488d90addfe8f276ce29d9385e8cbb0c32327358"
+    },
+    {
+      "index": 7,
+      "previous_hash": "b1dbb6fe1a62ddbe826eb567488d90addfe8f276ce29d9385e8cbb0c32327358",
+      "timestamp": "2025-09-13T02:11:40.224384Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-13T02:11:40.216863Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "aadc3eb073d536ccea2a409bb221fcf0fbf74b3b1308eb20a88e5ffa39f95fcb"
+    }
+  ],
+  "chapters": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-13T01:59:11.961619Z",
+      "pages": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-13T01:59:11.961619Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-13T01:59:11.961619Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e3195bce648c5e83f6a295ad72b79a5017f393d8fe65a8e503c40ffe49dac5c0"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "09a026fea3c9b206c530af2d7ea9d6cc7a4560405ce954a44f3efe693c474be2"
+    }
+  ],
+  "books": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-13T01:59:11.961619Z",
+      "chapters": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-13T01:59:11.961619Z",
+          "pages": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-13T01:59:11.961619Z",
+              "data": {
+                "action": "periodic_block",
+                "timestamp": "2025-09-13T01:59:11.961619Z",
+                "note": "Periodic block created by timer."
+              },
+              "validator": "SYSTEM",
+              "signature": "PERIODIC",
+              "hash": "e3195bce648c5e83f6a295ad72b79a5017f393d8fe65a8e503c40ffe49dac5c0"
+            }
+          ],
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "09a026fea3c9b206c530af2d7ea9d6cc7a4560405ce954a44f3efe693c474be2"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "f6071e36e0e7f6b09f77c56919cc4ccdd5eed9cecbb98372d66e24fab6e46410"
+    }
+  ],
+  "parts": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-13T01:59:11.961619Z",
+      "books": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-13T01:59:11.961619Z",
+          "chapters": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-13T01:59:11.961619Z",
+              "pages": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-13T01:59:11.961619Z",
+                  "data": {
+                    "action": "periodic_block",
+                    "timestamp": "2025-09-13T01:59:11.961619Z",
+                    "note": "Periodic block created by timer."
+                  },
+                  "validator": "SYSTEM",
+                  "signature": "PERIODIC",
+                  "hash": "e3195bce648c5e83f6a295ad72b79a5017f393d8fe65a8e503c40ffe49dac5c0"
+                }
+              ],
+              "validator": "SYSTEM",
+              "signature": "PERIODIC",
+              "hash": "09a026fea3c9b206c530af2d7ea9d6cc7a4560405ce954a44f3efe693c474be2"
+            }
+          ],
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f6071e36e0e7f6b09f77c56919cc4ccdd5eed9cecbb98372d66e24fab6e46410"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "3bee30c19b0bc79dad2c893730c8b1c6ab5eec6f5d7cd778bc9824467c77fb26"
+    }
+  ],
+  "series": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-13T01:59:11.961619Z",
+      "parts": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-13T01:59:11.961619Z",
+          "books": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-13T01:59:11.961619Z",
+              "chapters": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-13T01:59:11.961619Z",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                      "timestamp": "2025-09-13T01:59:11.961619Z",
+                      "data": {
+                        "action": "periodic_block",
+                        "timestamp": "2025-09-13T01:59:11.961619Z",
+                        "note": "Periodic block created by timer."
+                      },
+                      "validator": "SYSTEM",
+                      "signature": "PERIODIC",
+                      "hash": "e3195bce648c5e83f6a295ad72b79a5017f393d8fe65a8e503c40ffe49dac5c0"
+                    }
+                  ],
+                  "validator": "SYSTEM",
+                  "signature": "PERIODIC",
+                  "hash": "09a026fea3c9b206c530af2d7ea9d6cc7a4560405ce954a44f3efe693c474be2"
+                }
+              ],
+              "validator": "SYSTEM",
+              "signature": "PERIODIC",
+              "hash": "f6071e36e0e7f6b09f77c56919cc4ccdd5eed9cecbb98372d66e24fab6e46410"
+            }
+          ],
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "3bee30c19b0bc79dad2c893730c8b1c6ab5eec6f5d7cd778bc9824467c77fb26"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "de62905c04e29eb74e6a18f2dfe45898f70a7e93bb84cfce92bce7aef8222530"
+    }
+  ]
+}
+[{"current_page": {}, "current_chapter": {}, "current_book": {}, "current_part": {}, "current_series": {}}]

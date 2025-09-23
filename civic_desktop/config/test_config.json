@@ -1,0 +1,9 @@
+{
+  "env": "testing",
+  "db_path": "users/test_users_db.json",
+  "blockchain_path": "blockchain/test_blockchain_db.json",
+  "debates_db_path": "debates/test_debates_db.json",
+  "moderation_db_path": "moderation/test_moderation_db.json",
+  "logging_level": "INFO",
+  "features": ["all"]
+}

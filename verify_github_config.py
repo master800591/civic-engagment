@@ -29,7 +29,7 @@ def verify_repository_configuration():
         print(f"   Repository URL: {manager.repo_url}")
         print(f"   API URL: {manager.api_repo_url}")
         
-        expected_url = "https://github.com/Civic-Engagement/civic-engagment"
+        expected_url = "https://github.com/Civic-Engagement/civic-engagement"
         if manager.repo_url == expected_url:
             print("   ✅ Repository URL is correctly configured")
         else:
@@ -71,7 +71,7 @@ def verify_repository_configuration():
         
         print(f"\n🎯 VERIFICATION COMPLETE")
         print(f"Repository: {expected_url}")
-        print(f"All components configured to use: Civic-Engagement/civic-engagment")
+        print(f"All components configured to use: Civic-Engagement/civic-engagement")
         
         # Test actual connectivity (will fail if repo doesn't exist)
         print(f"\n🌐 Testing Repository Connectivity:")

@@ -1,0 +1,14 @@
+[
+  {
+    "email": "alice@example.com",
+    "public_key": "GENESIS_PLACEHOLDER",
+    "active": true,
+    "added_at": "2025-09-23T16:09:09.488284Z"
+  },
+  {
+    "email": "test_validator@civic.gov",
+    "public_key": "test_public_key",
+    "active": false,
+    "added_at": "2025-09-23T20:07:56.022410Z"
+  }
+]

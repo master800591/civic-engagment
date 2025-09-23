@@ -1,0 +1,19 @@
+{
+  "user_progress": {
+    "stevewc1234@gmail.com": {
+      "completed_courses": [],
+      "current_course": "civic_fundamentals",
+      "module_progress": {
+        "civic_fundamentals": {
+          "started_at": "2025-09-23T16:52:06.720993+00:00",
+          "completed_modules": [],
+          "current_module": 0
+        }
+      },
+      "quiz_scores": {},
+      "certifications": [],
+      "total_training_time": 0
+    }
+  },
+  "last_updated": "2025-09-23T16:52:06.720993+00:00"
+}

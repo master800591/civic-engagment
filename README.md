@@ -1,103 +1,95 @@
+
 # Civic Engagement Platform
 
-**Repository**: https://github.com/Civic-Engagement/civic-engagment
+[![Build Status](https://img.shields.io/github/workflow/status/Civic-Engagement/civic-engagement/CI)](https://github.com/Civic-Engagement/civic-engagement/actions)
+[![License](https://img.shields.io/github/license/Civic-Engagement/civic-engagement)](LICENSE)
+[![Coverage](https://img.shields.io/codecov/c/github/Civic-Engagement/civic-engagement)](https://codecov.io/gh/Civic-Engagement/civic-engagement)
+[![Version](https://img.shields.io/github/v/release/Civic-Engagement/civic-engagement)](https://github.com/Civic-Engagement/civic-engagement/releases)
 
-## 📋 Latest Updates
-For detailed information about recent changes, security improvements, and bug fixes, see our [**CHANGELOG.md**](CHANGELOG.md).
-
-**Current Version**: 1.6.0 (Production Ready)  
-**Latest Update**: Complete GitHub integration with update checking and version control  
-**Status**: ✅ Government-grade security implemented with automated updates
+- **Repository**: `https://github.com/Civic-Engagement/civic-engagment`
 
 ---
 
-## Business-Focused Features for Adoption
+## Table of Contents
+1. [Latest Updates](#latest-updates)
+2. [Mission Statement](#mission-statement)
+3. [Features](#features)
+4. [Technical Architecture](#technical-architecture)
+5. [Setup & Deployment](#setup--deployment)
+6. [Contributing](#contributing)
+7. [License](#license)
+8. [Contact](#contact)
 
-- **Verified Business Profiles**: Custom business accounts with verification and branding for organizations, companies, and civic groups.
-- **Networking Tools**: Digital business cards, QR/NFC sharing, and contact management to facilitate professional connections.
-- **Civic Sponsorships**: Businesses can sponsor debates, events, or community initiatives to increase visibility and support civic engagement.
-- **Analytics & Insights**: Dashboards showing engagement, reach, and impact for business activities and sponsored events.
-- **Integration APIs**: Connect with CRM, HR, and other business systems for seamless data exchange and workflow automation.
-- **Compliance & Audit Tools**: Exportable reports for legal and regulatory needs, supporting business compliance requirements.
-- **Marketplace**: Businesses can offer services, products, or job postings to the civic community, fostering economic and social collaboration.
-## User-Focused Features for Adoption
+---
 
-- **Privacy Controls**: Granular settings for what information is public, private, or shared. Users can control visibility of their profile, participation, and contact details.
-- **Rewards & Recognition**: Earn badges, reputation scores, and incentives for civic engagement, debate participation, and community contributions.
-- **Secure Messaging**: Encrypted direct messaging between users for safe, private communication.
-- **Event & Group Tools**: Create, join, and manage civic events or interest groups. Organize meetups, discussions, and collaborative projects within the platform.
-## User ID Cards
+## 📋 Latest Updates
+- See [CHANGELOG.md](CHANGELOG.md) for recent changes, security improvements, and bug fixes.
+- **Current Version:** 1.6.0 (Production Ready)
+- **Latest Update:** Complete GitHub integration with update checking and version control
+- **Status:** ✅ Government-grade security implemented with automated updates
 
-The platform will support two types of user ID cards:
-
-- **Public ID Card**: Can be shown or given out like a business card. Contains:
-  - NFC and QR code for quick sharing and verification
-  - User photo
-  - Name
-  - Address
-  - Public key or profile link
-  - Designed for networking, civic events, and public identification
-
-- **Private ID Card**: Used for secure account recovery and identity verification. Contains:
-  - Private recovery QR code or NFC tag
-  - User photo
-  - Name
-  - Address
-  - Private recovery credentials (never shared)
-  - Intended for personal use only; not to be given out
-
-These cards enhance security, privacy, and convenience for users, supporting both public engagement and private account management.
-# Civic Engagement Platform
+---
 
 ## Mission Statement
 Empower communities to participate in transparent, secure, and democratic governance through a decentralized, contract-based digital platform. Our goal is to prevent tyranny, protect minority rights, and ensure every citizen has a voice in decision-making.
 
-## Why This Project Exists
-Modern governance systems often suffer from lack of transparency, concentration of power, and limited citizen participation. This platform leverages blockchain, cryptography, and contract-based roles to:
-- Prevent majority or minority tyranny
-- Guarantee constitutional rights and due process
-- Provide immutable audit trails for all actions
-- Enable direct, secure, and fair participation for all users
+---
 
-## Who Is This For?
-- **Citizens**: Anyone seeking a voice in local, state, or national governance
-- **Representatives/Senators/Elders/Founders**: Elected or appointed officials with defined powers and checks
-- **Moderators**: Community members responsible for content review and platform integrity
-- **Developers**: Contributors building civic technology for transparency and democracy
-- **Organizations**: Civic groups, educational institutions, pilot programs
+## Features
 
-## What Does It Do?
-- **User Registration & Authentication**: Secure onboarding with identity verification, password hashing, and RSA key generation
-- **Contract-Based Governance**: Multi-branch system (Citizens, Representatives, Senators, Elders, Founders) with checks and balances
-- **Debate Platform**: Topic creation, argument threading, voting, and blockchain logging
-- **Moderation System**: Flagging, review, warnings, and constitutional appeals
-- **Blockchain Integration**: Hierarchical PoA blockchain for audit trails, validator registry, and P2P networking
-- **Environment Separation**: Dev, test, and prod configs for safe development and deployment
-- **UI**: PyQt5 desktop application with tabbed navigation for all modules
+### Business-Focused Features
+- Verified business profiles, networking tools, sponsorships, analytics, integration APIs, compliance tools, marketplace.
+
+### User-Focused Features
+- Privacy controls, rewards, secure messaging, event/group tools, public/private ID cards.
+
+### Platform Capabilities
+- User registration/authentication, contract-based governance, debate platform, moderation, blockchain integration, environment separation, PyQt5 desktop UI.
+
+---
 
 ## Technical Architecture
-- **Languages**: Python 3.x
-- **Frameworks**: PyQt5 (GUI), custom blockchain, bcrypt, cryptography
-- **Modules**: users, debates, moderation, blockchain, contracts, utils, tests
-- **Data Storage**: JSON files per environment, blockchain for audit
-- **Config**: ENV_CONFIG loaded from `main.py`, with paths set in `config/dev_config.json`, `config/test_config.json`, `config/prod_config.json`
-- **Security**: bcrypt password hashing, RSA-2048 keys, input validation, local private key storage
+- **Languages:** Python 3.x
+- **Frameworks:** PyQt5 (GUI), custom blockchain, bcrypt, cryptography
+- **Modules:** users, debates, moderation, blockchain, contracts, utils, tests
+- **Data Storage:** JSON files per environment, blockchain for audit
+- **Config:** ENV_CONFIG loaded from `main.py`, with paths set in `config/dev_config.json`, `config/test_config.json`, `config/prod_config.json`
+- **Security:** bcrypt password hashing, RSA-2048 keys, input validation, local private key storage
 
-## How It Works
-1. **Startup**: Loads environment config, initializes UI and blockchain timer
-2. **Registration/Login**: Validates user, generates keys, saves to database, records on blockchain
-3. **Governance**: Assigns roles, enables elections, enforces contract-based permissions
-4. **Debates**: Allows topic creation, argument submission, voting, and blockchain logging
-5. **Moderation**: Enables flagging, review, warnings, and appeals with full audit trail
-6. **Blockchain**: Records all actions, supports validator registry, and P2P foundation
+---
 
-## Development & Deployment
-- **Setup**:
-  ```bash
-  cd civic_engagement_platform/civic_desktop
-  pip install -r requirements.txt
-  python main.py
-  ```
+## Setup & Deployment
+```bash
+cd civic_engagement_platform/civic_desktop
+pip install -r requirements.txt
+python main.py
+```
+
+---
+
+## Contributing
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, code standards, and how to get started.
+
+---
+
+## License
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+## Contact
+For questions, support, or partnership inquiries:
+- Email: civic-engagement@protonmail.com
+- GitHub Issues: [Civic-Engagement/civic-engagement/issues](https://github.com/Civic-Engagement/civic-engagement/issues)
+
+---
+
+## Related Documentation
+- [Technical README](civic_desktop/README.md)
+- [Documentation Index](DOCS_INDEX.md)
+- [Copilot Instructions](.github/copilot-instructions.md)
+- [Security Audit Report](SECURITY_AUDIT_REPORT.md)
+- [Testing Results Report](TESTING_RESULTS_REPORT.md)
 - **Environment Switching**: Change config path in `main.py` or use `reload_config()` in `main_window.py`
 - **Testing**: Use separate test databases and requirements files
 - **Extensibility**: Modular design for easy feature addition

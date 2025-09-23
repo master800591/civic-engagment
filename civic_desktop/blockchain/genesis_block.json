@@ -1,0 +1,11 @@
+{
+  "type": "genesis",
+  "founder": {
+    "first_name": "steve",
+    "last_name": "cornell",
+    "email": "stevewc1234@gmail.com",
+    "created_at": null
+  },
+  "timestamp": "2025-09-23T16:09:09.488284Z",
+  "message": "Genesis block for Civic Engagement Platform"
+}
