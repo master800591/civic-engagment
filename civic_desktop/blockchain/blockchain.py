@@ -1258,3 +1258,182 @@ class BlockchainIntegrator:
         except Exception as e:
             print(f"Error retrieving all users from blockchain: {e}")
             return []
+
+    @staticmethod
+    def add_transaction(sender: str, receiver: str, amount: float, tx_type: str = "transfer", metadata: dict = None, validator: str = None) -> bool:
+        """
+        Add a universal transaction to the blockchain with network fee, credit logic, and pool payout.
+        Transaction fee is 0.001% of amount, min 0.1, max 10.
+        Credits are issued to maintain ~2000 credits per user ratio.
+        """
+        from ..utils.validation import DataValidator
+        import math
+        if metadata is None:
+            metadata = {}
+        if not validator:
+            validator = sender
+        # Calculate network fee (0.001%), min 0.1, max 10
+        fee = round(max(0.1, min(amount * 0.00001, 10)), 8)
+        net_amount = round(amount - fee, 8)
+        # Transaction block data
+        tx_data = {
+            "action": "transaction",
+            "sender": sender,
+            "receiver": receiver,
+            "amount": net_amount,
+            "fee": fee,
+            "tx_type": tx_type,
+            "metadata": metadata,
+            "timestamp": dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+        }
+        # Add transaction block
+        success = Blockchain.add_page(tx_data, validator)
+        if not success:
+            return False
+        # Add fee payout to network pool
+        pool_data = {
+            "action": "network_fee",
+            "from_tx": tx_data["timestamp"],
+            "amount": fee,
+            "pool": "network_pool",
+            "timestamp": tx_data["timestamp"]
+        }
+        Blockchain.add_page(pool_data, "SYSTEM")
+        # Credits logic: maintain ~2000 credits per user
+        chain = Blockchain.load_chain()
+        users = Blockchain.get_all_users_from_blockchain()
+        total_credits = sum(Blockchain.get_user_credits(u['email']) for u in users)
+        target_credits = len(users) * 2000
+        credits_to_issue = max(0, target_credits - total_credits)
+        if credits_to_issue > 0:
+            # Distribute credits equally to all users
+            per_user = credits_to_issue // max(1, len(users))
+            for u in users:
+                credit_data = {
+                    "action": "credit_reward",
+                    "user": u['email'],
+                    "credits": per_user,
+                    "reason": "network_inflation_adjustment",
+                    "timestamp": tx_data["timestamp"]
+                }
+                Blockchain.add_page(credit_data, "SYSTEM")
+        # Standard participation credit (100 per transaction)
+        credit_data = {
+            "action": "credit_reward",
+            "user": sender,
+            "credits": 100,
+            "reason": "network_participation",
+            "timestamp": tx_data["timestamp"]
+        }
+        Blockchain.add_page(credit_data, "SYSTEM")
+        return True
+
+    @staticmethod
+    def get_user_balance(user_email: str) -> float:
+        """Calculate user's balance from all transactions on-chain"""
+        chain = Blockchain.load_chain()
+        pages = chain.get('pages', [])
+        balance = 0.0
+        for page in pages:
+            data = page.get('data', {})
+            if data.get('action') == 'transaction':
+                if data.get('receiver') == user_email:
+                    balance += data.get('amount', 0.0)
+                if data.get('sender') == user_email:
+                    balance -= (data.get('amount', 0.0) + data.get('fee', 0.0))
+        return round(balance, 8)
+
+    @staticmethod
+    def get_user_credits(user_email: str) -> int:
+        """Calculate user's credits from all credit_reward and sinks on-chain"""
+        chain = Blockchain.load_chain()
+        pages = chain.get('pages', [])
+        credits = 0
+        for page in pages:
+            data = page.get('data', {})
+            if data.get('action') == 'credit_reward' and data.get('user') == user_email:
+                credits += data.get('credits', 0)
+            if data.get('action') == 'credit_sink' and data.get('user') == user_email:
+                credits -= data.get('credits', 0)
+        return credits
+
+    @staticmethod
+    def add_credit_sink(user_email: str, credits: int, reason: str = "sink") -> bool:
+        """Remove credits from user (sink) and store on-chain"""
+        sink_data = {
+            "action": "credit_sink",
+            "user": user_email,
+            "credits": credits,
+            "reason": reason,
+            "timestamp": dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+        }
+        return Blockchain.add_page(sink_data, "SYSTEM")
+
+    @staticmethod
+    def add_game_theory_event(user_email: str, event_type: str, value: int, reason: str = "") -> bool:
+        """Store game theory event (reward/penalty) on-chain"""
+        event_data = {
+            "action": "game_theory_event",
+            "user": user_email,
+            "event_type": event_type,  # "reward" or "penalty"
+            "value": value,
+            "reason": reason,
+            "timestamp": dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+        }
+        return Blockchain.add_page(event_data, "SYSTEM")
+
+    @staticmethod
+    def distribute_network_pool_payout() -> bool:
+        """
+        Distribute accumulated network pool fees to validators, node operators, founders, and service providers by percentage.
+        Payouts are stored as blockchain transactions.
+        """
+        chain = Blockchain.load_chain()
+        pages = chain.get('pages', [])
+        # Calculate total pool
+        total_pool = 0.0
+        for page in pages:
+            data = page.get('data', {})
+            if data.get('action') == 'network_fee':
+                total_pool += data.get('amount', 0.0)
+        if total_pool == 0.0:
+            return False
+        # Get current validators, founders, service providers, node operators
+        from civic_desktop.blockchain.blockchain import ValidatorRegistry
+        validators = [v for v in ValidatorRegistry.load_validators() if v.get('role') == 'validator']
+        founders = [v for v in ValidatorRegistry.load_validators() if v.get('role') == 'founder']
+        service_providers = [v for v in ValidatorRegistry.load_validators() if v.get('role') == 'service']
+        node_operators = [v for v in ValidatorRegistry.load_validators() if v.get('role') == 'node']
+        # Percentages
+        percent_validators = 0.40
+        percent_founders = 0.20
+        percent_node_operators = 0.20
+        percent_service_providers = 0.20
+        # Calculate shares
+        def calc_share(group, percent):
+            return round(total_pool * percent / max(1, len(group)), 8) if group else 0.0
+        share_validators = calc_share(validators, percent_validators)
+        share_founders = calc_share(founders, percent_founders)
+        share_node_operators = calc_share(node_operators, percent_node_operators)
+        share_service_providers = calc_share(service_providers, percent_service_providers)
+        # Payout to each recipient
+        for v in validators:
+            Blockchain.add_transaction('network_pool', v['email'], share_validators, tx_type='payout', metadata={'role': 'validator'}, validator='SYSTEM')
+        for f in founders:
+            Blockchain.add_transaction('network_pool', f['email'], share_founders, tx_type='payout', metadata={'role': 'founder'}, validator='SYSTEM')
+        for n in node_operators:
+            Blockchain.add_transaction('network_pool', n['email'], share_node_operators, tx_type='payout', metadata={'role': 'node'}, validator='SYSTEM')
+        for s in service_providers:
+            Blockchain.add_transaction('network_pool', s['email'], share_service_providers, tx_type='payout', metadata={'role': 'service'}, validator='SYSTEM')
+        # Record pool payout event
+        payout_data = {
+            'action': 'network_pool_payout',
+            'total_pool': total_pool,
+            'validator_share': share_validators,
+            'founder_share': share_founders,
+            'node_operator_share': share_node_operators,
+            'service_provider_share': share_service_providers,
+            'timestamp': dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
+        }
+        Blockchain.add_page(payout_data, 'SYSTEM')
+        return True

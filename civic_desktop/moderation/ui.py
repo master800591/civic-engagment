@@ -20,41 +20,55 @@ class ModerationDashboard(QWidget):
     
     def init_ui(self) -> None:
         layout = QVBoxLayout()
-        
-        # Check if user has moderation privileges
+        # Blockchain status and user role display
         user = SessionManager.get_current_user()
+        role = user.get('role', 'Unknown') if user else 'Unknown'
+        blockchain_status = QLabel("All moderation actions are <b>recorded on blockchain</b> for audit and transparency.")
+        blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+        role_label = QLabel(f"Your Role: <b>{role}</b>")
+        role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+        # Add Export Report button
+        export_btn = QPushButton("Export Moderation Report")
+        export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
+        export_btn.clicked.connect(self.open_reports_tab)
+        top_layout = QVBoxLayout()
+        top_layout.addWidget(blockchain_status)
+        top_layout.addWidget(role_label)
+        top_layout.addWidget(export_btn)
+        layout.addLayout(top_layout)
+        # Check if user has moderation privileges
         if not user or not ModerationBackend.can_moderate(user['email']):
-            # Show access denied message
             access_denied = QLabel("Access Denied: You don't have moderation privileges.")
             access_denied.setStyleSheet("color: red; font-size: 16px; font-weight: bold; text-align: center;")
             access_denied.setAlignment(Qt.AlignCenter)
             layout.addWidget(access_denied)
-            
             info_label = QLabel("Moderation access is restricted to elected representatives and platform administrators.")
             info_label.setWordWrap(True)
             info_label.setAlignment(Qt.AlignCenter)
             layout.addWidget(info_label)
-            
             self.setLayout(layout)
             return
-        
         # Moderation tabs
         tabs = QTabWidget()
-        
-        # Pending flags tab
         flags_tab = self.create_flags_tab()
         tabs.addTab(flags_tab, "Pending Flags")
-        
-        # Statistics tab
         stats_tab = self.create_stats_tab()
         tabs.addTab(stats_tab, "Statistics")
-        
-        # User management tab
         users_tab = self.create_users_tab()
         tabs.addTab(users_tab, "User Management")
-        
         layout.addWidget(tabs)
         self.setLayout(layout)
+
+    def open_reports_tab(self):
+        # Signal to main window to switch to Reports tab
+        mw = self.parent()
+        while mw and not hasattr(mw, 'tabs'):
+            mw = mw.parent()
+        if mw and hasattr(mw, 'tabs'):
+            for i in range(mw.tabs.count()):
+                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                    mw.tabs.setCurrentIndex(i)
+                    break
     
     def create_flags_tab(self) -> QWidget:
         """Create the pending flags management tab"""

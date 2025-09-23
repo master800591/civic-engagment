@@ -24,7 +24,22 @@ class TrainingTab(QWidget):
         """Initialize the training interface"""
         layout = QVBoxLayout()
         layout.setContentsMargins(10, 10, 10, 10)
-        
+        # Blockchain status and user role display
+        from civic_desktop.users.session import SessionManager
+        user = SessionManager.get_current_user()
+        role = user.get('role', 'Unknown') if user else 'Unknown'
+        blockchain_status = QLabel("All training completions are <b>recorded on blockchain</b> for audit and transparency.")
+        blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+        role_label = QLabel(f"Your Role: <b>{role}</b>")
+        role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+        export_btn = QPushButton("Export Training Report")
+        export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
+        export_btn.clicked.connect(self.open_reports_tab)
+        top_layout = QVBoxLayout()
+        top_layout.addWidget(blockchain_status)
+        top_layout.addWidget(role_label)
+        top_layout.addWidget(export_btn)
+        layout.addLayout(top_layout)
         # Header
         header = QLabel("🎓 Civic Training & Education Center")
         header.setStyleSheet("""
@@ -41,13 +56,21 @@ class TrainingTab(QWidget):
         """)
         header.setAlignment(Qt.AlignCenter)
         layout.addWidget(header)
-        
         # Create main content container
         self.main_content = QWidget()
         layout.addWidget(self.main_content)
-        
         self.setLayout(layout)
         self.refresh_ui()
+
+    def open_reports_tab(self):
+        mw = self.parent()
+        while mw and not hasattr(mw, 'tabs'):
+            mw = mw.parent()
+        if mw and hasattr(mw, 'tabs'):
+            for i in range(mw.tabs.count()):
+                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                    mw.tabs.setCurrentIndex(i)
+                    break
     
     def refresh_ui(self):
         """Refresh the entire UI based on authentication status"""

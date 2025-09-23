@@ -79,13 +79,59 @@ class MainWindow(QMainWindow):
         from civic_desktop.github_integration.github_tab import GitHubIntegrationTab
         self.github_tab = GitHubIntegrationTab()
         self.tabs.addTab(self.github_tab, "🐙 GitHub")
-        
-        # Add P2P Network tab
         from civic_desktop.blockchain.p2p_tab import P2PNetworkTab
         self.p2p_tab = P2PNetworkTab()
         self.tabs.addTab(self.p2p_tab, "📡 P2P Network")
-        
+        # Add Open Maps tab
+        self.tabs.addTab(self.maps_tab(), "🗺️ Open Maps")
+            # Add Reports tab for blockchain network reports
+            self.tabs.addTab(self.reports_tab(), "📊 Reports")
         self.setCentralWidget(self.tabs)
+    def reports_tab(self):
+        from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QLabel
+        from PyQt5.QtCore import Qt
+        from PyQt5.QtWidgets import QHeaderView
+        from civic_desktop.blockchain.reports import NetworkReports
+        widget = QWidget()
+        layout = QVBoxLayout()
+        layout.setContentsMargins(30, 30, 30, 30)
+        layout.setSpacing(18)
+        title = QLabel("<b>Blockchain Network Reports</b>")
+        layout.addWidget(title)
+
+        reports = NetworkReports()
+        # Credit Ratio Report
+        credit_ratio = reports.credit_ratio_report()
+        layout.addWidget(QLabel(f"Credits per User: <b>{credit_ratio['credits_per_user']:.2f}</b> (Target: {credit_ratio['target_ratio']})"))
+        layout.addWidget(QLabel(f"Inflation Status: <b>{credit_ratio['inflation_status']}</b>"))
+
+        # Network Pool Report
+        pool = reports.network_pool_report()
+        layout.addWidget(QLabel(f"Network Pool: <b>{pool['total_pool']:.2f}</b> credits"))
+        if pool['last_payout']:
+            payout_info = pool['last_payout']
+            layout.addWidget(QLabel(f"Last Payout: <b>{payout_info.get('amount', 'N/A')}</b> credits on <b>{payout_info.get('timestamp', 'N/A')}</b>"))
+
+        # User Balances Table
+        balances_report = reports.user_balances_report()
+        balances = balances_report.get('users', [])
+        table = QTableWidget()
+        table.setColumnCount(3)
+        table.setHorizontalHeaderLabels(["User", "Credits", "Role"])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.setRowCount(len(balances))
+        for i, user in enumerate(balances):
+            email = user.get('email', '')
+            credits = str(user.get('credits', 0))
+            # Try to get role if present, else blank
+            role = user.get('role', '') if 'role' in user else ''
+            table.setItem(i, 0, QTableWidgetItem(email))
+            table.setItem(i, 1, QTableWidgetItem(credits))
+            table.setItem(i, 2, QTableWidgetItem(role))
+        layout.addWidget(QLabel("<b>User Balances</b>"))
+        layout.addWidget(table)
+        widget.setLayout(layout)
+        return widget
     def registration_tab(self):
         widget = QWidget()
         layout = QVBoxLayout()
@@ -151,6 +197,61 @@ class MainWindow(QMainWindow):
         # All backend operations use config-driven paths
         from civic_desktop.contracts.contract_ui import ContractManagementWidget
         return ContractManagementWidget()
+
+    def maps_tab(self):
+        from civic_desktop.maps.map_view import MapView
+        from PyQt5.QtWidgets import QLineEdit, QPushButton, QLabel, QHBoxLayout
+        widget = QWidget()
+        layout = QVBoxLayout()
+        # Address input
+        address_layout = QHBoxLayout()
+        self.address_input = QLineEdit()
+        self.address_input.setPlaceholderText("Enter address or city...")
+        self.geocode_button = QPushButton("Find on Map")
+        self.save_button = QPushButton("Save Location")
+        address_layout.addWidget(QLabel("Address:"))
+        address_layout.addWidget(self.address_input)
+        address_layout.addWidget(self.geocode_button)
+        address_layout.addWidget(self.save_button)
+        layout.addLayout(address_layout)
+        # Map widget
+        self.map_widget = MapView()
+        layout.addWidget(self.map_widget)
+        widget.setLayout(layout)
+        # Connect buttons
+        self.geocode_button.clicked.connect(self.handle_geocode)
+        self.save_button.clicked.connect(self.handle_save_location)
+        return widget
+
+    def handle_geocode(self):
+        import osmnx as ox
+        address = self.address_input.text().strip()
+        if address:
+            try:
+                loc = ox.geocode(address)
+                lat, lon = loc[0], loc[1]
+                self.map_widget.set_location(lat, lon, zoom_start=14)
+                self.last_location = {'address': address, 'lat': lat, 'lon': lon}
+            except Exception as e:
+                from PyQt5.QtWidgets import QMessageBox
+                QMessageBox.warning(self, "Geocoding Error", f"Could not find location: {e}")
+
+    def handle_save_location(self):
+        from PyQt5.QtWidgets import QMessageBox
+        # Save to user profile (or contract, extend as needed)
+        location = getattr(self, 'last_location', None)
+        if location:
+            # Example: Save to user session profile
+            from civic_desktop.users.session import SessionManager
+            user = SessionManager.get_current_user()
+            if user:
+                user['saved_location'] = location
+                SessionManager.save_user(user)
+                QMessageBox.information(self, "Location Saved", f"Location saved to your profile: {location['address']}")
+            else:
+                QMessageBox.warning(self, "Save Error", "No authenticated user to save location.")
+        else:
+            QMessageBox.warning(self, "Save Error", "No location selected to save.")
 
     def handle_login(self, user: dict) -> None:
         SessionManager.login(user)

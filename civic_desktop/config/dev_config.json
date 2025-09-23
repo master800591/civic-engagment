@@ -6,6 +6,7 @@
   "moderation_db_path": "moderation/dev_moderation_db.json",
   "logging_level": "DEBUG",
   "features": ["all"],
+  "p2p_enabled": true,
   "p2p": {
     "enabled": true,
     "port": 8000,

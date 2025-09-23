@@ -27,14 +27,38 @@ from .contract_types import create_default_contracts
 
 class ContractSectionWidget(QFrame):
     """Widget to display a single contract section with acceptance checkbox"""
-    
     section_accepted = pyqtSignal(str, bool)  # section_id, accepted
-    
     def __init__(self, section: ContractSection, parent: Optional[QWidget] = None) -> None:
         super().__init__(parent)
         self.section = section
         self.accepted = False
         self.setup_ui()
+        # Blockchain status and user role display
+        from civic_desktop.users.session import SessionManager
+        user = SessionManager.get_current_user()
+        role = user.get('role', 'Unknown') if user else 'Unknown'
+        blockchain_status = QLabel("All contract acceptances are <b>recorded on blockchain</b> for legal and audit purposes.")
+        blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+        role_label = QLabel(f"Your Role: <b>{role}</b>")
+        role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+        export_btn = QPushButton("Export Contract Report")
+        export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
+        export_btn.clicked.connect(self.open_reports_tab)
+        top_layout = QVBoxLayout()
+        top_layout.addWidget(blockchain_status)
+        top_layout.addWidget(role_label)
+        top_layout.addWidget(export_btn)
+        self.layout().insertLayout(0, top_layout)
+
+    def open_reports_tab(self):
+        mw = self.parent()
+        while mw and not hasattr(mw, 'tabs'):
+            mw = mw.parent()
+        if mw and hasattr(mw, 'tabs'):
+            for i in range(mw.tabs.count()):
+                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                    mw.tabs.setCurrentIndex(i)
+                    break
     
     def setup_ui(self) -> None:
         """Setup the UI for contract section display"""
