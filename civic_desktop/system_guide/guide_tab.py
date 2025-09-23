@@ -113,50 +113,73 @@ class SystemGuideTab(QWidget):
         
         layout.addWidget(content)
         widget.setLayout(layout)
-        return widget
-    
-    def roles_section(self) -> QWidget:
-        """Detailed explanation of all roles and titles"""
-        widget = QWidget()
-        layout = QVBoxLayout()
-        
-        content = QTextEdit()
-        content.setReadOnly(True)
-        content.setHtml("""
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; padding: 20px;">
-            <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db;">👑 Hierarchical Role System</h2>
-            <p>The platform uses a contract-based role system with clear authority levels and responsibilities:</p>
-            
-            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #dc3545; margin: 10px 0;">
-                <h3 style="color: #dc3545; margin-top: 0;">🏛️ Contract Founders (Genesis Authority)</h3>
-                <p><strong>Symbol:</strong> 🏛️ Founder [Name]</p>
-                <p><strong>Authority Level:</strong> Constitutional (Highest)</p>
-                <p><strong>Powers:</strong></p>
-                <ul>
-                    <li>Modify core governance contracts (75%+ consensus required)</li>
-                    <li>Emergency protocol override during platform-threatening situations</li>
-                    <li>Appointment of initial Contract Elders (transition power only)</li>
-                </ul>
-                <p><strong>Limitations:</strong></p>
-                <ul>
-                    <li>Cannot directly govern day-to-day operations</li>
-                    <li>Cannot override elected body decisions except in constitutional emergencies</li>
-                    <li>Subject to removal by 2/3 vote of Contract Elders + Contract Senators</li>
-                </ul>
-                <p><strong>Term:</strong> Lifetime appointment with removal provisions</p>
-                <p><strong>Selection:</strong> Hardcoded in genesis block (maximum 7 founders)</p>
-            </div>
-            
-            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #6f42c1; margin: 10px 0;">
-                <h3 style="color: #6f42c1; margin-top: 0;">👴 Contract Elders (Wisdom Council)</h3>
-                <p><strong>Symbol:</strong> 👴 Elder [Name]</p>
-                <p><strong>Authority Level:</strong> Constitutional Review</p>
-                <p><strong>Powers:</strong></p>
-                <ul>
-                    <li><strong>Constitutional Veto:</strong> Block any proposal violating platform principles (60% required)</li>
-                    <li><strong>Judicial Review:</strong> Interpret governance contracts and resolve disputes</li>
-                    <li><strong>Elder Veto:</strong> Override Representative/Senator decisions if harmful (75% required)</li>
-                    <li><strong>Appointment Authority:</strong> Nominate candidates for critical platform positions</li>
+        def init_ui(self):
+            """Initialize the system guide interface"""
+            layout = QVBoxLayout()
+            layout.setContentsMargins(10, 10, 10, 10)
+            # Blockchain status and user role display
+            from civic_desktop.users.session import SessionManager
+            user = SessionManager.get_current_user()
+            role = user.get('role', 'Unknown') if user else 'Unknown'
+            blockchain_status = QLabel("All system guide updates are <b>recorded on blockchain</b> for audit and transparency.")
+            blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+            role_label = QLabel(f"Your Role: <b>{role}</b>")
+            role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+            export_btn = QPushButton("Export Guide Report")
+            export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
+            export_btn.clicked.connect(self.open_reports_tab)
+            top_layout = QVBoxLayout()
+            top_layout.addWidget(blockchain_status)
+            top_layout.addWidget(role_label)
+            top_layout.addWidget(export_btn)
+            layout.addLayout(top_layout)
+            # Header
+            header = QLabel("🏛️ Civic Engagement Platform - Complete System Guide")
+            header.setStyleSheet("""
+                QLabel {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #2c3e50;
+                    padding: 15px;
+                    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                    border-radius: 10px;
+                    margin-bottom: 10px;
+                }
+            """)
+            header.setAlignment(Qt.AlignCenter)
+            layout.addWidget(header)
+            # Create tabbed guide sections
+            self.guide_tabs = QTabWidget()
+            self.guide_tabs.setStyleSheet("""
+                QTabWidget::pane {
+                    border: 1px solid #bdc3c7;
+                    border-radius: 5px;
+                    background: white;
+                }
+                QTabBar::tab {
+                    background: #ecf0f1;
+                    padding: 8px 16px;
+                    margin-right: 2px;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                }
+                QTabBar::tab:selected {
+                    background: #3498db;
+                    color: white;
+                    font-weight: bold;
+                }
+            """)
+            # ...existing code...
+
+        def open_reports_tab(self):
+            mw = self.parent()
+            while mw and not hasattr(mw, 'tabs'):
+                mw = mw.parent()
+            if mw and hasattr(mw, 'tabs'):
+                for i in range(mw.tabs.count()):
+                    if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                        mw.tabs.setCurrentIndex(i)
+                        break
                 </ul>
                 <p><strong>Limitations:</strong></p>
                 <ul>
