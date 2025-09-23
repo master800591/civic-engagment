@@ -138,25 +138,53 @@ class CreateTopicDialog(QDialog):
         form_group.setLayout(form_layout)
         layout.addWidget(form_group)
         
-        # Buttons with better styling
-        button_layout = QHBoxLayout()
-        button_layout.addStretch()
-        
-        self.cancel_button = QPushButton("❌ Cancel")
-        self.cancel_button.setObjectName("cancel")
-        self.cancel_button.clicked.connect(self.reject)
-        button_layout.addWidget(self.cancel_button)
-        
-        self.create_button = QPushButton("✅ Create Topic")
-        self.create_button.clicked.connect(self.create_topic)
-        self.create_button.setDefault(True)  # Make it the default button (Enter key)
-        button_layout.addWidget(self.create_button)
-        
-        layout.addLayout(button_layout)
-        self.setLayout(layout)
-        
-        # Set focus to title input
-        self.title_input.setFocus()
+    # Add blockchain status, role, and export button at top for user-friendliness
+    from ..users.session import SessionManager
+    user = SessionManager.get_current_user()
+    role = user.get('role', 'Unknown') if user else 'Unknown'
+    blockchain_status = QLabel("All debate actions are <b>recorded on blockchain</b> for transparency.")
+    blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+    blockchain_status.setAccessibleName("Blockchain Status")
+    blockchain_status.setToolTip("All actions are securely recorded for audit and transparency.")
+    role_label = QLabel(f"Your Role: <b>{role}</b>")
+    role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+    role_label.setAccessibleName("User Role")
+    role_label.setToolTip("Your current platform role.")
+    export_btn = QPushButton("Export Debate Report")
+    export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 8px; padding: 12px 28px; font-size: 15px;")
+    export_btn.setAccessibleName("Export Debate Report Button")
+    export_btn.setToolTip("View and export blockchain-based debate reports.")
+    export_btn.setMinimumHeight(40)
+    export_btn.setMinimumWidth(180)
+    export_btn.clicked.connect(self.open_reports_tab)
+    top_layout = QVBoxLayout()
+    top_layout.addWidget(blockchain_status)
+    top_layout.addWidget(role_label)
+    top_layout.addWidget(export_btn)
+    layout.insertLayout(0, top_layout)
+
+    # Buttons with better styling
+    button_layout = QHBoxLayout()
+    button_layout.addStretch()
+    self.cancel_button = QPushButton("❌ Cancel")
+    self.cancel_button.setObjectName("cancel")
+    self.cancel_button.setAccessibleName("Cancel Button")
+    self.cancel_button.setToolTip("Cancel topic creation.")
+    self.cancel_button.setMinimumHeight(36)
+    self.cancel_button.setMinimumWidth(120)
+    self.cancel_button.clicked.connect(self.reject)
+    button_layout.addWidget(self.cancel_button)
+    self.create_button = QPushButton("✅ Create Topic")
+    self.create_button.setAccessibleName("Create Topic Button")
+    self.create_button.setToolTip("Submit your new debate topic.")
+    self.create_button.setMinimumHeight(36)
+    self.create_button.setMinimumWidth(140)
+    self.create_button.clicked.connect(self.create_topic)
+    self.create_button.setDefault(True)
+    button_layout.addWidget(self.create_button)
+    layout.addLayout(button_layout)
+    self.setLayout(layout)
+    self.title_input.setFocus()
     
     def update_location_options(self) -> None:
         """Update location dropdown based on jurisdiction level and user's registered location"""
