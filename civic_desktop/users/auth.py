@@ -1,4 +1,3 @@
-
 import hashlib
 import os
 from cryptography.hazmat.primitives import serialization
@@ -28,11 +27,23 @@ class AuthManager:
 
         candidates = sorted(matches, key=lambda u: (not is_bcrypt_hash(u.get('password_hash', ''))))
 
-        # Check private key file exists
-        privkey_dir = os.path.join(os.path.dirname(__file__), 'private_keys')
-        privkey_path = os.path.join(privkey_dir, f"{email.replace('@','_at_')}.pem")
-        if not os.path.exists(privkey_path):
-            return False, 'Private key file not found. Please restore your private key.'
+        # Check private key file exists - search in multiple possible locations
+        key_filename = f"{email.replace('@','_at_')}.pem"
+        possible_dirs = [
+            os.path.join(os.path.dirname(__file__), 'private_keys'), # Next to this file
+            os.path.join(os.path.dirname(os.path.dirname(__file__)), 'private_keys'), # In 'users' parent
+            os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'private_keys'), # In 'civic_desktop' parent
+        ]
+        
+        privkey_path = None
+        for directory in possible_dirs:
+            path = os.path.join(directory, key_filename)
+            if os.path.exists(path):
+                privkey_path = path
+                break
+
+        if not privkey_path:
+            return False, f"Private key file '{key_filename}' not found. Please restore your private key."
         
         # Load private key once
         try:

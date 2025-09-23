@@ -1,0 +1,666 @@
+{
+  "pages": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T22:41:01.761579Z",
+      "data": {
+        "action": "genesis_creation",
+        "type": "genesis",
+        "founder_email": "founder@civicengagementai.org",
+        "founder_name": "Steve Cornell",
+        "genesis_metadata": {
+          "type": "genesis",
+          "version": "1.0.0",
+          "platform": "Civic Engagement Platform",
+          "consensus": "proof_of_authority",
+          "governance": "contract_based_democracy",
+          "founder": {
+            "first_name": "Steve",
+            "last_name": "Cornell",
+            "email": "founder@civicengagementai.org",
+            "created_at": "2025-09-23T22:41:01.721528+00:00",
+            "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fcoX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6t9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30QmThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29NtqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlDWwIDAQAB-----END PUBLIC KEY-----",
+            "role": "Contract Founder"
+          },
+          "constitution": {
+            "voting_thresholds": {
+              "contract_elder_veto": 0.6,
+              "founder_consensus": 0.75,
+              "constitutional_amendment": 0.6,
+              "citizen_recall": 0.55
+            },
+            "authority_hierarchy": [
+              "Contract Founders",
+              "Contract Elders",
+              "Contract Representatives",
+              "Contract Senators",
+              "Contract Citizens"
+            ],
+            "checks_and_balances": {
+              "elder_veto_power": true,
+              "bicameral_legislature": true,
+              "citizen_recall_rights": true,
+              "constitutional_review": true
+            }
+          },
+          "network_parameters": {
+            "consensus_mechanism": "proof_of_authority",
+            "block_time": "immediate",
+            "validator_selection": "democratic_election",
+            "max_validators": 100,
+            "min_validators": 1
+          },
+          "timestamp": "2025-09-23T22:41:01.739106Z",
+          "message": "Genesis block for Civic Engagement Platform - Democratic Blockchain Governance",
+          "genesis_hash": "96a9e4ae9d5a3973ebee03fbb31654444fe768806f9b18f6635e0f98c3d86001"
+        },
+        "timestamp": "2025-09-23T22:41:01.739106Z"
+      },
+      "validator": "founder@civicengagementai.org",
+      "signature": "GENESIS",
+      "hash": "c3378765a829411fdf7c21c35e8bd25eb3b4dae70092fc6f222b96b8d73a11d3"
+    },
+    {
+      "index": 1,
+      "previous_hash": "c3378765a829411fdf7c21c35e8bd25eb3b4dae70092fc6f222b96b8d73a11d3",
+      "timestamp": "2025-09-23T22:41:01.774829Z",
+      "data": {
+        "action": "register_user",
+        "user_email": "founder@civicengagementai.org",
+        "first_name": "Steve",
+        "last_name": "Cornell",
+        "address": "123 Founder Ave",
+        "city": "Genesis City",
+        "state": "Origin",
+        "country": "Platform Nation",
+        "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fcoX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6t9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30QmThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29NtqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlDWwIDAQAB-----END PUBLIC KEY-----",
+        "roles": [
+          "Contract Founder"
+        ],
+        "password_hash": "$2b$12$.7HW5uTZhTxEFUoc.kdDN.aIaabfOQ6LvaVk1NDT9dyOM3jNW5L96",
+        "id_document_hash": "genesis_founder_id_hash",
+        "timestamp": "2025-09-23T22:41:01.721528Z"
+      },
+      "validator": "founder@civicengagementai.org",
+      "signature": "GENESIS",
+      "hash": "36b3f11bcdef6eb7fcd0596bb63cfc3e983102ce9933ee85138e115642e89880"
+    },
+    {
+      "index": 2,
+      "previous_hash": "36b3f11bcdef6eb7fcd0596bb63cfc3e983102ce9933ee85138e115642e89880",
+      "timestamp": "2025-09-23T22:42:23.337520Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:42:23.337520Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "a88b7e5503543e70963695106eee1bcad74cf3345427669b3528de33883cc481"
+    },
+    {
+      "index": 3,
+      "previous_hash": "a88b7e5503543e70963695106eee1bcad74cf3345427669b3528de33883cc481",
+      "timestamp": "2025-09-23T22:42:53.352846Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:42:53.351798Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "6091ee33e2f1e6c6b842f1b4475c11368a3838929b8f71dc5c705ef9d773fff0"
+    },
+    {
+      "index": 4,
+      "previous_hash": "6091ee33e2f1e6c6b842f1b4475c11368a3838929b8f71dc5c705ef9d773fff0",
+      "timestamp": "2025-09-23T22:43:23.367451Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:43:23.367451Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "11d8c3c80c733a63486b0996f86a288be97bb97f71e4af1a9b787f02ac57fe7b"
+    },
+    {
+      "index": 5,
+      "previous_hash": "11d8c3c80c733a63486b0996f86a288be97bb97f71e4af1a9b787f02ac57fe7b",
+      "timestamp": "2025-09-23T22:43:34.028250Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:43:34.027276Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "f43db3400baf0f16c5dad23973e0a2b9a69d07a7e00171b4133e397e8571bfcd"
+    },
+    {
+      "index": 6,
+      "previous_hash": "f43db3400baf0f16c5dad23973e0a2b9a69d07a7e00171b4133e397e8571bfcd",
+      "timestamp": "2025-09-23T22:43:53.381550Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:43:53.381550Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "74669283e73cd9312b8f6bfaf0093585ec6fe563e6b8c88822b105b8370c1071"
+    },
+    {
+      "index": 7,
+      "previous_hash": "74669283e73cd9312b8f6bfaf0093585ec6fe563e6b8c88822b105b8370c1071",
+      "timestamp": "2025-09-23T22:44:04.025831Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:44:04.025831Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "186dde3940761dc6e1e23d7128172f41d245ba7cc2275877edff58f97c1841ae"
+    },
+    {
+      "index": 8,
+      "previous_hash": "186dde3940761dc6e1e23d7128172f41d245ba7cc2275877edff58f97c1841ae",
+      "timestamp": "2025-09-23T22:44:23.380073Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:44:23.380073Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "04c180d4e36ea24f2e64ac282d758fcb6566f2e9d0b82b3e5dc63a6823dad7b5"
+    },
+    {
+      "index": 9,
+      "previous_hash": "04c180d4e36ea24f2e64ac282d758fcb6566f2e9d0b82b3e5dc63a6823dad7b5",
+      "timestamp": "2025-09-23T22:44:34.040054Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:44:34.040054Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "a748efb62b72c14d0e9a7f408c7bca216adbc4d6dcf1e5801a7384e9bd5a4b4c"
+    },
+    {
+      "index": 10,
+      "previous_hash": "a748efb62b72c14d0e9a7f408c7bca216adbc4d6dcf1e5801a7384e9bd5a4b4c",
+      "timestamp": "2025-09-23T22:47:00.593227Z",
+      "data": {
+        "action": "update_profile",
+        "user_email": "founder@civicengagementai.org",
+        "updates": {
+          "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArsBAwPI77VDiGzuWOkXTtuIlP5bWU+vR30IO2ZHclBG1eU3yw+3gCIc27CnRCeEVOOQezGO0uFBEaoCbJfAoCsYM80gnmKv5fwBSoYQzXNH6fFMHpj/uNmKz/u49f5pTADxPmWd+00/+Y/qG+FnU6TZz2R6JTZF1QH0bUBLjNNy+txIaCVmDM79xoqNe/fWMvbp6b/j5bFpZsphFjhthwmHTkvIV9sfBvqkrWO3faQo+WisfrzUYaHxMvtdBWDXFbkZofnQ0y1JDGcXYLzvwwM6ToduePer9Dp6zIWR99PoD85ArPEBrfyGZ0kMS4bK6xwdFdgJJ1fC/l9oJt7WgqwIDAQAB-----END PUBLIC KEY-----"
+        },
+        "timestamp": "2025-09-23T22:47:00.560587Z"
+      },
+      "validator": "founder@civicengagementai.org",
+      "signature": "fKdjXzlH5ojypsfsY6Glj/kbCWunbAHDOjWam8KyCkGR1yeN8DYVsD5638Qr/zPzcGb63SqvCPdvnnwR40SyorFWDSy+x8WNGRHBz1fh8uDe6mJWbwaENxvuJWp3sTZoSKfTy4Sg8OQuZ7BuzMx5qK4Q763oVmUjR0MkUOikxucN/+UYmkaYgEqhoLgVk7SKCpcnvPurUT606iJLJAcq2JnHrrvvJnF0rQ5pP60tFopjVFTTbC4Vbwr7RT7WXzu48LzMqMhtSMSkc8O7dR+mEBqnlyDVY1hPq1thS61jYNSzr4s0KleU+zMjyyKrUPWwhkGCDthJvDPtYhHNiziwrQ==",
+      "hash": "c6134556428ad870711534c7dfe6d4ccd4627450f4e9c75fe4eb594b4f25c6eb"
+    },
+    {
+      "index": 11,
+      "previous_hash": "c6134556428ad870711534c7dfe6d4ccd4627450f4e9c75fe4eb594b4f25c6eb",
+      "timestamp": "2025-09-23T22:47:44.319424Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:47:44.319424Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "fe44476a935e94a98186d97aecced4be7f0501a7ceb0ef31712377e255a4905a"
+    },
+    {
+      "index": 12,
+      "previous_hash": "fe44476a935e94a98186d97aecced4be7f0501a7ceb0ef31712377e255a4905a",
+      "timestamp": "2025-09-23T22:48:14.322093Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:48:14.322093Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "2b7c0674a2a394f5a29f0e6e28b23ce393fdbafbefe96731bcae7a867fa2a2f6"
+    },
+    {
+      "index": 13,
+      "previous_hash": "2b7c0674a2a394f5a29f0e6e28b23ce393fdbafbefe96731bcae7a867fa2a2f6",
+      "timestamp": "2025-09-23T22:48:44.322360Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:48:44.322360Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "a0ff16a0c9a61206a1979931d19469ba55b82d1dab42f23ec13f2ce603eb14fd"
+    },
+    {
+      "index": 14,
+      "previous_hash": "a0ff16a0c9a61206a1979931d19469ba55b82d1dab42f23ec13f2ce603eb14fd",
+      "timestamp": "2025-09-23T22:49:14.312691Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:49:14.312691Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "eccbb80694d1b9f3d4bc193c19fa76d2f37ee8c5444d5ce5cec57bed00c5be93"
+    },
+    {
+      "index": 15,
+      "previous_hash": "eccbb80694d1b9f3d4bc193c19fa76d2f37ee8c5444d5ce5cec57bed00c5be93",
+      "timestamp": "2025-09-23T22:49:44.325133Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:49:44.325133Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "0ca3d3562cbc8b4a4e8af0c4e50186bb6d3d53e186bb13f7335b801d5d97a5d6"
+    },
+    {
+      "index": 16,
+      "previous_hash": "0ca3d3562cbc8b4a4e8af0c4e50186bb6d3d53e186bb13f7335b801d5d97a5d6",
+      "timestamp": "2025-09-23T22:50:14.323049Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:50:14.322460Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "9bd5151f3331f2af92c7a6bbd52e7561f03063e7ab4510f4d7ae33f0fcf9b197"
+    },
+    {
+      "index": 17,
+      "previous_hash": "9bd5151f3331f2af92c7a6bbd52e7561f03063e7ab4510f4d7ae33f0fcf9b197",
+      "timestamp": "2025-09-23T22:52:02.064213Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:52:02.063143Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "a7a1c4140e838ef2e34b6fc9f707ce76a0f0fc0f9048a595c35f1dbb9c904a6e"
+    },
+    {
+      "index": 18,
+      "previous_hash": "a7a1c4140e838ef2e34b6fc9f707ce76a0f0fc0f9048a595c35f1dbb9c904a6e",
+      "timestamp": "2025-09-23T22:52:32.063572Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-23T22:52:32.063572Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "67c6516520115fad5cd74c89b30f2e699d26b19b22129f7f1f738da9686ee989"
+    }
+  ],
+  "chapters": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T22:41:01.761579Z",
+      "pages": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T22:41:01.761579Z",
+          "data": {
+            "action": "genesis_creation",
+            "type": "genesis",
+            "founder_email": "founder@civicengagementai.org",
+            "founder_name": "Steve Cornell",
+            "genesis_metadata": {
+              "type": "genesis",
+              "version": "1.0.0",
+              "platform": "Civic Engagement Platform",
+              "consensus": "proof_of_authority",
+              "governance": "contract_based_democracy",
+              "founder": {
+                "first_name": "Steve",
+                "last_name": "Cornell",
+                "email": "founder@civicengagementai.org",
+                "created_at": "2025-09-23T22:41:01.721528+00:00",
+                "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fcoX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6t9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30QmThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29NtqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlDWwIDAQAB-----END PUBLIC KEY-----",
+                "role": "Contract Founder"
+              },
+              "constitution": {
+                "voting_thresholds": {
+                  "contract_elder_veto": 0.6,
+                  "founder_consensus": 0.75,
+                  "constitutional_amendment": 0.6,
+                  "citizen_recall": 0.55
+                },
+                "authority_hierarchy": [
+                  "Contract Founders",
+                  "Contract Elders",
+                  "Contract Representatives",
+                  "Contract Senators",
+                  "Contract Citizens"
+                ],
+                "checks_and_balances": {
+                  "elder_veto_power": true,
+                  "bicameral_legislature": true,
+                  "citizen_recall_rights": true,
+                  "constitutional_review": true
+                }
+              },
+              "network_parameters": {
+                "consensus_mechanism": "proof_of_authority",
+                "block_time": "immediate",
+                "validator_selection": "democratic_election",
+                "max_validators": 100,
+                "min_validators": 1
+              },
+              "timestamp": "2025-09-23T22:41:01.739106Z",
+              "message": "Genesis block for Civic Engagement Platform - Democratic Blockchain Governance",
+              "genesis_hash": "96a9e4ae9d5a3973ebee03fbb31654444fe768806f9b18f6635e0f98c3d86001"
+            },
+            "timestamp": "2025-09-23T22:41:01.739106Z"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "GENESIS",
+          "hash": "c3378765a829411fdf7c21c35e8bd25eb3b4dae70092fc6f222b96b8d73a11d3"
+        }
+      ],
+      "validator": "founder@civicengagementai.org",
+      "signature": "GENESIS",
+      "hash": "38dbaf057bdd4dbe5c73e54d11fdfd92e5954adbaab68020006b475b8f02486b"
+    }
+  ],
+  "books": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T22:41:01.761579Z",
+      "chapters": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T22:41:01.761579Z",
+          "pages": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T22:41:01.761579Z",
+              "data": {
+                "action": "genesis_creation",
+                "type": "genesis",
+                "founder_email": "founder@civicengagementai.org",
+                "founder_name": "Steve Cornell",
+                "genesis_metadata": {
+                  "type": "genesis",
+                  "version": "1.0.0",
+                  "platform": "Civic Engagement Platform",
+                  "consensus": "proof_of_authority",
+                  "governance": "contract_based_democracy",
+                  "founder": {
+                    "first_name": "Steve",
+                    "last_name": "Cornell",
+                    "email": "founder@civicengagementai.org",
+                    "created_at": "2025-09-23T22:41:01.721528+00:00",
+                    "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fcoX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6t9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30QmThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29NtqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlDWwIDAQAB-----END PUBLIC KEY-----",
+                    "role": "Contract Founder"
+                  },
+                  "constitution": {
+                    "voting_thresholds": {
+                      "contract_elder_veto": 0.6,
+                      "founder_consensus": 0.75,
+                      "constitutional_amendment": 0.6,
+                      "citizen_recall": 0.55
+                    },
+                    "authority_hierarchy": [
+                      "Contract Founders",
+                      "Contract Elders",
+                      "Contract Representatives",
+                      "Contract Senators",
+                      "Contract Citizens"
+                    ],
+                    "checks_and_balances": {
+                      "elder_veto_power": true,
+                      "bicameral_legislature": true,
+                      "citizen_recall_rights": true,
+                      "constitutional_review": true
+                    }
+                  },
+                  "network_parameters": {
+                    "consensus_mechanism": "proof_of_authority",
+                    "block_time": "immediate",
+                    "validator_selection": "democratic_election",
+                    "max_validators": 100,
+                    "min_validators": 1
+                  },
+                  "timestamp": "2025-09-23T22:41:01.739106Z",
+                  "message": "Genesis block for Civic Engagement Platform - Democratic Blockchain Governance",
+                  "genesis_hash": "96a9e4ae9d5a3973ebee03fbb31654444fe768806f9b18f6635e0f98c3d86001"
+                },
+                "timestamp": "2025-09-23T22:41:01.739106Z"
+              },
+              "validator": "founder@civicengagementai.org",
+              "signature": "GENESIS",
+              "hash": "c3378765a829411fdf7c21c35e8bd25eb3b4dae70092fc6f222b96b8d73a11d3"
+            }
+          ],
+          "validator": "founder@civicengagementai.org",
+          "signature": "GENESIS",
+          "hash": "38dbaf057bdd4dbe5c73e54d11fdfd92e5954adbaab68020006b475b8f02486b"
+        }
+      ],
+      "validator": "founder@civicengagementai.org",
+      "signature": "GENESIS",
+      "hash": "f58696d348e8e40c307f5fda2a16e8f8f99d3a6bac09d07cac9b0f1e47e38b9e"
+    }
+  ],
+  "parts": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T22:41:01.761579Z",
+      "books": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T22:41:01.761579Z",
+          "chapters": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T22:41:01.761579Z",
+              "pages": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-23T22:41:01.761579Z",
+                  "data": {
+                    "action": "genesis_creation",
+                    "type": "genesis",
+                    "founder_email": "founder@civicengagementai.org",
+                    "founder_name": "Steve Cornell",
+                    "genesis_metadata": {
+                      "type": "genesis",
+                      "version": "1.0.0",
+                      "platform": "Civic Engagement Platform",
+                      "consensus": "proof_of_authority",
+                      "governance": "contract_based_democracy",
+                      "founder": {
+                        "first_name": "Steve",
+                        "last_name": "Cornell",
+                        "email": "founder@civicengagementai.org",
+                        "created_at": "2025-09-23T22:41:01.721528+00:00",
+                        "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fcoX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6t9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30QmThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29NtqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlDWwIDAQAB-----END PUBLIC KEY-----",
+                        "role": "Contract Founder"
+                      },
+                      "constitution": {
+                        "voting_thresholds": {
+                          "contract_elder_veto": 0.6,
+                          "founder_consensus": 0.75,
+                          "constitutional_amendment": 0.6,
+                          "citizen_recall": 0.55
+                        },
+                        "authority_hierarchy": [
+                          "Contract Founders",
+                          "Contract Elders",
+                          "Contract Representatives",
+                          "Contract Senators",
+                          "Contract Citizens"
+                        ],
+                        "checks_and_balances": {
+                          "elder_veto_power": true,
+                          "bicameral_legislature": true,
+                          "citizen_recall_rights": true,
+                          "constitutional_review": true
+                        }
+                      },
+                      "network_parameters": {
+                        "consensus_mechanism": "proof_of_authority",
+                        "block_time": "immediate",
+                        "validator_selection": "democratic_election",
+                        "max_validators": 100,
+                        "min_validators": 1
+                      },
+                      "timestamp": "2025-09-23T22:41:01.739106Z",
+                      "message": "Genesis block for Civic Engagement Platform - Democratic Blockchain Governance",
+                      "genesis_hash": "96a9e4ae9d5a3973ebee03fbb31654444fe768806f9b18f6635e0f98c3d86001"
+                    },
+                    "timestamp": "2025-09-23T22:41:01.739106Z"
+                  },
+                  "validator": "founder@civicengagementai.org",
+                  "signature": "GENESIS",
+                  "hash": "c3378765a829411fdf7c21c35e8bd25eb3b4dae70092fc6f222b96b8d73a11d3"
+                }
+              ],
+              "validator": "founder@civicengagementai.org",
+              "signature": "GENESIS",
+              "hash": "38dbaf057bdd4dbe5c73e54d11fdfd92e5954adbaab68020006b475b8f02486b"
+            }
+          ],
+          "validator": "founder@civicengagementai.org",
+          "signature": "GENESIS",
+          "hash": "f58696d348e8e40c307f5fda2a16e8f8f99d3a6bac09d07cac9b0f1e47e38b9e"
+        }
+      ],
+      "validator": "founder@civicengagementai.org",
+      "signature": "GENESIS",
+      "hash": "00d167852aaf8fb71db00c3abd73be5ba5628273f534d05dc16ffdddc5c85823"
+    }
+  ],
+  "series": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T22:41:01.761579Z",
+      "parts": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T22:41:01.761579Z",
+          "books": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T22:41:01.761579Z",
+              "chapters": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-23T22:41:01.761579Z",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                      "timestamp": "2025-09-23T22:41:01.761579Z",
+                      "data": {
+                        "action": "genesis_creation",
+                        "type": "genesis",
+                        "founder_email": "founder@civicengagementai.org",
+                        "founder_name": "Steve Cornell",
+                        "genesis_metadata": {
+                          "type": "genesis",
+                          "version": "1.0.0",
+                          "platform": "Civic Engagement Platform",
+                          "consensus": "proof_of_authority",
+                          "governance": "contract_based_democracy",
+                          "founder": {
+                            "first_name": "Steve",
+                            "last_name": "Cornell",
+                            "email": "founder@civicengagementai.org",
+                            "created_at": "2025-09-23T22:41:01.721528+00:00",
+                            "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fcoX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6t9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30QmThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29NtqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlDWwIDAQAB-----END PUBLIC KEY-----",
+                            "role": "Contract Founder"
+                          },
+                          "constitution": {
+                            "voting_thresholds": {
+                              "contract_elder_veto": 0.6,
+                              "founder_consensus": 0.75,
+                              "constitutional_amendment": 0.6,
+                              "citizen_recall": 0.55
+                            },
+                            "authority_hierarchy": [
+                              "Contract Founders",
+                              "Contract Elders",
+                              "Contract Representatives",
+                              "Contract Senators",
+                              "Contract Citizens"
+                            ],
+                            "checks_and_balances": {
+                              "elder_veto_power": true,
+                              "bicameral_legislature": true,
+                              "citizen_recall_rights": true,
+                              "constitutional_review": true
+                            }
+                          },
+                          "network_parameters": {
+                            "consensus_mechanism": "proof_of_authority",
+                            "block_time": "immediate",
+                            "validator_selection": "democratic_election",
+                            "max_validators": 100,
+                            "min_validators": 1
+                          },
+                          "timestamp": "2025-09-23T22:41:01.739106Z",
+                          "message": "Genesis block for Civic Engagement Platform - Democratic Blockchain Governance",
+                          "genesis_hash": "96a9e4ae9d5a3973ebee03fbb31654444fe768806f9b18f6635e0f98c3d86001"
+                        },
+                        "timestamp": "2025-09-23T22:41:01.739106Z"
+                      },
+                      "validator": "founder@civicengagementai.org",
+                      "signature": "GENESIS",
+                      "hash": "c3378765a829411fdf7c21c35e8bd25eb3b4dae70092fc6f222b96b8d73a11d3"
+                    }
+                  ],
+                  "validator": "founder@civicengagementai.org",
+                  "signature": "GENESIS",
+                  "hash": "38dbaf057bdd4dbe5c73e54d11fdfd92e5954adbaab68020006b475b8f02486b"
+                }
+              ],
+              "validator": "founder@civicengagementai.org",
+              "signature": "GENESIS",
+              "hash": "f58696d348e8e40c307f5fda2a16e8f8f99d3a6bac09d07cac9b0f1e47e38b9e"
+            }
+          ],
+          "validator": "founder@civicengagementai.org",
+          "signature": "GENESIS",
+          "hash": "00d167852aaf8fb71db00c3abd73be5ba5628273f534d05dc16ffdddc5c85823"
+        }
+      ],
+      "validator": "founder@civicengagementai.org",
+      "signature": "GENESIS",
+      "hash": "17d5137d6efa9818a28409acebcefabfa55aef2a55c03a45d5393e484122cafd"
+    }
+  ]
+}

@@ -10,5 +10,11 @@
     "public_key": "test_public_key",
     "active": false,
     "added_at": "2025-09-23T20:07:56.022410Z"
+  },
+  {
+    "email": "founder@civicengagementai.org",
+    "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fco\nX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6\nt9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30Qm\nThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX\n9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29N\ntqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlD\nWwIDAQAB\n-----END PUBLIC KEY-----\n",
+    "active": true,
+    "added_at": "2025-09-23T22:41:01.721528Z"
   }
 ]

@@ -60,8 +60,13 @@ USER_ROLES = {
         "restrictions": []
     },
     "Contract Founder": {
-        "level": 8,
-        "permissions": ["emergency_protocols", "constitutional_amendments", "elder_appointment"],
+        "level": 10,
+        "permissions": ["all"],
+        "restrictions": []
+    },
+    "CEO": {
+        "level": 9,
+        "permissions": ["all"],
         "restrictions": []
     }
 }

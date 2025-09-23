@@ -1,11 +1,46 @@
 {
   "type": "genesis",
+  "version": "1.0.0",
+  "platform": "Civic Engagement Platform",
+  "consensus": "proof_of_authority",
+  "governance": "contract_based_democracy",
   "founder": {
-    "first_name": "steve",
-    "last_name": "cornell",
-    "email": "stevewc1234@gmail.com",
-    "created_at": null
+    "first_name": "Steve",
+    "last_name": "Cornell",
+    "email": "founder@civicengagementai.org",
+    "created_at": "2025-09-23T22:41:01.721528+00:00",
+    "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fco\nX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6\nt9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30Qm\nThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX\n9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29N\ntqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlD\nWwIDAQAB\n-----END PUBLIC KEY-----\n",
+    "role": "Contract Founder"
   },
-  "timestamp": "2025-09-23T16:09:09.488284Z",
-  "message": "Genesis block for Civic Engagement Platform"
+  "constitution": {
+    "voting_thresholds": {
+      "contract_elder_veto": 0.6,
+      "founder_consensus": 0.75,
+      "constitutional_amendment": 0.6,
+      "citizen_recall": 0.55
+    },
+    "authority_hierarchy": [
+      "Contract Founders",
+      "Contract Elders",
+      "Contract Representatives",
+      "Contract Senators",
+      "Contract Citizens"
+    ],
+    "checks_and_balances": {
+      "elder_veto_power": true,
+      "bicameral_legislature": true,
+      "citizen_recall_rights": true,
+      "constitutional_review": true
+    }
+  },
+  "network_parameters": {
+    "consensus_mechanism": "proof_of_authority",
+    "block_time": "immediate",
+    "validator_selection": "democratic_election",
+    "max_validators": 100,
+    "min_validators": 1
+  },
+  "timestamp": "2025-09-23T22:41:01.739106Z",
+  "message": "Genesis block for Civic Engagement Platform - Democratic Blockchain Governance",
+  "genesis_hash": "96a9e4ae9d5a3973ebee03fbb31654444fe768806f9b18f6635e0f98c3d86001"
 }

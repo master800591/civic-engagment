@@ -23,6 +23,30 @@ from .contract_terms import (
     ContractType, ContractStatus, contract_manager
 )
 from .contract_types import create_default_contracts
+from .genesis_contract import GENESIS_CONTRACT_TEXT
+
+
+class GenesisContractViewer(QDialog):
+    """A viewer specifically for the Genesis Contract."""
+    def __init__(self, parent: Optional[QWidget] = None):
+        super().__init__(parent)
+        self.setWindowTitle("The Genesis Contract")
+        self.setModal(True)
+        self.resize(800, 700)
+
+        layout = QVBoxLayout(self)
+
+        title_label = QLabel("<h1>The Genesis Contract</h1>")
+        title_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(title_label)
+
+        text_browser = QTextBrowser()
+        text_browser.setHtml(f"<pre>{GENESIS_CONTRACT_TEXT}</pre>")
+        layout.addWidget(text_browser)
+
+        button_box = QDialogButtonBox(QDialogButtonBox.Close)
+        button_box.rejected.connect(self.reject)
+        layout.addWidget(button_box)
 
 
 class ContractSectionWidget(QFrame):
@@ -252,6 +276,10 @@ class ContractAcceptanceWidget(QWidget):
         # Action buttons
         button_layout = QHBoxLayout()
         
+        self.view_genesis_btn = QPushButton("View Genesis Contract")
+        self.view_genesis_btn.clicked.connect(self.show_genesis_contract)
+        button_layout.addWidget(self.view_genesis_btn)
+
         self.view_hierarchy_btn = QPushButton("View Contract Hierarchy")
         self.view_hierarchy_btn.clicked.connect(self.show_contract_hierarchy)
         button_layout.addWidget(self.view_hierarchy_btn)
@@ -264,7 +292,12 @@ class ContractAcceptanceWidget(QWidget):
         button_layout.addWidget(self.accept_all_btn)
         
         layout.addLayout(button_layout)
-    
+
+    def show_genesis_contract(self):
+        """Shows the Genesis Contract in a dedicated viewer."""
+        viewer = GenesisContractViewer(self)
+        viewer.exec_()
+
     def load_applicable_contracts(self):
         """Load contracts applicable to user's location"""
         # Initialize default contracts if none exist
