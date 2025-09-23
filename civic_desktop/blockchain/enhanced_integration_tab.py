@@ -52,54 +52,57 @@ class EnhancedBlockchainTab(QWidget):
         
     def init_ui(self):
         layout = QVBoxLayout()
-        
+        # Blockchain status and user role display
+        from civic_desktop.users.session import SessionManager
+        user = SessionManager.get_current_user()
+        role = user.get('role', 'Unknown') if user else 'Unknown'
+        blockchain_status = QLabel("All integration analytics are <b>recorded on blockchain</b> for audit and transparency.")
+        blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+        role_label = QLabel(f"Your Role: <b>{role}</b>")
+        role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+        export_btn = QPushButton("Export Integration Report")
+        export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
+        export_btn.clicked.connect(self.open_reports_tab)
+        top_layout = QVBoxLayout()
+        top_layout.addWidget(blockchain_status)
+        top_layout.addWidget(role_label)
+        top_layout.addWidget(export_btn)
+        layout.addLayout(top_layout)
         # Header with title and status
         header_layout = QHBoxLayout()
-        
         title_label = QLabel("🔗 Enhanced Blockchain Integration Dashboard")
         title_font = QFont()
         title_font.setPointSize(16)
         title_font.setBold(True)
         title_label.setFont(title_font)
         header_layout.addWidget(title_label)
-        
         header_layout.addStretch()
-        
-        # Status indicator
         self.status_label = QLabel("🔄 Loading...")
         header_layout.addWidget(self.status_label)
-        
-        # Refresh button
         refresh_btn = QPushButton("🔄 Refresh Analytics")
         refresh_btn.clicked.connect(self.refresh_analytics)
         header_layout.addWidget(refresh_btn)
-        
         layout.addLayout(header_layout)
-        
         # Create tabbed interface
         self.tab_widget = QTabWidget()
-        
-        # Tab 1: Integration Overview
         self.tab_widget.addTab(self.create_overview_tab(), "📊 Overview")
-        
-        # Tab 2: Module Analytics  
         self.tab_widget.addTab(self.create_analytics_tab(), "📈 Analytics")
-        
-        # Tab 3: Cross-Module Dependencies
         self.tab_widget.addTab(self.create_dependencies_tab(), "🔗 Dependencies")
-        
-        # Tab 4: Health Monitoring
         self.tab_widget.addTab(self.create_health_tab(), "🏥 Health")
-        
-        # Tab 5: User Activity Analysis
         self.tab_widget.addTab(self.create_activity_tab(), "👤 User Activity")
-        
         layout.addWidget(self.tab_widget)
-        
         self.setLayout(layout)
-        
-        # Start initial analytics load
         self.refresh_analytics()
+
+    def open_reports_tab(self):
+        mw = self.parent()
+        while mw and not hasattr(mw, 'tabs'):
+            mw = mw.parent()
+        if mw and hasattr(mw, 'tabs'):
+            for i in range(mw.tabs.count()):
+                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                    mw.tabs.setCurrentIndex(i)
+                    break
     
     def create_overview_tab(self) -> QWidget:
         """Create the integration overview tab"""
