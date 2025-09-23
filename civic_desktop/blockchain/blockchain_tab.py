@@ -8,6 +8,22 @@ class BlockchainTab(QWidget):
         super().__init__(parent)
         self.vbox = QVBoxLayout()
         self.setLayout(self.vbox)
+        # Blockchain status and user role display
+        from civic_desktop.users.session import SessionManager
+        user = SessionManager.get_current_user()
+        role = user.get('role', 'Unknown') if user else 'Unknown'
+        blockchain_status = QLabel("All blockchain actions are <b>recorded on blockchain</b> for audit and transparency.")
+        blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+        role_label = QLabel(f"Your Role: <b>{role}</b>")
+        role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+        export_btn = QPushButton("Export Blockchain Report")
+        export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
+        export_btn.clicked.connect(self.open_reports_tab)
+        top_layout = QVBoxLayout()
+        top_layout.addWidget(blockchain_status)
+        top_layout.addWidget(role_label)
+        top_layout.addWidget(export_btn)
+        self.vbox.addLayout(top_layout)
         self.summary_group = QGroupBox("Blockchain Summary")
         self.summary_layout = QVBoxLayout()
         self.summary_group.setLayout(self.summary_layout)
@@ -29,12 +45,21 @@ class BlockchainTab(QWidget):
         self.vbox.addLayout(hbox)
         self.block_list.currentRowChanged.connect(self.display_block)
         self.load_blocks()
-
         # Auto-refresh every 10 seconds
         from PyQt5.QtCore import QTimer
         self.refresh_timer = QTimer(self)
         self.refresh_timer.timeout.connect(self.load_blocks)
         self.refresh_timer.start(10000)
+
+    def open_reports_tab(self):
+        mw = self.parent()
+        while mw and not hasattr(mw, 'tabs'):
+            mw = mw.parent()
+        if mw and hasattr(mw, 'tabs'):
+            for i in range(mw.tabs.count()):
+                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                    mw.tabs.setCurrentIndex(i)
+                    break
 
     def load_blocks(self):
         self.block_list.clear()

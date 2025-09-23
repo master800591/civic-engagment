@@ -24,13 +24,11 @@ from ..users.session import SessionManager
 class GitHubOperationsWorker(QThread):
     """Background worker for GitHub operations"""
     operation_complete = pyqtSignal(str, dict)  # operation_type, result
-    
     def __init__(self, operation: str, github_manager: GitHubIntegrationManager, **kwargs: Any):
         super().__init__()
         self.operation = operation
         self.github_manager = github_manager
         self.kwargs = kwargs
-    
     def run(self):
         try:
             if self.operation == 'check_updates':
@@ -58,6 +56,30 @@ class GitHubOperationsWorker(QThread):
                     self.kwargs.get('labels', [])
                 )
             else:
+        # Blockchain status and user role display (add to main tab)
+        from civic_desktop.users.session import SessionManager
+        user = SessionManager.get_current_user()
+        role = user.get('role', 'Unknown') if user else 'Unknown'
+        blockchain_status = QLabel("All GitHub integration events are <b>recorded on blockchain</b> for audit and transparency.")
+        blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
+        role_label = QLabel(f"Your Role: <b>{role}</b>")
+        role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
+        export_btn = QPushButton("Export GitHub Report")
+        export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
+        export_btn.clicked.connect(self.open_reports_tab)
+        top_layout = QVBoxLayout()
+        top_layout.addWidget(blockchain_status)
+        top_layout.addWidget(role_label)
+        top_layout.addWidget(export_btn)
+        # Insert at top of main layout (if available)
+        mw = self.parent()
+        while mw and not hasattr(mw, 'tabs'):
+            mw = mw.parent()
+        if mw and hasattr(mw, 'tabs'):
+            for i in range(mw.tabs.count()):
+                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                    mw.tabs.setCurrentIndex(i)
+                    break
                 result = {'error': f'Unknown operation: {self.operation}'}
             
             self.operation_complete.emit(self.operation, result)
