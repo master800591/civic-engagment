@@ -84,8 +84,8 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.p2p_tab, "📡 P2P Network")
         # Add Open Maps tab
         self.tabs.addTab(self.maps_tab(), "🗺️ Open Maps")
-            # Add Reports tab for blockchain network reports
-            self.tabs.addTab(self.reports_tab(), "📊 Reports")
+        # Add Reports tab for blockchain network reports
+        self.tabs.addTab(self.reports_tab(), "📊 Reports")
         self.setCentralWidget(self.tabs)
     def reports_tab(self):
         from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QLabel
