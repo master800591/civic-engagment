@@ -251,3 +251,36 @@ def cleanup_peers() -> int:
     save_peers(healthy_peers)
     logger.info(f"Peer cleanup complete: {removed_count} peers removed, {len(healthy_peers)} remain")
     return removed_count
+
+def cleanup_unhealthy_peers() -> int:
+    """Alias for cleanup_peers for consistency"""
+    return cleanup_peers()
+
+def broadcast_to_peers(data: Dict[str, Any], endpoint: str = "/api/blockchain/new_block") -> int:
+    """Broadcast data to all healthy peers"""
+    peers = load_peers()
+    successful_broadcasts = 0
+    
+    for peer in peers:
+        try:
+            if check_peer_health(peer):
+                response = requests.post(
+                    f"{peer}{endpoint}",
+                    json=data,
+                    timeout=10,
+                    headers={'Content-Type': 'application/json'}
+                )
+                
+                if response.status_code == 200:
+                    successful_broadcasts += 1
+                    logger.debug(f"Successfully broadcasted to {peer}")
+                else:
+                    logger.warning(f"Broadcast failed to {peer}: {response.status_code}")
+            else:
+                logger.warning(f"Skipping unhealthy peer: {peer}")
+                
+        except Exception as e:
+            logger.error(f"Error broadcasting to {peer}: {e}")
+    
+    logger.info(f"Broadcasted to {successful_broadcasts}/{len(peers)} peers")
+    return successful_broadcasts

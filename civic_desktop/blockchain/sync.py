@@ -76,7 +76,7 @@ class BlockchainSynchronizer:
             local_height = len(local_chain.get('pages', []))
             
             # Get list of peers
-            from . import load_peers
+            from .p2p import load_peers
             peers = load_peers()
             
             if not peers:

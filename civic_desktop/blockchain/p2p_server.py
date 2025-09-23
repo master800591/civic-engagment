@@ -290,29 +290,63 @@ class P2PServer:
                 if block_data.get('previous_hash') != '0' * 64:
                     return False, "Invalid genesis block previous hash"
             
-            # Validate block signature
+            # Validate block signature with full cryptographic verification
             validator = block_data.get('validator')
             signature = block_data.get('signature')
+            
+            # Validate required fields first
+            if not validator or not isinstance(validator, str):
+                return False, "Block must have a valid validator field"
             
             # Skip signature validation for system blocks
             if validator not in ['SYSTEM', 'GENESIS']:
                 try:
                     from ..blockchain.blockchain import ValidatorRegistry
-                    if not ValidatorRegistry.is_validator(validator):
-                        return False, f"Invalid validator: {validator}"
+                    from ..blockchain.signatures import BlockchainSigner
                     
-                    # Verify signature (simplified for now)
-                    # In production, would fully validate cryptographic signature
+                    # Check validator authorization (PoA validation)
+                    if not ValidatorRegistry.is_validator(validator):
+                        return False, f"Unauthorized validator: {validator} (not in validator registry)"
+                    
+                    # Require valid signature
                     if not signature or signature == 'UNSIGNED':
-                        return False, "Block signature required"
+                        return False, "Block signature required for validator blocks"
+                    
+                    # Get validator's public key for signature verification
+                    public_key = ValidatorRegistry.get_validator_public_key(validator)
+                    if not public_key:
+                        return False, f"No public key found for validator: {validator}"
+                    
+                    # Perform full cryptographic signature verification
+                    # Create block data for signature verification (excluding signature field)
+                    verification_data = {
+                        'index': block_data.get('index'),
+                        'previous_hash': block_data.get('previous_hash'),
+                        'timestamp': block_data.get('timestamp'),
+                        'data': block_data.get('data'),
+                        'validator': validator
+                    }
+                    
+                    is_signature_valid = BlockchainSigner.verify_block_signature(
+                        verification_data, signature, public_key
+                    )
+                    
+                    if not is_signature_valid:
+                        return False, f"Invalid cryptographic signature for validator: {validator}"
+                    
+                    logger.info(f"✅ PoA validation passed for validator: {validator}")
                         
                 except Exception as e:
-                    logger.warning(f"Signature validation error: {e}")
-                    # Continue without strict signature validation for now
+                    logger.error(f"PoA signature validation error: {e}")
+                    return False, f"PoA validation failed: {str(e)}"
             
             # Add block to chain using existing method
+            block_data_field = block_data.get('data')
+            if not isinstance(block_data_field, dict):
+                return False, "Block data field must be a dictionary"
+                
             success = Blockchain.add_page(
-                data=block_data.get('data'),
+                data=block_data_field,
                 validator=validator,
                 signature=signature
             )
