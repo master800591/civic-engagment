@@ -1260,20 +1260,11 @@ class BlockchainIntegrator:
             return []
 
     @staticmethod
-    def add_transaction(sender: str, receiver: str, amount: float, tx_type: str = "transfer", metadata: dict = None, validator: str = None) -> bool:
-        """
-        Add a universal transaction to the blockchain with network fee, credit logic, and pool payout.
-        Transaction fee is 0.001% of amount, min 0.1, max 10.
-        Credits are issued to maintain ~2000 credits per user ratio.
-        """
-        from ..utils.validation import DataValidator
-        import math
-        if metadata is None:
-            metadata = {}
-        if not validator:
-            validator = sender
-        # Calculate network fee (0.001%), min 0.1, max 10
-        fee = round(max(0.1, min(amount * 0.00001, 10)), 8)
+    def add_transaction(sender: str, receiver: str, amount: float, tx_type: str = 'standard', metadata: Optional[Dict[str, Any]] = None, validator: Optional[str] = None) -> bool:
+        """Adds a new transaction to the blockchain, including network fee."""
+        from civic_desktop.users.backend import UserBackend
+        # Fee calculation
+        fee = round(amount * 0.005, 8)  # 0.5% network fee
         net_amount = round(amount - fee, 8)
         # Transaction block data
         tx_data = {
@@ -1301,7 +1292,7 @@ class BlockchainIntegrator:
         Blockchain.add_page(pool_data, "SYSTEM")
         # Credits logic: maintain ~2000 credits per user
         chain = Blockchain.load_chain()
-        users = Blockchain.get_all_users_from_blockchain()
+        users = UserBackend.load_users()
         total_credits = sum(Blockchain.get_user_credits(u['email']) for u in users)
         target_credits = len(users) * 2000
         credits_to_issue = max(0, target_credits - total_credits)

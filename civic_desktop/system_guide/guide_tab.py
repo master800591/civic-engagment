@@ -117,10 +117,10 @@ class SystemGuideTab(QWidget):
             """Initialize the system guide interface"""
             layout = QVBoxLayout()
             layout.setContentsMargins(10, 10, 10, 10)
-            # Blockchain status and user role display
-            from civic_desktop.users.session import SessionManager
-            user = SessionManager.get_current_user()
-            role = user.get('role', 'Unknown') if user else 'Unknown'
+        # Blockchain status and user role display
+        from civic_desktop.users.session import SessionManager
+        user = SessionManager.get_current_user()
+        role = user.get('role', 'Unknown') if user else 'Unknown'
         blockchain_status = QLabel("All system guide updates are <b>recorded on blockchain</b> for audit and transparency.")
         blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
         blockchain_status.setAccessibleName("Blockchain Status")
@@ -141,53 +141,78 @@ class SystemGuideTab(QWidget):
         top_layout.addWidget(role_label)
         top_layout.addWidget(export_btn)
         layout.addLayout(top_layout)
-            # Header
-            header = QLabel("🏛️ Civic Engagement Platform - Complete System Guide")
-            header.setStyleSheet("""
-                QLabel {
-                    font-size: 24px;
-                    font-weight: bold;
-                    color: #2c3e50;
-                    padding: 15px;
-                    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-                    border-radius: 10px;
-                    margin-bottom: 10px;
-                }
+        # Header
+        header = QLabel("🏛️ Civic Engagement Platform - Complete System Guide")
+        header.setStyleSheet("""
+            QLabel {
+                font-size: 24px;
+                font-weight: bold;
+                color: #2c3e50;
+                padding: 15px;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
             """)
-            header.setAlignment(Qt.AlignCenter)
-            layout.addWidget(header)
-            # Create tabbed guide sections
-            self.guide_tabs = QTabWidget()
-            self.guide_tabs.setStyleSheet("""
-                QTabWidget::pane {
-                    border: 1px solid #bdc3c7;
-                    border-radius: 5px;
-                    background: white;
-                }
-                QTabBar::tab {
-                    background: #ecf0f1;
-                    padding: 8px 16px;
-                    margin-right: 2px;
-                    border-top-left-radius: 5px;
-                    border-top-right-radius: 5px;
-                }
-                QTabBar::tab:selected {
-                    background: #3498db;
-                    color: white;
-                    font-weight: bold;
-                }
-            """)
-            # ...existing code...
+        header.setAlignment(Qt.AlignCenter)
+        layout.addWidget(header)
+        # Create tabbed guide sections
+        self.guide_tabs = QTabWidget()
+        self.guide_tabs.setStyleSheet("""
+            QTabWidget::pane {
+                border: 1px solid #bdc3c7;
+                border-radius: 5px;
+                background: white;
+            }
+            QTabBar::tab {
+                background: #ecf0f1;
+                padding: 8px 16px;
+                margin-right: 2px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+            }
+            QTabBar::tab:selected {
+                background: #3498db;
+                color: white;
+                font-weight: bold;
+            }
+        """)
+        # ...existing code...
 
-        def open_reports_tab(self):
-            mw = self.parent()
-            while mw and not hasattr(mw, 'tabs'):
-                mw = mw.parent()
-            if mw and hasattr(mw, 'tabs'):
-                for i in range(mw.tabs.count()):
-                    if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
-                        mw.tabs.setCurrentIndex(i)
-                        break
+    def open_reports_tab(self):
+        mw = self.parent()
+        while mw and not hasattr(mw, 'tabs'):
+            mw = mw.parent()
+        if mw and hasattr(mw, 'tabs'):
+            for i in range(mw.tabs.count()):
+                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
+                    mw.tabs.setCurrentIndex(i)
+                    break
+
+    def roles_section(self) -> QWidget:
+        """User roles and authority levels"""
+        widget = QWidget()
+        layout = QVBoxLayout()
+        
+        content = QTextEdit()
+        content.setReadOnly(True)
+        content.setHtml("""
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; padding: 20px;">
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db;">👥 Roles & Authority Levels</h2>
+            
+            <h3 style="color: #e67e22;">🏛️ Contract-Based Governance Roles</h3>
+            <p>The platform operates under a constitutional democracy with defined contract roles:</p>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #dc3545; margin: 10px 0;">
+                <h3 style="color: #dc3545; margin-top: 0;">🧙‍♂️ Contract Elders (Wisdom Council)</h3>
+                <p><strong>Symbol:</strong> 🧙‍♂️ Elder [Name]</p>
+                <p><strong>Authority Level:</strong> Constitutional Oversight</p>
+                <p><strong>Powers:</strong></p>
+                <ul>
+                    <li><strong>Constitutional Veto:</strong> Block proposals violating platform principles (60% of Elders)</li>
+                    <li><strong>Judicial Review:</strong> Interpret governance contracts and resolve disputes</li>
+                    <li><strong>Elder Veto:</strong> Override harmful decisions (75% of Elders required)</li>
+                    <li><strong>Appointment Authority:</strong> Nominate candidates for critical platform positions</li>
                 </ul>
                 <p><strong>Limitations:</strong></p>
                 <ul>
@@ -282,7 +307,7 @@ class SystemGuideTab(QWidget):
         layout.addWidget(content)
         widget.setLayout(layout)
         return widget
-    
+
     def governance_section(self) -> QWidget:
         """Governance structure and decision-making processes"""
         widget = QWidget()

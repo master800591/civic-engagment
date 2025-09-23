@@ -327,6 +327,12 @@ class MainWindow(QMainWindow):
 
 
 def run_gui():
+    from PyQt5.QtCore import Qt, QCoreApplication
+    from PyQt5.QtWebEngineWidgets import QWebEngineView  # Import early to fix initialization
+    
+    # Set Qt attributes before creating QApplication
+    QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+    
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()

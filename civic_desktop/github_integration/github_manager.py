@@ -97,7 +97,7 @@ class GitHubIntegrationManager:
     
     def check_for_updates(self) -> Dict[str, Any]:
         """Check for available updates from GitHub releases"""
-        update_info = {
+        update_info: Dict[str, Any] = {
             'has_updates': False,
             'current_version': self.current_version,
             'latest_version': None,
@@ -109,12 +109,16 @@ class GitHubIntegrationManager:
         }
         
         try:
-            # Get latest release
-            latest_release = self._make_api_request(f"repos/{self.repo_owner}/{self.repo_name}/releases/latest")
+            # Get all releases and pick the first one (most recent)
+            releases = self._make_api_request(f"repos/{self.repo_owner}/{self.repo_name}/releases")
             
-            if not latest_release:
-                update_info['error'] = "Unable to fetch release information from GitHub"
+            if not releases:
+                # This is not an error, just no releases published.
+                update_info['error'] = "No releases found for this repository."
+                update_info['has_updates'] = False
                 return update_info
+
+            latest_release = releases[0]
             
             latest_version = latest_release.get('tag_name', '').lstrip('v')
             update_info['latest_version'] = latest_version
@@ -262,7 +266,7 @@ class GitHubIntegrationManager:
             if result.returncode != 0:
                 return {'error': 'Not a git repository'}
             
-            status_info = {}
+            status_info: Dict[str, Any] = {}
             
             # Get current branch
             result = subprocess.run(['git', 'branch', '--show-current'], 
@@ -344,7 +348,7 @@ class GitHubIntegrationManager:
     def download_update(self, asset_url: str, filename: str) -> Dict[str, Any]:
         """Download update file from GitHub release"""
         try:
-            headers = {}
+            headers: Dict[str, str] = {}
             if self.github_token:
                 headers['Authorization'] = f'token {self.github_token}'
             
@@ -449,7 +453,7 @@ def get_platform_development_status() -> Dict[str, Any]:
         'update_check': github_manager.check_for_updates()
     }
 
-def report_platform_issue(title: str, description: str, user_email: str = None) -> Dict[str, Any]:
+def report_platform_issue(title: str, description: str, user_email: Optional[str] = None) -> Dict[str, Any]:
     """Report an issue to the GitHub repository"""
     github_manager = GitHubIntegrationManager()
     

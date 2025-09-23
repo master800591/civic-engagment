@@ -1,12 +1,12 @@
 
 # Civic Engagement Platform
 
-[![Build Status](https://img.shields.io/github/workflow/status/Civic-Engagement/civic-engagment/CI)](https://github.com/Civic-Engagement/civic-engagment/actions)
-[![License](https://img.shields.io/github/license/Civic-Engagement/civic-engagment)](LICENSE)
-[![Coverage](https://img.shields.io/codecov/c/github/Civic-Engagement/civic-engagment)](https://codecov.io/gh/Civic-Engagement/civic-engagment)
-[![Version](https://img.shields.io/github/v/release/Civic-Engagement/civic-engagment)](https://github.com/Civic-Engagement/civic-engagment/releases)
+[![Build Status](https://img.shields.io/github/workflow/status/Civic-Engagement/civic-engagement/CI)](https://github.com/Civic-Engagement/civic-engagement/actions)
+[![License](https://img.shields.io/github/license/Civic-Engagement/civic-engagement)](LICENSE)
+[![Coverage](https://img.shields.io/codecov/c/github/Civic-Engagement/civic-engagement)](https://codecov.io/gh/Civic-Engagement/civic-engagement)
+[![Version](https://img.shields.io/github/v/release/Civic-Engagement/civic-engagement)](https://github.com/Civic-Engagement/civic-engagement/releases)
 
-**Repository:** [Civic-Engagement/civic-engagment](https://github.com/Civic-Engagement/civic-engagment)
+- **Repository**: `https://github.com/Civic-Engagement/civic-engagment`
 
 ---
 
@@ -80,7 +80,7 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 ## Contact
 For questions, support, or partnership inquiries:
 - Email: civic-engagement@protonmail.com
-- GitHub Issues: [Civic-Engagement/civic-engagment/issues](https://github.com/Civic-Engagement/civic-engagment/issues)
+- GitHub Issues: [Civic-Engagement/civic-engagement/issues](https://github.com/Civic-Engagement/civic-engagement/issues)
 
 ---
 

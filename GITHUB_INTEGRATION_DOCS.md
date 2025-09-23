@@ -282,7 +282,7 @@ Enable debug output by checking application logs and console output. The system 
 # Configure for different repository
 manager = GitHubIntegrationManager(
   repo_owner="Civic-Engagement",
-  repo_name="civic-engagment"
+  repo_name="civic-engagement"
 )
 ```
 

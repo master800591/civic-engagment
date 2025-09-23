@@ -1,12 +1,13 @@
 import datetime as dt
-from civic_desktop.blockchain.blockchain import Blockchain
+from civic_desktop.blockchain.blockchain import Blockchain, BlockchainIntegrator
+from civic_desktop.users.backend import UserBackend
 
 class NetworkReports:
     @staticmethod
     def credit_ratio_report():
         """Report: Current credits per user and network inflation status"""
-        users = Blockchain.get_all_users_from_blockchain()
-        total_credits = sum(Blockchain.get_user_credits(u['email']) for u in users)
+        users = UserBackend.load_users()
+        total_credits = sum(BlockchainIntegrator.get_user_credits(u['email']) for u in users)
         user_count = len(users)
         ratio = round(total_credits / max(1, user_count), 2)
         return {
@@ -34,13 +35,13 @@ class NetworkReports:
     @staticmethod
     def user_balances_report():
         """Report: All user balances and credits"""
-        users = Blockchain.get_all_users_from_blockchain()
+        users = UserBackend.load_users()
         report = []
         for u in users:
             report.append({
                 'email': u['email'],
-                'balance': Blockchain.get_user_balance(u['email']),
-                'credits': Blockchain.get_user_credits(u['email'])
+                'balance': BlockchainIntegrator.get_user_balance(u['email']),
+                'credits': BlockchainIntegrator.get_user_credits(u['email'])
             })
         return {
             'timestamp': dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z'),

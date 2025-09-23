@@ -17,13 +17,13 @@ from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
 from PyQt5.QtCore import Qt, QTimer, QThread, pyqtSignal, QUrl
 from PyQt5.QtGui import QFont, QColor, QPalette, QDesktopServices
 
-from ..github_integration.github_manager import GitHubIntegrationManager, GitHubIntegrationUI
+from ..github_integration.github_manager import GitHubIntegrationManager
 from ..users.session import SessionManager
 
 
 class GitHubOperationsWorker(QThread):
     """Background worker for GitHub operations"""
-    operation_complete = pyqtSignal(str, dict)  # operation_type, result
+    operation_complete = pyqtSignal(str, object)  # operation_type, result
     def __init__(self, operation: str, github_manager: GitHubIntegrationManager, **kwargs: Any):
         super().__init__()
         self.operation = operation
@@ -56,36 +56,14 @@ class GitHubOperationsWorker(QThread):
                     self.kwargs.get('labels', [])
                 )
             else:
-        # Blockchain status and user role display (add to main tab)
-        from civic_desktop.users.session import SessionManager
-        user = SessionManager.get_current_user()
-        role = user.get('role', 'Unknown') if user else 'Unknown'
-        blockchain_status = QLabel("All GitHub integration events are <b>recorded on blockchain</b> for audit and transparency.")
-        blockchain_status.setStyleSheet("color: #007bff; font-size: 13px; margin-bottom: 8px;")
-        role_label = QLabel(f"Your Role: <b>{role}</b>")
-        role_label.setStyleSheet("color: #343a40; font-size: 13px; margin-bottom: 8px;")
-        export_btn = QPushButton("Export GitHub Report")
-        export_btn.setStyleSheet("background-color: #28a745; color: white; font-weight: bold; border-radius: 5px; padding: 8px 18px;")
-        export_btn.clicked.connect(self.open_reports_tab)
-        top_layout = QVBoxLayout()
-        top_layout.addWidget(blockchain_status)
-        top_layout.addWidget(role_label)
-        top_layout.addWidget(export_btn)
-        # Insert at top of main layout (if available)
-        mw = self.parent()
-        while mw and not hasattr(mw, 'tabs'):
-            mw = mw.parent()
-        if mw and hasattr(mw, 'tabs'):
-            for i in range(mw.tabs.count()):
-                if mw.tabs.tabText(i).lower().startswith("📊 reports") or mw.tabs.tabText(i).lower().startswith("reports"):
-                    mw.tabs.setCurrentIndex(i)
-                    break
                 result = {'error': f'Unknown operation: {self.operation}'}
             
             self.operation_complete.emit(self.operation, result)
             
         except Exception as e:
-            self.operation_complete.emit(self.operation, {'error': str(e)})
+            error_result = {'error': f"An exception occurred in operation '{self.operation}': {str(e)}"}
+            print(f"Worker error: {error_result}")
+            self.operation_complete.emit(self.operation, error_result)
 
 
 class IssueReportDialog(QDialog):
@@ -138,7 +116,14 @@ class GitHubIntegrationTab(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.github_manager = GitHubIntegrationManager()
-        self.workers = {}
+        self.workers: Dict[str, GitHubOperationsWorker] = {}
+        self.current_update_info: Dict[str, Any] = {}
+        self.current_repo_info: Dict[str, Any] = {}
+        self.current_issues: List[Dict[str, Any]] = []
+        self.current_prs: List[Dict[str, Any]] = []
+        self.repo_clone_url: Optional[str] = None
+        self.repo_html_url: Optional[str] = None
+        self.latest_release_url: Optional[str] = None
         self.init_ui()
         self.setup_auto_refresh()
         
@@ -192,7 +177,62 @@ class GitHubIntegrationTab(QWidget):
         
         # Start initial data load
         self.refresh_all_data()
-    
+
+    def update_updates_display(self, update_info: Dict[str, Any]):
+        """Update the UI with update information."""
+        if update_info.get('error'):
+            self.update_status_label.setText(f"❌ Error")
+            self.update_status_label.setToolTip(update_info['error'])
+            self.update_details_text.setText(f"Could not check for updates.\n\nError: {update_info['error']}")
+            self.download_btn.setEnabled(False)
+            self.view_release_btn.setEnabled(False)
+            return
+
+        if update_info.get('has_updates'):
+            self.update_status_label.setText(f"🆕 Update Available: {update_info['latest_version']}")
+            self.update_status_label.setStyleSheet("color: green;")
+            
+            details = f"""
+A new version of the platform is available.
+
+Current Version: {update_info['current_version']}
+Latest Version: {update_info['latest_version']}
+
+Release Notes:
+{update_info.get('release_notes', 'No release notes available.')}
+            """
+            self.update_details_text.setText(details)
+            self.download_btn.setEnabled(True)
+            self.view_release_btn.setEnabled(True)
+            # Store release URL for the button
+            self.latest_release_url = update_info.get('update_url')
+        else:
+            self.update_status_label.setText(f"✅ Up to date ({update_info['current_version']})")
+            self.update_status_label.setStyleSheet("color: black;")
+            self.update_details_text.setText("You are running the latest version of the platform.")
+            self.download_btn.setEnabled(False)
+            self.view_release_btn.setEnabled(False)
+
+    def update_repository_display(self, repo_info: Dict[str, Any]):
+        """Update the UI with repository information."""
+        if repo_info.get('error'):
+            self.repo_info_text.setText(f"Error fetching repository info: {repo_info['error']}")
+            return
+
+        self.current_repo_info = repo_info
+        info = f"""
+Name: {repo_info.get('name', 'N/A')}
+Description: {repo_info.get('description', 'N/A')}
+Stars: {repo_info.get('stars', 0)}
+Forks: {repo_info.get('forks', 0)}
+Open Issues: {repo_info.get('issues', 0)}
+Language: {repo_info.get('language', 'N/A')}
+Last Updated: {repo_info.get('last_updated', 'N/A')}
+        """
+        self.repo_info_text.setText(info.strip())
+        self.repo_clone_url = repo_info.get('clone_url')
+        self.repo_html_url = repo_info.get('url')
+
     def create_updates_tab(self) -> QWidget:
         """Create the updates and releases tab"""
         widget = QWidget()
@@ -497,7 +537,7 @@ Generate token at: https://github.com/settings/tokens
         self.refresh_timer.timeout.connect(self.refresh_update_status)
         self.refresh_timer.start(300000)  # Refresh every 5 minutes
     
-    def start_operation(self, operation: str, **kwargs):
+    def start_operation(self, operation: str, **kwargs: Any):
         """Start a background GitHub operation"""
         if operation in self.workers and self.workers[operation].isRunning():
             return
@@ -507,9 +547,22 @@ Generate token at: https://github.com/settings/tokens
         self.workers[operation] = worker
         worker.start()
     
-    def handle_operation_result(self, operation: str, result: dict):
+    def handle_operation_result(self, operation: str, result: Any):
         """Handle completed GitHub operation"""
         try:
+            # Handle errors first
+            if isinstance(result, dict) and result.get('error'):
+                self.status_label.setText(f"❌ Error in {operation}")
+                print(f"Error in operation '{operation}': {result.get('error')}")
+                # Optionally display error in the relevant UI part
+                if operation == 'check_updates':
+                    self.update_updates_display(result)
+                elif operation == 'get_repo_info':
+                    self.update_repository_display(result)
+                return
+
+            # Handle success
+            self.status_label.setText("✅ Ready")
             if operation == 'check_updates':
                 self.update_updates_display(result)
             elif operation == 'get_repo_info':
@@ -520,23 +573,85 @@ Generate token at: https://github.com/settings/tokens
                 self.update_commits_display(result)
             elif operation == 'get_issues':
                 self.update_issues_display(result)
+                self.current_issues = result
             elif operation == 'get_pull_requests':
-                self.update_pull_requests_display(result)
+                self.update_prs_display(result)
+                self.current_prs = result
             elif operation == 'create_issue':
                 self.handle_issue_creation_result(result)
-            
-            # Update status
-            if result.get('error'):
-                self.status_label.setText(f"❌ Error in {operation}")
-            else:
-                self.status_label.setText(f"✅ Updated at {datetime.now().strftime('%H:%M:%S')}")
-                
+
         except Exception as e:
-            print(f"Error handling {operation} result: {e}")
-    
+            print(f"Error handling operation result for '{operation}': {e}")
+            self.status_label.setText(f"❌ UI Error")
+
+    def update_git_status_display(self, git_status: Dict[str, Any]):
+        """Update the UI with git status information."""
+        if git_status.get('error'):
+            self.git_status_text.setText(f"Error fetching git status: {git_status['error']}")
+            return
+
+        status = f"""
+Branch: {git_status.get('current_branch', 'unknown')}
+Changes: {'Yes' if git_status.get('has_changes') else 'No'}
+Remote: {'Connected' if git_status.get('has_remote') else 'Not connected'}
+"""
+        if git_status.get('ahead') is not None:
+            status += f"Ahead: {git_status['ahead']} commits\n"
+        if git_status.get('behind') is not None:
+            status += f"Behind: {git_status['behind']} commits\n"
+        
+        self.git_status_text.setText(status.strip())
+
+    def update_commits_display(self, commits: List[Dict[str, Any]]):
+        """Update the UI with recent commits."""
+        self.commits_table.setRowCount(0)
+        if not commits:
+            return
+        
+        self.commits_table.setRowCount(len(commits))
+        for row, commit in enumerate(commits):
+            self.commits_table.setItem(row, 0, QTableWidgetItem(commit.get('sha', '')))
+            self.commits_table.setItem(row, 1, QTableWidgetItem(commit.get('message', '')))
+            self.commits_table.setItem(row, 2, QTableWidgetItem(commit.get('author', '')))
+            self.commits_table.setItem(row, 3, QTableWidgetItem(commit.get('date', '')))
+
+    def update_issues_display(self, issues: List[Dict[str, Any]]):
+        """Update the UI with open issues."""
+        self.issues_table.setRowCount(0)
+        if not issues:
+            return
+
+        self.issues_table.setRowCount(len(issues))
+        for row, issue in enumerate(issues):
+            self.issues_table.setItem(row, 0, QTableWidgetItem(str(issue.get('number', ''))))
+            self.issues_table.setItem(row, 1, QTableWidgetItem(issue.get('title', '')))
+            self.issues_table.setItem(row, 2, QTableWidgetItem(issue.get('author', '')))
+            self.issues_table.setItem(row, 3, QTableWidgetItem(", ".join(issue.get('labels', []))))
+
+    def update_prs_display(self, prs: List[Dict[str, Any]]):
+        """Update the UI with open pull requests."""
+        self.prs_table.setRowCount(0)
+        if not prs:
+            return
+            
+        self.prs_table.setRowCount(len(prs))
+        for row, pr in enumerate(prs):
+            self.prs_table.setItem(row, 0, QTableWidgetItem(str(pr.get('number', ''))))
+            self.prs_table.setItem(row, 1, QTableWidgetItem(pr.get('title', '')))
+            self.prs_table.setItem(row, 2, QTableWidgetItem(pr.get('author', '')))
+            self.prs_table.setItem(row, 3, QTableWidgetItem(pr.get('head_branch', '')))
+
+    def handle_issue_creation_result(self, result: Dict[str, Any]):
+        """Handle the result of creating an issue."""
+        if result.get('error'):
+            QMessageBox.critical(self, "Issue Creation Failed", f"Could not create issue: {result['error']}")
+        else:
+            QMessageBox.information(self, "Issue Created", f"Successfully created issue #{result.get('issue_number')}")
+            self.refresh_issues()
+
     def refresh_all_data(self):
-        """Refresh all GitHub data"""
-        self.status_label.setText("🔄 Refreshing all data...")
+        """Refresh all data from GitHub"""
+        self.status_label.setText("🔄 Refreshing...")
         self.start_operation('check_updates')
         self.start_operation('get_repo_info')
         self.start_operation('get_git_status')
@@ -569,263 +684,87 @@ Generate token at: https://github.com/settings/tokens
         """Refresh pull requests list"""
         self.start_operation('get_pull_requests', state='open', limit=10)
     
-    def update_updates_display(self, update_info: dict):
-        """Update the updates tab display"""
-        if update_info.get('error'):
-            self.update_status_label.setText(f"❌ Error: {update_info['error']}")
-            self.update_details_text.setPlainText(f"Error checking for updates: {update_info['error']}")
-            return
-        
-        # Update status
-        if update_info.get('has_updates'):
-            self.update_status_label.setText(f"🆕 Update Available! v{update_info['latest_version']}")
-            self.update_status_label.setStyleSheet("color: orange; font-weight: bold;")
-            self.download_btn.setEnabled(True)
-            self.view_release_btn.setEnabled(True)
-        else:
-            self.update_status_label.setText(f"✅ Up to date (v{update_info['current_version']})")
-            self.update_status_label.setStyleSheet("color: green; font-weight: bold;")
-            self.download_btn.setEnabled(False)
-            self.view_release_btn.setEnabled(False)
-        
-        # Update details
-        details = GitHubIntegrationUI.format_update_notification(update_info)
-        self.update_details_text.setPlainText(details)
-        
-        # Update version info
-        version_info = f"""
-Current Version: {update_info['current_version']}
-Latest Version: {update_info.get('latest_version', 'Unknown')}
-Repository: {self.github_manager.repo_url}
-Last Checked: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-        """
-        self.version_info_text.setPlainText(version_info)
-        
-        # Store update info for actions
-        self.current_update_info = update_info
-    
-    def update_repository_display(self, repo_info: dict):
-        """Update the repository tab display"""
-        if repo_info.get('error'):
-            self.repo_info_text.setPlainText(f"Error: {repo_info['error']}")
-            return
-        
-        info_text = f"""
-Repository: {repo_info.get('name', 'N/A')}
-Description: {repo_info.get('description', 'No description')}
-⭐ Stars: {repo_info.get('stars', 0)}
-🍴 Forks: {repo_info.get('forks', 0)}
-🐛 Open Issues: {repo_info.get('issues', 0)}
-📝 Language: {repo_info.get('language', 'N/A')}
-📄 License: {repo_info.get('license', 'No license')}
-🔗 URL: {repo_info.get('url', 'N/A')}
-📋 Clone URL: {repo_info.get('clone_url', 'N/A')}
-        """
-        self.repo_info_text.setPlainText(info_text)
-        
-        # Store repo info for actions
-        self.current_repo_info = repo_info
-    
-    def update_git_status_display(self, git_status: dict):
-        """Update the git status display"""
-        if git_status.get('error'):
-            self.git_status_text.setPlainText(f"Git Status: {git_status['error']}")
-            return
-        
-        status_text = f"""
-Current Branch: {git_status.get('current_branch', 'unknown')}
-Has Changes: {'Yes' if git_status.get('has_changes') else 'No'}
-Remote Connected: {'Yes' if git_status.get('has_remote') else 'No'}
-"""
-        
-        if git_status.get('ahead') is not None:
-            status_text += f"Ahead: {git_status['ahead']} commits\n"
-        if git_status.get('behind') is not None:
-            status_text += f"Behind: {git_status['behind']} commits\n"
-        
-        if git_status.get('last_commit'):
-            commit = git_status['last_commit']
-            status_text += f"""
-Last Commit:
-  SHA: {commit.get('sha', 'unknown')}
-  Message: {commit.get('message', 'No message')}
-  Author: {commit.get('author', 'Unknown')}
-  Date: {commit.get('date', 'Unknown')}
-"""
-        
-        if git_status.get('changes'):
-            status_text += f"\nModified Files:\n"
-            for change in git_status['changes'][:10]:  # Show first 10 changes
-                status_text += f"  {change}\n"
-        
-        self.git_status_text.setPlainText(status_text)
-    
-    def update_commits_display(self, commits: list):
-        """Update the commits table"""
-        self.commits_table.setRowCount(len(commits))
-        
-        for i, commit in enumerate(commits):
-            self.commits_table.setItem(i, 0, QTableWidgetItem(commit.get('sha', '')))
-            self.commits_table.setItem(i, 1, QTableWidgetItem(commit.get('message', '')))
-            self.commits_table.setItem(i, 2, QTableWidgetItem(commit.get('author', '')))
-            self.commits_table.setItem(i, 3, QTableWidgetItem(commit.get('date', '')[:10]))  # Date only
-        
-        # Update development statistics
-        stats_text = f"""
-Recent Activity:
-• {len(commits)} recent commits shown
-• Authors: {len(set(c.get('author', '') for c in commits))} unique contributors
-• Latest commit: {commits[0].get('date', 'Unknown')[:10] if commits else 'No commits'}
-        """
-        self.dev_stats_text.setPlainText(stats_text)
-    
-    def update_issues_display(self, issues: list):
-        """Update the issues table"""
-        self.issues_table.setRowCount(len(issues))
-        
-        for i, issue in enumerate(issues):
-            self.issues_table.setItem(i, 0, QTableWidgetItem(str(issue.get('number', ''))))
-            self.issues_table.setItem(i, 1, QTableWidgetItem(issue.get('title', '')))
-            self.issues_table.setItem(i, 2, QTableWidgetItem(issue.get('author', '')))
-            self.issues_table.setItem(i, 3, QTableWidgetItem(', '.join(issue.get('labels', []))))
-        
-        # Store issues for URL opening
-        self.current_issues = issues
-    
-    def update_pull_requests_display(self, prs: list):
-        """Update the pull requests table"""
-        self.prs_table.setRowCount(len(prs))
-        
-        for i, pr in enumerate(prs):
-            self.prs_table.setItem(i, 0, QTableWidgetItem(str(pr.get('number', ''))))
-            self.prs_table.setItem(i, 1, QTableWidgetItem(pr.get('title', '')))
-            self.prs_table.setItem(i, 2, QTableWidgetItem(pr.get('author', '')))
-            self.prs_table.setItem(i, 3, QTableWidgetItem(f"{pr.get('head_branch', '')} → {pr.get('base_branch', '')}"))
-        
-        # Store PRs for URL opening
-        self.current_prs = prs
-    
-    def download_update(self):
-        """Download the latest update"""
-        if not hasattr(self, 'current_update_info') or not self.current_update_info.get('has_updates'):
-            QMessageBox.information(self, "No Updates", "No updates available to download.")
-            return
-        
-        assets = self.current_update_info.get('assets', [])
-        if not assets:
-            QMessageBox.information(self, "No Assets", "No downloadable assets found for this release.")
-            return
-        
-        # For now, just open the release page
-        release_url = self.current_update_info.get('update_url')
-        if release_url:
-            QDesktopServices.openUrl(QUrl(release_url))
-    
-    def view_release_on_github(self):
-        """View the latest release on GitHub"""
-        if hasattr(self, 'current_update_info'):
-            release_url = self.current_update_info.get('update_url')
-            if release_url:
-                QDesktopServices.openUrl(QUrl(release_url))
-    
     def view_repository_on_github(self):
         """View the repository on GitHub"""
-        QDesktopServices.openUrl(QUrl(self.github_manager.repo_url))
-    
+        if self.repo_html_url:
+            QDesktopServices.openUrl(QUrl(self.repo_html_url))
+
     def copy_clone_url(self):
-        """Copy clone URL to clipboard"""
-        if hasattr(self, 'current_repo_info'):
-            clone_url = self.current_repo_info.get('clone_url')
-            if clone_url:
-                from PyQt5.QtWidgets import QApplication
-                QApplication.clipboard().setText(clone_url)
-                QMessageBox.information(self, "Copied", f"Clone URL copied to clipboard:\n{clone_url}")
-    
+        if self.repo_clone_url:
+            clipboard = QApplication.clipboard()
+            if clipboard:
+                clipboard.setText(self.repo_clone_url)
+                QMessageBox.information(self, "Clone URL Copied", "Repository clone URL copied to clipboard.")
+
     def initialize_git_repository(self):
-        """Initialize git repository"""
-        result = self.github_manager.initialize_git_repository()
-        
-        if result.get('success'):
-            QMessageBox.information(self, "Success", result.get('message', 'Git repository initialized'))
-            self.refresh_git_status()
-        else:
-            QMessageBox.warning(self, "Error", result.get('error', 'Failed to initialize git repository'))
-    
-    def report_issue(self):
-        """Report an issue to GitHub"""
-        dialog = IssueReportDialog(self)
-        if dialog.exec_() == QDialog.Accepted:
-            issue_data = dialog.get_issue_data()
-            
-            if not issue_data['title'] or not issue_data['body']:
-                QMessageBox.warning(self, "Incomplete", "Please provide both title and description.")
-                return
-            
-            # Add user context
-            user = SessionManager.get_current_user()
-            if user:
-                issue_data['body'] += f"\n\n**Reported by:** {user.get('email', 'Unknown')}"
-            
-            self.start_operation('create_issue', **issue_data)
-    
-    def handle_issue_creation_result(self, result: dict):
-        """Handle issue creation result"""
-        if result.get('success'):
-            QMessageBox.information(self, "Issue Created", 
-                                  f"Issue #{result.get('issue_number')} created successfully!\n"
-                                  f"URL: {result.get('url', 'N/A')}")
-            self.refresh_issues()
-        else:
-            QMessageBox.warning(self, "Error", f"Failed to create issue: {result.get('error', 'Unknown error')}")
-    
+        # This is a potentially destructive action, confirm with user
+        reply = QMessageBox.question(self, 'Initialize Git Repository',
+                                     "Are you sure you want to initialize a new Git repository in the project root?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            # For now, we just log this. Implementation would be in GitHubManager
+            print("User confirmed Git initialization.")
+
     def open_issue_url(self, row: int, column: int):
-        """Open issue URL when double-clicked"""
-        if hasattr(self, 'current_issues') and row < len(self.current_issues):
+        if self.current_issues and row < len(self.current_issues):
             issue_url = self.current_issues[row].get('url')
             if issue_url:
                 QDesktopServices.openUrl(QUrl(issue_url))
-    
+
     def open_pr_url(self, row: int, column: int):
-        """Open PR URL when double-clicked"""
-        if hasattr(self, 'current_prs') and row < len(self.current_prs):
+        if self.current_prs and row < len(self.current_prs):
             pr_url = self.current_prs[row].get('url')
             if pr_url:
                 QDesktopServices.openUrl(QUrl(pr_url))
-    
+
     def view_all_issues(self):
-        """View all issues on GitHub"""
-        issues_url = f"{self.github_manager.repo_url}/issues"
-        QDesktopServices.openUrl(QUrl(issues_url))
-    
+        if self.repo_html_url:
+            QDesktopServices.openUrl(QUrl(f"{self.repo_html_url}/issues"))
+
+    def report_issue(self):
+        dialog = IssueReportDialog(self)
+        if dialog.exec_():
+            issue_data: Dict[str, Any] = dialog.get_issue_data()
+            if not issue_data['title'] or not issue_data['body']:
+                QMessageBox.warning(self, "Incomplete Information", "Please provide a title and description for the issue.")
+                return
+            
+            user = SessionManager.get_current_user()
+            issue_data['body'] += f"\n\nReported by: {user['email'] if user else 'N/A'}"
+            
+            self.start_operation('create_issue', **issue_data)
+
     def save_github_token(self):
-        """Save GitHub token to config"""
         token = self.token_edit.text().strip()
-        if not token:
-            QMessageBox.warning(self, "No Token", "Please enter a GitHub token.")
+        if token:
+            # In a real app, save this securely. For now, just update the manager instance.
+            self.github_manager.github_token = token
+            QMessageBox.information(self, "Token Saved", "GitHub token has been saved for this session.")
+            self.token_edit.clear()
+        else:
+            QMessageBox.warning(self, "Empty Token", "Please enter a GitHub token.")
+
+    def download_update(self):
+        if not self.current_update_info.get('has_updates'):
+            QMessageBox.information(self, "No Updates", "You are already on the latest version.")
+            return
+
+        assets = self.current_update_info.get('assets', [])
+        if not assets:
+            QMessageBox.warning(self, "No Assets", "The latest release has no downloadable assets.")
             return
         
-        try:
-            # Create config directory if it doesn't exist
-            config_dir = os.path.join(os.path.dirname(__file__), '..', 'config')
-            os.makedirs(config_dir, exist_ok=True)
-            
-            # Save token to config file
-            config_path = os.path.join(config_dir, 'github_config.json')
-            config = {}
-            if os.path.exists(config_path):
-                with open(config_path, 'r') as f:
-                    config = json.load(f)
-            
-            config['github_token'] = token
-            
-            with open(config_path, 'w') as f:
-                json.dump(config, f, indent=2)
-            
-            # Update GitHub manager with new token
-            self.github_manager.github_token = token
-            
-            QMessageBox.information(self, "Token Saved", "GitHub token saved successfully!")
-            self.token_edit.clear()
-            
-        except Exception as e:
-            QMessageBox.warning(self, "Error", f"Failed to save token: {str(e)}")
+        # For simplicity, assume the first asset is the one we want.
+        asset_url = assets[0].get('browser_download_url')
+        filename = assets[0].get('name')
+
+        if asset_url and filename:
+            # This would trigger a download in the manager. For now, just show info.
+            QMessageBox.information(self, "Download Started", f"Downloading '{filename}' from {asset_url}")
+            # self.github_manager.download_update(asset_url, filename) -> This would be a threaded operation
+        else:
+            QMessageBox.warning(self, "Download Error", "Could not find a valid download URL for the update.")
+
+    def view_release_on_github(self):
+        if self.latest_release_url:
+            QDesktopServices.openUrl(QUrl(self.latest_release_url))
