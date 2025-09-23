@@ -5,5 +5,20 @@
   "debates_db_path": "debates/debates_db.json",
   "moderation_db_path": "moderation/moderation_db.json",
   "logging_level": "WARNING",
-  "features": ["all"]
+  "features": ["all"],
+  "p2p": {
+    "enabled": true,
+    "port": 8000,
+    "host": "0.0.0.0",
+    "max_peers": 100,
+    "sync_interval": 60,
+    "bootstrap_nodes": [
+      "http://civic-node-1.civic.gov:8000",
+      "http://civic-node-2.civic.gov:8000",
+      "http://civic-node-3.civic.gov:8000"
+    ],
+    "network_id": "civic-mainnet",
+    "auto_discover": true,
+    "broadcast_blocks": true
+  }
 }

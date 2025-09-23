@@ -373,20 +373,145 @@ class UserBackend:
 
     @staticmethod
     def create_genesis_block(founder_user: Dict[str, Any]) -> None:
+        """Create enhanced genesis block with real cryptographic keys and metadata"""
         genesis_path = os.path.join(os.path.dirname(__file__), '../blockchain/genesis_block.json')
+        
+        # Generate real RSA keys for genesis founder
+        from ..blockchain.signatures import BlockchainSigner
+        from cryptography.hazmat.primitives import serialization
+        
+        try:
+            # Get founder's actual public key from validator registry
+            from ..blockchain.blockchain import ValidatorRegistry
+            public_key = ValidatorRegistry.get_validator_public_key(founder_user['email'])
+            
+            # If placeholder key found, generate real key
+            if not public_key or public_key == "GENESIS_PLACEHOLDER":
+                print(f"Generating real RSA keys for genesis founder: {founder_user['email']}")
+                # Load private key and extract public key
+                private_key = BlockchainSigner.load_private_key(founder_user['email'])
+                if private_key:
+                    public_key_obj = private_key.public_key()
+                    public_key = public_key_obj.public_key_bytes(
+                        encoding=serialization.Encoding.PEM,
+                        format=serialization.PublicFormat.SubjectPublicKeyInfo
+                    ).decode('utf-8')
+                else:
+                    public_key = "KEY_GENERATION_ERROR"
+            
+        except Exception as e:
+            print(f"Warning: Could not generate real keys for genesis: {e}")
+            public_key = "GENESIS_PLACEHOLDER"
+        
+        # Enhanced genesis metadata
         genesis: Dict[str, Any] = {
             'type': 'genesis',
+            'version': '1.0.0',
+            'platform': 'Civic Engagement Platform',
+            'consensus': 'proof_of_authority',
+            'governance': 'contract_based_democracy',
             'founder': {
                 'first_name': founder_user['first_name'],
                 'last_name': founder_user['last_name'],
                 'email': founder_user['email'],
-                'created_at': founder_user.get('created_at')
+                'created_at': founder_user.get('created_at'),
+                'public_key': public_key,
+                'role': 'Contract Founder'
+            },
+            'constitution': {
+                'voting_thresholds': {
+                    'contract_elder_veto': 0.60,
+                    'founder_consensus': 0.75,
+                    'constitutional_amendment': 0.60,
+                    'citizen_recall': 0.55
+                },
+                'authority_hierarchy': [
+                    'Contract Founders',
+                    'Contract Elders', 
+                    'Contract Representatives',
+                    'Contract Senators',
+                    'Contract Citizens'
+                ],
+                'checks_and_balances': {
+                    'elder_veto_power': True,
+                    'bicameral_legislature': True,
+                    'citizen_recall_rights': True,
+                    'constitutional_review': True
+                }
+            },
+            'network_parameters': {
+                'consensus_mechanism': 'proof_of_authority',
+                'block_time': 'immediate',
+                'validator_selection': 'democratic_election',
+                'max_validators': 100,
+                'min_validators': 1
             },
             'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
-            'message': 'Genesis block for Civic Engagement Platform',
+            'message': 'Genesis block for Civic Engagement Platform - Democratic Blockchain Governance',
+            'genesis_hash': None  # Will be computed
         }
+        
+        # Compute genesis hash for integrity
+        import hashlib
+        genesis_string = json.dumps(genesis, sort_keys=True).encode()
+        genesis['genesis_hash'] = hashlib.sha256(genesis_string).hexdigest()
+        
+        # Save enhanced genesis block
         with open(genesis_path, 'w', encoding='utf-8') as f:
             json.dump(genesis, f, indent=2)
+            
+        # Now create actual genesis block in blockchain as block 0
+        UserBackend._ensure_genesis_block_first(founder_user, genesis)
+
+    @staticmethod
+    def _ensure_genesis_block_first(founder_user: Dict[str, Any], genesis_data: Dict[str, Any]) -> None:
+        """Ensure genesis block is the first block in the blockchain"""
+        from ..blockchain.blockchain import Blockchain
+        
+        # Load existing chain
+        chain = Blockchain.load_chain()
+        pages = chain.get('pages', [])
+        
+        # Check if genesis block already exists as first block
+        if pages and pages[0].get('data', {}).get('action') == 'genesis_creation':
+            print("Genesis block already exists as first block")
+            return
+            
+        # Create genesis block data for blockchain
+        genesis_block_data = {
+            'action': 'genesis_creation',
+            'type': 'genesis',
+            'founder_email': founder_user['email'],
+            'founder_name': f"{founder_user['first_name']} {founder_user['last_name']}",
+            'genesis_metadata': genesis_data,
+            'timestamp': genesis_data['timestamp']
+        }
+        
+        if pages:
+            # Blockchain already has blocks - reset it for clean genesis start
+            print("Blockchain contains blocks. Resetting for clean genesis start.")
+            if Blockchain.reset_blockchain_for_genesis():
+                print("Blockchain reset successful. Creating genesis block.")
+                Blockchain.add_page(
+                    data=genesis_block_data,
+                    validator=founder_user['email'],
+                    signature='GENESIS'
+                )
+            else:
+                print("Blockchain reset failed. Adding genesis as regular block.")
+                Blockchain.add_page(
+                    data=genesis_block_data,
+                    validator=founder_user['email'],
+                    signature='GENESIS'
+                )
+        else:
+            # Empty blockchain - add genesis as first block
+            print("Creating genesis block as first block in empty blockchain.")
+            Blockchain.add_page(
+                data=genesis_block_data,
+                validator=founder_user['email'],
+                signature='GENESIS'
+            )
 
 
     @staticmethod

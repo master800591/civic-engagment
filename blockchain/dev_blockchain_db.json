@@ -1,0 +1,202 @@
+{
+  "pages": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T19:27:55.491369Z",
+      "data": {
+        "action": "test_transaction",
+        "user_email": "test@example.com",
+        "test_type": "poa_verification",
+        "message": "Testing PoA consensus mechanism",
+        "timestamp": "2025-09-23T19:27:55.467731Z"
+      },
+      "validator": "SYSTEM",
+      "signature": "SYSTEM",
+      "hash": "dbeb0fe5fc26f45eaf673012f73c440a1cf803fff569c506a183f676be4c4fe1"
+    },
+    {
+      "index": 1,
+      "previous_hash": "dbeb0fe5fc26f45eaf673012f73c440a1cf803fff569c506a183f676be4c4fe1",
+      "timestamp": "2025-09-23T19:27:55.526340Z",
+      "data": {
+        "action": "validator_test",
+        "user_email": "alice@example.com",
+        "test_type": "registered_validator",
+        "message": "Testing with registered validator",
+        "timestamp": "2025-09-23T19:27:55.525170Z"
+      },
+      "validator": "alice@example.com",
+      "signature": "E0JJaV27HT9qyEtuOMd0KakTkUf3Piyb4XWcaDxU/LosOs7v1c8OjIEEOrISZ7c43yjI+Ea21Gs5Vz4Tot6zDSlx3vDjBCJU5l+hEsEr8a4fzCek7eRPnXNO0Mrf5ObeHzykjPz1qfGpolpWWKzlKCuGhtovkLHxp3PMslrSWIs4tHI3BvCm4q7pXIzfkRvdLz9+E2PDGjpAnW7k0AsBeH6yBoXrsg9XPoGiHbSggd1Ct+UZKRxfCH6tfkrUS1nwA4h1P01rihgadRV2JzPiwL4aQgpyy3G6J07Sdv/VFNbdKAZIGGoQczY51QeZcpIQyTKZ44Y+cAsgFa6z8jJg7g==",
+      "hash": "1a8ed41ca637ccded9555ba86c05c67160846d676a8cf69fcb03f1974cb0ce2a"
+    }
+  ],
+  "chapters": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T19:27:55.495201Z",
+      "pages": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T19:27:55.491369Z",
+          "data": {
+            "action": "test_transaction",
+            "user_email": "test@example.com",
+            "test_type": "poa_verification",
+            "message": "Testing PoA consensus mechanism",
+            "timestamp": "2025-09-23T19:27:55.467731Z"
+          },
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "dbeb0fe5fc26f45eaf673012f73c440a1cf803fff569c506a183f676be4c4fe1"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "SYSTEM",
+      "hash": "5a33c555256ab207479632a56063a47a4f1917d238aee607813f7e6b694dac1b"
+    }
+  ],
+  "books": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T19:27:55.495201Z",
+      "chapters": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T19:27:55.495201Z",
+          "pages": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T19:27:55.491369Z",
+              "data": {
+                "action": "test_transaction",
+                "user_email": "test@example.com",
+                "test_type": "poa_verification",
+                "message": "Testing PoA consensus mechanism",
+                "timestamp": "2025-09-23T19:27:55.467731Z"
+              },
+              "validator": "SYSTEM",
+              "signature": "SYSTEM",
+              "hash": "dbeb0fe5fc26f45eaf673012f73c440a1cf803fff569c506a183f676be4c4fe1"
+            }
+          ],
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "5a33c555256ab207479632a56063a47a4f1917d238aee607813f7e6b694dac1b"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "SYSTEM",
+      "hash": "02c82eb077b54431d4bc427b312c5a35084853c6ac682ad8826dabb88d762522"
+    }
+  ],
+  "parts": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T19:27:55.495201Z",
+      "books": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T19:27:55.495201Z",
+          "chapters": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T19:27:55.495201Z",
+              "pages": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-23T19:27:55.491369Z",
+                  "data": {
+                    "action": "test_transaction",
+                    "user_email": "test@example.com",
+                    "test_type": "poa_verification",
+                    "message": "Testing PoA consensus mechanism",
+                    "timestamp": "2025-09-23T19:27:55.467731Z"
+                  },
+                  "validator": "SYSTEM",
+                  "signature": "SYSTEM",
+                  "hash": "dbeb0fe5fc26f45eaf673012f73c440a1cf803fff569c506a183f676be4c4fe1"
+                }
+              ],
+              "validator": "SYSTEM",
+              "signature": "SYSTEM",
+              "hash": "5a33c555256ab207479632a56063a47a4f1917d238aee607813f7e6b694dac1b"
+            }
+          ],
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "02c82eb077b54431d4bc427b312c5a35084853c6ac682ad8826dabb88d762522"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "SYSTEM",
+      "hash": "d35cf84440d9162cb21f0b83bd6206961fd6aed954737b3b8ea0256e9c250fa6"
+    }
+  ],
+  "series": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T19:27:55.495201Z",
+      "parts": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T19:27:55.495201Z",
+          "books": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T19:27:55.495201Z",
+              "chapters": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-23T19:27:55.495201Z",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                      "timestamp": "2025-09-23T19:27:55.491369Z",
+                      "data": {
+                        "action": "test_transaction",
+                        "user_email": "test@example.com",
+                        "test_type": "poa_verification",
+                        "message": "Testing PoA consensus mechanism",
+                        "timestamp": "2025-09-23T19:27:55.467731Z"
+                      },
+                      "validator": "SYSTEM",
+                      "signature": "SYSTEM",
+                      "hash": "dbeb0fe5fc26f45eaf673012f73c440a1cf803fff569c506a183f676be4c4fe1"
+                    }
+                  ],
+                  "validator": "SYSTEM",
+                  "signature": "SYSTEM",
+                  "hash": "5a33c555256ab207479632a56063a47a4f1917d238aee607813f7e6b694dac1b"
+                }
+              ],
+              "validator": "SYSTEM",
+              "signature": "SYSTEM",
+              "hash": "02c82eb077b54431d4bc427b312c5a35084853c6ac682ad8826dabb88d762522"
+            }
+          ],
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "d35cf84440d9162cb21f0b83bd6206961fd6aed954737b3b8ea0256e9c250fa6"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "SYSTEM",
+      "hash": "219f9285e547cb3bd58a435777cb4050551b0d7073aede4250f6a2972a88b60c"
+    }
+  ]
+}

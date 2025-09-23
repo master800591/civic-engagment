@@ -190,6 +190,20 @@ class Blockchain:
     Hierarchical blockchain: Page (minute), Chapter (day), Book (month), Part (year), Series (10y).
     Each level aggregates the lower level. Validation occurs on rollup.
     """
+    
+    @staticmethod
+    def reset_blockchain_for_genesis() -> bool:
+        """Reset blockchain to empty state for proper genesis block creation"""
+        try:
+            with _blockchain_lock:
+                empty_chain = {'pages': [], 'chapters': [], 'books': [], 'parts': [], 'series': []}
+                Blockchain.save_chain(empty_chain)
+                print("Blockchain reset successfully for genesis block creation")
+                return True
+        except Exception as e:
+            print(f"Failed to reset blockchain: {e}")
+            return False
+    
     @staticmethod
     @staticmethod
     def load_chain() -> Dict[str, List[Dict[str, Any]]]:
@@ -570,6 +584,15 @@ class ValidatorRegistry:
     def is_validator(email: str) -> bool:
         validators = ValidatorRegistry.load_validators()
         return any(v['email'] == email and v['active'] for v in validators)
+    
+    @staticmethod
+    def get_validator_public_key(email: str) -> Optional[str]:
+        """Get public key for a validator by email"""
+        validators = ValidatorRegistry.load_validators()
+        for validator in validators:
+            if validator['email'] == email and validator['active']:
+                return validator.get('public_key')
+        return None
 
 # --- Enhanced Module Integration Methods ---
 

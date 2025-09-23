@@ -19,6 +19,9 @@ class MainWindow(QMainWindow):
         from civic_desktop.blockchain.blockchain_timer import BlockchainTimer
         self.blockchain_timer = BlockchainTimer(self)
         
+        # Initialize P2P networking
+        self._init_p2p_networking()
+        
         # Start session monitoring timer
         self.session_timer = QTimer(self)
         self.session_timer.timeout.connect(self.check_session_status)
@@ -29,6 +32,22 @@ class MainWindow(QMainWindow):
         
         # Document: All backend modules use environment-aware paths from ENV_CONFIG
         # To switch environments, reload config and refresh UI
+
+    def _init_p2p_networking(self):
+        """Initialize P2P networking system"""
+        try:
+            from civic_desktop.main import ENV_CONFIG
+            from civic_desktop.blockchain.p2p_manager import initialize_p2p, start_p2p
+            
+            # Initialize P2P with configuration
+            if initialize_p2p(ENV_CONFIG):
+                start_p2p()
+                print("✅ P2P networking initialized successfully")
+            else:
+                print("⚠️ P2P networking disabled or failed to initialize")
+                
+        except Exception as e:
+            print(f"❌ P2P initialization error: {e}")
 
     def reload_config(self, config_path: str = None) -> None:
         """Reload ENV_CONFIG and update all backend modules and UI."""
@@ -60,6 +79,12 @@ class MainWindow(QMainWindow):
         from civic_desktop.github_integration.github_tab import GitHubIntegrationTab
         self.github_tab = GitHubIntegrationTab()
         self.tabs.addTab(self.github_tab, "🐙 GitHub")
+        
+        # Add P2P Network tab
+        from civic_desktop.blockchain.p2p_tab import P2PNetworkTab
+        self.p2p_tab = P2PNetworkTab()
+        self.tabs.addTab(self.p2p_tab, "📡 P2P Network")
+        
         self.setCentralWidget(self.tabs)
     def registration_tab(self):
         widget = QWidget()
