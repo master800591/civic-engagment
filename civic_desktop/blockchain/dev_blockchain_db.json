@@ -1,0 +1,237 @@
+{
+  "pages": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T16:09:08.450887Z",
+      "data": {
+        "action": "test_action",
+        "user_email": "test@example.com",
+        "timestamp": "2025-09-16T00:00:00Z"
+      },
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "44f65019e8e6aeba1a3d73b7eadc5847e043aeeaa07d1ed9a3f919b97d8ed66b"
+    },
+    {
+      "index": 1,
+      "previous_hash": "44f65019e8e6aeba1a3d73b7eadc5847e043aeeaa07d1ed9a3f919b97d8ed66b",
+      "timestamp": "2025-09-23T16:09:08.495282Z",
+      "data": {
+        "action": "create_topic",
+        "topic_id": "ffdad001-2d76-49c3-8cc1-ae731dec7080",
+        "title": "Test Topic",
+        "description": "Test Description",
+        "creator_email": "rep@example.com",
+        "jurisdiction": "city",
+        "location": "",
+        "timestamp": "2025-09-23T16:09:08.495282Z"
+      },
+      "validator": "rep@example.com",
+      "signature": "UNSIGNED",
+      "hash": "cdf9238bda3908a337a28260384fcf2feb06288bc645bb4017f03a214e08efab"
+    },
+    {
+      "index": 2,
+      "previous_hash": "cdf9238bda3908a337a28260384fcf2feb06288bc645bb4017f03a214e08efab",
+      "timestamp": "2025-09-23T16:09:08.506856Z",
+      "data": {
+        "action": "flag_content",
+        "flag_id": "b6f3103e-9dba-4174-860b-123608900412",
+        "content_type": "debate",
+        "content_id": "topic123",
+        "reporter_email": "citizen@example.com",
+        "severity": "medium",
+        "timestamp": "2025-09-23T16:09:08.506856Z"
+      },
+      "validator": "citizen@example.com",
+      "signature": "UNSIGNED",
+      "hash": "7bffee395f261b7d3c5f9be1a2c48c16b29208fb320750411f9e484a219468d6"
+    },
+    {
+      "index": 3,
+      "previous_hash": "7bffee395f261b7d3c5f9be1a2c48c16b29208fb320750411f9e484a219468d6",
+      "timestamp": "2025-09-23T16:09:09.488284Z",
+      "data": {
+        "action": "register_user",
+        "user_email": "alice@example.com",
+        "first_name": "Alice",
+        "last_name": "Smith",
+        "address": "123 Main St",
+        "city": "Testville",
+        "state": "TS",
+        "country": "Testland",
+        "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsmlqJsvqiCscgJUarPITAOQWGkblXRLPmfkiYXM3GHG4VALQ/fL2hw4t+hxuybaO8A632T0H51SrgWfTVEs692dtZ7A1tvFpbBfekZhUdRMih5Wqaf0wOHQ30++5YxHp9NIZ/uP51tQNz1gMFV4VhykeqwaADLxckyNiAAwSmgClvDDwm02iqqP5VxdUj1z2sMAsvNnbHT9eMvGJL+8xr4PmfV3ycd1gJqdA1GH1gj94QB1q4HofNY187DKWGrztoOwuAmb50t2psjjj4PUEhmqdONjrbLEX4QVvcv5qjMXsMhQIu1Hnt6KqeohfMOcrzC8EMwTh7HMKSut6e00/PQIDAQAB-----END PUBLIC KEY-----",
+        "roles": [
+          "Contract Founder"
+        ],
+        "password_hash": "$2b$12$eFe3x52hbsOV9ygoTlyOVOdPlERJf4jcX0duVLr2DNk4JoS4CYNca",
+        "id_document_hash": "bbd2ae648ef5cf2e46acdbf20176855721949326ee8d4d7ea33c61c983a65a93",
+        "timestamp": "2025-09-23T16:09:09.488284Z"
+      },
+      "validator": "alice@example.com",
+      "signature": "GENESIS",
+      "hash": "377ea050b41a81860215586e2e7b11a5d7c9eba328900454ee544b3aea44081e"
+    }
+  ],
+  "chapters": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T16:09:08.450887Z",
+      "pages": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T16:09:08.450887Z",
+          "data": {
+            "action": "test_action",
+            "user_email": "test@example.com",
+            "timestamp": "2025-09-16T00:00:00Z"
+          },
+          "validator": "test@example.com",
+          "signature": "UNSIGNED",
+          "hash": "44f65019e8e6aeba1a3d73b7eadc5847e043aeeaa07d1ed9a3f919b97d8ed66b"
+        }
+      ],
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "1c521b08f8c3fa7f1530d83cd0a1df1d286e8ed97190f26a445ed035b87b5dd0"
+    }
+  ],
+  "books": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T16:09:08.450887Z",
+      "chapters": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T16:09:08.450887Z",
+          "pages": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T16:09:08.450887Z",
+              "data": {
+                "action": "test_action",
+                "user_email": "test@example.com",
+                "timestamp": "2025-09-16T00:00:00Z"
+              },
+              "validator": "test@example.com",
+              "signature": "UNSIGNED",
+              "hash": "44f65019e8e6aeba1a3d73b7eadc5847e043aeeaa07d1ed9a3f919b97d8ed66b"
+            }
+          ],
+          "validator": "test@example.com",
+          "signature": "UNSIGNED",
+          "hash": "1c521b08f8c3fa7f1530d83cd0a1df1d286e8ed97190f26a445ed035b87b5dd0"
+        }
+      ],
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "13a95bb0f4ab4fc854dd0c40bb23a30b68c71980bb55ee858e4e85828ce47a18"
+    }
+  ],
+  "parts": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T16:09:08.450887Z",
+      "books": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T16:09:08.450887Z",
+          "chapters": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T16:09:08.450887Z",
+              "pages": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-23T16:09:08.450887Z",
+                  "data": {
+                    "action": "test_action",
+                    "user_email": "test@example.com",
+                    "timestamp": "2025-09-16T00:00:00Z"
+                  },
+                  "validator": "test@example.com",
+                  "signature": "UNSIGNED",
+                  "hash": "44f65019e8e6aeba1a3d73b7eadc5847e043aeeaa07d1ed9a3f919b97d8ed66b"
+                }
+              ],
+              "validator": "test@example.com",
+              "signature": "UNSIGNED",
+              "hash": "1c521b08f8c3fa7f1530d83cd0a1df1d286e8ed97190f26a445ed035b87b5dd0"
+            }
+          ],
+          "validator": "test@example.com",
+          "signature": "UNSIGNED",
+          "hash": "13a95bb0f4ab4fc854dd0c40bb23a30b68c71980bb55ee858e4e85828ce47a18"
+        }
+      ],
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "89c152e50721c2da36accde83abecbec7d96997c74c5ec592601fa308ae1f8f0"
+    }
+  ],
+  "series": [
+    {
+      "index": 0,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2025-09-23T16:09:08.450887Z",
+      "parts": [
+        {
+          "index": 0,
+          "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "timestamp": "2025-09-23T16:09:08.450887Z",
+          "books": [
+            {
+              "index": 0,
+              "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+              "timestamp": "2025-09-23T16:09:08.450887Z",
+              "chapters": [
+                {
+                  "index": 0,
+                  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "timestamp": "2025-09-23T16:09:08.450887Z",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                      "timestamp": "2025-09-23T16:09:08.450887Z",
+                      "data": {
+                        "action": "test_action",
+                        "user_email": "test@example.com",
+                        "timestamp": "2025-09-16T00:00:00Z"
+                      },
+                      "validator": "test@example.com",
+                      "signature": "UNSIGNED",
+                      "hash": "44f65019e8e6aeba1a3d73b7eadc5847e043aeeaa07d1ed9a3f919b97d8ed66b"
+                    }
+                  ],
+                  "validator": "test@example.com",
+                  "signature": "UNSIGNED",
+                  "hash": "1c521b08f8c3fa7f1530d83cd0a1df1d286e8ed97190f26a445ed035b87b5dd0"
+                }
+              ],
+              "validator": "test@example.com",
+              "signature": "UNSIGNED",
+              "hash": "13a95bb0f4ab4fc854dd0c40bb23a30b68c71980bb55ee858e4e85828ce47a18"
+            }
+          ],
+          "validator": "test@example.com",
+          "signature": "UNSIGNED",
+          "hash": "89c152e50721c2da36accde83abecbec7d96997c74c5ec592601fa308ae1f8f0"
+        }
+      ],
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "877b1bf92f2b36dc505daf52315f1da64a1be06cdb586cef21ba37d8f2cef470"
+    }
+  ]
+}

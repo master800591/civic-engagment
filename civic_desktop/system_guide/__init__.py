@@ -1,0 +1,1 @@
+# System Guide Module - Comprehensive platform documentation for users

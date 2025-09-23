@@ -1,0 +1,11 @@
+{
+  "type": "genesis",
+  "founder": {
+    "first_name": "Alice",
+    "last_name": "Smith",
+    "email": "alice@example.com",
+    "created_at": null
+  },
+  "timestamp": "2025-09-23T16:09:09.488284Z",
+  "message": "Genesis block for Civic Engagement Platform"
+}

@@ -1,0 +1,9 @@
+{
+  "env": "development",
+  "db_path": "users/dev_users_db.json",
+  "blockchain_path": "blockchain/dev_blockchain_db.json",
+  "debates_db_path": "debates/dev_debates_db.json",
+  "moderation_db_path": "moderation/dev_moderation_db.json",
+  "logging_level": "DEBUG",
+  "features": ["all"]
+}

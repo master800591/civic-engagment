@@ -1,0 +1,9 @@
+{
+  "env": "production",
+  "db_path": "users/users_db.json",
+  "blockchain_path": "blockchain/blockchain_db.json",
+  "debates_db_path": "debates/debates_db.json",
+  "moderation_db_path": "moderation/moderation_db.json",
+  "logging_level": "WARNING",
+  "features": ["all"]
+}
