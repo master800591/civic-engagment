@@ -1,0 +1,356 @@
+{
+  "contracts": [
+    {
+      "contract_id": "MASTER_CONSTITUTIONAL_2024",
+      "contract_type": "master",
+      "jurisdiction": "Constitutional",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "CONST_001_DEMOCRACY",
+          "title": "Democratic Governance Principles",
+          "intent": "Establish democratic governance as the fundamental organizing principle",
+          "reason": "Democracy ensures all voices are heard and tyranny is prevented through representation",
+          "objective": "Create a system where power flows from the citizens through elected representatives with constitutional constraints",
+          "content": "\n            DEMOCRATIC GOVERNANCE FRAMEWORK:\n            \n            1. CITIZEN SOVEREIGNTY: All legitimate authority derives from the consent of Contract Citizens\n            2. REPRESENTATIVE DEMOCRACY: Citizens elect Contract Representatives to govern on their behalf\n            3. SEPARATION OF POWERS: Legislative (Representatives/Senators), Executive (day-to-day operations), Judicial (Elders)\n            4. CHECKS AND BALANCES: No single branch may exercise unchecked power\n            5. CONSTITUTIONAL SUPREMACY: This Master Contract supersedes all other governance documents\n            6. REGULAR ELECTIONS: Representatives serve limited terms and face regular electoral accountability\n            7. MINORITY PROTECTION: Constitutional rights that cannot be voted away by majorities\n            8. DUE PROCESS: Fair procedures for all governance decisions affecting individual citizens\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 1,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "CONST_002_HIERARCHY",
+          "title": "Constitutional Contract Hierarchy",
+          "intent": "Establish clear precedence order for resolving conflicting governance rules",
+          "reason": "Prevents governance chaos by providing clear conflict resolution mechanism",
+          "objective": "Ensure Master Contract provisions cannot be overridden by any lower-level governance documents",
+          "content": "\n            CONTRACT PRECEDENCE ORDER (highest to lowest):\n            \n            1. MASTER CONTRACT (Constitutional): Overrides all other contracts and governance documents\n            2. COUNTRY CONTRACTS: National-level governance, subject to Constitutional constraints\n            3. STATE CONTRACTS: Regional governance, subject to Constitutional and Country constraints  \n            4. CITY CONTRACTS: Local governance, subject to all higher-level constraints\n            \n            CONFLICT RESOLUTION RULES:\n            - Higher precedence always controls in case of conflict\n            - Constitutional rights cannot be diminished by any lower contract\n            - Emergency powers are subject to constitutional review and citizen oversight\n            - Contract amendments require supermajority approval and constitutional compliance review\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 2,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "CONST_003_RIGHTS",
+          "title": "Fundamental Citizen Rights",
+          "intent": "Guarantee inalienable rights that protect individual liberty and human dignity",
+          "reason": "Rights provide essential protections against both majority tyranny and government overreach",
+          "objective": "Establish constitutional rights that cannot be voted away or overridden by any governance body",
+          "content": "\n            INALIENABLE CITIZEN RIGHTS:\n            \n            1. FREE EXPRESSION: Right to speak, write, debate, and criticize governance without fear of retaliation\n            2. DUE PROCESS: Right to fair treatment in all moderation and governance procedures with appeal rights\n            3. EQUAL PARTICIPATION: Equal access to platform features, elections, and democratic processes regardless of background\n            4. PRIVACY PROTECTION: Personal data security and freedom from unreasonable government surveillance\n            5. EQUAL TREATMENT: Protection from discrimination based on race, religion, gender, nationality, or political views\n            6. DEMOCRATIC PARTICIPATION: Right to vote, run for office, petition government, and participate in governance\n            7. PEACEFUL ASSEMBLY: Right to organize, associate, and petition for redress of grievances\n            8. CONSTITUTIONAL APPEAL: Right to challenge any governance action that violates constitutional principles\n            \n            RIGHTS ENFORCEMENT:\n            - These rights cannot be suspended except during constitutional emergencies with strict oversight\n            - All governance actions must respect these rights or face constitutional review\n            - Citizens may appeal any rights violation to Contract Elders for constitutional review\n            - Emergency powers cannot override core rights without supermajority approval and sunset clauses\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 3,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "CONST_004_STRUCTURE",
+          "title": "Constitutional Governance Structure",
+          "intent": "Define the structure of democratic governance with proper checks and balances",
+          "reason": "Structured governance prevents concentration of power and ensures democratic accountability",
+          "objective": "Create a system of overlapping authorities that prevents any single point of control",
+          "content": "\n            GOVERNANCE BRANCHES AND POWERS:\n            \n            CONTRACT CITIZENS (Sovereign Authority):\n            - Electoral power: Vote in all elections and referendums\n            - Initiative power: Propose constitutional amendments (40% petition + 55% approval)\n            - Recall power: Remove any elected official through special elections\n            - Ultimate sovereignty: Source of all legitimate democratic authority\n            \n            CONTRACT REPRESENTATIVES (Legislative Branch):\n            - Legislative initiative: Create and propose platform policies\n            - Budget authority: Control platform resource allocation\n            - Impeachment power: Remove other officials for constitutional violations\n            - Term: 2 years, unlimited terms, direct citizen election\n            \n            CONTRACT SENATORS (Deliberative Branch):\n            - Legislative review: Must approve Representative proposals\n            - Confirmation authority: Approve major appointments\n            - Override power: Can override Elder vetoes with 67% supermajority\n            - Term: 6 years, max 2 consecutive terms, mixed election system\n            \n            CONTRACT ELDERS (Constitutional Branch):\n            - Constitutional veto: Block proposals violating platform principles (60% required)\n            - Judicial review: Interpret governance contracts and resolve disputes\n            - Elder veto: Override harmful decisions (75% required)  \n            - Term: 4 years, renewable, max 3 consecutive terms\n            \n            CONTRACT FOUNDERS (Emergency Authority):\n            - Constitutional amendment: Modify core governance (75% consensus required)\n            - Emergency protocols: Override during platform-threatening situations\n            - Limited scope: Cannot govern day-to-day operations\n            - Removal: Subject to 2/3 vote of Elders + Senators combined\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 4,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "CONST_005_AMENDMENTS",
+          "title": "Constitutional Amendment Process",
+          "intent": "Provide mechanism for constitutional evolution while preventing hasty changes",
+          "reason": "Constitutions must be amendable but not easily manipulated by temporary majorities",
+          "objective": "Balance democratic change with constitutional stability through deliberate processes",
+          "content": "\n            CONSTITUTIONAL AMENDMENT PROCEDURES:\n            \n            INITIATION (Two Methods):\n            1. Contract Founder Proposal: 75% of Contract Founders agree to propose amendment\n            2. Citizen Initiative: 40% of active citizens petition for amendment with specific text\n            \n            LEGISLATIVE APPROVAL:\n            1. Contract Representatives: 60% approval required\n            2. Contract Senators: 60% approval required  \n            3. Both chambers must approve identical text\n            \n            CONSTITUTIONAL REVIEW:\n            1. Contract Elders review for constitutional compliance and wisdom\n            2. Can recommend modifications but cannot block citizen-initiated amendments\n            3. Must provide written analysis of amendment implications\n            \n            CITIZEN RATIFICATION:\n            1. Platform-wide referendum with 55% turnout requirement\n            2. 60% approval required for ratification\n            3. 30-day public debate period before voting\n            4. Equal time for supporters and opponents\n            \n            IMPLEMENTATION:\n            1. 6-month implementation period with technical review\n            2. Contract Elders monitor implementation for constitutional compliance\n            3. Emergency suspension possible only for platform-threatening technical issues\n            \n            LIMITATIONS:\n            - Fundamental rights in Section 3 cannot be eliminated by amendment\n            - Democratic governance principles cannot be suspended\n            - Amendment process itself cannot be made impossible\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 5,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "COUNTRY_UNITED STATES_20250916",
+      "contract_type": "country",
+      "jurisdiction": "United States",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "COUNTRY_UNITED STATES_001_REPRESENTATION",
+          "title": "National Representation Standards",
+          "intent": "Establish representation standards for national-level elections",
+          "reason": "Ensures fair representation while respecting national sovereignty",
+          "objective": "Create balanced representation that reflects national political structure",
+          "content": "\n            NATIONAL REPRESENTATION FRAMEWORK FOR UNITED STATES:\n            \n            1. ELECTORAL DISTRICTS: Representation based on population with geographic considerations\n            2. NATIONAL LANGUAGE: Primary platform language for United States governance\n            3. CULTURAL SENSITIVITY: Governance must respect national traditions and values\n            4. LEGAL COMPLIANCE: All platform activities must comply with United States law\n            5. SOVEREIGNTY RESPECT: National governance decisions take precedence over platform operations within constitutional limits\n            \n            REPRESENTATION ALLOCATION:\n            - Contract Representatives: Direct election by geographic districts\n            - Contract Senators: Mixed system respecting national federal structure\n            - Contract Elders: Nominated by national representatives, confirmed by citizens\n            \n            Subject to Master Contract constitutional constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 10,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "COUNTRY_UNITED STATES_002_LEGAL",
+          "title": "National Legal Compliance",
+          "intent": "Ensure platform operations comply with national law while maintaining democratic principles",
+          "reason": "Platform must operate within legal framework while preserving constitutional governance",
+          "objective": "Balance legal compliance with platform constitutional protections",
+          "content": "\n            LEGAL COMPLIANCE FRAMEWORK FOR UNITED STATES:\n            \n            1. LAW SUPREMACY: United States law takes precedence over platform operations where applicable\n            2. CONSTITUTIONAL PROTECTION: Platform constitutional rights cannot be waived except where required by law\n            3. CONFLICT RESOLUTION: Legal conflicts resolved through established national courts\n            4. EMERGENCY PROCEDURES: National emergency powers recognized within constitutional limits\n            5. PRIVACY LAWS: Compliance with national data protection and privacy regulations\n            \n            GOVERNANCE INTERACTION:\n            - Platform governance must respect national legal framework\n            - Constitutional rights protected to maximum extent allowed by law\n            - Legal challenges resolved through national court system\n            - Platform constitutional protections apply unless overridden by law\n            \n            This section cannot override Master Contract fundamental rights except where required by United States law.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 11,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "COUNTRY_CANADA_20250916",
+      "contract_type": "country",
+      "jurisdiction": "Canada",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "COUNTRY_CANADA_001_REPRESENTATION",
+          "title": "National Representation Standards",
+          "intent": "Establish representation standards for national-level elections",
+          "reason": "Ensures fair representation while respecting national sovereignty",
+          "objective": "Create balanced representation that reflects national political structure",
+          "content": "\n            NATIONAL REPRESENTATION FRAMEWORK FOR CANADA:\n            \n            1. ELECTORAL DISTRICTS: Representation based on population with geographic considerations\n            2. NATIONAL LANGUAGE: Primary platform language for Canada governance\n            3. CULTURAL SENSITIVITY: Governance must respect national traditions and values\n            4. LEGAL COMPLIANCE: All platform activities must comply with Canada law\n            5. SOVEREIGNTY RESPECT: National governance decisions take precedence over platform operations within constitutional limits\n            \n            REPRESENTATION ALLOCATION:\n            - Contract Representatives: Direct election by geographic districts\n            - Contract Senators: Mixed system respecting national federal structure\n            - Contract Elders: Nominated by national representatives, confirmed by citizens\n            \n            Subject to Master Contract constitutional constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 10,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "COUNTRY_CANADA_002_LEGAL",
+          "title": "National Legal Compliance",
+          "intent": "Ensure platform operations comply with national law while maintaining democratic principles",
+          "reason": "Platform must operate within legal framework while preserving constitutional governance",
+          "objective": "Balance legal compliance with platform constitutional protections",
+          "content": "\n            LEGAL COMPLIANCE FRAMEWORK FOR CANADA:\n            \n            1. LAW SUPREMACY: Canada law takes precedence over platform operations where applicable\n            2. CONSTITUTIONAL PROTECTION: Platform constitutional rights cannot be waived except where required by law\n            3. CONFLICT RESOLUTION: Legal conflicts resolved through established national courts\n            4. EMERGENCY PROCEDURES: National emergency powers recognized within constitutional limits\n            5. PRIVACY LAWS: Compliance with national data protection and privacy regulations\n            \n            GOVERNANCE INTERACTION:\n            - Platform governance must respect national legal framework\n            - Constitutional rights protected to maximum extent allowed by law\n            - Legal challenges resolved through national court system\n            - Platform constitutional protections apply unless overridden by law\n            \n            This section cannot override Master Contract fundamental rights except where required by Canada law.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 11,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "STATE_CALIFORNIA_20250916",
+      "contract_type": "state",
+      "jurisdiction": "California",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "STATE_CALIFORNIA_001_REPRESENTATION",
+          "title": "Regional Representation Framework",
+          "intent": "Establish regional representation reflecting state political structure",
+          "reason": "Regional governance must reflect local political traditions and structures",
+          "objective": "Balance regional autonomy with national and constitutional requirements",
+          "content": "\n            REGIONAL REPRESENTATION FOR CALIFORNIA:\n            \n            1. REGIONAL DISTRICTS: Electoral districts based on existing state political boundaries\n            2. LOCAL REPRESENTATION: Representation reflects state's internal political structure\n            3. CULTURAL RECOGNITION: State cultural and political traditions respected in governance\n            4. RESOURCE ALLOCATION: Regional resources allocated according to state priorities\n            5. INTER-STATE COOPERATION: Coordination with other states on shared issues\n            \n            REPRESENTATION STRUCTURE:\n            - Contract Representatives: Elected from state districts according to state law\n            - Regional coordination: Interface with state government structures\n            - Resource sharing: Cooperation with adjacent states on shared concerns\n            \n            Subject to Master Contract and United States Country Contract constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 20,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "STATE_CALIFORNIA_002_LAW",
+          "title": "State Law Integration",
+          "intent": "Integrate platform governance with state legal and political framework",
+          "reason": "Platform must work within existing state governance structures",
+          "objective": "Harmonize platform democracy with state constitutional and legal requirements",
+          "content": "\n            STATE LAW INTEGRATION FOR CALIFORNIA:\n            \n            1. STATE LAW COMPLIANCE: Platform operations comply with California state law\n            2. CONSTITUTIONAL HARMONY: Platform governance respects state constitutional principles\n            3. GOVERNMENT COORDINATION: Coordination with state government where appropriate\n            4. LEGAL RESOLUTION: State courts handle legal disputes where applicable\n            5. EMERGENCY COORDINATION: Coordination with state emergency management\n            \n            GOVERNANCE INTEGRATION:\n            - Platform representatives may coordinate with state officials\n            - State emergency powers recognized within constitutional limits\n            - Legal compliance follows state law hierarchy\n            - Constitutional protections maintained within legal constraints\n            \n            Cannot override Master Contract or applicable Country Contract provisions.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 21,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "STATE_TEXAS_20250916",
+      "contract_type": "state",
+      "jurisdiction": "Texas",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "STATE_TEXAS_001_REPRESENTATION",
+          "title": "Regional Representation Framework",
+          "intent": "Establish regional representation reflecting state political structure",
+          "reason": "Regional governance must reflect local political traditions and structures",
+          "objective": "Balance regional autonomy with national and constitutional requirements",
+          "content": "\n            REGIONAL REPRESENTATION FOR TEXAS:\n            \n            1. REGIONAL DISTRICTS: Electoral districts based on existing state political boundaries\n            2. LOCAL REPRESENTATION: Representation reflects state's internal political structure\n            3. CULTURAL RECOGNITION: State cultural and political traditions respected in governance\n            4. RESOURCE ALLOCATION: Regional resources allocated according to state priorities\n            5. INTER-STATE COOPERATION: Coordination with other states on shared issues\n            \n            REPRESENTATION STRUCTURE:\n            - Contract Representatives: Elected from state districts according to state law\n            - Regional coordination: Interface with state government structures\n            - Resource sharing: Cooperation with adjacent states on shared concerns\n            \n            Subject to Master Contract and United States Country Contract constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 20,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "STATE_TEXAS_002_LAW",
+          "title": "State Law Integration",
+          "intent": "Integrate platform governance with state legal and political framework",
+          "reason": "Platform must work within existing state governance structures",
+          "objective": "Harmonize platform democracy with state constitutional and legal requirements",
+          "content": "\n            STATE LAW INTEGRATION FOR TEXAS:\n            \n            1. STATE LAW COMPLIANCE: Platform operations comply with Texas state law\n            2. CONSTITUTIONAL HARMONY: Platform governance respects state constitutional principles\n            3. GOVERNMENT COORDINATION: Coordination with state government where appropriate\n            4. LEGAL RESOLUTION: State courts handle legal disputes where applicable\n            5. EMERGENCY COORDINATION: Coordination with state emergency management\n            \n            GOVERNANCE INTEGRATION:\n            - Platform representatives may coordinate with state officials\n            - State emergency powers recognized within constitutional limits\n            - Legal compliance follows state law hierarchy\n            - Constitutional protections maintained within legal constraints\n            \n            Cannot override Master Contract or applicable Country Contract provisions.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 21,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "STATE_ONTARIO_20250916",
+      "contract_type": "state",
+      "jurisdiction": "Ontario",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "STATE_ONTARIO_001_REPRESENTATION",
+          "title": "Regional Representation Framework",
+          "intent": "Establish regional representation reflecting state political structure",
+          "reason": "Regional governance must reflect local political traditions and structures",
+          "objective": "Balance regional autonomy with national and constitutional requirements",
+          "content": "\n            REGIONAL REPRESENTATION FOR ONTARIO:\n            \n            1. REGIONAL DISTRICTS: Electoral districts based on existing state political boundaries\n            2. LOCAL REPRESENTATION: Representation reflects state's internal political structure\n            3. CULTURAL RECOGNITION: State cultural and political traditions respected in governance\n            4. RESOURCE ALLOCATION: Regional resources allocated according to state priorities\n            5. INTER-STATE COOPERATION: Coordination with other states on shared issues\n            \n            REPRESENTATION STRUCTURE:\n            - Contract Representatives: Elected from state districts according to state law\n            - Regional coordination: Interface with state government structures\n            - Resource sharing: Cooperation with adjacent states on shared concerns\n            \n            Subject to Master Contract and Canada Country Contract constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 20,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "STATE_ONTARIO_002_LAW",
+          "title": "State Law Integration",
+          "intent": "Integrate platform governance with state legal and political framework",
+          "reason": "Platform must work within existing state governance structures",
+          "objective": "Harmonize platform democracy with state constitutional and legal requirements",
+          "content": "\n            STATE LAW INTEGRATION FOR ONTARIO:\n            \n            1. STATE LAW COMPLIANCE: Platform operations comply with Ontario state law\n            2. CONSTITUTIONAL HARMONY: Platform governance respects state constitutional principles\n            3. GOVERNMENT COORDINATION: Coordination with state government where appropriate\n            4. LEGAL RESOLUTION: State courts handle legal disputes where applicable\n            5. EMERGENCY COORDINATION: Coordination with state emergency management\n            \n            GOVERNANCE INTEGRATION:\n            - Platform representatives may coordinate with state officials\n            - State emergency powers recognized within constitutional limits\n            - Legal compliance follows state law hierarchy\n            - Constitutional protections maintained within legal constraints\n            \n            Cannot override Master Contract or applicable Country Contract provisions.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 21,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "CITY_SAN FRANCISCO_20250916",
+      "contract_type": "city",
+      "jurisdiction": "San Francisco",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "CITY_SAN FRANCISCO_001_REPRESENTATION",
+          "title": "Local Representation Framework",
+          "intent": "Establish local representation reflecting municipal structure and needs",
+          "reason": "Local governance must be responsive to immediate community needs and preferences",
+          "objective": "Create responsive local governance that addresses specific municipal concerns",
+          "content": "\n            LOCAL REPRESENTATION FOR SAN FRANCISCO:\n            \n            1. NEIGHBORHOOD REPRESENTATION: Representation by neighborhood or district within city\n            2. LOCAL ISSUES FOCUS: Platform governance addresses local municipal concerns\n            3. COMMUNITY ENGAGEMENT: High citizen participation in local decision-making\n            4. MUNICIPAL COORDINATION: Coordination with existing city government structures\n            5. LOCAL RESOURCE MANAGEMENT: Community control over local platform resources\n            \n            REPRESENTATION STRUCTURE:\n            - Contract Representatives: Elected from city districts/neighborhoods\n            - Local priorities: Focus on municipal services and community needs\n            - Direct democracy: Enhanced citizen participation in local issues\n            - Municipal interface: Coordination with city government where appropriate\n            \n            Subject to Master Contract, United States Country Contract, and California State Contract constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 30,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "CITY_SAN FRANCISCO_002_MUNICIPAL",
+          "title": "Municipal Government Integration",
+          "intent": "Integrate platform governance with existing municipal government structures",
+          "reason": "Platform must complement rather than conflict with municipal governance",
+          "objective": "Create synergy between platform democracy and municipal government",
+          "content": "\n            MUNICIPAL INTEGRATION FOR SAN FRANCISCO:\n            \n            1. MUNICIPAL COOPERATION: Platform governance cooperates with city government\n            2. SERVICE COORDINATION: Coordination on civic services and community needs\n            3. LOCAL LAW COMPLIANCE: Compliance with city ordinances and regulations  \n            4. COMMUNITY BENEFIT: Platform activities benefit overall community welfare\n            5. RESOURCE SHARING: Appropriate sharing of resources for community benefit\n            \n            INTEGRATION FRAMEWORK:\n            - Platform representatives may coordinate with city officials\n            - Municipal law compliance required within constitutional limits\n            - Community benefit prioritized in local governance decisions\n            - Local emergency coordination with municipal authorities\n            \n            Cannot override Master Contract, Country Contract, or State Contract provisions.\n            All higher-level constitutional protections remain in effect.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 31,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "CITY_AUSTIN_20250916",
+      "contract_type": "city",
+      "jurisdiction": "Austin",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "CITY_AUSTIN_001_REPRESENTATION",
+          "title": "Local Representation Framework",
+          "intent": "Establish local representation reflecting municipal structure and needs",
+          "reason": "Local governance must be responsive to immediate community needs and preferences",
+          "objective": "Create responsive local governance that addresses specific municipal concerns",
+          "content": "\n            LOCAL REPRESENTATION FOR AUSTIN:\n            \n            1. NEIGHBORHOOD REPRESENTATION: Representation by neighborhood or district within city\n            2. LOCAL ISSUES FOCUS: Platform governance addresses local municipal concerns\n            3. COMMUNITY ENGAGEMENT: High citizen participation in local decision-making\n            4. MUNICIPAL COORDINATION: Coordination with existing city government structures\n            5. LOCAL RESOURCE MANAGEMENT: Community control over local platform resources\n            \n            REPRESENTATION STRUCTURE:\n            - Contract Representatives: Elected from city districts/neighborhoods\n            - Local priorities: Focus on municipal services and community needs\n            - Direct democracy: Enhanced citizen participation in local issues\n            - Municipal interface: Coordination with city government where appropriate\n            \n            Subject to Master Contract, United States Country Contract, and Texas State Contract constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 30,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "CITY_AUSTIN_002_MUNICIPAL",
+          "title": "Municipal Government Integration",
+          "intent": "Integrate platform governance with existing municipal government structures",
+          "reason": "Platform must complement rather than conflict with municipal governance",
+          "objective": "Create synergy between platform democracy and municipal government",
+          "content": "\n            MUNICIPAL INTEGRATION FOR AUSTIN:\n            \n            1. MUNICIPAL COOPERATION: Platform governance cooperates with city government\n            2. SERVICE COORDINATION: Coordination on civic services and community needs\n            3. LOCAL LAW COMPLIANCE: Compliance with city ordinances and regulations  \n            4. COMMUNITY BENEFIT: Platform activities benefit overall community welfare\n            5. RESOURCE SHARING: Appropriate sharing of resources for community benefit\n            \n            INTEGRATION FRAMEWORK:\n            - Platform representatives may coordinate with city officials\n            - Municipal law compliance required within constitutional limits\n            - Community benefit prioritized in local governance decisions\n            - Local emergency coordination with municipal authorities\n            \n            Cannot override Master Contract, Country Contract, or State Contract provisions.\n            All higher-level constitutional protections remain in effect.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 31,
+          "requires_agreement": true
+        }
+      ]
+    },
+    {
+      "contract_id": "CITY_TORONTO_20250916",
+      "contract_type": "city",
+      "jurisdiction": "Toronto",
+      "version": "1.0",
+      "effective_date": "2025-09-16T14:20:25.745452",
+      "last_modified": "2025-09-16T14:20:25.745452",
+      "acceptance_required": true,
+      "sections": [
+        {
+          "section_id": "CITY_TORONTO_001_REPRESENTATION",
+          "title": "Local Representation Framework",
+          "intent": "Establish local representation reflecting municipal structure and needs",
+          "reason": "Local governance must be responsive to immediate community needs and preferences",
+          "objective": "Create responsive local governance that addresses specific municipal concerns",
+          "content": "\n            LOCAL REPRESENTATION FOR TORONTO:\n            \n            1. NEIGHBORHOOD REPRESENTATION: Representation by neighborhood or district within city\n            2. LOCAL ISSUES FOCUS: Platform governance addresses local municipal concerns\n            3. COMMUNITY ENGAGEMENT: High citizen participation in local decision-making\n            4. MUNICIPAL COORDINATION: Coordination with existing city government structures\n            5. LOCAL RESOURCE MANAGEMENT: Community control over local platform resources\n            \n            REPRESENTATION STRUCTURE:\n            - Contract Representatives: Elected from city districts/neighborhoods\n            - Local priorities: Focus on municipal services and community needs\n            - Direct democracy: Enhanced citizen participation in local issues\n            - Municipal interface: Coordination with city government where appropriate\n            \n            Subject to Master Contract, Canada Country Contract, and Ontario State Contract constraints.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 30,
+          "requires_agreement": true
+        },
+        {
+          "section_id": "CITY_TORONTO_002_MUNICIPAL",
+          "title": "Municipal Government Integration",
+          "intent": "Integrate platform governance with existing municipal government structures",
+          "reason": "Platform must complement rather than conflict with municipal governance",
+          "objective": "Create synergy between platform democracy and municipal government",
+          "content": "\n            MUNICIPAL INTEGRATION FOR TORONTO:\n            \n            1. MUNICIPAL COOPERATION: Platform governance cooperates with city government\n            2. SERVICE COORDINATION: Coordination on civic services and community needs\n            3. LOCAL LAW COMPLIANCE: Compliance with city ordinances and regulations  \n            4. COMMUNITY BENEFIT: Platform activities benefit overall community welfare\n            5. RESOURCE SHARING: Appropriate sharing of resources for community benefit\n            \n            INTEGRATION FRAMEWORK:\n            - Platform representatives may coordinate with city officials\n            - Municipal law compliance required within constitutional limits\n            - Community benefit prioritized in local governance decisions\n            - Local emergency coordination with municipal authorities\n            \n            Cannot override Master Contract, Country Contract, or State Contract provisions.\n            All higher-level constitutional protections remain in effect.\n            ",
+          "effective_date": "2025-09-16T14:20:25.745452",
+          "expiration_date": null,
+          "precedence": 31,
+          "requires_agreement": true
+        }
+      ]
+    }
+  ],
+  "last_updated": "2025-09-16T14:20:25.750480"
+}
