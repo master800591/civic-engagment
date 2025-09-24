@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, 
                             QTabWidget, QTextEdit, QLabel, QProgressBar,
                             QTableWidget, QTableWidgetItem, QHeaderView,
-                            QGroupBox, QScrollArea, QFrame, QSplitter)
+                            QGroupBox, QScrollArea, QFrame, QSplitter, QAbstractItemView)
 from PyQt5.QtCore import Qt, QTimer, QThread, pyqtSignal
 from PyQt5.QtGui import QFont, QColor, QPalette
 
@@ -148,6 +148,9 @@ class EnhancedBlockchainTab(QWidget):
         self.stats_table.setColumnCount(4)
         self.stats_table.setHorizontalHeaderLabels(['Module', 'Total Actions', 'Active Users', 'Health Status'])
         self.stats_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # Make statistics table read-only to prevent editing of reports
+        self.stats_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.stats_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         stats_layout.addWidget(self.stats_table)
         
         stats_group.setLayout(stats_layout)
@@ -261,6 +264,9 @@ class EnhancedBlockchainTab(QWidget):
         self.contributors_table.setHorizontalHeaderLabels(['Email', 'Total Actions', 'Trust Score'])
         self.contributors_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.contributors_table.setMaximumHeight(200)
+        # Make contributors table read-only to prevent editing of reports
+        self.contributors_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.contributors_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         contrib_layout.addWidget(self.contributors_table)
         
         contributors_group.setLayout(contrib_layout)

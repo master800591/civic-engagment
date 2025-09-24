@@ -3,7 +3,7 @@ from typing import Optional, Any, Dict
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, 
                             QListWidget, QTextEdit, QLineEdit, QComboBox, QMessageBox,
                             QFrame, QScrollArea, QSplitter, QGroupBox, QFormLayout,
-                            QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView)
+                            QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView)
 from PyQt5.QtCore import Qt
 from .backend import ModerationBackend, ModerationAction, ModerationSeverity
 from ..users.session import SessionManager
@@ -95,6 +95,10 @@ class ModerationDashboard(QWidget):
         # Make table headers stretch
         header = self.flags_table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.Stretch)
+        
+        # Make flags table read-only to prevent editing of reports
+        self.flags_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.flags_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         
         self.flags_table.itemSelectionChanged.connect(self.on_flag_selected)
         layout.addWidget(self.flags_table)

@@ -1293,7 +1293,7 @@ class BlockchainIntegrator:
         # Credits logic: maintain ~2000 credits per user
         chain = Blockchain.load_chain()
         users = UserBackend.load_users()
-        total_credits = sum(Blockchain.get_user_credits(u['email']) for u in users)
+        total_credits = sum(BlockchainIntegrator.get_user_credits(u['email']) for u in users)
         target_credits = len(users) * 2000
         credits_to_issue = max(0, target_credits - total_credits)
         if credits_to_issue > 0:

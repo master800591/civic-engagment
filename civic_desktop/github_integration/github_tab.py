@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
                             QTableWidget, QTableWidgetItem, QHeaderView,
                             QGroupBox, QScrollArea, QFrame, QSplitter,
                             QLineEdit, QComboBox, QMessageBox, QDialog,
-                            QDialogButtonBox, QFormLayout, QApplication)
+                            QDialogButtonBox, QFormLayout, QApplication, QAbstractItemView)
 from PyQt5.QtCore import Qt, QTimer, QThread, pyqtSignal, QUrl
 from PyQt5.QtGui import QFont, QColor, QPalette, QDesktopServices
 
@@ -374,6 +374,9 @@ Last Updated: {repo_info.get('last_updated', 'N/A')}
         self.commits_table.setHorizontalHeaderLabels(['SHA', 'Message', 'Author', 'Date'])
         self.commits_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.commits_table.setMaximumHeight(200)
+        # Make commits table read-only to prevent editing of reports
+        self.commits_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.commits_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         commits_layout.addWidget(self.commits_table)
         
         refresh_commits_btn = QPushButton("🔄 Refresh Commits")
@@ -412,6 +415,9 @@ Last Updated: {repo_info.get('last_updated', 'N/A')}
         self.issues_table.setHorizontalHeaderLabels(['#', 'Title', 'Author', 'Labels'])
         self.issues_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.issues_table.setMaximumHeight(200)
+        # Make issues table read-only to prevent editing of reports
+        self.issues_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.issues_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.issues_table.cellDoubleClicked.connect(self.open_issue_url)
         issues_layout.addWidget(self.issues_table)
         
@@ -445,6 +451,9 @@ Last Updated: {repo_info.get('last_updated', 'N/A')}
         self.prs_table.setHorizontalHeaderLabels(['#', 'Title', 'Author', 'Branch'])
         self.prs_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.prs_table.setMaximumHeight(200)
+        # Make pull requests table read-only to prevent editing of reports
+        self.prs_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.prs_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.prs_table.cellDoubleClicked.connect(self.open_pr_url)
         prs_layout.addWidget(self.prs_table)
         

@@ -88,7 +88,7 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.reports_tab(), "📊 Reports")
         self.setCentralWidget(self.tabs)
     def reports_tab(self):
-        from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QLabel
+        from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QLabel, QAbstractItemView
         from PyQt5.QtCore import Qt
         from PyQt5.QtWidgets import QHeaderView
         from civic_desktop.blockchain.reports import NetworkReports
@@ -120,6 +120,9 @@ class MainWindow(QMainWindow):
         table.setHorizontalHeaderLabels(["User", "Credits", "Role"])
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.setRowCount(len(balances))
+        # Make table read-only to prevent editing of reports
+        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        table.setSelectionBehavior(QAbstractItemView.SelectRows)
         for i, user in enumerate(balances):
             email = user.get('email', '')
             credits = str(user.get('credits', 0))
@@ -193,10 +196,16 @@ class MainWindow(QMainWindow):
         return ModerationDashboard()
 
     def contracts_tab(self):
-        """Create the contracts tab with contract management functionality"""
+        """Create the contracts tab with enhanced contract and amendment functionality"""
         # All backend operations use config-driven paths
-        from civic_desktop.contracts.contract_ui import ContractManagementWidget
-        return ContractManagementWidget()
+        try:
+            from civic_desktop.contracts.enhanced_contract_tab import EnhancedContractTab
+            return EnhancedContractTab()
+        except Exception as e:
+            print(f"Failed to load enhanced contract tab: {e}")
+            # Fallback to original contract management
+            from civic_desktop.contracts.contract_ui import ContractManagementWidget
+            return ContractManagementWidget()
 
     def maps_tab(self):
         from civic_desktop.maps.map_view import MapView
