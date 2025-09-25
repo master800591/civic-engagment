@@ -1,0 +1,37 @@
+{
+  "events": [],
+  "rsvps": [],
+  "attendance": [],
+  "event_counter": 1,
+  "settings": {
+    "auto_approval": false,
+    "require_constitutional_review": true,
+    "max_events_per_user": 50,
+    "default_rsvp_deadline_hours": 24,
+    "notification_preferences": {
+      "new_events": true,
+      "rsvp_reminders": true,
+      "event_updates": true,
+      "check_in_reminders": true
+    }
+  },
+  "event_types": [
+    "Town Hall",
+    "Public Meeting",
+    "Training Session", 
+    "Election",
+    "Debate",
+    "Community Forum",
+    "Working Group",
+    "Social Event",
+    "Emergency Assembly"
+  ],
+  "metadata": {
+    "created": "2024-01-15T10:30:00.000Z",
+    "last_updated": "2024-01-15T10:30:00.000Z",
+    "version": "1.0.0",
+    "total_events_created": 0,
+    "total_rsvps": 0,
+    "total_attendance": 0
+  }
+}

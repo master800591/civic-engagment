@@ -607,3 +607,37 @@ class DebateViewer(QWidget):
                 self.load_arguments()
         else:
             QMessageBox.warning(self, "Failed", message)
+    
+    def refresh_ui(self):
+        """Refresh the UI to reflect current authentication state"""
+        user = SessionManager.get_current_user()
+        is_authenticated = user is not None
+        
+        # Enable/disable topic creation based on authentication and role
+        if is_authenticated:
+            user_role = user.get('role', '')
+            # Only Contract Representatives can create topics
+            can_create = user_role in ['Contract Representative', 'Contract Senator', 
+                                     'Contract Elder', 'Contract Founder', 'CEO', 'Admin']
+            self.create_topic_btn.setEnabled(can_create)
+            self.create_topic_btn.setToolTip(
+                "Create a new debate topic" if can_create else 
+                f"Role '{user_role}' cannot create topics. Representatives and higher roles only."
+            )
+        else:
+            self.create_topic_btn.setEnabled(False)
+            self.create_topic_btn.setToolTip("Please log in to create topics")
+        
+        # Enable/disable voting buttons
+        if hasattr(self, 'vote_for_btn'):
+            self.vote_for_btn.setEnabled(is_authenticated)
+            self.vote_against_btn.setEnabled(is_authenticated)
+            self.vote_neutral_btn.setEnabled(is_authenticated)
+            
+            tooltip_text = "Cast your vote on this topic" if is_authenticated else "Please log in to vote"
+            self.vote_for_btn.setToolTip(tooltip_text)
+            self.vote_against_btn.setToolTip(tooltip_text)
+            self.vote_neutral_btn.setToolTip(tooltip_text)
+        
+        # Refresh topics list to show current state
+        self.load_topics()

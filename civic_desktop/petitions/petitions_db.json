@@ -1,0 +1,24 @@
+{
+    "petitions": [],
+    "signatures": [],
+    "initiatives": [],
+    "campaigns": [],
+    "settings": {
+        "signature_requirements": {
+            "local_petition": 100,
+            "state_petition": 1000,
+            "federal_petition": 10000,
+            "constitutional_amendment": 50000
+        },
+        "verification_settings": {
+            "require_identity_verification": true,
+            "duplicate_prevention": true,
+            "geographic_validation": true
+        },
+        "timeline_requirements": {
+            "signature_collection_period_days": 90,
+            "public_comment_period_days": 30,
+            "legislative_review_period_days": 60
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "messages": [],
+  "announcements": [],
+  "group_chats": [],
+  "notifications": [],
+  "settings": {
+    "message_encryption": true,
+    "read_receipts_enabled": true,
+    "notification_sound": true,
+    "auto_archive_days": 90,
+    "max_message_length": 10000,
+    "file_upload_max_size": 10485760
+  },
+  "metadata": {
+    "created": "2024-01-15T11:00:00.000Z",
+    "last_updated": "2024-01-15T11:00:00.000Z",
+    "version": "1.0.0",
+    "total_messages": 0,
+    "total_announcements": 0,
+    "encryption_enabled": true
+  }
+}

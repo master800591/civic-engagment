@@ -3058,6 +3058,370 @@
       "validator": "SYSTEM",
       "signature": "PERIODIC",
       "hash": "da8300356d3c98ce40e3f7bbd14d09011276d5aaf070eb084a1227838a663695"
+    },
+    {
+      "index": 224,
+      "previous_hash": "da8300356d3c98ce40e3f7bbd14d09011276d5aaf070eb084a1227838a663695",
+      "timestamp": "2025-09-25T18:07:49.614717Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:07:49.614307Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "286d154de5531db468fd7e1b5024a79cb64493344760e3b75aeed53f481b0d99"
+    },
+    {
+      "index": 225,
+      "previous_hash": "286d154de5531db468fd7e1b5024a79cb64493344760e3b75aeed53f481b0d99",
+      "timestamp": "2025-09-25T18:08:19.615387Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:08:19.615387Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "0af22952a75e1120acd7b1f05013a72f2fecdad7f4c5ca1a637cd2bc6decb618"
+    },
+    {
+      "index": 226,
+      "previous_hash": "0af22952a75e1120acd7b1f05013a72f2fecdad7f4c5ca1a637cd2bc6decb618",
+      "timestamp": "2025-09-25T18:08:49.617832Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:08:49.615281Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "30a4985dfb0556b134e3d2cd4fd97a4b2fa9981de1381da42df71bdf0c8c9c5d"
+    },
+    {
+      "index": 227,
+      "previous_hash": "30a4985dfb0556b134e3d2cd4fd97a4b2fa9981de1381da42df71bdf0c8c9c5d",
+      "timestamp": "2025-09-25T18:09:19.634581Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:09:19.634581Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "42d78d5b3d128a1a197339c4aefcccd6705e201f51b45ce74fbbbf17446863c0"
+    },
+    {
+      "index": 228,
+      "previous_hash": "42d78d5b3d128a1a197339c4aefcccd6705e201f51b45ce74fbbbf17446863c0",
+      "timestamp": "2025-09-25T18:09:49.624478Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:09:49.624478Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "cd569a9807d52080753a2b3738f5e24b2944f25f4c27ab32394900a006701cc7"
+    },
+    {
+      "index": 229,
+      "previous_hash": "cd569a9807d52080753a2b3738f5e24b2944f25f4c27ab32394900a006701cc7",
+      "timestamp": "2025-09-25T18:10:19.644463Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:10:19.644463Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "efa53d2f464d2539fbaa34fc14ceb4ef3705ddaba62c693f0cdd8f648d91ff2c"
+    },
+    {
+      "index": 230,
+      "previous_hash": "efa53d2f464d2539fbaa34fc14ceb4ef3705ddaba62c693f0cdd8f648d91ff2c",
+      "timestamp": "2025-09-25T18:10:49.646939Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:10:49.646939Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "da9ff7193d414edfa889a73d3f9d6d7c4a97384eb1d2c521405b0f1b67ff448d"
+    },
+    {
+      "index": 231,
+      "previous_hash": "da9ff7193d414edfa889a73d3f9d6d7c4a97384eb1d2c521405b0f1b67ff448d",
+      "timestamp": "2025-09-25T18:11:19.649408Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:11:19.649408Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "993070764328a36e9b0fab2532fada71b0a8b13049be6eea041e1fc4840fa37f"
+    },
+    {
+      "index": 232,
+      "previous_hash": "993070764328a36e9b0fab2532fada71b0a8b13049be6eea041e1fc4840fa37f",
+      "timestamp": "2025-09-25T18:11:49.660216Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:11:49.657169Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "f77de795a3d57df2f60bba8f50994e07bf924325260b6d8628a73585f796fdf2"
+    },
+    {
+      "index": 233,
+      "previous_hash": "f77de795a3d57df2f60bba8f50994e07bf924325260b6d8628a73585f796fdf2",
+      "timestamp": "2025-09-25T18:12:19.644480Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:12:19.642474Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "a33464d4334803ff0ace730d502a2e6a0e38bfeb5a1816154f01da665d6290ad"
+    },
+    {
+      "index": 234,
+      "previous_hash": "a33464d4334803ff0ace730d502a2e6a0e38bfeb5a1816154f01da665d6290ad",
+      "timestamp": "2025-09-25T18:13:03.994460Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:13:03.994460Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "6aa8067322e12fa243e7c9d8f6b894b1db04fef18127983bcf1ba606c0d89dd7"
+    },
+    {
+      "index": 235,
+      "previous_hash": "6aa8067322e12fa243e7c9d8f6b894b1db04fef18127983bcf1ba606c0d89dd7",
+      "timestamp": "2025-09-25T18:13:33.984284Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:13:33.983284Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "45e4e7eca93b6fabe2801b89ce8a5b4b3015d437ff72341e30f2ac88c8356f56"
+    },
+    {
+      "index": 236,
+      "previous_hash": "45e4e7eca93b6fabe2801b89ce8a5b4b3015d437ff72341e30f2ac88c8356f56",
+      "timestamp": "2025-09-25T18:14:03.987600Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:14:03.987600Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "fe5f4b73de3ffb1272fa029c93da91900bdb07f1a1230d5f8da8f4ec9b48b685"
+    },
+    {
+      "index": 237,
+      "previous_hash": "fe5f4b73de3ffb1272fa029c93da91900bdb07f1a1230d5f8da8f4ec9b48b685",
+      "timestamp": "2025-09-25T18:14:33.997744Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:14:33.997744Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "42e0c93fd7facb8022b000a357ad32fa9a3c3e4d530361341f31cf737881ad7f"
+    },
+    {
+      "index": 238,
+      "previous_hash": "42e0c93fd7facb8022b000a357ad32fa9a3c3e4d530361341f31cf737881ad7f",
+      "timestamp": "2025-09-25T18:22:38.705628Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:22:38.689436Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "4771cd48d44994a56382a3b3bd186fe4e04254a6e2c34b2e55e9f95b341890f7"
+    },
+    {
+      "index": 239,
+      "previous_hash": "4771cd48d44994a56382a3b3bd186fe4e04254a6e2c34b2e55e9f95b341890f7",
+      "timestamp": "2025-09-25T18:23:08.700591Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:23:08.699591Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "5a0391e36f32578d759b08e746e6ce30875fde71089a9f36e9136cc23c45f730"
+    },
+    {
+      "index": 240,
+      "previous_hash": "5a0391e36f32578d759b08e746e6ce30875fde71089a9f36e9136cc23c45f730",
+      "timestamp": "2025-09-25T18:23:38.705433Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:23:38.705433Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "f44d76f00e8cfc6263cc514ad56a6e8b2f4afc6fdb4b83c8cf22df768533a771"
+    },
+    {
+      "index": 241,
+      "previous_hash": "f44d76f00e8cfc6263cc514ad56a6e8b2f4afc6fdb4b83c8cf22df768533a771",
+      "timestamp": "2025-09-25T18:24:08.708000Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:24:08.708000Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "0af5df99a46ad8aaffe56883f858746c68639d6d27b9aa74452bac92f969a406"
+    },
+    {
+      "index": 242,
+      "previous_hash": "0af5df99a46ad8aaffe56883f858746c68639d6d27b9aa74452bac92f969a406",
+      "timestamp": "2025-09-25T18:35:32.980459Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T18:35:32.963714Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "5e73c73a80178b2a4d295b2948a15dadadbd70a7a93f41e30c0f0eef9d6ebf9d"
+    },
+    {
+      "index": 243,
+      "previous_hash": "5e73c73a80178b2a4d295b2948a15dadadbd70a7a93f41e30c0f0eef9d6ebf9d",
+      "timestamp": "2025-09-25T19:06:51.748638Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:06:51.746973Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "49db324aa8f0bb347841e9e87fa019625abd346c7dd38e049678b0a4bc0387e9"
+    },
+    {
+      "index": 244,
+      "previous_hash": "49db324aa8f0bb347841e9e87fa019625abd346c7dd38e049678b0a4bc0387e9",
+      "timestamp": "2025-09-25T19:07:21.748174Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:07:21.748174Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "1e0f5a7804f4fe4247a71ec9ca1213af3ce9641a8dc3a88e3339ce2bc210be4e"
+    },
+    {
+      "index": 245,
+      "previous_hash": "1e0f5a7804f4fe4247a71ec9ca1213af3ce9641a8dc3a88e3339ce2bc210be4e",
+      "timestamp": "2025-09-25T19:07:51.767234Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:07:51.767234Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "33e4418602c2430c3d21fec1d9b9881b6102c034bc2f84c62e5cbd4e7c781c22"
+    },
+    {
+      "index": 246,
+      "previous_hash": "33e4418602c2430c3d21fec1d9b9881b6102c034bc2f84c62e5cbd4e7c781c22",
+      "timestamp": "2025-09-25T19:08:21.787377Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:08:21.785843Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "4401818f406876fe88c63eaabdb8ed7981f0ca0eb28d8ae6b149c425602f2035"
+    },
+    {
+      "index": 247,
+      "previous_hash": "4401818f406876fe88c63eaabdb8ed7981f0ca0eb28d8ae6b149c425602f2035",
+      "timestamp": "2025-09-25T19:08:51.786940Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:08:51.786940Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "e99d66ad78bebeec422321ed40c9cf331e1da69779b12b21a3b5f2c95c51d4ba"
+    },
+    {
+      "index": 248,
+      "previous_hash": "e99d66ad78bebeec422321ed40c9cf331e1da69779b12b21a3b5f2c95c51d4ba",
+      "timestamp": "2025-09-25T19:09:21.794157Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:09:21.794157Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "87d6590f4d312866ab1f264f8eaeaecb826645f215dd2819cb783194d64017f1"
+    },
+    {
+      "index": 249,
+      "previous_hash": "87d6590f4d312866ab1f264f8eaeaecb826645f215dd2819cb783194d64017f1",
+      "timestamp": "2025-09-25T19:09:51.806790Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:09:51.806790Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "1b8dddcfe2406cd3a5e3a4cd8700ce3380749cfdf88c710ec5a4b3058439c578"
+    },
+    {
+      "index": 250,
+      "previous_hash": "1b8dddcfe2406cd3a5e3a4cd8700ce3380749cfdf88c710ec5a4b3058439c578",
+      "timestamp": "2025-09-25T19:10:21.807479Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:10:21.804547Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "6d16c5c81aabe29dd8257967042ba17b879c2ceb16d057582bf28113d94a1265"
+    },
+    {
+      "index": 251,
+      "previous_hash": "6d16c5c81aabe29dd8257967042ba17b879c2ceb16d057582bf28113d94a1265",
+      "timestamp": "2025-09-25T19:10:51.803835Z",
+      "data": {
+        "action": "periodic_block",
+        "timestamp": "2025-09-25T19:10:51.803835Z",
+        "note": "Periodic block created by timer."
+      },
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "8fee91e6eb5a8a51315f9c1617cb80f9a5d1f1d76ed3b533691b6a7422ddc35c"
     }
   ],
   "chapters": [
@@ -3131,6 +3495,3027 @@
       "validator": "founder@civicengagementai.org",
       "signature": "GENESIS",
       "hash": "38dbaf057bdd4dbe5c73e54d11fdfd92e5954adbaab68020006b475b8f02486b"
+    },
+    {
+      "index": 1,
+      "previous_hash": "38dbaf057bdd4dbe5c73e54d11fdfd92e5954adbaab68020006b475b8f02486b",
+      "timestamp": "2025-09-25T18:07:49.618810Z",
+      "pages": [
+        {
+          "index": 1,
+          "previous_hash": "c3378765a829411fdf7c21c35e8bd25eb3b4dae70092fc6f222b96b8d73a11d3",
+          "timestamp": "2025-09-23T22:41:01.774829Z",
+          "data": {
+            "action": "register_user",
+            "user_email": "founder@civicengagementai.org",
+            "first_name": "Steve",
+            "last_name": "Cornell",
+            "address": "123 Founder Ave",
+            "city": "Genesis City",
+            "state": "Origin",
+            "country": "Platform Nation",
+            "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5tCo1MTasTcMF7KT/fcoX9C30jUR2PdQvvCBOg9fJr6qdF5xB/rYuDtCqQueTD7Sf6F/CxSXpXE1t7p8TiO6t9m7G0USTzqS4bbCMJH/Kr46wgdaaPLy/nVVzDAIlmSwTWHJI3HIs9adQ3UQ30QmThL3yPHaD37wJnMcDJupXyGiDQi3wMzvPQPw0xGNHOFeCzOcWYPuBLEog1g49hqX9f5nUe8tK0t9SR5jcooUdseGIbpv+y8brb2lpoGuefoRqu9CbCXfV7/aXmAqw29NtqeFvG7lBvGr7WFlWrwPKMjQ/wm4BLnjspeDXh/EHLbsvl2pYpq3daZlEM926KlDWwIDAQAB-----END PUBLIC KEY-----",
+            "roles": [
+              "Contract Founder"
+            ],
+            "password_hash": "$2b$12$.7HW5uTZhTxEFUoc.kdDN.aIaabfOQ6LvaVk1NDT9dyOM3jNW5L96",
+            "id_document_hash": "genesis_founder_id_hash",
+            "timestamp": "2025-09-23T22:41:01.721528Z"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "GENESIS",
+          "hash": "36b3f11bcdef6eb7fcd0596bb63cfc3e983102ce9933ee85138e115642e89880"
+        },
+        {
+          "index": 2,
+          "previous_hash": "36b3f11bcdef6eb7fcd0596bb63cfc3e983102ce9933ee85138e115642e89880",
+          "timestamp": "2025-09-23T22:42:23.337520Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:42:23.337520Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a88b7e5503543e70963695106eee1bcad74cf3345427669b3528de33883cc481"
+        },
+        {
+          "index": 3,
+          "previous_hash": "a88b7e5503543e70963695106eee1bcad74cf3345427669b3528de33883cc481",
+          "timestamp": "2025-09-23T22:42:53.352846Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:42:53.351798Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6091ee33e2f1e6c6b842f1b4475c11368a3838929b8f71dc5c705ef9d773fff0"
+        },
+        {
+          "index": 4,
+          "previous_hash": "6091ee33e2f1e6c6b842f1b4475c11368a3838929b8f71dc5c705ef9d773fff0",
+          "timestamp": "2025-09-23T22:43:23.367451Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:43:23.367451Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "11d8c3c80c733a63486b0996f86a288be97bb97f71e4af1a9b787f02ac57fe7b"
+        },
+        {
+          "index": 5,
+          "previous_hash": "11d8c3c80c733a63486b0996f86a288be97bb97f71e4af1a9b787f02ac57fe7b",
+          "timestamp": "2025-09-23T22:43:34.028250Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:43:34.027276Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f43db3400baf0f16c5dad23973e0a2b9a69d07a7e00171b4133e397e8571bfcd"
+        },
+        {
+          "index": 6,
+          "previous_hash": "f43db3400baf0f16c5dad23973e0a2b9a69d07a7e00171b4133e397e8571bfcd",
+          "timestamp": "2025-09-23T22:43:53.381550Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:43:53.381550Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "74669283e73cd9312b8f6bfaf0093585ec6fe563e6b8c88822b105b8370c1071"
+        },
+        {
+          "index": 7,
+          "previous_hash": "74669283e73cd9312b8f6bfaf0093585ec6fe563e6b8c88822b105b8370c1071",
+          "timestamp": "2025-09-23T22:44:04.025831Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:44:04.025831Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "186dde3940761dc6e1e23d7128172f41d245ba7cc2275877edff58f97c1841ae"
+        },
+        {
+          "index": 8,
+          "previous_hash": "186dde3940761dc6e1e23d7128172f41d245ba7cc2275877edff58f97c1841ae",
+          "timestamp": "2025-09-23T22:44:23.380073Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:44:23.380073Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "04c180d4e36ea24f2e64ac282d758fcb6566f2e9d0b82b3e5dc63a6823dad7b5"
+        },
+        {
+          "index": 9,
+          "previous_hash": "04c180d4e36ea24f2e64ac282d758fcb6566f2e9d0b82b3e5dc63a6823dad7b5",
+          "timestamp": "2025-09-23T22:44:34.040054Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:44:34.040054Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a748efb62b72c14d0e9a7f408c7bca216adbc4d6dcf1e5801a7384e9bd5a4b4c"
+        },
+        {
+          "index": 10,
+          "previous_hash": "a748efb62b72c14d0e9a7f408c7bca216adbc4d6dcf1e5801a7384e9bd5a4b4c",
+          "timestamp": "2025-09-23T22:47:00.593227Z",
+          "data": {
+            "action": "update_profile",
+            "user_email": "founder@civicengagementai.org",
+            "updates": {
+              "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArsBAwPI77VDiGzuWOkXTtuIlP5bWU+vR30IO2ZHclBG1eU3yw+3gCIc27CnRCeEVOOQezGO0uFBEaoCbJfAoCsYM80gnmKv5fwBSoYQzXNH6fFMHpj/uNmKz/u49f5pTADxPmWd+00/+Y/qG+FnU6TZz2R6JTZF1QH0bUBLjNNy+txIaCVmDM79xoqNe/fWMvbp6b/j5bFpZsphFjhthwmHTkvIV9sfBvqkrWO3faQo+WisfrzUYaHxMvtdBWDXFbkZofnQ0y1JDGcXYLzvwwM6ToduePer9Dp6zIWR99PoD85ArPEBrfyGZ0kMS4bK6xwdFdgJJ1fC/l9oJt7WgqwIDAQAB-----END PUBLIC KEY-----"
+            },
+            "timestamp": "2025-09-23T22:47:00.560587Z"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "fKdjXzlH5ojypsfsY6Glj/kbCWunbAHDOjWam8KyCkGR1yeN8DYVsD5638Qr/zPzcGb63SqvCPdvnnwR40SyorFWDSy+x8WNGRHBz1fh8uDe6mJWbwaENxvuJWp3sTZoSKfTy4Sg8OQuZ7BuzMx5qK4Q763oVmUjR0MkUOikxucN/+UYmkaYgEqhoLgVk7SKCpcnvPurUT606iJLJAcq2JnHrrvvJnF0rQ5pP60tFopjVFTTbC4Vbwr7RT7WXzu48LzMqMhtSMSkc8O7dR+mEBqnlyDVY1hPq1thS61jYNSzr4s0KleU+zMjyyKrUPWwhkGCDthJvDPtYhHNiziwrQ==",
+          "hash": "c6134556428ad870711534c7dfe6d4ccd4627450f4e9c75fe4eb594b4f25c6eb"
+        },
+        {
+          "index": 11,
+          "previous_hash": "c6134556428ad870711534c7dfe6d4ccd4627450f4e9c75fe4eb594b4f25c6eb",
+          "timestamp": "2025-09-23T22:47:44.319424Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:47:44.319424Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "fe44476a935e94a98186d97aecced4be7f0501a7ceb0ef31712377e255a4905a"
+        },
+        {
+          "index": 12,
+          "previous_hash": "fe44476a935e94a98186d97aecced4be7f0501a7ceb0ef31712377e255a4905a",
+          "timestamp": "2025-09-23T22:48:14.322093Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:48:14.322093Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2b7c0674a2a394f5a29f0e6e28b23ce393fdbafbefe96731bcae7a867fa2a2f6"
+        },
+        {
+          "index": 13,
+          "previous_hash": "2b7c0674a2a394f5a29f0e6e28b23ce393fdbafbefe96731bcae7a867fa2a2f6",
+          "timestamp": "2025-09-23T22:48:44.322360Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:48:44.322360Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a0ff16a0c9a61206a1979931d19469ba55b82d1dab42f23ec13f2ce603eb14fd"
+        },
+        {
+          "index": 14,
+          "previous_hash": "a0ff16a0c9a61206a1979931d19469ba55b82d1dab42f23ec13f2ce603eb14fd",
+          "timestamp": "2025-09-23T22:49:14.312691Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:49:14.312691Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "eccbb80694d1b9f3d4bc193c19fa76d2f37ee8c5444d5ce5cec57bed00c5be93"
+        },
+        {
+          "index": 15,
+          "previous_hash": "eccbb80694d1b9f3d4bc193c19fa76d2f37ee8c5444d5ce5cec57bed00c5be93",
+          "timestamp": "2025-09-23T22:49:44.325133Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:49:44.325133Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "0ca3d3562cbc8b4a4e8af0c4e50186bb6d3d53e186bb13f7335b801d5d97a5d6"
+        },
+        {
+          "index": 16,
+          "previous_hash": "0ca3d3562cbc8b4a4e8af0c4e50186bb6d3d53e186bb13f7335b801d5d97a5d6",
+          "timestamp": "2025-09-23T22:50:14.323049Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:50:14.322460Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "9bd5151f3331f2af92c7a6bbd52e7561f03063e7ab4510f4d7ae33f0fcf9b197"
+        },
+        {
+          "index": 17,
+          "previous_hash": "9bd5151f3331f2af92c7a6bbd52e7561f03063e7ab4510f4d7ae33f0fcf9b197",
+          "timestamp": "2025-09-23T22:52:02.064213Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:52:02.063143Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a7a1c4140e838ef2e34b6fc9f707ce76a0f0fc0f9048a595c35f1dbb9c904a6e"
+        },
+        {
+          "index": 18,
+          "previous_hash": "a7a1c4140e838ef2e34b6fc9f707ce76a0f0fc0f9048a595c35f1dbb9c904a6e",
+          "timestamp": "2025-09-23T22:52:32.063572Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T22:52:32.063572Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "67c6516520115fad5cd74c89b30f2e699d26b19b22129f7f1f738da9686ee989"
+        },
+        {
+          "index": 19,
+          "previous_hash": "67c6516520115fad5cd74c89b30f2e699d26b19b22129f7f1f738da9686ee989",
+          "timestamp": "2025-09-23T23:55:00.926158Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T23:55:00.926158Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b6cede1d1f29de0e30e6989347a660efda2f7f8739b4167d54be42907c1c2484"
+        },
+        {
+          "index": 20,
+          "previous_hash": "b6cede1d1f29de0e30e6989347a660efda2f7f8739b4167d54be42907c1c2484",
+          "timestamp": "2025-09-23T23:55:30.926829Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T23:55:30.926829Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "67635a6aabe0f07c1163db9ac28a172de9bb36cc4c1bd827d316aeeafeecb528"
+        },
+        {
+          "index": 21,
+          "previous_hash": "67635a6aabe0f07c1163db9ac28a172de9bb36cc4c1bd827d316aeeafeecb528",
+          "timestamp": "2025-09-23T23:56:00.951662Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T23:56:00.950640Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "4b198978f28461baaafef31828b61a7a54db74904c6349de35b6bb6b9432e615"
+        },
+        {
+          "index": 22,
+          "previous_hash": "4b198978f28461baaafef31828b61a7a54db74904c6349de35b6bb6b9432e615",
+          "timestamp": "2025-09-23T23:56:30.956399Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T23:56:30.955894Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "97d6a8337158d7a6fa39aaaa7f028bbb4082dd8a44541c18e83c8269d1164f62"
+        },
+        {
+          "index": 23,
+          "previous_hash": "97d6a8337158d7a6fa39aaaa7f028bbb4082dd8a44541c18e83c8269d1164f62",
+          "timestamp": "2025-09-23T23:58:50.011281Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T23:58:50.011281Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "9d62d83438b2563f6901087afea9eee4a79d956555bb295a5e53732c7e5b2fc4"
+        },
+        {
+          "index": 24,
+          "previous_hash": "9d62d83438b2563f6901087afea9eee4a79d956555bb295a5e53732c7e5b2fc4",
+          "timestamp": "2025-09-23T23:59:20.014121Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T23:59:20.013463Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "89d3bf9b09abf66207b79d2665ab9397ded61c3b9419e13d24eb593a4b2559c0"
+        },
+        {
+          "index": 25,
+          "previous_hash": "89d3bf9b09abf66207b79d2665ab9397ded61c3b9419e13d24eb593a4b2559c0",
+          "timestamp": "2025-09-23T23:59:50.026313Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T23:59:50.026313Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a2ca032bc3559f55a33d56debc926b8c157542b8f5a5d1d9e3042b90f1c26b1c"
+        },
+        {
+          "index": 26,
+          "previous_hash": "a2ca032bc3559f55a33d56debc926b8c157542b8f5a5d1d9e3042b90f1c26b1c",
+          "timestamp": "2025-09-24T00:00:20.024195Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:00:20.024195Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "ad9de1233190f700ada7fed8ff7c5a98d5896d51234aad8326b67e6f9b3ae919"
+        },
+        {
+          "index": 27,
+          "previous_hash": "ad9de1233190f700ada7fed8ff7c5a98d5896d51234aad8326b67e6f9b3ae919",
+          "timestamp": "2025-09-24T00:00:50.031785Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:00:50.031785Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "7c5ff7b986e2344fe5096b5910956cdeffa2d79054073741677ff6f0184de5e8"
+        },
+        {
+          "index": 28,
+          "previous_hash": "7c5ff7b986e2344fe5096b5910956cdeffa2d79054073741677ff6f0184de5e8",
+          "timestamp": "2025-09-24T00:01:20.017425Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:01:20.017425Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a6bbc7358719316cc31c61971dbc0dae508b9b569b79425c606235ef1ba15a85"
+        },
+        {
+          "index": 29,
+          "previous_hash": "a6bbc7358719316cc31c61971dbc0dae508b9b569b79425c606235ef1ba15a85",
+          "timestamp": "2025-09-24T00:01:50.043138Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:01:50.043138Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c5dfee346b095ba91a771ce8d814e2844f69e85ff0f920f4e1d428f95317eef1"
+        },
+        {
+          "index": 30,
+          "previous_hash": "c5dfee346b095ba91a771ce8d814e2844f69e85ff0f920f4e1d428f95317eef1",
+          "timestamp": "2025-09-24T00:02:20.046756Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:02:20.046756Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b58815ed3f0f7323de500c3ab3216f33e597dba042c54c5124faf3123b59c7be"
+        },
+        {
+          "index": 31,
+          "previous_hash": "b58815ed3f0f7323de500c3ab3216f33e597dba042c54c5124faf3123b59c7be",
+          "timestamp": "2025-09-24T00:02:50.038455Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:02:50.038455Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "efcc3962eaa22587c0e9ca6f25f1ec0487e9dbac785b67ecb56022111ce9b94a"
+        },
+        {
+          "index": 32,
+          "previous_hash": "efcc3962eaa22587c0e9ca6f25f1ec0487e9dbac785b67ecb56022111ce9b94a",
+          "timestamp": "2025-09-24T00:03:20.044660Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:03:20.044660Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2aa2fe3766396addc2c6a9e70b20af33d6363cf9cbe2c8f637d13fa620a84c47"
+        },
+        {
+          "index": 33,
+          "previous_hash": "2aa2fe3766396addc2c6a9e70b20af33d6363cf9cbe2c8f637d13fa620a84c47",
+          "timestamp": "2025-09-24T00:03:50.055695Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:03:50.055695Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "aa33034e17342cd9ec5c5c4bcb5a36d12255601d593c69e45285600aef910c4c"
+        },
+        {
+          "index": 34,
+          "previous_hash": "aa33034e17342cd9ec5c5c4bcb5a36d12255601d593c69e45285600aef910c4c",
+          "timestamp": "2025-09-24T00:04:20.058023Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:04:20.058023Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "85710f3f50b4078482669ed7b96e691b61deaf90fd0c9f18ad5f38603ff4afa2"
+        },
+        {
+          "index": 35,
+          "previous_hash": "85710f3f50b4078482669ed7b96e691b61deaf90fd0c9f18ad5f38603ff4afa2",
+          "timestamp": "2025-09-24T00:04:50.076949Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:04:50.076949Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "1371945de74a36215b6cc496872509918d5921cfb78344dd21b5b26349ed4593"
+        },
+        {
+          "index": 36,
+          "previous_hash": "1371945de74a36215b6cc496872509918d5921cfb78344dd21b5b26349ed4593",
+          "timestamp": "2025-09-24T00:05:20.074987Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:05:20.074987Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e60316855953dd204e08f5e143b9ef6f27d3918a97d96b94c0d50aba9fbc78b7"
+        },
+        {
+          "index": 37,
+          "previous_hash": "e60316855953dd204e08f5e143b9ef6f27d3918a97d96b94c0d50aba9fbc78b7",
+          "timestamp": "2025-09-24T00:05:50.077919Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:05:50.077919Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5d7a57106298c13e5c5c6faa9e5b060f8c08978393cdbc679c986df3a2b3f4c5"
+        },
+        {
+          "index": 38,
+          "previous_hash": "5d7a57106298c13e5c5c6faa9e5b060f8c08978393cdbc679c986df3a2b3f4c5",
+          "timestamp": "2025-09-24T00:06:20.070211Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:06:20.070211Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "fc8cdfbcdaf4d12c5d11af5728d924a49bcfdf57f48ce6f7f6b86c981e521506"
+        },
+        {
+          "index": 39,
+          "previous_hash": "fc8cdfbcdaf4d12c5d11af5728d924a49bcfdf57f48ce6f7f6b86c981e521506",
+          "timestamp": "2025-09-24T00:06:50.066618Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:06:50.066618Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6ba1088cee6d1082f150b2b33452ef522ff81428606fbdcc621036ea9d5efbfc"
+        },
+        {
+          "index": 40,
+          "previous_hash": "6ba1088cee6d1082f150b2b33452ef522ff81428606fbdcc621036ea9d5efbfc",
+          "timestamp": "2025-09-24T00:07:20.067910Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:07:20.067910Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6b2b517ada8cd2bbcd023b436b4c1988a152b0e81ded20509f73c8e57a016331"
+        },
+        {
+          "index": 41,
+          "previous_hash": "6b2b517ada8cd2bbcd023b436b4c1988a152b0e81ded20509f73c8e57a016331",
+          "timestamp": "2025-09-24T00:07:50.075608Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:07:50.075608Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f4a22b52467b2d548266446b5456f52b0880410324c004874c8745cbd1408b0a"
+        },
+        {
+          "index": 42,
+          "previous_hash": "f4a22b52467b2d548266446b5456f52b0880410324c004874c8745cbd1408b0a",
+          "timestamp": "2025-09-24T00:08:20.069210Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:08:20.069210Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "eb8c05f3588ec9024866f67dc6d4227c0d03c3b9b60ae5d83895253851d5c0d9"
+        },
+        {
+          "index": 43,
+          "previous_hash": "eb8c05f3588ec9024866f67dc6d4227c0d03c3b9b60ae5d83895253851d5c0d9",
+          "timestamp": "2025-09-24T00:08:50.075312Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:08:50.075312Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "cf3a84ae890450668a154eba119b9ec2347267ab1583fcb478f5cfd9ffddf6d4"
+        },
+        {
+          "index": 44,
+          "previous_hash": "cf3a84ae890450668a154eba119b9ec2347267ab1583fcb478f5cfd9ffddf6d4",
+          "timestamp": "2025-09-24T00:09:20.083491Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:09:20.083491Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8c4938b5048da5a2ce9ccadc1224c7717193afd0a863a84e8cb180c079c0039e"
+        },
+        {
+          "index": 45,
+          "previous_hash": "8c4938b5048da5a2ce9ccadc1224c7717193afd0a863a84e8cb180c079c0039e",
+          "timestamp": "2025-09-24T00:09:50.086469Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:09:50.086469Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8e67763b35bedfe74e8d57e7cc2c1ef731c8f200dee6b58a453a728e3d5e7aba"
+        },
+        {
+          "index": 46,
+          "previous_hash": "8e67763b35bedfe74e8d57e7cc2c1ef731c8f200dee6b58a453a728e3d5e7aba",
+          "timestamp": "2025-09-24T00:10:20.095909Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:10:20.095909Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "165ce59d916b87347f9d95af3e9295a2a2c23abac711f241791f921475dc0a85"
+        },
+        {
+          "index": 47,
+          "previous_hash": "165ce59d916b87347f9d95af3e9295a2a2c23abac711f241791f921475dc0a85",
+          "timestamp": "2025-09-24T00:10:50.087988Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:10:50.087988Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "037e1b0a89559f330999cc830b8c4425f1a0dee23b522eba044feaa688420aed"
+        },
+        {
+          "index": 48,
+          "previous_hash": "037e1b0a89559f330999cc830b8c4425f1a0dee23b522eba044feaa688420aed",
+          "timestamp": "2025-09-24T00:11:20.093873Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:11:20.093873Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b4d44970fdcaf0d261e2b588efe21cc0e6ca22128d0eab68d158a91f65a14aff"
+        },
+        {
+          "index": 49,
+          "previous_hash": "b4d44970fdcaf0d261e2b588efe21cc0e6ca22128d0eab68d158a91f65a14aff",
+          "timestamp": "2025-09-24T00:11:50.089985Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:11:50.089985Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "95d32f25103375821b1417972ea9d92e992263c771d165082cc26d1856dae6e9"
+        },
+        {
+          "index": 50,
+          "previous_hash": "95d32f25103375821b1417972ea9d92e992263c771d165082cc26d1856dae6e9",
+          "timestamp": "2025-09-24T00:12:20.110786Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:12:20.110786Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5fc51334980d26dc53cd5c8b20e69bff55990d6804185f43b8d8a183ba0546df"
+        },
+        {
+          "index": 51,
+          "previous_hash": "5fc51334980d26dc53cd5c8b20e69bff55990d6804185f43b8d8a183ba0546df",
+          "timestamp": "2025-09-24T00:12:50.103996Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:12:50.103996Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "16526efd342d45fc23d8c3f8cc709b23f9952ead3792c39bdad43fb844adc123"
+        },
+        {
+          "index": 52,
+          "previous_hash": "16526efd342d45fc23d8c3f8cc709b23f9952ead3792c39bdad43fb844adc123",
+          "timestamp": "2025-09-24T00:13:20.099189Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:13:20.099189Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "dd4cc0a33d2f5ebd92b47d0dbb5e6e8842602503725fa1c62742bb2b703d622d"
+        },
+        {
+          "index": 53,
+          "previous_hash": "dd4cc0a33d2f5ebd92b47d0dbb5e6e8842602503725fa1c62742bb2b703d622d",
+          "timestamp": "2025-09-24T00:13:50.108532Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:13:50.108532Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "d15bcd26aad41da6e5abec5448f2b8601c3b7f6dc6e5c56f9c53ad21701282cb"
+        },
+        {
+          "index": 54,
+          "previous_hash": "d15bcd26aad41da6e5abec5448f2b8601c3b7f6dc6e5c56f9c53ad21701282cb",
+          "timestamp": "2025-09-24T00:14:20.113903Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:14:20.113903Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5db82bcad9d620f69a0c578b1fbe546d246d946c8fed57736c16c37127005f37"
+        },
+        {
+          "index": 55,
+          "previous_hash": "5db82bcad9d620f69a0c578b1fbe546d246d946c8fed57736c16c37127005f37",
+          "timestamp": "2025-09-24T00:14:50.131386Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:14:50.131386Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2bff9997d9786fd3cf832abb77ddafde1675ed66987463e4f7ea7cb80e228900"
+        },
+        {
+          "index": 56,
+          "previous_hash": "2bff9997d9786fd3cf832abb77ddafde1675ed66987463e4f7ea7cb80e228900",
+          "timestamp": "2025-09-24T00:15:20.148493Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:15:20.148493Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "9fd2f07b20358c999365e66e4d65d9a36ce97022215657267be258767c069086"
+        },
+        {
+          "index": 57,
+          "previous_hash": "9fd2f07b20358c999365e66e4d65d9a36ce97022215657267be258767c069086",
+          "timestamp": "2025-09-24T00:15:50.157954Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:15:50.157954Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "4d16bb744c16e2ca8ca101cda89b935ffedcb95f186d3718bdf5855739a29851"
+        },
+        {
+          "index": 58,
+          "previous_hash": "4d16bb744c16e2ca8ca101cda89b935ffedcb95f186d3718bdf5855739a29851",
+          "timestamp": "2025-09-24T00:16:20.160622Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:16:20.160622Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2d7444da67e46c88e91fd13e25fe3dffd9078d38dd16562980d318a9b7d6f2ce"
+        },
+        {
+          "index": 59,
+          "previous_hash": "2d7444da67e46c88e91fd13e25fe3dffd9078d38dd16562980d318a9b7d6f2ce",
+          "timestamp": "2025-09-24T00:16:50.171427Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:16:50.171427Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "05583ea6f48be6f8a295c56974f0fcfb8bfa8342c73fe16d7b5adaa039a580a0"
+        },
+        {
+          "index": 60,
+          "previous_hash": "05583ea6f48be6f8a295c56974f0fcfb8bfa8342c73fe16d7b5adaa039a580a0",
+          "timestamp": "2025-09-24T00:17:20.168424Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:17:20.168424Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "17bc98a43b81aaca6af33b0a75567765d2bb9929f6eac6d043fe22d3dae51996"
+        },
+        {
+          "index": 61,
+          "previous_hash": "17bc98a43b81aaca6af33b0a75567765d2bb9929f6eac6d043fe22d3dae51996",
+          "timestamp": "2025-09-24T00:17:50.177822Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:17:50.177822Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "3ea58429a1a007d9c5a9724a067906923515bc05dc4f5f339b1faf4d739bf0b5"
+        },
+        {
+          "index": 62,
+          "previous_hash": "3ea58429a1a007d9c5a9724a067906923515bc05dc4f5f339b1faf4d739bf0b5",
+          "timestamp": "2025-09-24T00:18:20.184783Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:18:20.184783Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8559495378d727ea67218ad7b75c6dcf0af64727aedb9062d3bc265ee6f2423e"
+        },
+        {
+          "index": 63,
+          "previous_hash": "8559495378d727ea67218ad7b75c6dcf0af64727aedb9062d3bc265ee6f2423e",
+          "timestamp": "2025-09-24T00:18:50.181205Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:18:50.181205Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e34d656e2a5d7c8bd8c32c7c58e4e2ff2a539491ad3b84f463676b5ff3ce1b76"
+        },
+        {
+          "index": 64,
+          "previous_hash": "e34d656e2a5d7c8bd8c32c7c58e4e2ff2a539491ad3b84f463676b5ff3ce1b76",
+          "timestamp": "2025-09-24T00:19:20.188025Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:19:20.188025Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "09093b33df0bc835486825df00d76537e28fac45caee78d894d44d5d0fc8327a"
+        },
+        {
+          "index": 65,
+          "previous_hash": "09093b33df0bc835486825df00d76537e28fac45caee78d894d44d5d0fc8327a",
+          "timestamp": "2025-09-24T00:19:50.184288Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:19:50.184288Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c9116948e2074844dabd5f87cac5da4de1ab42e84fe28bb1218cdb58782b43a6"
+        },
+        {
+          "index": 66,
+          "previous_hash": "c9116948e2074844dabd5f87cac5da4de1ab42e84fe28bb1218cdb58782b43a6",
+          "timestamp": "2025-09-24T00:20:20.190668Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:20:20.190668Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "1a61828109e732476c622f3cae6df9357be54d04701bcbabe2c065e9e0790a5e"
+        },
+        {
+          "index": 67,
+          "previous_hash": "1a61828109e732476c622f3cae6df9357be54d04701bcbabe2c065e9e0790a5e",
+          "timestamp": "2025-09-24T00:20:50.189893Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:20:50.189893Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8934823f9d84e5a60f8d3d7249b5191efd2a2f80f0fe4bc3856e1143805917cf"
+        },
+        {
+          "index": 68,
+          "previous_hash": "8934823f9d84e5a60f8d3d7249b5191efd2a2f80f0fe4bc3856e1143805917cf",
+          "timestamp": "2025-09-24T00:21:20.188196Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:21:20.188196Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "068e1d7d79a4e656356f95575dea366cd8907ab829b6d5d50f98434ca72debce"
+        },
+        {
+          "index": 69,
+          "previous_hash": "068e1d7d79a4e656356f95575dea366cd8907ab829b6d5d50f98434ca72debce",
+          "timestamp": "2025-09-24T00:21:50.178407Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:21:50.178407Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2d59788c3f332a1f5e8c98c3b3f8bbb8e638a27417ac7938c6ca701ef77e3e8f"
+        },
+        {
+          "index": 70,
+          "previous_hash": "2d59788c3f332a1f5e8c98c3b3f8bbb8e638a27417ac7938c6ca701ef77e3e8f",
+          "timestamp": "2025-09-24T00:22:20.183682Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:22:20.183682Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5396183fe027cefd5b9be7557d3b240adc7476513f2511b677fcdc34b694a47f"
+        },
+        {
+          "index": 71,
+          "previous_hash": "5396183fe027cefd5b9be7557d3b240adc7476513f2511b677fcdc34b694a47f",
+          "timestamp": "2025-09-24T00:22:50.187947Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:22:50.187947Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "53fe34c955d87e2ccb0eb7d6979f3bbc83d3c2a849d9cf682bcaa1c6cc79b256"
+        },
+        {
+          "index": 72,
+          "previous_hash": "53fe34c955d87e2ccb0eb7d6979f3bbc83d3c2a849d9cf682bcaa1c6cc79b256",
+          "timestamp": "2025-09-24T00:23:20.208505Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:23:20.208505Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "944931b9f4d930fec074f80211f537042ab12b695c685ca575ff1ad5f89078ad"
+        },
+        {
+          "index": 73,
+          "previous_hash": "944931b9f4d930fec074f80211f537042ab12b695c685ca575ff1ad5f89078ad",
+          "timestamp": "2025-09-24T00:23:50.227050Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:23:50.227050Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e57e25cdb25b53338a0172b52bba61cc101b243e5c626ecfdaf4217009c3158d"
+        },
+        {
+          "index": 74,
+          "previous_hash": "e57e25cdb25b53338a0172b52bba61cc101b243e5c626ecfdaf4217009c3158d",
+          "timestamp": "2025-09-24T00:24:20.228352Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:24:20.228352Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6b64c89613b35b9f1b0be01deb51cf514d7cd2df84649f28aa48360f1e381db4"
+        },
+        {
+          "index": 75,
+          "previous_hash": "6b64c89613b35b9f1b0be01deb51cf514d7cd2df84649f28aa48360f1e381db4",
+          "timestamp": "2025-09-24T00:24:50.231585Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:24:50.231585Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "789f072bd08ec1c3ead21d4382826847c0392cbaee4c75d35f26b9bd38ebbf5d"
+        },
+        {
+          "index": 76,
+          "previous_hash": "789f072bd08ec1c3ead21d4382826847c0392cbaee4c75d35f26b9bd38ebbf5d",
+          "timestamp": "2025-09-24T00:25:20.230815Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:25:20.230815Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "cc232dfee0e16d998695119da1a491795acf8617f699a689bb248ed6bbe11573"
+        },
+        {
+          "index": 77,
+          "previous_hash": "cc232dfee0e16d998695119da1a491795acf8617f699a689bb248ed6bbe11573",
+          "timestamp": "2025-09-24T00:25:50.232992Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:25:50.232992Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "973dff828b64e0cae5d581c7f1c1e00128d3532637967260fdc9557dbe0e540c"
+        },
+        {
+          "index": 78,
+          "previous_hash": "973dff828b64e0cae5d581c7f1c1e00128d3532637967260fdc9557dbe0e540c",
+          "timestamp": "2025-09-24T00:26:20.228932Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:26:20.228932Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a151f2f89bc1a67f3a4bee440c3ed908343834dada7a8fcfcaf8093414886c88"
+        },
+        {
+          "index": 79,
+          "previous_hash": "a151f2f89bc1a67f3a4bee440c3ed908343834dada7a8fcfcaf8093414886c88",
+          "timestamp": "2025-09-24T00:26:50.230184Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:26:50.230184Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "bd4f4e007a61c5dfc9033f65d04ddfaac042c3d56dd4a215690b43ca412bde94"
+        },
+        {
+          "index": 80,
+          "previous_hash": "bd4f4e007a61c5dfc9033f65d04ddfaac042c3d56dd4a215690b43ca412bde94",
+          "timestamp": "2025-09-24T00:27:20.229958Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:27:20.229958Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "ff6547de377b51704a2b55954d20e7f2432b01e28ae2058ca1714ac784a69900"
+        },
+        {
+          "index": 81,
+          "previous_hash": "ff6547de377b51704a2b55954d20e7f2432b01e28ae2058ca1714ac784a69900",
+          "timestamp": "2025-09-24T00:27:50.233376Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:27:50.233376Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b59ecf108e94457e0e44d818fe45a2f98be02f9696de82459ca10e2df81cd313"
+        },
+        {
+          "index": 82,
+          "previous_hash": "b59ecf108e94457e0e44d818fe45a2f98be02f9696de82459ca10e2df81cd313",
+          "timestamp": "2025-09-24T00:28:20.234874Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:28:20.234874Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "355f4c8c75074d8022ab4a388ebf3c45a1212278f3966af2dd77b3415be3680d"
+        },
+        {
+          "index": 83,
+          "previous_hash": "355f4c8c75074d8022ab4a388ebf3c45a1212278f3966af2dd77b3415be3680d",
+          "timestamp": "2025-09-24T00:28:50.239002Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:28:50.239002Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b0d0d4e6022fcd77d91b47a95bf2d701dc0ec493a87a348bf17e771a2c196c54"
+        },
+        {
+          "index": 84,
+          "previous_hash": "b0d0d4e6022fcd77d91b47a95bf2d701dc0ec493a87a348bf17e771a2c196c54",
+          "timestamp": "2025-09-24T00:29:20.225305Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:29:20.225305Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6ced3a21a040e2e9a4646b81bf84f53f66724bef3551dd5eda1121f64232dc24"
+        },
+        {
+          "index": 85,
+          "previous_hash": "6ced3a21a040e2e9a4646b81bf84f53f66724bef3551dd5eda1121f64232dc24",
+          "timestamp": "2025-09-24T00:29:50.236818Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:29:50.236818Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8028b2418142f7ca8254d69ee97dc9402b4f7472320154117becc1c38d5e1145"
+        },
+        {
+          "index": 86,
+          "previous_hash": "8028b2418142f7ca8254d69ee97dc9402b4f7472320154117becc1c38d5e1145",
+          "timestamp": "2025-09-24T00:30:20.226489Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:30:20.226489Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6d855cf916d488012c167867fcb4e152ff2b0357e7e27faefc1efc453f07efcd"
+        },
+        {
+          "index": 87,
+          "previous_hash": "6d855cf916d488012c167867fcb4e152ff2b0357e7e27faefc1efc453f07efcd",
+          "timestamp": "2025-09-24T00:30:50.237333Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:30:50.237333Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c7808234cb26164962268b7fc0027dd88d67dcf075556c35a2bd528ace50b75f"
+        },
+        {
+          "index": 88,
+          "previous_hash": "c7808234cb26164962268b7fc0027dd88d67dcf075556c35a2bd528ace50b75f",
+          "timestamp": "2025-09-24T00:31:20.240356Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:31:20.240356Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "ecad24035b931b231266606b939d620e28e89608297b0a7394bbab0dc3c74fb8"
+        },
+        {
+          "index": 89,
+          "previous_hash": "ecad24035b931b231266606b939d620e28e89608297b0a7394bbab0dc3c74fb8",
+          "timestamp": "2025-09-24T00:31:50.239573Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:31:50.239573Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "57746d9f26c1be5cd993fa09a41300ed57f83ac35a9acbde89e6ab5d648ae714"
+        },
+        {
+          "index": 90,
+          "previous_hash": "57746d9f26c1be5cd993fa09a41300ed57f83ac35a9acbde89e6ab5d648ae714",
+          "timestamp": "2025-09-24T00:32:20.236669Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:32:20.236669Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "1850198b877fdbddd9ee3a760ceb9ebeda3e0431a126c728236771286ec72bba"
+        },
+        {
+          "index": 91,
+          "previous_hash": "1850198b877fdbddd9ee3a760ceb9ebeda3e0431a126c728236771286ec72bba",
+          "timestamp": "2025-09-24T00:32:50.230767Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:32:50.230767Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "1bf6f4f9395eb74641795681b250ba714198f0702f6a45a506be7c9224ec8cba"
+        },
+        {
+          "index": 92,
+          "previous_hash": "1bf6f4f9395eb74641795681b250ba714198f0702f6a45a506be7c9224ec8cba",
+          "timestamp": "2025-09-24T00:33:20.235118Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:33:20.235118Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "0113841e4c2b87b6b74d34705637266c982ddf51d7d850d60a85503412080f53"
+        },
+        {
+          "index": 93,
+          "previous_hash": "0113841e4c2b87b6b74d34705637266c982ddf51d7d850d60a85503412080f53",
+          "timestamp": "2025-09-24T00:33:50.230293Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:33:50.230293Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "d1dbc0f852b149ab210a264d57af896a23fa2b845d336ea8fe9036e5e40d06ed"
+        },
+        {
+          "index": 94,
+          "previous_hash": "d1dbc0f852b149ab210a264d57af896a23fa2b845d336ea8fe9036e5e40d06ed",
+          "timestamp": "2025-09-24T00:34:20.238697Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:34:20.238697Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6bbe273e0db1d51206da12095b7b0742853df4815354ab811a54dc89faeab123"
+        },
+        {
+          "index": 95,
+          "previous_hash": "6bbe273e0db1d51206da12095b7b0742853df4815354ab811a54dc89faeab123",
+          "timestamp": "2025-09-24T00:34:50.239038Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:34:50.239038Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8cf8ca0b3e30b7b2475eddaa8254b1486d6db69c5f0557dd6a9c792798304ff8"
+        },
+        {
+          "index": 96,
+          "previous_hash": "8cf8ca0b3e30b7b2475eddaa8254b1486d6db69c5f0557dd6a9c792798304ff8",
+          "timestamp": "2025-09-24T00:35:20.235672Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:35:20.235672Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5dd309f657e68c37b22b8142c8b45ed8114331cecd4b64d40b2fea98025b2735"
+        },
+        {
+          "index": 97,
+          "previous_hash": "5dd309f657e68c37b22b8142c8b45ed8114331cecd4b64d40b2fea98025b2735",
+          "timestamp": "2025-09-24T00:35:50.241206Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:35:50.241206Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e140d32055cff649f2892e8bab6378df997fcf13cc10c5352adfb183ff075259"
+        },
+        {
+          "index": 98,
+          "previous_hash": "e140d32055cff649f2892e8bab6378df997fcf13cc10c5352adfb183ff075259",
+          "timestamp": "2025-09-24T00:36:20.229077Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:36:20.229077Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a2b4b206f0211e8c2de2380b385f2363b2fb0700653937edcec9715a8236ce4d"
+        },
+        {
+          "index": 99,
+          "previous_hash": "a2b4b206f0211e8c2de2380b385f2363b2fb0700653937edcec9715a8236ce4d",
+          "timestamp": "2025-09-24T00:36:50.229506Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:36:50.229506Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e88343ab22b509661f159d18a7ae484f55d15d33908c4e7ebd044d90f1f5bb03"
+        },
+        {
+          "index": 100,
+          "previous_hash": "e88343ab22b509661f159d18a7ae484f55d15d33908c4e7ebd044d90f1f5bb03",
+          "timestamp": "2025-09-24T00:37:20.228147Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:37:20.228147Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "fac9aba4c69d0f469f8081b11b7c506c6074ddaadf0d363425d6fd5eead9a411"
+        },
+        {
+          "index": 101,
+          "previous_hash": "fac9aba4c69d0f469f8081b11b7c506c6074ddaadf0d363425d6fd5eead9a411",
+          "timestamp": "2025-09-24T00:37:50.238034Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:37:50.238034Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f02a81e731a8e4606fed3e4f8f7822b7a496397bd866f9643ec1d4eac4a5989f"
+        },
+        {
+          "index": 102,
+          "previous_hash": "f02a81e731a8e4606fed3e4f8f7822b7a496397bd866f9643ec1d4eac4a5989f",
+          "timestamp": "2025-09-24T00:38:20.238037Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:38:20.238037Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f639f3cd3a8709d0b929e5848e40a2a30569b639f7cafad84747bf2f9a828da0"
+        },
+        {
+          "index": 103,
+          "previous_hash": "f639f3cd3a8709d0b929e5848e40a2a30569b639f7cafad84747bf2f9a828da0",
+          "timestamp": "2025-09-24T00:38:50.231742Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:38:50.231742Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2e457d52ea030e5ab82e1fa62208572feb4f019f5e51537542ffd3140873277d"
+        },
+        {
+          "index": 104,
+          "previous_hash": "2e457d52ea030e5ab82e1fa62208572feb4f019f5e51537542ffd3140873277d",
+          "timestamp": "2025-09-24T00:39:20.228980Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:39:20.228980Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b71fa42bcf06dc008cff58f81822305360802c3919141298b891da6cb5a191b9"
+        },
+        {
+          "index": 105,
+          "previous_hash": "b71fa42bcf06dc008cff58f81822305360802c3919141298b891da6cb5a191b9",
+          "timestamp": "2025-09-24T00:39:50.233165Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:39:50.233165Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "d7f68185bdcbd2d6fdf6ff23c36a54df063e5213a4fcebb37bd537071b94c89d"
+        },
+        {
+          "index": 106,
+          "previous_hash": "d7f68185bdcbd2d6fdf6ff23c36a54df063e5213a4fcebb37bd537071b94c89d",
+          "timestamp": "2025-09-24T00:40:20.240418Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:40:20.240418Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f567cc26d5a43a3ffee382b3004f617c3485fc94c64075e5975d5b5f45b5428d"
+        },
+        {
+          "index": 107,
+          "previous_hash": "f567cc26d5a43a3ffee382b3004f617c3485fc94c64075e5975d5b5f45b5428d",
+          "timestamp": "2025-09-24T00:40:50.233572Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:40:50.233572Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "51f848326baf5fec357d22c0d3aca9d1d5a6cd62217fddd8b7bbc4b770a1cf1f"
+        },
+        {
+          "index": 108,
+          "previous_hash": "51f848326baf5fec357d22c0d3aca9d1d5a6cd62217fddd8b7bbc4b770a1cf1f",
+          "timestamp": "2025-09-24T00:41:20.239105Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:41:20.239105Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "026959d283de468bfd1cddce38205d51b1fcbbb2ea5b14c9b0ef2c6584161e00"
+        },
+        {
+          "index": 109,
+          "previous_hash": "026959d283de468bfd1cddce38205d51b1fcbbb2ea5b14c9b0ef2c6584161e00",
+          "timestamp": "2025-09-24T00:41:50.242173Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:41:50.242173Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8d8e5d93e2cbe02c311275c4a282f00f437439df9ea3f8bef0ea364eede77e2e"
+        },
+        {
+          "index": 110,
+          "previous_hash": "8d8e5d93e2cbe02c311275c4a282f00f437439df9ea3f8bef0ea364eede77e2e",
+          "timestamp": "2025-09-24T00:42:20.248997Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:42:20.248997Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5d5b9fd5a5acf603fa93359763000f606bcb021c18fab6bcd008ed4fcc580b37"
+        },
+        {
+          "index": 111,
+          "previous_hash": "5d5b9fd5a5acf603fa93359763000f606bcb021c18fab6bcd008ed4fcc580b37",
+          "timestamp": "2025-09-24T00:42:50.256898Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:42:50.256898Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "59b996b80cea34bd44a12c79996f95fa9e02233e90810d4aecbec483a8b6dd71"
+        },
+        {
+          "index": 112,
+          "previous_hash": "59b996b80cea34bd44a12c79996f95fa9e02233e90810d4aecbec483a8b6dd71",
+          "timestamp": "2025-09-24T00:43:20.253494Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:43:20.253494Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e7bc57be0bb152ab71e9f0db6b999db75735ce2da08f44ea0682ce730e0795aa"
+        },
+        {
+          "index": 113,
+          "previous_hash": "e7bc57be0bb152ab71e9f0db6b999db75735ce2da08f44ea0682ce730e0795aa",
+          "timestamp": "2025-09-24T00:43:50.268263Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:43:50.268263Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "37ce43be39dd5a615f67095882458296c36f11a8a6426450e8ef9f388040d5a8"
+        },
+        {
+          "index": 114,
+          "previous_hash": "37ce43be39dd5a615f67095882458296c36f11a8a6426450e8ef9f388040d5a8",
+          "timestamp": "2025-09-24T00:44:20.263095Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:44:20.263095Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "15eec0131d1f60f04eb560d1bd336a71d7ed5af004ed5c94b313c78a2f13523b"
+        },
+        {
+          "index": 115,
+          "previous_hash": "15eec0131d1f60f04eb560d1bd336a71d7ed5af004ed5c94b313c78a2f13523b",
+          "timestamp": "2025-09-24T00:44:50.283667Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:44:50.283667Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "15292b796b36df8072e6dba3d208ce772a13312a1986e07f88276e9dd5fc6234"
+        },
+        {
+          "index": 116,
+          "previous_hash": "15292b796b36df8072e6dba3d208ce772a13312a1986e07f88276e9dd5fc6234",
+          "timestamp": "2025-09-24T00:45:20.279884Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:45:20.279884Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "7ba94459b531bd8e457b56d215b2f1d5a00134f62eecc2bf39ca1b83c3ecb949"
+        },
+        {
+          "index": 117,
+          "previous_hash": "7ba94459b531bd8e457b56d215b2f1d5a00134f62eecc2bf39ca1b83c3ecb949",
+          "timestamp": "2025-09-24T00:45:50.274628Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:45:50.274628Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f919daa890c8f916113afa9b80278e2c43c67062b44b9ed0f5280db6f4e3b44d"
+        },
+        {
+          "index": 118,
+          "previous_hash": "f919daa890c8f916113afa9b80278e2c43c67062b44b9ed0f5280db6f4e3b44d",
+          "timestamp": "2025-09-24T00:46:20.278885Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:46:20.278885Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "be5f97137866c3a4df41e0e04016382608c4828c51f060e978d565749447d64e"
+        },
+        {
+          "index": 119,
+          "previous_hash": "be5f97137866c3a4df41e0e04016382608c4828c51f060e978d565749447d64e",
+          "timestamp": "2025-09-24T00:46:50.285589Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:46:50.285589Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f66765be8f229cfd88919ae9520506e46727fe6e2330159282f246b87586745b"
+        },
+        {
+          "index": 120,
+          "previous_hash": "f66765be8f229cfd88919ae9520506e46727fe6e2330159282f246b87586745b",
+          "timestamp": "2025-09-24T00:47:20.277275Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:47:20.277275Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "29500c5486bd25537d482490c2dfaaebaa31b99155942ce688a6dfcab04d7f3e"
+        },
+        {
+          "index": 121,
+          "previous_hash": "29500c5486bd25537d482490c2dfaaebaa31b99155942ce688a6dfcab04d7f3e",
+          "timestamp": "2025-09-24T00:47:50.285585Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:47:50.285585Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "63e18894f5e2c811b893d3c82c17e4647337559f799a9700d49f7a5286331358"
+        },
+        {
+          "index": 122,
+          "previous_hash": "63e18894f5e2c811b893d3c82c17e4647337559f799a9700d49f7a5286331358",
+          "timestamp": "2025-09-24T00:48:20.283059Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:48:20.283059Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "622fb8265e4768a8f5d52c7c5533ef3ee3aced17f86b6ea446759cf80b16b0c6"
+        },
+        {
+          "index": 123,
+          "previous_hash": "622fb8265e4768a8f5d52c7c5533ef3ee3aced17f86b6ea446759cf80b16b0c6",
+          "timestamp": "2025-09-24T00:48:50.286991Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:48:50.286991Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5a4425ef958694e07770623597f2d8278d9a1b5057ce44c6b33278cf58b70a23"
+        },
+        {
+          "index": 124,
+          "previous_hash": "5a4425ef958694e07770623597f2d8278d9a1b5057ce44c6b33278cf58b70a23",
+          "timestamp": "2025-09-24T00:49:20.275188Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:49:20.275188Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "7e9fc3ccc0559817c5f154ef1873b605a1977776a51145915392281103617a0a"
+        },
+        {
+          "index": 125,
+          "previous_hash": "7e9fc3ccc0559817c5f154ef1873b605a1977776a51145915392281103617a0a",
+          "timestamp": "2025-09-24T00:49:50.280415Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:49:50.280415Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a24b89718ef6079af700e7585dc23acbd0b9193e09f2d929a2242390a5bee8d3"
+        },
+        {
+          "index": 126,
+          "previous_hash": "a24b89718ef6079af700e7585dc23acbd0b9193e09f2d929a2242390a5bee8d3",
+          "timestamp": "2025-09-24T00:50:20.275261Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:50:20.275261Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b2c8383e07b595eeb904ddf438dd0b56f117e6649cf4c5339a67dfb163745379"
+        },
+        {
+          "index": 127,
+          "previous_hash": "b2c8383e07b595eeb904ddf438dd0b56f117e6649cf4c5339a67dfb163745379",
+          "timestamp": "2025-09-24T00:50:50.285098Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:50:50.285098Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "170aef688b0230561ab0d167471bcec408ce2d04fb8c7b2e1b0254a8e96863f0"
+        },
+        {
+          "index": 128,
+          "previous_hash": "170aef688b0230561ab0d167471bcec408ce2d04fb8c7b2e1b0254a8e96863f0",
+          "timestamp": "2025-09-24T00:51:20.288447Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:51:20.288447Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "425d227179e6db31b047b7f4b7636db93e836e685d9b66694577070130d1cc00"
+        },
+        {
+          "index": 129,
+          "previous_hash": "425d227179e6db31b047b7f4b7636db93e836e685d9b66694577070130d1cc00",
+          "timestamp": "2025-09-24T00:51:50.285095Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:51:50.285095Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "27c6f82dfa503984cd006c9551ee4c241aa9d6f10973857e77a544488e7758e8"
+        },
+        {
+          "index": 130,
+          "previous_hash": "27c6f82dfa503984cd006c9551ee4c241aa9d6f10973857e77a544488e7758e8",
+          "timestamp": "2025-09-24T00:52:20.289994Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:52:20.289994Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "89c9ac746cbf9604e719133924a30065c0798d40c4931ef92864a83b0ac82a28"
+        },
+        {
+          "index": 131,
+          "previous_hash": "89c9ac746cbf9604e719133924a30065c0798d40c4931ef92864a83b0ac82a28",
+          "timestamp": "2025-09-24T00:52:50.294373Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:52:50.294373Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "dbba2d818b3479eed9ee7d8e7ffaefbe99a22323d6293029864c6c6513c2d42f"
+        },
+        {
+          "index": 132,
+          "previous_hash": "dbba2d818b3479eed9ee7d8e7ffaefbe99a22323d6293029864c6c6513c2d42f",
+          "timestamp": "2025-09-24T00:53:20.302712Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:53:20.302712Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "18acf39fe31b67ab568c5ca0c43c5e936b40f3f062218849a1b0394672a2a9de"
+        },
+        {
+          "index": 133,
+          "previous_hash": "18acf39fe31b67ab568c5ca0c43c5e936b40f3f062218849a1b0394672a2a9de",
+          "timestamp": "2025-09-24T00:53:50.298254Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:53:50.298254Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "7995e55e17ba90c2a744d321000597b8a0d8ac0f6d26222f99e4db2f2679741c"
+        },
+        {
+          "index": 134,
+          "previous_hash": "7995e55e17ba90c2a744d321000597b8a0d8ac0f6d26222f99e4db2f2679741c",
+          "timestamp": "2025-09-24T00:54:20.311728Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:54:20.311728Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8448c8b18a35a2e1de51a2c1a5f0b2c9b4f2461948d2c41b05618b442d79b0f0"
+        },
+        {
+          "index": 135,
+          "previous_hash": "8448c8b18a35a2e1de51a2c1a5f0b2c9b4f2461948d2c41b05618b442d79b0f0",
+          "timestamp": "2025-09-24T00:54:50.312017Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:54:50.312017Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "27a532070a1bce11bb56d0f3d1f5660f559b62a14c9bc3b2391f4e7e1ee62fff"
+        },
+        {
+          "index": 136,
+          "previous_hash": "27a532070a1bce11bb56d0f3d1f5660f559b62a14c9bc3b2391f4e7e1ee62fff",
+          "timestamp": "2025-09-24T00:55:20.308407Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:55:20.308407Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2d345edb04fb13622bf69e0a7cf271c0b1060c1c57a782a24922a7efc641fe8c"
+        },
+        {
+          "index": 137,
+          "previous_hash": "2d345edb04fb13622bf69e0a7cf271c0b1060c1c57a782a24922a7efc641fe8c",
+          "timestamp": "2025-09-24T00:55:50.317358Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:55:50.317358Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "24140ec2cf72f11d0c1208d77b0138159ca74928879e2916580829c1b34060e6"
+        },
+        {
+          "index": 138,
+          "previous_hash": "24140ec2cf72f11d0c1208d77b0138159ca74928879e2916580829c1b34060e6",
+          "timestamp": "2025-09-24T00:56:20.324693Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:56:20.324693Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "ba11cdfb3f7f4173b2729a842ecbe1395a9a34d2a32df7a6e7166c5d3987f9e7"
+        },
+        {
+          "index": 139,
+          "previous_hash": "ba11cdfb3f7f4173b2729a842ecbe1395a9a34d2a32df7a6e7166c5d3987f9e7",
+          "timestamp": "2025-09-24T00:56:50.323794Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:56:50.323794Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "44f8417e80763e933ad64ef80174f7dd37e9f9fc7085a84e6c8ef89379abdfb3"
+        },
+        {
+          "index": 140,
+          "previous_hash": "44f8417e80763e933ad64ef80174f7dd37e9f9fc7085a84e6c8ef89379abdfb3",
+          "timestamp": "2025-09-24T00:57:20.332011Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:57:20.332011Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8326de018e4d90e0e808188a4fc9020824c1987f4406553a34999e666325d4bd"
+        },
+        {
+          "index": 141,
+          "previous_hash": "8326de018e4d90e0e808188a4fc9020824c1987f4406553a34999e666325d4bd",
+          "timestamp": "2025-09-24T00:57:50.335071Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:57:50.335071Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c4e868f76ff15251fb4e8b393b2d3e1be51a7de253646028e7da7611d39eeaa3"
+        },
+        {
+          "index": 142,
+          "previous_hash": "c4e868f76ff15251fb4e8b393b2d3e1be51a7de253646028e7da7611d39eeaa3",
+          "timestamp": "2025-09-24T00:58:20.323296Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:58:20.323296Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "8defdfcb8f3235534e4505e01561ff1a1efc319ce62619687da2c32c09685abf"
+        },
+        {
+          "index": 143,
+          "previous_hash": "8defdfcb8f3235534e4505e01561ff1a1efc319ce62619687da2c32c09685abf",
+          "timestamp": "2025-09-24T00:58:50.325644Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:58:50.325644Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5c4ae7d18abc77f11f1036cdc3d6a986447aa2208a9e0c2d993e25ee21a9513a"
+        },
+        {
+          "index": 144,
+          "previous_hash": "5c4ae7d18abc77f11f1036cdc3d6a986447aa2208a9e0c2d993e25ee21a9513a",
+          "timestamp": "2025-09-24T00:59:20.325713Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:59:20.325713Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "afbb18b60a0bcd611c845fd5849ee5997fe21832f51f0c33384ae0885e4401a4"
+        },
+        {
+          "index": 145,
+          "previous_hash": "afbb18b60a0bcd611c845fd5849ee5997fe21832f51f0c33384ae0885e4401a4",
+          "timestamp": "2025-09-24T00:59:50.331348Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T00:59:50.331348Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "60b9ca24943a576bb802003e432ad8e0d4c97b468b151d4142b5f4edff56e949"
+        },
+        {
+          "index": 146,
+          "previous_hash": "60b9ca24943a576bb802003e432ad8e0d4c97b468b151d4142b5f4edff56e949",
+          "timestamp": "2025-09-24T01:00:20.331233Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:00:20.331233Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "52292f3009ea5c869bbf94da726fe147f520e41c793540372384be4bc38ccd36"
+        },
+        {
+          "index": 147,
+          "previous_hash": "52292f3009ea5c869bbf94da726fe147f520e41c793540372384be4bc38ccd36",
+          "timestamp": "2025-09-24T01:00:50.334804Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:00:50.334804Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "59fe6c241d5a8b6e4142905b1aead53526f96860947a34f392241943b5269530"
+        },
+        {
+          "index": 148,
+          "previous_hash": "59fe6c241d5a8b6e4142905b1aead53526f96860947a34f392241943b5269530",
+          "timestamp": "2025-09-24T01:01:20.323037Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:01:20.323037Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6bd4db4c76ace6e07ecdf42f1f8a959af20d0daa119e5f5d9068b1b76be73763"
+        },
+        {
+          "index": 149,
+          "previous_hash": "6bd4db4c76ace6e07ecdf42f1f8a959af20d0daa119e5f5d9068b1b76be73763",
+          "timestamp": "2025-09-24T01:01:50.334392Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:01:50.334392Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c1688aec8b4bc265f874ddbe02fc2018e82a23a6684f2490276d454d59b1df0a"
+        },
+        {
+          "index": 150,
+          "previous_hash": "c1688aec8b4bc265f874ddbe02fc2018e82a23a6684f2490276d454d59b1df0a",
+          "timestamp": "2025-09-24T01:02:20.322501Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:02:20.322501Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "829667fe2658ceb17984f67498724e0f23c0317c10432cba827de06057403248"
+        },
+        {
+          "index": 151,
+          "previous_hash": "829667fe2658ceb17984f67498724e0f23c0317c10432cba827de06057403248",
+          "timestamp": "2025-09-24T01:02:50.337028Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:02:50.337028Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c187b7cae164e7a65f4e489e41099ad73a27f0a7fded5d8062bc680810e48292"
+        },
+        {
+          "index": 152,
+          "previous_hash": "c187b7cae164e7a65f4e489e41099ad73a27f0a7fded5d8062bc680810e48292",
+          "timestamp": "2025-09-24T01:03:20.323611Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:03:20.323611Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a78ea755700473a4485fa984db474d7cc6aa3e26feab3ef53aabdd43c404f74c"
+        },
+        {
+          "index": 153,
+          "previous_hash": "a78ea755700473a4485fa984db474d7cc6aa3e26feab3ef53aabdd43c404f74c",
+          "timestamp": "2025-09-24T01:03:50.328882Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:03:50.328882Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f71d258b5bdfda9eae78162255ed86324b4964a1bed7cdacc65f4426f04d5c8e"
+        },
+        {
+          "index": 154,
+          "previous_hash": "f71d258b5bdfda9eae78162255ed86324b4964a1bed7cdacc65f4426f04d5c8e",
+          "timestamp": "2025-09-24T01:04:20.331202Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:04:20.331202Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6025a1f52d098f9cb7cbd689b5683f1af275617b218f2a09d44549b6d5a05142"
+        },
+        {
+          "index": 155,
+          "previous_hash": "6025a1f52d098f9cb7cbd689b5683f1af275617b218f2a09d44549b6d5a05142",
+          "timestamp": "2025-09-24T01:04:50.331221Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:04:50.331221Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "d550fd439599fa23c93476407e5f14ecc5d59e436ac750b6c730d17df9abadf3"
+        },
+        {
+          "index": 156,
+          "previous_hash": "d550fd439599fa23c93476407e5f14ecc5d59e436ac750b6c730d17df9abadf3",
+          "timestamp": "2025-09-24T01:05:20.324124Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:05:20.324124Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "066db130608dce842fd3ba4d8a300ed32cebffc60c441b1d197b5b3e235cb4b4"
+        },
+        {
+          "index": 157,
+          "previous_hash": "066db130608dce842fd3ba4d8a300ed32cebffc60c441b1d197b5b3e235cb4b4",
+          "timestamp": "2025-09-24T01:05:50.331634Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:05:50.331634Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "3323fbdb3f04215e40837bea51e577bd1ea08507b9fc6c324847216b7dc63cae"
+        },
+        {
+          "index": 158,
+          "previous_hash": "3323fbdb3f04215e40837bea51e577bd1ea08507b9fc6c324847216b7dc63cae",
+          "timestamp": "2025-09-24T01:06:20.328007Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:06:20.328007Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "cdb61b318b81bb49d138dbd1e6fad589e9363a659cf28c09d50e5e3aeda1a022"
+        },
+        {
+          "index": 159,
+          "previous_hash": "cdb61b318b81bb49d138dbd1e6fad589e9363a659cf28c09d50e5e3aeda1a022",
+          "timestamp": "2025-09-24T01:06:50.326387Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:06:50.326387Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "55f3cf3dfbed33cc62a0e2943bdba8af64647afbbe5438d2d70466a973384d64"
+        },
+        {
+          "index": 160,
+          "previous_hash": "55f3cf3dfbed33cc62a0e2943bdba8af64647afbbe5438d2d70466a973384d64",
+          "timestamp": "2025-09-24T01:07:20.325256Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:07:20.325256Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "614e6ac9e6d5d289ad0f56936db4d5967695467ca2acb4ea43e150faab3bebfc"
+        },
+        {
+          "index": 161,
+          "previous_hash": "614e6ac9e6d5d289ad0f56936db4d5967695467ca2acb4ea43e150faab3bebfc",
+          "timestamp": "2025-09-24T01:07:50.329057Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:07:50.329057Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "6d6a012b0c34f89ad6967e2229a07b4a9e3d4c4503d6e6a359ce9a9e85ba60aa"
+        },
+        {
+          "index": 162,
+          "previous_hash": "6d6a012b0c34f89ad6967e2229a07b4a9e3d4c4503d6e6a359ce9a9e85ba60aa",
+          "timestamp": "2025-09-24T01:08:20.337883Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:08:20.337883Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a069f1d5201dda96ce937daa11e82a4c39d5dfe05bc9a6e60224bbef178f8e89"
+        },
+        {
+          "index": 163,
+          "previous_hash": "a069f1d5201dda96ce937daa11e82a4c39d5dfe05bc9a6e60224bbef178f8e89",
+          "timestamp": "2025-09-24T01:08:50.359175Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:08:50.359175Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "1e8823fc9a7f70afb8060eda1a5514823d3a3ce359eee3dcf32e7d6af264fe00"
+        },
+        {
+          "index": 164,
+          "previous_hash": "1e8823fc9a7f70afb8060eda1a5514823d3a3ce359eee3dcf32e7d6af264fe00",
+          "timestamp": "2025-09-24T01:09:20.357643Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:09:20.357643Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "900abe7b0dcf01be0f18a630b5f38e4490aed1ec60d0f8dc62fc81fadbd3af53"
+        },
+        {
+          "index": 165,
+          "previous_hash": "900abe7b0dcf01be0f18a630b5f38e4490aed1ec60d0f8dc62fc81fadbd3af53",
+          "timestamp": "2025-09-24T01:09:50.354305Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:09:50.354305Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f59edecde9c5ee293e8aef85b04142df90516f8df186163c6688619cdace24f6"
+        },
+        {
+          "index": 166,
+          "previous_hash": "f59edecde9c5ee293e8aef85b04142df90516f8df186163c6688619cdace24f6",
+          "timestamp": "2025-09-24T01:10:20.367848Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:10:20.367848Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "808615afb07df81ad5ffbd7d5144548ab1a59877cff35c701327fb91c2db7846"
+        },
+        {
+          "index": 167,
+          "previous_hash": "808615afb07df81ad5ffbd7d5144548ab1a59877cff35c701327fb91c2db7846",
+          "timestamp": "2025-09-24T01:10:50.365170Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:10:50.365170Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "71a4e1bda78baa47b77c0127fe61aa302600b2980fcc68cc5e50445b59e92507"
+        },
+        {
+          "index": 168,
+          "previous_hash": "71a4e1bda78baa47b77c0127fe61aa302600b2980fcc68cc5e50445b59e92507",
+          "timestamp": "2025-09-24T01:11:20.354960Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:11:20.354960Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "19f9881f3fdc2a293f0b36a2739789dad86ffe91a1578943f916c1e156fc6bf5"
+        },
+        {
+          "index": 169,
+          "previous_hash": "19f9881f3fdc2a293f0b36a2739789dad86ffe91a1578943f916c1e156fc6bf5",
+          "timestamp": "2025-09-24T01:11:50.361408Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:11:50.361408Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "b732a7b7287cae2cad55d1a3b702bc700930a2f777a2b9a42f103409a85a14e8"
+        },
+        {
+          "index": 170,
+          "previous_hash": "b732a7b7287cae2cad55d1a3b702bc700930a2f777a2b9a42f103409a85a14e8",
+          "timestamp": "2025-09-24T01:12:20.364218Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:12:20.364218Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "30b20a2bb2d26d4e88066494d780d44e9ef45446c52670eb52879a3487e9eed9"
+        },
+        {
+          "index": 171,
+          "previous_hash": "30b20a2bb2d26d4e88066494d780d44e9ef45446c52670eb52879a3487e9eed9",
+          "timestamp": "2025-09-24T01:12:50.355671Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:12:50.355671Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "88e63ea7ddbe5e9ed57948acd6c16280f41b791a0710c2321fb9b786b8d75b6d"
+        },
+        {
+          "index": 172,
+          "previous_hash": "88e63ea7ddbe5e9ed57948acd6c16280f41b791a0710c2321fb9b786b8d75b6d",
+          "timestamp": "2025-09-24T01:13:20.360965Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:13:20.359968Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "cd127be55483448aee10dc57add201fc9918670527707b02da3c59cdb0cdf810"
+        },
+        {
+          "index": 173,
+          "previous_hash": "cd127be55483448aee10dc57add201fc9918670527707b02da3c59cdb0cdf810",
+          "timestamp": "2025-09-24T01:14:14.937648Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:14:14.937648Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "4d69fefec8f8798ffafea3e0ba2f23236df744142f341287f2e8e8a95e7725fc"
+        },
+        {
+          "index": 174,
+          "previous_hash": "4d69fefec8f8798ffafea3e0ba2f23236df744142f341287f2e8e8a95e7725fc",
+          "timestamp": "2025-09-24T01:14:44.942004Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:14:44.940999Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "525043c638d3cc26dda02d8263004563a3f2e74ebcfbcee816a5ede3b6859bf9"
+        },
+        {
+          "index": 175,
+          "previous_hash": "525043c638d3cc26dda02d8263004563a3f2e74ebcfbcee816a5ede3b6859bf9",
+          "timestamp": "2025-09-24T01:15:14.943031Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:15:14.943031Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "fdc2b8f1fd257ff31872d46d255004d661981f18e18c6a889834b8b581f9c60c"
+        },
+        {
+          "index": 176,
+          "previous_hash": "fdc2b8f1fd257ff31872d46d255004d661981f18e18c6a889834b8b581f9c60c",
+          "timestamp": "2025-09-24T01:15:44.940529Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:15:44.939820Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "3518aa71ab5deaadcada77160d0761f651a92133eb7ef79bd4151c5d2bdb7b7c"
+        },
+        {
+          "index": 177,
+          "previous_hash": "3518aa71ab5deaadcada77160d0761f651a92133eb7ef79bd4151c5d2bdb7b7c",
+          "timestamp": "2025-09-24T01:16:14.935231Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:16:14.935231Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "5b6ea5546919addacb191bf39eca8b8470c7f750a323f78cf1e4beaf37320bc0"
+        },
+        {
+          "index": 178,
+          "previous_hash": "5b6ea5546919addacb191bf39eca8b8470c7f750a323f78cf1e4beaf37320bc0",
+          "timestamp": "2025-09-24T01:16:44.952942Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:16:44.952942Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2bd7860cb5da2077e064c307c4915f5a5afc4eb159f7bde59bcd51d4f62c2c37"
+        },
+        {
+          "index": 179,
+          "previous_hash": "2bd7860cb5da2077e064c307c4915f5a5afc4eb159f7bde59bcd51d4f62c2c37",
+          "timestamp": "2025-09-24T01:16:47.356071Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T18:16:47.333623Z",
+            "note": "Timer fix validation test"
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "ceb808e4bef1e9f286625f1b871e46645f1c09723566b74de14cf00dde23b77e"
+        },
+        {
+          "index": 180,
+          "previous_hash": "ceb808e4bef1e9f286625f1b871e46645f1c09723566b74de14cf00dde23b77e",
+          "timestamp": "2025-09-24T01:17:14.956172Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:17:14.955168Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "d4a9713e46f52f9ea1bc10540f981d7e0f7acd2fd8822b596a0b0e6c40f313e7"
+        },
+        {
+          "index": 181,
+          "previous_hash": "d4a9713e46f52f9ea1bc10540f981d7e0f7acd2fd8822b596a0b0e6c40f313e7",
+          "timestamp": "2025-09-24T01:17:44.952437Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:17:44.952437Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c4f9c71b354df337534addbc1bb639f6e2d59345615301ec0eae1f98c77bb934"
+        },
+        {
+          "index": 182,
+          "previous_hash": "c4f9c71b354df337534addbc1bb639f6e2d59345615301ec0eae1f98c77bb934",
+          "timestamp": "2025-09-24T01:18:38.004337Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-23T18:18:37.981480Z",
+            "note": "Timer fix validation test"
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e75a184ec3ff4e11cafbacffd5222c8dc94171392b6c119b7b354bc3189edad3"
+        },
+        {
+          "index": 183,
+          "previous_hash": "e75a184ec3ff4e11cafbacffd5222c8dc94171392b6c119b7b354bc3189edad3",
+          "timestamp": "2025-09-24T01:20:51.955720Z",
+          "data": {
+            "contract_type": "genesis_contract",
+            "title": "The Genesis Contract - Constitution of the Republic",
+            "version": "1.0",
+            "articles_count": 18,
+            "recorded_by": "test_user@example.com",
+            "action": "genesis_contract_creation",
+            "timestamp": "2025-09-24T01:20:51.933406Z",
+            "description": "Testing Genesis Contract recording with correct parameters"
+          },
+          "validator": "test_user@example.com",
+          "signature": "UNSIGNED",
+          "hash": "78d7b3ee73e5fa28c80ccb218177ac917b76b414e49ff37ebc227badd574939a"
+        },
+        {
+          "index": 184,
+          "previous_hash": "78d7b3ee73e5fa28c80ccb218177ac917b76b414e49ff37ebc227badd574939a",
+          "timestamp": "2025-09-24T01:20:51.970061Z",
+          "data": {
+            "contract_type": "genesis_contract",
+            "action": "contract_acceptance",
+            "user_email": "citizen@example.com",
+            "user_name": "Test Citizen",
+            "contract_version": "1.0",
+            "timestamp": "2025-09-24T01:20:51.968713Z",
+            "ip_address": "localhost",
+            "description": "Testing contract acceptance with correct parameters"
+          },
+          "validator": "citizen@example.com",
+          "signature": "UNSIGNED",
+          "hash": "ea7957e67604e5441a2ed46b2e19dbeb36f9e0f5e72a34e792cd80656a3c5d35"
+        },
+        {
+          "index": 185,
+          "previous_hash": "ea7957e67604e5441a2ed46b2e19dbeb36f9e0f5e72a34e792cd80656a3c5d35",
+          "timestamp": "2025-09-24T01:20:51.992635Z",
+          "data": {
+            "action": "hierarchical_contract_acceptance",
+            "user_email": "hierarchical_user@example.com",
+            "jurisdiction": "Test Jurisdiction",
+            "contracts_accepted": 5,
+            "total_contracts": 5,
+            "genesis_contract_acknowledged": true,
+            "constitutional_compliance": true,
+            "timestamp": "2025-09-24T01:20:51.986316Z",
+            "description": "Testing hierarchical contract acceptance with correct parameters"
+          },
+          "validator": "hierarchical_user@example.com",
+          "signature": "UNSIGNED",
+          "hash": "0609680028e50f671ee769d8636dcad30193f14e2c2e5fcbdf91e848231e8c2d"
+        },
+        {
+          "index": 186,
+          "previous_hash": "0609680028e50f671ee769d8636dcad30193f14e2c2e5fcbdf91e848231e8c2d",
+          "timestamp": "2025-09-24T01:22:44.961388Z",
+          "data": {
+            "contract_type": "genesis_contract",
+            "title": "The Genesis Contract - Constitution of the Republic",
+            "version": "1.0",
+            "articles_count": 18,
+            "content_hash": 1612748302904612205,
+            "recorded_by": "system",
+            "action": "genesis_contract_creation",
+            "timestamp": "2025-09-24T01:22:44.961388Z",
+            "description": "Recording the foundational Genesis Contract establishing the constitutional framework of the Republic"
+          },
+          "validator": "system",
+          "signature": "UNSIGNED",
+          "hash": "26d99ceb339067d54a83a63b9fbe4558ab0ab5c31bbe88eede9c4f12ae30dd79"
+        },
+        {
+          "index": 187,
+          "previous_hash": "26d99ceb339067d54a83a63b9fbe4558ab0ab5c31bbe88eede9c4f12ae30dd79",
+          "timestamp": "2025-09-24T01:23:08.997103Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:23:08.996097Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f228e12538ece026bec1a0905fb3c1ebe8cd37ca884453068161319364a705c0"
+        },
+        {
+          "index": 188,
+          "previous_hash": "f228e12538ece026bec1a0905fb3c1ebe8cd37ca884453068161319364a705c0",
+          "timestamp": "2025-09-24T01:23:18.509030Z",
+          "data": {
+            "contract_type": "genesis_contract",
+            "title": "The Genesis Contract - Constitution of the Republic",
+            "version": "1.0",
+            "articles_count": 18,
+            "content_hash": 1612748302904612205,
+            "recorded_by": "founder@civicengagementai.org",
+            "action": "genesis_contract_creation",
+            "timestamp": "2025-09-24T01:23:18.508027Z",
+            "description": "Recording the foundational Genesis Contract establishing the constitutional framework of the Republic"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "TxixdcaMnWf75vo9hSj79ett07CzRNiYVBbOdFDMWhTDeaOm6oFG7aXDKcdSQUQ+j/tjpXH8enTfCKR/FImmJZ7IFUcpG+3T1Ivfn2A9rZH6iJnN3HIwiAsG2ZVGBc4qwcnpSkHK5S2ADp+/Aa1ubTwylBLetcws29UsDsxdfCzbnGuk7D2MH5hLrFgRqw3pS9Lt11E/huhmYDGXDUN7D/9fIxN3SsheOIh6SbS2b0J/2C+b3C/nuyIeEueeeGiN6MP1lCdwFh9RURLKfkyubo9EPH58fr/Nna5kCGaGxujBqf6TK3tJ0Z6XuhLYrkKZahLZAnCSzUwtUmtUehHf0Q==",
+          "hash": "bcf8bc78e3a53292f33541be2cd0054d9923934a1cf79053c4bd3b1f8df7aa28"
+        },
+        {
+          "index": 189,
+          "previous_hash": "bcf8bc78e3a53292f33541be2cd0054d9923934a1cf79053c4bd3b1f8df7aa28",
+          "timestamp": "2025-09-24T01:23:19.838046Z",
+          "data": {
+            "contract_type": "genesis_contract",
+            "action": "contract_acceptance",
+            "user_email": "founder@civicengagementai.org",
+            "user_name": "Steve Cornell",
+            "timestamp": "2025-09-24T01:23:19.827976Z",
+            "contract_version": "1.0",
+            "ip_address": "localhost",
+            "description": "Citizen founder@civicengagementai.org has reviewed and accepted the Genesis Contract"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "La/Q24bCnBqaMkqeXYwY/+DJy8sz6nRJAb/fTrdq96BsPaB7sDQVIR8C74y/YflXDfV5hv3z0JzmVLdusi6xtw9aROTyaEzAjxbStZjsS+qVH6ta7oO2ANU5wrp9rluOH2qWakjRtwU6VXsBU4kcLvImkAxZ3hc4cz1wEHF/EhaXt6amx8ozjZ23+NhUZMXVpm8yklqxOG3YVA8mNVZqMS3P000+cwZ+pC1a6kcjB5x9SWhZuyyQ4gTrj3QBP3k0xUN0p1r5fT8tJoQ8QV7yZHxEdIif6rKaTEXxkuWAE64QiL+xTsK9n44hGJ3DKrxB2g3gqQq1ZLpPU3VXWT4VRg==",
+          "hash": "09c0c89ebb7d7e656ad99617d62ee0a22a6f6d1d8488c09f1a080b0233d6f319"
+        },
+        {
+          "index": 190,
+          "previous_hash": "09c0c89ebb7d7e656ad99617d62ee0a22a6f6d1d8488c09f1a080b0233d6f319",
+          "timestamp": "2025-09-24T01:23:39.016155Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:23:39.016155Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "11f90ece5cfe2cabae82aa8025d0e309e183a1fa1f43a35ee3042dd88280c5d2"
+        },
+        {
+          "index": 191,
+          "previous_hash": "11f90ece5cfe2cabae82aa8025d0e309e183a1fa1f43a35ee3042dd88280c5d2",
+          "timestamp": "2025-09-24T01:36:53.628512Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:36:53.627509Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "f0ce14bf9ef8f4a763691e846afc4868a4fe17ad625e6b2d170c1ee01193a6b5"
+        },
+        {
+          "index": 192,
+          "previous_hash": "f0ce14bf9ef8f4a763691e846afc4868a4fe17ad625e6b2d170c1ee01193a6b5",
+          "timestamp": "2025-09-24T01:37:23.630008Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:37:23.630008Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "953d9547f8691ce78b7d7d0ff2880ed948b9b0a92d847891a977df832f76edfe"
+        },
+        {
+          "index": 193,
+          "previous_hash": "953d9547f8691ce78b7d7d0ff2880ed948b9b0a92d847891a977df832f76edfe",
+          "timestamp": "2025-09-24T01:37:43.324619Z",
+          "data": {
+            "action": "contract_amendment_proposed",
+            "amendment_id": "AMD_20250924_013743_0000",
+            "article_section": "ARTICLE I.1.A",
+            "change_type": "modification",
+            "jurisdiction_level": "city",
+            "jurisdiction_name": "Springfield, Illinois",
+            "proposer_email": "test_citizen@example.com",
+            "status": "submitted",
+            "timestamp": "2025-09-24T01:37:43.300457Z",
+            "description": "Contract amendment amendment_proposed: ARTICLE I.1.A in Springfield, Illinois"
+          },
+          "validator": "test_citizen@example.com",
+          "signature": "UNSIGNED",
+          "hash": "5e62403fc5bef7746f79cad9348f460491cdb24621ff3685cb97ba9129015c35"
+        },
+        {
+          "index": 194,
+          "previous_hash": "5e62403fc5bef7746f79cad9348f460491cdb24621ff3685cb97ba9129015c35",
+          "timestamp": "2025-09-24T01:37:43.352366Z",
+          "data": {
+            "action": "contract_debate_started",
+            "amendment_id": "AMD_20250924_013743_0000",
+            "article_section": "ARTICLE I.1.A",
+            "change_type": "modification",
+            "jurisdiction_level": "city",
+            "jurisdiction_name": "Springfield, Illinois",
+            "proposer_email": "test_citizen@example.com",
+            "status": "local_debate",
+            "timestamp": "2025-09-24T01:37:43.346558Z",
+            "description": "Contract amendment debate_started: ARTICLE I.1.A in Springfield, Illinois"
+          },
+          "validator": "test_citizen@example.com",
+          "signature": "UNSIGNED",
+          "hash": "677fb03e5f50dd667e7cd26b8f7ec3620b424208b951ffc9b9182e62ab14532c"
+        },
+        {
+          "index": 195,
+          "previous_hash": "677fb03e5f50dd667e7cd26b8f7ec3620b424208b951ffc9b9182e62ab14532c",
+          "timestamp": "2025-09-24T01:37:53.636648Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:37:53.634751Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "3d0dd3b28038c61d50ecc63838b4619db2b048beeb2b418bd88edc3049c05988"
+        },
+        {
+          "index": 196,
+          "previous_hash": "3d0dd3b28038c61d50ecc63838b4619db2b048beeb2b418bd88edc3049c05988",
+          "timestamp": "2025-09-24T01:38:23.634360Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:38:23.634360Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "562707cd946d2a818e3325df49d89a97d4786ce73010b8ab1e804c1c5b57999e"
+        },
+        {
+          "index": 197,
+          "previous_hash": "562707cd946d2a818e3325df49d89a97d4786ce73010b8ab1e804c1c5b57999e",
+          "timestamp": "2025-09-24T01:38:53.637698Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:38:53.636695Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "31289f7fa133c53ee8167a484aec7434c9669a41f48aaab5c2dc8954754fc326"
+        },
+        {
+          "index": 198,
+          "previous_hash": "31289f7fa133c53ee8167a484aec7434c9669a41f48aaab5c2dc8954754fc326",
+          "timestamp": "2025-09-24T01:39:23.640123Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:39:23.639068Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "53062b415c4471d7ab880310b6bf1dd93b419e4bf822c1f0563baaf2517d1d09"
+        },
+        {
+          "index": 199,
+          "previous_hash": "53062b415c4471d7ab880310b6bf1dd93b419e4bf822c1f0563baaf2517d1d09",
+          "timestamp": "2025-09-24T01:39:37.746002Z",
+          "data": {
+            "contract_type": "genesis_contract",
+            "action": "contract_acceptance",
+            "user_email": "founder@civicengagementai.org",
+            "user_name": "Steve Cornell",
+            "timestamp": "2025-09-24T01:39:37.746002Z",
+            "contract_version": "1.0",
+            "ip_address": "localhost",
+            "description": "Citizen founder@civicengagementai.org has reviewed and accepted the Genesis Contract"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "lW4J/sHscMZzpd0RqpXIoOHEWLwXlNWMgnaM8XtDJ9LaG6Kw/2Q78dx6d7nUGp1gcHqzvyh2I706lHNtg9kY2eJ+8lY1I6GkP4kprb8+bv7wcWY1Y+m6GyC9xUvqxUSi9WUJLkNIyUuEoziVEKFe1GYunI+EwASRlHSbhMlg0ZQ815moEM1+wlEE8I8yg/lhSeg9Nx0mLToDAt3kXZHe+I7hM1EApvV+vJA6NTgywTaVbeu280aPZjf/9CZerBOczr3kIKBih4aT0CsaX9nvBAdLVxm6O06PzdjMZDU1mLUHpiIwzuak8TcBkvAEsOfAvklbhptNt0rFs4ONQ7FNUA==",
+          "hash": "8cde770606bff8f1a373df1207c684bebed7df215736f9472963ff19ece42a73"
+        },
+        {
+          "index": 200,
+          "previous_hash": "8cde770606bff8f1a373df1207c684bebed7df215736f9472963ff19ece42a73",
+          "timestamp": "2025-09-24T01:39:42.826976Z",
+          "data": {
+            "contract_type": "genesis_contract",
+            "action": "contract_acceptance",
+            "user_email": "founder@civicengagementai.org",
+            "user_name": "Steve Cornell",
+            "timestamp": "2025-09-24T01:39:42.825954Z",
+            "contract_version": "1.0",
+            "ip_address": "localhost",
+            "description": "Citizen founder@civicengagementai.org has reviewed and accepted the Genesis Contract"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "mVv+prz43dsO2xWn2RA5a1FflRIE2mFfgNNaBmgF/sPoyOhY1qBcrBOjUEODoDtYHr4uHNlrR0ORdG3F+yREP79fy0gbRP1g6qR+8qpdAnFWHPet07GrQzdsOqdowjBmRtbOtatZm9N2WP/w22u+axVaKu1g5DtDsd5w5h5i/obtSOwXBlvaijuMuHTBJYixQO1HRyXyH6yszKwmUx3xmSuloshY37MspPUQBZBuT4sfw80BA4Bo7Kk6NKhEbd1rVTnXSE+OOWxqJV4ELaqaHK6kxvlxQzfTXzivY6hSmVFjV/dXMphgWpp8BJzTnATROqI2T68CklE2AjFbj83WiQ==",
+          "hash": "63b84bfd434b76bf465fdeaea5ceea81500083523a0a2ea92920729292e8c126"
+        },
+        {
+          "index": 201,
+          "previous_hash": "63b84bfd434b76bf465fdeaea5ceea81500083523a0a2ea92920729292e8c126",
+          "timestamp": "2025-09-24T01:39:53.651133Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:39:53.651133Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "1900f2297de41d005e1dcd6b3cf126ed7d488c889de473ead69ffebd314acb65"
+        },
+        {
+          "index": 202,
+          "previous_hash": "1900f2297de41d005e1dcd6b3cf126ed7d488c889de473ead69ffebd314acb65",
+          "timestamp": "2025-09-24T01:40:23.657127Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:40:23.655665Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "75adc3f26016ffe0dd045c0d02aecee8282465a19a7b8f9d06e2e30b23c3be2f"
+        },
+        {
+          "index": 203,
+          "previous_hash": "75adc3f26016ffe0dd045c0d02aecee8282465a19a7b8f9d06e2e30b23c3be2f",
+          "timestamp": "2025-09-24T01:40:53.671985Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:40:53.670750Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "d5f89e0fde8dd7bb5c1efbef6f32ced229c3b558cf69732dbf6fc22acfc5556c"
+        },
+        {
+          "index": 204,
+          "previous_hash": "d5f89e0fde8dd7bb5c1efbef6f32ced229c3b558cf69732dbf6fc22acfc5556c",
+          "timestamp": "2025-09-24T01:41:23.685366Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:41:23.685366Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "23fabef6a7a5c22e8258170e242858e1a5c80ee2f889207b1a7651346d81d322"
+        },
+        {
+          "index": 205,
+          "previous_hash": "23fabef6a7a5c22e8258170e242858e1a5c80ee2f889207b1a7651346d81d322",
+          "timestamp": "2025-09-24T01:41:53.684394Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:41:53.684394Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "0bd16af4956c4fddb1222d83aff22d35752e351c1bad1e6cea9c521a0229ebfa"
+        },
+        {
+          "index": 206,
+          "previous_hash": "0bd16af4956c4fddb1222d83aff22d35752e351c1bad1e6cea9c521a0229ebfa",
+          "timestamp": "2025-09-24T01:42:23.690260Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:42:23.690260Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "d2aee3e3fac5f6b0092c6cc813d35c4814d97815aecae1bb888e403644dade99"
+        },
+        {
+          "index": 207,
+          "previous_hash": "d2aee3e3fac5f6b0092c6cc813d35c4814d97815aecae1bb888e403644dade99",
+          "timestamp": "2025-09-24T01:42:53.691890Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:42:53.691890Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "c2bab3a75b67571c08018cc1d53924a50ffedb31fb867c0117600cfd0c8b54b8"
+        },
+        {
+          "index": 208,
+          "previous_hash": "c2bab3a75b67571c08018cc1d53924a50ffedb31fb867c0117600cfd0c8b54b8",
+          "timestamp": "2025-09-24T01:43:23.689945Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:43:23.688932Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "a129c4c4b502f64922492ebaef51ef5a80be3e2bccd5f434a1c1c8e4b4b2e13a"
+        },
+        {
+          "index": 209,
+          "previous_hash": "a129c4c4b502f64922492ebaef51ef5a80be3e2bccd5f434a1c1c8e4b4b2e13a",
+          "timestamp": "2025-09-24T01:44:04.825629Z",
+          "data": {
+            "action": "credit_reward",
+            "user": "founder@civicengagementai.org",
+            "credits": 2000,
+            "reason": "system_initialization",
+            "timestamp": "2025-09-24T01:44:04.800476Z"
+          },
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "f83167042ba9f35f41f0bdadd7657193514a426af3ec5d405733c9f222614e6f"
+        },
+        {
+          "index": 210,
+          "previous_hash": "f83167042ba9f35f41f0bdadd7657193514a426af3ec5d405733c9f222614e6f",
+          "timestamp": "2025-09-24T01:44:04.850507Z",
+          "data": {
+            "action": "credit_reward",
+            "user": "founder@civicengagementai.org",
+            "credits": 8000,
+            "reason": "founder_initialization",
+            "timestamp": "2025-09-24T01:44:04.849504Z"
+          },
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "f52be8a5be77736878c97f6c33bde89385a8a8f28965c6a092d80e03dea93f7f"
+        },
+        {
+          "index": 211,
+          "previous_hash": "f52be8a5be77736878c97f6c33bde89385a8a8f28965c6a092d80e03dea93f7f",
+          "timestamp": "2025-09-24T01:46:30.561718Z",
+          "data": {
+            "action": "register_user",
+            "user_email": "alice@test.com",
+            "first_name": "Alice",
+            "last_name": "Democracy",
+            "address": "123 Democracy St",
+            "city": "TestCity",
+            "state": "TestState",
+            "country": "TestCountry",
+            "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwWuCA3aFkaBeX84EP/Sd3MIX4m4h0uVt0xMiheuaBtMF4+pD9dEdV6OGzzL3ngqe2JdvXVK/5g+E9/B4Md4zlzrobPkHqSizbQ+qpBxIb1xOtT5hK2Ze7viD7j2hP3oudyN8BPBvVlqEyplDqSBf8HzITS/IVccobdRzBU9mEW69KCsQzJDxZLUnBBlAJZAD34Ick7YViEk1E37O+/09vIAX8aceFJ2ze7e1QZrE1d+3pOA3+hZh0TiiQbdNspzMs11tIbbhDfaxiver6a3V0nHN/loajl/A8/jO7Lim8W0CZAa6cse+5oc/veyh7H/cow9Ey7Mh0d82pH0/RKyrHwIDAQAB-----END PUBLIC KEY-----",
+            "roles": [
+              "Prospect Contract Citizen"
+            ],
+            "password_hash": "$2b$12$xXAGP6ojF6sAmsxMqgOicOmGwRKIiVYzO71HutcizX.J1evyJSaWe",
+            "id_document_hash": "ec5aabf1eda4a08badf096abc9435e4addf72ba8acc17c1801ddf5e3767fc5b6",
+            "timestamp": "2025-09-24T01:46:30.554452Z"
+          },
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "10e741329195c91b57872f4601124ed3579a26b0a51c5a8ebe12650b7ac78d12"
+        },
+        {
+          "index": 212,
+          "previous_hash": "10e741329195c91b57872f4601124ed3579a26b0a51c5a8ebe12650b7ac78d12",
+          "timestamp": "2025-09-24T01:46:37.704901Z",
+          "data": {
+            "action": "transaction",
+            "sender": "founder@civicengagementai.org",
+            "receiver": "alice@test.com",
+            "amount": 9.95,
+            "fee": 0.05,
+            "tx_type": "test_credit_generation",
+            "metadata": {
+              "test": true
+            },
+            "timestamp": "2025-09-24T01:46:37.678728Z"
+          },
+          "validator": "founder@civicengagementai.org",
+          "signature": "LzWUC/087CBnPDAclPFTnk6rty4CTHl+yfD5O1jd9eGLNw18waK65se9L9uk3phzWwP2LzIFb2f+wMsDNAuu3RuZ7z6Bt3zN6WZGDdUY1e5AcmUfDsbkY0iYNtY8VoLOTs+cUVy6q2icY2IurC24IzKTUQDOKlBkebLKIJKwp6IBLxphdhOisy400QwKPlVW8yCTzf1Xz2Jh+9eIGblP5uEmkX4IJ+KOrxYkztF2DnBwsa8dYDtcXJZMFHljrMK8/aUwmmO/Tl8lExpW5UkdGjSA4WY207RUfTfBnvm80fmJlR+X/wjIqBydrkEUhYssMK4oi94WwYYpUQPv/aSVqQ==",
+          "hash": "d33316f8820c564e4a7d7171f652d712b7df7135bbcdba5a6d6058103da0f7fc"
+        },
+        {
+          "index": 213,
+          "previous_hash": "d33316f8820c564e4a7d7171f652d712b7df7135bbcdba5a6d6058103da0f7fc",
+          "timestamp": "2025-09-24T01:46:37.763065Z",
+          "data": {
+            "action": "network_fee",
+            "from_tx": "2025-09-24T01:46:37.678728Z",
+            "amount": 0.05,
+            "pool": "network_pool",
+            "timestamp": "2025-09-24T01:46:37.678728Z"
+          },
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "6fcd8f1cc83d14393f2a26dd25d778bfa7681960767ff9b5d6937739aab9bdc9"
+        },
+        {
+          "index": 214,
+          "previous_hash": "6fcd8f1cc83d14393f2a26dd25d778bfa7681960767ff9b5d6937739aab9bdc9",
+          "timestamp": "2025-09-24T01:46:37.782950Z",
+          "data": {
+            "action": "credit_reward",
+            "user": "founder@civicengagementai.org",
+            "credits": 100,
+            "reason": "network_participation",
+            "timestamp": "2025-09-24T01:46:37.678728Z"
+          },
+          "validator": "SYSTEM",
+          "signature": "SYSTEM",
+          "hash": "1c2995d3e23565a3f9d7885ac9f58f05500211a67ff8f11a6bad9aa1f2bb351b"
+        },
+        {
+          "index": 215,
+          "previous_hash": "1c2995d3e23565a3f9d7885ac9f58f05500211a67ff8f11a6bad9aa1f2bb351b",
+          "timestamp": "2025-09-24T01:47:37.224777Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:47:37.223775Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "335cd0560c424ef5b89eaf060a8b926a281fe737c1781f13b1fdcfcacd3a9fa9"
+        },
+        {
+          "index": 216,
+          "previous_hash": "335cd0560c424ef5b89eaf060a8b926a281fe737c1781f13b1fdcfcacd3a9fa9",
+          "timestamp": "2025-09-24T01:48:07.234527Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:48:07.233520Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "05d5a960d010578af9e8a90e0a9c13e844f6f33608969e838e3ee739cd706bb1"
+        },
+        {
+          "index": 217,
+          "previous_hash": "05d5a960d010578af9e8a90e0a9c13e844f6f33608969e838e3ee739cd706bb1",
+          "timestamp": "2025-09-24T01:48:37.230260Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:48:37.230260Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "41862c9ca6544225d3b1a1e28432e9f790f00fdd8b7c6bc6e318eff980e0aaf1"
+        },
+        {
+          "index": 218,
+          "previous_hash": "41862c9ca6544225d3b1a1e28432e9f790f00fdd8b7c6bc6e318eff980e0aaf1",
+          "timestamp": "2025-09-24T01:49:07.247052Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:49:07.247052Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "e2868351efd06a5e53e12545164412517471e373c49abf4e8d973cc866a21a12"
+        },
+        {
+          "index": 219,
+          "previous_hash": "e2868351efd06a5e53e12545164412517471e373c49abf4e8d973cc866a21a12",
+          "timestamp": "2025-09-24T01:49:37.250051Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:49:37.250051Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "7cee16e07d5e76bd3f9bfecd78c623ffa78d6dc81e14621fcac294996fcc3092"
+        },
+        {
+          "index": 220,
+          "previous_hash": "7cee16e07d5e76bd3f9bfecd78c623ffa78d6dc81e14621fcac294996fcc3092",
+          "timestamp": "2025-09-24T01:50:07.266546Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:50:07.266546Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "2230b5b8e3c77cf6b9b066cc7f7497af1e74461b3b970017f3dc0886ad4daad1"
+        },
+        {
+          "index": 221,
+          "previous_hash": "2230b5b8e3c77cf6b9b066cc7f7497af1e74461b3b970017f3dc0886ad4daad1",
+          "timestamp": "2025-09-24T01:50:37.277462Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:50:37.277462Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "af04cf1b14ae87d5ffed00fb25677be668dc30a8f748fc706588b1f04944e07a"
+        },
+        {
+          "index": 222,
+          "previous_hash": "af04cf1b14ae87d5ffed00fb25677be668dc30a8f748fc706588b1f04944e07a",
+          "timestamp": "2025-09-24T01:51:07.291250Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:51:07.290247Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "bb5dcec6701b9e50204eac5effcb07294dd61fce97c5669d933a9aaa81dcd15a"
+        },
+        {
+          "index": 223,
+          "previous_hash": "bb5dcec6701b9e50204eac5effcb07294dd61fce97c5669d933a9aaa81dcd15a",
+          "timestamp": "2025-09-24T01:51:37.277256Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-24T01:51:37.277256Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "da8300356d3c98ce40e3f7bbd14d09011276d5aaf070eb084a1227838a663695"
+        },
+        {
+          "index": 224,
+          "previous_hash": "da8300356d3c98ce40e3f7bbd14d09011276d5aaf070eb084a1227838a663695",
+          "timestamp": "2025-09-25T18:07:49.614717Z",
+          "data": {
+            "action": "periodic_block",
+            "timestamp": "2025-09-25T18:07:49.614307Z",
+            "note": "Periodic block created by timer."
+          },
+          "validator": "SYSTEM",
+          "signature": "PERIODIC",
+          "hash": "286d154de5531db468fd7e1b5024a79cb64493344760e3b75aeed53f481b0d99"
+        }
+      ],
+      "validator": "SYSTEM",
+      "signature": "PERIODIC",
+      "hash": "ee4c2919e86003b5ccc1e02e6a9abba653055cf6f25e00708ed9a629285de5ed"
     }
   ],
   "books": [

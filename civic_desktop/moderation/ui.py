@@ -416,3 +416,17 @@ class ModerationDashboard(QWidget):
             self.refresh_flags()
         else:
             QMessageBox.warning(self, "Error", message)
+    
+    def refresh_ui(self):
+        """Refresh the UI to reflect current authentication state"""
+        # Clear existing content and rebuild
+        layout = self.layout()
+        if layout:
+            while layout.count():
+                child = layout.takeAt(0)
+                if child.widget():
+                    child.widget().deleteLater()
+        
+        # Rebuild the UI with current authentication state
+        self.init_ui()
+        self.refresh_data()

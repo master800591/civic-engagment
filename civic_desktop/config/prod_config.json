@@ -4,6 +4,10 @@
   "blockchain_path": "blockchain/blockchain_db.json",
   "debates_db_path": "debates/debates_db.json",
   "moderation_db_path": "moderation/moderation_db.json",
+  "surveys_db_path": "surveys/surveys_db.json",
+  "petitions_db_path": "petitions/petitions_db.json",
+  "documents_db_path": "documents/documents_db.json",
+  "transparency_db_path": "transparency/transparency_db.json",
   "logging_level": "WARNING",
   "features": ["all"],
   "p2p": {

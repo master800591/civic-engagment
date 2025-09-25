@@ -76,6 +76,8 @@ class MainWindow(QMainWindow):
         from civic_desktop.training.ui import TrainingTab
         self.training_tab = TrainingTab()
         self.tabs.addTab(self.training_tab, "🎓 Training")
+        # Add Crypto/Wallet tab
+        self.tabs.addTab(self.crypto_wallet_tab(), "💰 Wallet")
         from civic_desktop.github_integration.github_tab import GitHubIntegrationTab
         self.github_tab = GitHubIntegrationTab()
         self.tabs.addTab(self.github_tab, "🐙 GitHub")
@@ -86,6 +88,27 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.maps_tab(), "🗺️ Open Maps")
         # Add Reports tab for blockchain network reports
         self.tabs.addTab(self.reports_tab(), "📊 Reports")
+        # Add Analytics tab
+        self.tabs.addTab(self.analytics_tab(), "📈 Analytics")
+        
+        # 13. Events & Calendar Tab - Civic event management and community organizing
+        self.tabs.addTab(self.events_tab(), "📅 Events")
+        
+        # 14. Communications Tab - Secure civic messaging and announcements
+        self.tabs.addTab(self.communications_tab(), "💬 Communications")
+        
+        # 15. Surveys & Polling Tab - Democratic opinion gathering and research
+        self.tabs.addTab(self.surveys_tab(), "📊 Surveys")
+        
+        # 16. Petitions & Initiatives Tab - Citizen-driven legislative process
+        self.tabs.addTab(self.petitions_tab(), "📝 Petitions")
+        
+        # 17. Documents & Archive Tab - Official document management and transparency
+        self.tabs.addTab(self.documents_tab(), "📄 Documents")
+        
+        # 18. Transparency & Audit Tab - Accountability and oversight
+        self.tabs.addTab(self.transparency_tab(), "🔍 Transparency")
+        
         self.setCentralWidget(self.tabs)
     def reports_tab(self):
         from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QLabel, QAbstractItemView
@@ -206,6 +229,47 @@ class MainWindow(QMainWindow):
             # Fallback to original contract management
             from civic_desktop.contracts.contract_ui import ContractManagementWidget
             return ContractManagementWidget()
+    
+    def crypto_wallet_tab(self):
+        """Create the crypto/wallet tab for civic token economy"""
+        # All backend operations use config-driven paths
+        from civic_desktop.crypto.wallet_ui import WalletWidget
+        from civic_desktop.crypto.ledger import TokenLedger
+        
+        # Check if user is authenticated
+        user = SessionManager.get_current_user()
+        if not user:
+            # Return placeholder widget for non-authenticated users
+            widget = QWidget()
+            layout = QVBoxLayout()
+            layout.addWidget(QLabel("Please login to access your wallet"))
+            widget.setLayout(layout)
+            return widget
+        
+        # Create wallet for authenticated user
+        ledger = TokenLedger()
+        return WalletWidget(user['email'], ledger)
+    
+    def analytics_tab(self):
+        """Create the analytics tab for data-driven governance insights"""
+        # All backend operations use config-driven paths
+        from civic_desktop.analytics.reports_ui import AnalyticsTab
+        return AnalyticsTab()
+    
+    def events_tab(self):
+        """Create the events & calendar tab for civic event management"""
+        from civic_desktop.events.calendar_ui import CalendarTab
+        return CalendarTab()
+    
+    def communications_tab(self):
+        """Create the communications tab for secure civic messaging"""
+        from civic_desktop.communications.communications_ui import CommunicationsTab
+        return CommunicationsTab()
+    
+    def surveys_tab(self):
+        """Create the surveys & polling tab for democratic opinion gathering"""
+        from civic_desktop.surveys.polling_ui import SurveysPollingTab
+        return SurveysPollingTab()
 
     def maps_tab(self):
         from civic_desktop.maps.map_view import MapView
@@ -264,15 +328,13 @@ class MainWindow(QMainWindow):
 
     def handle_login(self, user: dict) -> None:
         SessionManager.login(user)
-        # Dashboard may not exist yet; refresh tabs to build it if authenticated
-        self.refresh_users_tab()
-        self.refresh_training_tab()
+        # Refresh all tabs to reflect authenticated state
+        self.refresh_all_tabs()
 
     def handle_logout(self) -> None:
         SessionManager.logout()
-        # Dashboard may not exist if user wasn't on Users tab; just refresh tabs
-        self.refresh_users_tab()
-        self.refresh_training_tab()
+        # Refresh all tabs to reflect unauthenticated state
+        self.refresh_all_tabs()
     
     def check_session_status(self) -> None:
         """Check session status and handle timeouts"""
@@ -300,9 +362,37 @@ class MainWindow(QMainWindow):
         # Cleanup expired sessions (this will logout if session is invalid)
         SessionManager.cleanup_expired_sessions()
         
-        # If session was cleaned up, refresh the UI
-        if not SessionManager.is_authenticated() and hasattr(self, 'dashboard'):
-            self.refresh_users_tab()
+        # If session was cleaned up due to expiration, refresh all tabs
+        if not SessionManager.is_authenticated():
+            self.refresh_all_tabs()
+
+    def refresh_all_tabs(self) -> None:
+        """Refresh all tabs to reflect current authentication state"""
+        # Store current tab index to restore after refresh
+        current_tab_index = self.tabs.currentIndex()
+        
+        # Refresh Users tab (special handling for login/logout)
+        self.refresh_users_tab()
+        
+        # Refresh all other tabs that have refresh_ui methods
+        for i in range(self.tabs.count()):
+            widget = self.tabs.widget(i)
+            tab_name = self.tabs.tabText(i)
+            
+            # Skip Users and Register tabs (handled above)
+            if tab_name in ["Users", "Register"]:
+                continue
+                
+            # Call refresh_ui method if it exists
+            if hasattr(widget, 'refresh_ui') and callable(getattr(widget, 'refresh_ui')):
+                try:
+                    widget.refresh_ui()
+                except Exception as e:
+                    print(f"Error refreshing {tab_name} tab: {e}")
+        
+        # Restore the active tab (but don't go to a removed registration tab)
+        if current_tab_index < self.tabs.count():
+            self.tabs.setCurrentIndex(current_tab_index)
 
     def refresh_users_tab(self) -> None:
         # Replace the Users tab and Registration tab with fresh ones reflecting login/logout state
@@ -310,7 +400,7 @@ class MainWindow(QMainWindow):
         users_index = 0  # Users tab is always first
         tabs.removeTab(users_index)
         tabs.insertTab(users_index, self.users_tab(), "Users")
-        tabs.setCurrentIndex(users_index)
+        
         # Registration tab is always second if not authenticated
         if not SessionManager.is_authenticated():
             if tabs.count() < 2 or tabs.tabText(1) != "Register":
@@ -326,6 +416,46 @@ class MainWindow(QMainWindow):
         """Refresh the training tab to reflect current authentication status"""
         if hasattr(self, 'training_tab'):
             self.training_tab.refresh_ui()
+
+    def petitions_tab(self) -> QWidget:
+        """Create Petitions & Initiatives tab for citizen-driven legislative processes"""
+        try:
+            from civic_desktop.petitions.initiatives_ui import PetitionsInitiativesTab
+            return PetitionsInitiativesTab()
+        except Exception as e:
+            widget = QWidget()
+            layout = QVBoxLayout()
+            layout.addWidget(QLabel(f"Petitions module error: {str(e)}"))
+            widget.setLayout(layout)
+            return widget
+
+    def documents_tab(self) -> QWidget:
+        """Create Documents & Archive tab for official document management"""
+        widget = QWidget()
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel("📄 Documents & Archive Module"))
+        layout.addWidget(QLabel("Official document management, public records, and transparency tools"))
+        layout.addWidget(QLabel("• Document upload and version control"))
+        layout.addWidget(QLabel("• Public records access and FOIA requests"))
+        layout.addWidget(QLabel("• Transparency compliance and audit trails"))
+        layout.addWidget(QLabel("• Blockchain-verified document integrity"))
+        layout.addWidget(QLabel("\nModule foundation implemented - UI development pending"))
+        widget.setLayout(layout)
+        return widget
+
+    def transparency_tab(self) -> QWidget:
+        """Create Transparency & Audit tab for accountability and oversight"""
+        widget = QWidget()
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel("🔍 Transparency & Audit Module"))
+        layout.addWidget(QLabel("Enhanced accountability, oversight, and governance monitoring"))
+        layout.addWidget(QLabel("• Financial transparency and spending oversight"))
+        layout.addWidget(QLabel("• Conflict of interest monitoring and ethics compliance"))
+        layout.addWidget(QLabel("• Performance metrics and accountability dashboards"))
+        layout.addWidget(QLabel("• Real-time governance audit and compliance checking"))
+        layout.addWidget(QLabel("\nModule foundation implemented - UI development pending"))
+        widget.setLayout(layout)
+        return widget
 
     def make_tab(self, name: str) -> QWidget:
         widget = QWidget()
