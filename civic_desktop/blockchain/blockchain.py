@@ -593,6 +593,16 @@ class ValidatorRegistry:
             if validator['email'] == email and validator['active']:
                 return validator.get('public_key')
         return None
+    
+    @staticmethod
+    def get_all_pages() -> List[Dict[str, Any]]:
+        """Get all pages from the blockchain for analytics"""
+        try:
+            chain = Blockchain.load_chain()
+            return chain.get('pages', [])
+        except Exception as e:
+            print(f"Error loading blockchain pages: {e}")
+            return []
 
 # --- Enhanced Module Integration Methods ---
 

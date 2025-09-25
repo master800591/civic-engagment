@@ -254,13 +254,17 @@ class ModerationDashboard(QWidget):
     
     def refresh_data(self):
         """Refresh all moderation data"""
-        self.refresh_flags()
-        self.refresh_stats()
+        try:
+            if hasattr(self, 'flags_table') and self.flags_table is not None:
+                self.refresh_flags()
+                self.refresh_stats()
+        except Exception as e:
+            print(f"Error refreshing moderation data: {e}")
     
     def refresh_flags(self):
         """Refresh the pending flags list"""
         user = SessionManager.get_current_user()
-        if not user:
+        if not user or not hasattr(self, 'flags_table') or self.flags_table is None:
             return
         
         pending_flags = ModerationBackend.get_pending_flags(user['email'])

@@ -91,6 +91,18 @@ class MainWindow(QMainWindow):
         # Add Analytics tab
         self.tabs.addTab(self.analytics_tab(), "📈 Analytics")
         
+        # 🤖 AI-Powered Smart Dashboard - Advanced intelligence and predictive analytics
+        self.tabs.addTab(self.ai_dashboard_tab(), "🤖 AI Intelligence")
+        
+        # 🛡️ Enhanced Security Monitoring - Advanced threat detection and response
+        self.tabs.addTab(self.security_dashboard_tab(), "🛡️ Security Monitor")
+        
+        # 🔔 Security Notification Center - Real-time alert management and response
+        self.tabs.addTab(self.security_notifications_tab(), "🔔 Security Alerts")
+        
+        # 📋 Advanced Compliance & Audit - Enterprise-grade governance compliance
+        self.tabs.addTab(self.compliance_audit_tab(), "📋 Compliance")
+        
         # 13. Events & Calendar Tab - Civic event management and community organizing
         self.tabs.addTab(self.events_tab(), "📅 Events")
         
@@ -255,6 +267,56 @@ class MainWindow(QMainWindow):
         # All backend operations use config-driven paths
         from civic_desktop.analytics.reports_ui import AnalyticsTab
         return AnalyticsTab()
+    
+    def ai_dashboard_tab(self):
+        """Create the AI-powered intelligent dashboard for advanced analytics and predictions"""
+        from civic_desktop.analytics.smart_dashboard_ui import SmartAIDashboard
+        return SmartAIDashboard()
+    
+    def security_dashboard_tab(self):
+        """Create Enhanced Security Monitoring Dashboard tab"""
+        try:
+            from civic_desktop.security.enhanced_security_dashboard import EnhancedSecurityDashboard
+            return EnhancedSecurityDashboard()
+        except ImportError as e:
+            print(f"Security Dashboard not available: {e}")
+            # Fallback basic widget
+            from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+            widget = QWidget()
+            layout = QVBoxLayout()
+            layout.addWidget(QLabel("🛡️ Enhanced Security Dashboard\n\nSecurity monitoring module not available"))
+            widget.setLayout(layout)
+            return widget
+    
+    def security_notifications_tab(self):
+        """Create Security Notification Center tab"""
+        try:
+            from civic_desktop.security.security_notification_system import SecurityNotificationCenter
+            return SecurityNotificationCenter()
+        except ImportError as e:
+            print(f"Security Notifications not available: {e}")
+            # Fallback basic widget
+            from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+            widget = QWidget()
+            layout = QVBoxLayout()
+            layout.addWidget(QLabel("🔔 Security Notification Center\n\nNotification system not available"))
+            widget.setLayout(layout)
+            return widget
+    
+    def compliance_audit_tab(self):
+        """Create Advanced Compliance & Audit System tab"""
+        try:
+            from civic_desktop.security.advanced_compliance_audit import AdvancedComplianceAuditSystem
+            return AdvancedComplianceAuditSystem()
+        except ImportError as e:
+            print(f"Compliance Audit System not available: {e}")
+            # Fallback basic widget
+            from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+            widget = QWidget()
+            layout = QVBoxLayout()
+            layout.addWidget(QLabel("📋 Advanced Compliance & Audit System\n\nCompliance module not available"))
+            widget.setLayout(layout)
+            return widget
     
     def events_tab(self):
         """Create the events & calendar tab for civic event management"""
@@ -431,31 +493,27 @@ class MainWindow(QMainWindow):
 
     def documents_tab(self) -> QWidget:
         """Create Documents & Archive tab for official document management"""
-        widget = QWidget()
-        layout = QVBoxLayout()
-        layout.addWidget(QLabel("📄 Documents & Archive Module"))
-        layout.addWidget(QLabel("Official document management, public records, and transparency tools"))
-        layout.addWidget(QLabel("• Document upload and version control"))
-        layout.addWidget(QLabel("• Public records access and FOIA requests"))
-        layout.addWidget(QLabel("• Transparency compliance and audit trails"))
-        layout.addWidget(QLabel("• Blockchain-verified document integrity"))
-        layout.addWidget(QLabel("\nModule foundation implemented - UI development pending"))
-        widget.setLayout(layout)
-        return widget
+        try:
+            from civic_desktop.documents.archive_ui import DocumentsArchiveTab
+            return DocumentsArchiveTab()
+        except Exception as e:
+            widget = QWidget()
+            layout = QVBoxLayout()
+            layout.addWidget(QLabel(f"Documents module error: {str(e)}"))
+            widget.setLayout(layout)
+            return widget
 
     def transparency_tab(self) -> QWidget:
         """Create Transparency & Audit tab for accountability and oversight"""
-        widget = QWidget()
-        layout = QVBoxLayout()
-        layout.addWidget(QLabel("🔍 Transparency & Audit Module"))
-        layout.addWidget(QLabel("Enhanced accountability, oversight, and governance monitoring"))
-        layout.addWidget(QLabel("• Financial transparency and spending oversight"))
-        layout.addWidget(QLabel("• Conflict of interest monitoring and ethics compliance"))
-        layout.addWidget(QLabel("• Performance metrics and accountability dashboards"))
-        layout.addWidget(QLabel("• Real-time governance audit and compliance checking"))
-        layout.addWidget(QLabel("\nModule foundation implemented - UI development pending"))
-        widget.setLayout(layout)
-        return widget
+        try:
+            from civic_desktop.transparency.oversight_ui import TransparencyAuditTab
+            return TransparencyAuditTab()
+        except Exception as e:
+            widget = QWidget()
+            layout = QVBoxLayout()
+            layout.addWidget(QLabel(f"Transparency module error: {str(e)}"))
+            widget.setLayout(layout)
+            return widget
 
     def make_tab(self, name: str) -> QWidget:
         widget = QWidget()
