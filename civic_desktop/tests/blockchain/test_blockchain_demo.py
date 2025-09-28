@@ -32,7 +32,7 @@ def test_blockchain_integration():
             'name': 'Alice Democracy',
             'email': 'alice@civic.platform',
             'location': 'Democracy City, Freedom State',
-            'role': 'contract_citizen',
+            'role': 'contract_member',
             'registration_method': 'civic_platform_wizard'
         }
         

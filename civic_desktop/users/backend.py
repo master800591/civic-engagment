@@ -193,7 +193,7 @@ class UserBackend:
             return False, "Email address already registered", None
         
         # Check for Founder key during registration
-        user_role = 'contract_citizen'  # Default role
+        user_role = 'contract_member'  # Default role
         founder_info = None
         
         if user_data.get('founder_private_key') and FOUNDER_SYSTEM_AVAILABLE:
@@ -206,17 +206,14 @@ class UserBackend:
                 if is_valid_founder:
                     user_role = 'contract_founder'
                     founder_info = founder_data
-                    print(f"🏛️ Hardcoded founder key validated: {founder_data['id']}")
-                    print(f"🎉 User promoted to Constitutional Founder with single-use key: {founder_data['id']}")
-                    
-                    # Mark key as used (handled automatically by HardcodedFounderKeys.validate_founder_key)
-                    print(f"🔒 Founder key {founder_data['id']} is now permanently used and cannot be reused")
-                        
+                    # Key marked as used automatically by HardcodedFounderKeys.validate_founder_key
                 else:
-                    print(f"⚠️ Invalid Founder key provided: {founder_message}")
+                    # Invalid founder key - continue with regular citizen registration
+                    pass
                     
             except Exception as e:
-                print(f"⚠️ Error validating Founder key: {e}")
+                # Error validating founder key - continue with regular citizen registration
+                pass
         
         # Create user record
         user_id = self._generate_user_id()
@@ -231,7 +228,7 @@ class UserBackend:
             'city': DataValidator.sanitize_input(user_data['city']),
             'state': DataValidator.sanitize_input(user_data['state']),
             'country': DataValidator.sanitize_input(user_data['country']),
-            'role': user_role,  # Founder role if key validated, otherwise contract_citizen
+            'role': user_role,  # Founder role if key validated, otherwise contract_member
             'verification_status': 'pending',  # ID verification pending
             'created_at': datetime.now().isoformat(),
             'last_login': None,
@@ -261,7 +258,7 @@ class UserBackend:
         if FOUNDER_SYSTEM_AVAILABLE:
             try:
                 role_manager = ContractRoleManager(self.config_path)
-                contract_role = ContractRole.CONTRACT_FOUNDER if user_role == 'contract_founder' else ContractRole.CONTRACT_CITIZEN
+                contract_role = ContractRole.CONTRACT_FOUNDER if user_role == 'contract_founder' else ContractRole.CONTRACT_MEMBER
                 assignment_method = 'founder_key' if user_role == 'contract_founder' else 'initial_setup'
                 
                 role_success, role_message, role_info = role_manager.assign_contract_role(
@@ -311,9 +308,7 @@ class UserBackend:
                 )
                 
                 if pdf_success:
-                    print(f"📄 User PDFs generated successfully")
-                    print(f"   Public PDF: {pdf_paths.get('public_pdf', 'N/A')}")
-                    print(f"   Private PDF: {pdf_paths.get('private_pdf', 'N/A')}")
+                    pass  # User PDFs generated successfully
                     
                     # Add PDF paths to user metadata
                     new_user['metadata']['pdf_documents'] = {

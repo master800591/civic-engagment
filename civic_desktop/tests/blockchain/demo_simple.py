@@ -35,7 +35,7 @@ def run_blockchain_demo():
             'name': 'Alice Democracy',
             'email': 'alice.democracy@civic.platform',
             'location': 'Democracy City, Freedom State',
-            'role': 'contract_citizen',
+            'role': 'contract_member',
             'registration_method': 'civic_platform_wizard'
         }
         

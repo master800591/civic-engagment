@@ -21,6 +21,14 @@ except ImportError:
     print("Warning: RSA key management not available")
     CRYPTO_AVAILABLE = False
 
+# Import multi-level validation system
+try:
+    from blockchain.multi_level_validation import MultiLevelValidator, ValidationLevel, ValidationType
+    MULTI_LEVEL_VALIDATION_AVAILABLE = True
+except ImportError:
+    print("Warning: Multi-level validation system not available")
+    MULTI_LEVEL_VALIDATION_AVAILABLE = False
+
 @dataclass
 class BlockchainPage:
     """Individual page entry - smallest blockchain unit"""
@@ -137,7 +145,7 @@ class CivicBlockchain:
                 'Due process and appeal rights'
             ],
             'governance_framework': {
-                'roles': ['contract_citizen', 'contract_representative', 'contract_senator', 'contract_elder', 'contract_founder'],
+                'roles': ['contract_member', 'contract_representative', 'contract_senator', 'contract_elder', 'contract_founder'],
                 'consensus_mechanism': 'proof_of_authority',
                 'amendment_process': 'bicameral_plus_elder_review',
                 'appeal_system': 'constitutional_review'
@@ -347,11 +355,11 @@ class CivicBlockchain:
         return (end - start).total_seconds() / 3600
     
     def register_validator(self, user_email: str, public_key: str, role: str) -> Tuple[bool, str]:
-        """Register a user as a blockchain validator"""
+        """Register a user as a blockchain validator - now includes Contract Members"""
         
-        # Check if user has appropriate role for validation
-        if role not in ['contract_representative', 'contract_senator', 'contract_elder', 'contract_founder']:
-            return False, "Only elected representatives can serve as validators"
+        # Updated to allow Contract Members to validate blockchain
+        if role not in ['contract_member', 'contract_representative', 'contract_senator', 'contract_elder', 'contract_founder']:
+            return False, "Contract Members and elected representatives can serve as validators"
         
         validators = self._load_validators()
         
@@ -375,6 +383,24 @@ class CivicBlockchain:
         self._save_validators(validators)
         
         print(f"⚡ Validator registered: {user_email} ({role})")
+        
+        # Also register with multi-level validation system if available
+        if MULTI_LEVEL_VALIDATION_AVAILABLE:
+            try:
+                multi_validator = MultiLevelValidator()
+                user_data = {
+                    'role': role,
+                    'rsa_public_key': public_key,
+                    'city': '',  # Would need to be provided or looked up
+                    'state': '',
+                    'country': ''
+                }
+                multi_success, multi_message = multi_validator.register_member_validator(user_email, user_data)
+                if multi_success:
+                    print(f"📍 Also registered for multi-level validation: {multi_message}")
+            except Exception as e:
+                print(f"⚠️ Warning: Could not register for multi-level validation: {e}")
+        
         return True, "Validator registered successfully"
     
     def get_blockchain_stats(self) -> Dict[str, Any]:

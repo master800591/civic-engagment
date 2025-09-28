@@ -561,8 +561,7 @@ class UserDashboard(QWidget if PYQT_AVAILABLE else object):
         """Update header with current user info"""
         if self.current_user:
             first_name = self.current_user.get('first_name', 'User')
-            role = self.current_user.get('role', 'contract_citizen')
-            
+            role = self.current_user.get('role', 'contract_member')
             self.welcome_label.setText(f"Welcome back, {first_name}!")
             
             role_display = role.replace('contract_', '').replace('_', ' ').title()
@@ -575,11 +574,11 @@ class UserDashboard(QWidget if PYQT_AVAILABLE else object):
         if not self.current_user:
             return
         
-        role = self.current_user.get('role', 'contract_citizen')
+        role = self.current_user.get('role', 'contract_member')
         
         # Role descriptions
         role_descriptions = {
-            'contract_citizen': 'Contract Citizen - You have fundamental democratic rights including voting, debating, petitioning, and appealing decisions.',
+            'contract_member': 'Contract Member - You have fundamental democratic rights including voting, debating, petitioning, and appealing decisions.',
             'contract_representative': 'Contract Representative - You represent citizens in the legislature with powers to create legislation, control budgets, and impeach officials.',
             'contract_senator': 'Contract Senator - You serve in the deliberative upper house with authority to review legislation, confirm appointments, and override Elder vetoes.',
             'contract_elder': 'Contract Elder - You are a constitutional guardian with veto power over unconstitutional legislation and authority to interpret governance contracts.',

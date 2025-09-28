@@ -36,7 +36,7 @@ def demonstrate_blockchain_with_users():
             'name': 'Alice Democracy',
             'email': 'alice.democracy@civic.platform',
             'location': 'Democracy City, Freedom State, United States',
-            'role': 'contract_citizen',
+            'role': 'contract_member',
             'registration_method': 'civic_platform_wizard',
             'constitutional_rights': True,
             'rsa_key_generated': True,
@@ -87,7 +87,7 @@ def demonstrate_blockchain_with_users():
         
         role_data = {
             'user_id': 'citizen_001',
-            'previous_role': 'contract_citizen',
+            'previous_role': 'contract_member',
             'new_role': 'contract_representative',
             'assignment_type': 'democratic_election',
             'election_date': '2025-11-05',

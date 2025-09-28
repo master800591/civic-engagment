@@ -212,7 +212,7 @@ def test_session_management():
         'email': 'test@civic.platform',
         'first_name': 'Test',
         'last_name': 'User',
-        'role': 'contract_citizen'
+        'role': 'contract_member'
     }
     
     # Create session

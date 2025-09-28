@@ -183,7 +183,7 @@ class DataValidator:
     def validate_user_role(role: str) -> Tuple[bool, str]:
         """Validate user role assignment"""
         valid_roles = {
-            'contract_citizen': 'Contract Citizen - Core democratic rights',
+            'contract_member': 'Contract Member - Core democratic rights',
             'contract_representative': 'Contract Representative - People\'s voice in legislature',
             'contract_senator': 'Contract Senator - Deliberative upper house',
             'contract_elder': 'Contract Elder - Constitutional guardian',
@@ -266,7 +266,7 @@ class SecurityValidator:
         """Validate user permissions for specific actions"""
         # Define role-based permissions
         permissions = {
-            'contract_citizen': {'vote', 'debate', 'petition', 'appeal'},
+            'contract_member': {'vote', 'debate', 'petition', 'appeal'},
             'contract_representative': {'vote', 'debate', 'petition', 'appeal', 'legislate', 'budget', 'impeach'},
             'contract_senator': {'vote', 'debate', 'petition', 'appeal', 'legislate', 'confirm', 'review'},
             'contract_elder': {'vote', 'debate', 'veto', 'interpret', 'constitutional_review'},

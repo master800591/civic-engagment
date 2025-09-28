@@ -12,12 +12,18 @@ from enum import Enum
 class ContractRole(Enum):
     """Constitutional contract roles with hierarchical authority"""
     
-    # Citizens - Base democratic participation
-    CONTRACT_CITIZEN = "contract_citizen"
+    # Members - Base democratic participation
+    CONTRACT_MEMBER = "contract_member"
     
     # Legislative Branch - People's Representatives
     CONTRACT_REPRESENTATIVE = "contract_representative"  # House of People
     CONTRACT_SENATOR = "contract_senator"              # Deliberative Upper House
+    
+    # City/Town Local Government - Municipal Representatives
+    CITY_REPRESENTATIVE = "city_representative"        # Local city representatives
+    CITY_SENATOR = "city_senator"                     # Local city senators
+    TOWN_REPRESENTATIVE = "town_representative"        # Local town representatives  
+    TOWN_SENATOR = "town_senator"                     # Local town senators
     
     # Judicial/Advisory Branch - Constitutional Guardians  
     CONTRACT_ELDER = "contract_elder"                  # Wisdom Council with veto power
@@ -28,8 +34,8 @@ class ContractRole(Enum):
 class ContractPermissions:
     """Defines permissions and limitations for each contract role"""
     
-    # Contract Citizen Permissions (Base democratic rights)
-    CITIZEN_PERMISSIONS = {
+    # Contract Member Permissions (Base democratic rights)
+    MEMBER_PERMISSIONS = {
         'electoral_rights': [
             'vote_in_elections',
             'run_for_representative', 
@@ -59,7 +65,7 @@ class ContractPermissions:
     
     # Contract Representative Permissions (Legislative initiative)
     REPRESENTATIVE_PERMISSIONS = {
-        **CITIZEN_PERMISSIONS,
+        **MEMBER_PERMISSIONS,
         'legislative_powers': [
             'propose_legislation',
             'budget_authority',
@@ -81,7 +87,7 @@ class ContractPermissions:
     
     # Contract Senator Permissions (Deliberative review)
     SENATOR_PERMISSIONS = {
-        **CITIZEN_PERMISSIONS,
+        **MEMBER_PERMISSIONS,
         'legislative_powers': [
             'review_representative_proposals',
             'deliberative_delay_authority',
@@ -108,7 +114,7 @@ class ContractPermissions:
     
     # Contract Elder Permissions (Constitutional guardians)
     ELDER_PERMISSIONS = {
-        **CITIZEN_PERMISSIONS,
+        **MEMBER_PERMISSIONS,
         'constitutional_powers': [
             'constitutional_veto',      # 60% Elder consensus required
             'judicial_review',
@@ -135,9 +141,61 @@ class ContractPermissions:
         }
     }
     
+    # City Representative Permissions (Municipal legislative)
+    CITY_REPRESENTATIVE_PERMISSIONS = {
+        **MEMBER_PERMISSIONS,
+        'municipal_powers': [
+            'propose_city_ordinances',
+            'city_budget_authority',
+            'local_zoning_decisions',
+            'municipal_service_oversight',
+            'local_economic_development'
+        ],
+        'blockchain_authority': [
+            'city_validator_eligibility',
+            'municipal_block_signing',
+            'local_consensus_participation'
+        ],
+        'term_info': {
+            'term_length': '1_year',
+            'term_limit': '4_total_terms',
+            'consecutive_restriction': True,  # Cannot serve consecutive terms
+            'election_trigger': 'population_threshold',  # 1% initial, 50% expansion
+            'jurisdiction': 'city_level'
+        }
+    }
+    
+    # City Senator Permissions (Municipal deliberative)
+    CITY_SENATOR_PERMISSIONS = {
+        **MEMBER_PERMISSIONS,
+        'municipal_powers': [
+            'review_city_representative_proposals',
+            'municipal_deliberative_authority',
+            'city_appointment_confirmations',
+            'local_constitutional_oversight',
+            'inter_city_coordination'
+        ],
+        'blockchain_authority': [
+            'city_validator_eligibility',
+            'municipal_block_signing',
+            'local_consensus_participation'
+        ],
+        'term_info': {
+            'term_length': '1_year',
+            'term_limit': '4_total_terms',
+            'consecutive_restriction': True,  # Cannot serve consecutive terms
+            'election_trigger': 'population_threshold',  # 1% initial, 50% expansion
+            'jurisdiction': 'city_level'
+        }
+    }
+    
+    # Town Representative/Senator Permissions (Same as city but for towns)
+    TOWN_REPRESENTATIVE_PERMISSIONS = CITY_REPRESENTATIVE_PERMISSIONS.copy()
+    TOWN_SENATOR_PERMISSIONS = CITY_SENATOR_PERMISSIONS.copy()
+    
     # Contract Founder Permissions (Genesis authority)
     FOUNDER_PERMISSIONS = {
-        **CITIZEN_PERMISSIONS,
+        **MEMBER_PERMISSIONS,
         'constitutional_authority': [
             'modify_core_governance_contracts',  # 75%+ Founder consensus
             'emergency_protocol_override',
@@ -195,15 +253,19 @@ class ContractRoleManager:
         if not self.roles_db_path.exists():
             initial_data = {
                 'contract_roles': {
-                    'citizens': {},
+                    'members': {},
                     'representatives': {},
                     'senators': {},
+                    'city_representatives': {},
+                    'city_senators': {},
+                    'town_representatives': {},
+                    'town_senators': {},
                     'elders': {},
                     'founders': {}
                 },
                 'role_assignments': [],
                 'permission_matrix': {
-                    'contract_citizen': ContractPermissions.CITIZEN_PERMISSIONS,
+                    'contract_member': ContractPermissions.MEMBER_PERMISSIONS,
                     'contract_representative': ContractPermissions.REPRESENTATIVE_PERMISSIONS,
                     'contract_senator': ContractPermissions.SENATOR_PERMISSIONS,
                     'contract_elder': ContractPermissions.ELDER_PERMISSIONS,
@@ -308,9 +370,9 @@ class ContractRoleManager:
                         role_enum = ContractRole(role_info['role'])
                         return True, f"User role: {role_enum.value}", role_enum
             
-            # Default to Contract Citizen if no specific role assigned
-            return True, "Default role: contract_citizen", ContractRole.CONTRACT_CITIZEN
-        
+            # Default to Contract Member if no specific role assigned
+            return True, "Default role: contract_member", ContractRole.CONTRACT_MEMBER
+            
         except Exception as e:
             return False, f"Error retrieving user role: {str(e)}", None
     
@@ -355,13 +417,13 @@ class ContractRoleManager:
     def get_role_permissions(self, role: ContractRole) -> Dict[str, Any]:
         """Get all permissions for a specific contract role"""
         permission_map = {
-            ContractRole.CONTRACT_CITIZEN: ContractPermissions.CITIZEN_PERMISSIONS,
+            ContractRole.CONTRACT_MEMBER: ContractPermissions.MEMBER_PERMISSIONS,
             ContractRole.CONTRACT_REPRESENTATIVE: ContractPermissions.REPRESENTATIVE_PERMISSIONS,
             ContractRole.CONTRACT_SENATOR: ContractPermissions.SENATOR_PERMISSIONS,
             ContractRole.CONTRACT_ELDER: ContractPermissions.ELDER_PERMISSIONS,
             ContractRole.CONTRACT_FOUNDER: ContractPermissions.FOUNDER_PERMISSIONS
         }
-        return permission_map.get(role, ContractPermissions.CITIZEN_PERMISSIONS)
+        return permission_map.get(role, ContractPermissions.MEMBER_PERMISSIONS)
     
     def _validate_role_assignment_authority(self, new_role: ContractRole, 
                                           assignment_method: str, 
@@ -403,13 +465,13 @@ class ContractRoleManager:
     def _get_role_category(self, role: ContractRole) -> str:
         """Get the database category for a role"""
         role_categories = {
-            ContractRole.CONTRACT_CITIZEN: 'citizens',
+            ContractRole.CONTRACT_MEMBER: 'members',
             ContractRole.CONTRACT_REPRESENTATIVE: 'representatives',
             ContractRole.CONTRACT_SENATOR: 'senators', 
             ContractRole.CONTRACT_ELDER: 'elders',
             ContractRole.CONTRACT_FOUNDER: 'founders'
         }
-        return role_categories.get(role, 'citizens')
+        return role_categories.get(role, 'members')
     
     def _calculate_term_end(self, role: ContractRole) -> Optional[str]:
         """Calculate term end date based on role"""
@@ -420,7 +482,7 @@ class ContractRoleManager:
             ContractRole.CONTRACT_REPRESENTATIVE: timedelta(days=730),  # 2 years
             ContractRole.CONTRACT_SENATOR: timedelta(days=2190),       # 6 years  
             ContractRole.CONTRACT_ELDER: timedelta(days=1460),         # 4 years
-            ContractRole.CONTRACT_CITIZEN: None  # No term limit
+            ContractRole.CONTRACT_MEMBER: None  # No term limit
         }
         
         term_length = term_lengths.get(role)

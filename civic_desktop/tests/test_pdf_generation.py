@@ -41,7 +41,7 @@ def test_pdf_generation_system():
             'city': 'Liberty City',
             'state': 'Democracy State',
             'country': 'Constitutional Republic',
-            'role': 'contract_citizen',
+            'role': 'contract_member',
             'verification_status': 'verified',
             'created_at': datetime.now().isoformat(),
             'terms_accepted': True

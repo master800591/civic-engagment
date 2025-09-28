@@ -225,8 +225,8 @@ def test_invalid_founder_key():
             print(f"   Role assigned: {user_record['role']}")
             
             # Should be regular citizen, not founder
-            if user_record['role'] == 'contract_citizen':
-                print("✅ Correctly assigned contract_citizen role")
+            if user_record['role'] == 'contract_member':
+                print("✅ Correctly assigned contract_member role")
             else:
                 print(f"⚠️ Unexpected role: {user_record['role']}")
         else:
