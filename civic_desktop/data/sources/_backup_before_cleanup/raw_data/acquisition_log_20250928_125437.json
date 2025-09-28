@@ -1,0 +1,37 @@
+{
+  "session_id": "20250928_125437",
+  "start_time": "2025-09-28T12:54:37.899247",
+  "sources": {
+    "natural_earth": {
+      "status": "completed",
+      "results": {
+        "countries": "FAILED",
+        "states_provinces": "FAILED",
+        "populated_places": "FAILED",
+        "summary_generated": "SUCCESS"
+      },
+      "completed_at": "2025-09-28T12:54:39.237784"
+    },
+    "us_census": {
+      "status": "failed",
+      "error": "US Census acquisition failed: No module named 'geopandas'",
+      "failed_at": "2025-09-28T12:54:39.252385"
+    },
+    "fec": {
+      "status": "completed",
+      "results": {
+        "candidates_all": "0 candidates downloaded",
+        "candidates_house": "0 House candidates downloaded",
+        "candidates_senate": "0 Senate candidates downloaded",
+        "candidates_presidential": "0 Presidential candidates downloaded",
+        "congressional_districts": "0 districts processed",
+        "election_results": "0 results downloaded",
+        "committees": "0 committees downloaded"
+      },
+      "completed_at": "2025-09-28T12:54:42.746781"
+    }
+  },
+  "summary": {},
+  "end_time": "2025-09-28T12:54:42.747783",
+  "total_duration": "00:00:04"
+}

@@ -1,0 +1,470 @@
+[
+  {
+    "fips_code": "01",
+    "name": "Alabama",
+    "population": 5028092,
+    "state_code": "AL",
+    "capital": "Montgomery",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "02",
+    "name": "Alaska",
+    "population": 734821,
+    "state_code": "AK",
+    "capital": "Juneau",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "04",
+    "name": "Arizona",
+    "population": 7172282,
+    "state_code": "AZ",
+    "capital": "Phoenix",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "05",
+    "name": "Arkansas",
+    "population": 3018669,
+    "state_code": "AR",
+    "capital": "Little Rock",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "06",
+    "name": "California",
+    "population": 39356104,
+    "state_code": "CA",
+    "capital": "Sacramento",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "08",
+    "name": "Colorado",
+    "population": 5770790,
+    "state_code": "CO",
+    "capital": "Denver",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "09",
+    "name": "Connecticut",
+    "population": 3611317,
+    "state_code": "CT",
+    "capital": "Hartford",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "10",
+    "name": "Delaware",
+    "population": 993635,
+    "state_code": "DE",
+    "capital": "Dover",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "11",
+    "name": "District of Columbia",
+    "population": 670587,
+    "state_code": "DC",
+    "capital": "Washington",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "12",
+    "name": "Florida",
+    "population": 21634529,
+    "state_code": "FL",
+    "capital": "Tallahassee",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "13",
+    "name": "Georgia",
+    "population": 10722325,
+    "state_code": "GA",
+    "capital": "Atlanta",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "15",
+    "name": "Hawaii",
+    "population": 1450589,
+    "state_code": "HI",
+    "capital": "Honolulu",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "16",
+    "name": "Idaho",
+    "population": 1854109,
+    "state_code": "ID",
+    "capital": "Boise",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "17",
+    "name": "Illinois",
+    "population": 12757634,
+    "state_code": "IL",
+    "capital": "Springfield",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "18",
+    "name": "Indiana",
+    "population": 6784403,
+    "state_code": "IN",
+    "capital": "Indianapolis",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "19",
+    "name": "Iowa",
+    "population": 3188836,
+    "state_code": "IA",
+    "capital": "Des Moines",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "20",
+    "name": "Kansas",
+    "population": 2935922,
+    "state_code": "KS",
+    "capital": "Topeka",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "21",
+    "name": "Kentucky",
+    "population": 4502935,
+    "state_code": "KY",
+    "capital": "Frankfort",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "22",
+    "name": "Louisiana",
+    "population": 4640546,
+    "state_code": "LA",
+    "capital": "Baton Rouge",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.127711"
+  },
+  {
+    "fips_code": "23",
+    "name": "Maine",
+    "population": 1366949,
+    "state_code": "ME",
+    "capital": "Augusta",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "24",
+    "name": "Maryland",
+    "population": 6161707,
+    "state_code": "MD",
+    "capital": "Annapolis",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "25",
+    "name": "Massachusetts",
+    "population": 6984205,
+    "state_code": "MA",
+    "capital": "Boston",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "26",
+    "name": "Michigan",
+    "population": 10057921,
+    "state_code": "MI",
+    "capital": "Lansing",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "27",
+    "name": "Minnesota",
+    "population": 5695292,
+    "state_code": "MN",
+    "capital": "Saint Paul",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "28",
+    "name": "Mississippi",
+    "population": 2958846,
+    "state_code": "MS",
+    "capital": "Jackson",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "29",
+    "name": "Missouri",
+    "population": 6154422,
+    "state_code": "MO",
+    "capital": "Jefferson City",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "30",
+    "name": "Montana",
+    "population": 1091840,
+    "state_code": "MT",
+    "capital": "Helena",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "31",
+    "name": "Nebraska",
+    "population": 1958939,
+    "state_code": "NE",
+    "capital": "Lincoln",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "32",
+    "name": "Nevada",
+    "population": 3104817,
+    "state_code": "NV",
+    "capital": "Carson City",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "33",
+    "name": "New Hampshire",
+    "population": 1379610,
+    "state_code": "NH",
+    "capital": "Concord",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "34",
+    "name": "New Jersey",
+    "population": 9249063,
+    "state_code": "NJ",
+    "capital": "Trenton",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "35",
+    "name": "New Mexico",
+    "population": 2112463,
+    "state_code": "NM",
+    "capital": "Santa Fe",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "36",
+    "name": "New York",
+    "population": 19994379,
+    "state_code": "NY",
+    "capital": "Albany",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "37",
+    "name": "North Carolina",
+    "population": 10470214,
+    "state_code": "NC",
+    "capital": "Raleigh",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "38",
+    "name": "North Dakota",
+    "population": 776874,
+    "state_code": "ND",
+    "capital": "Bismarck",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "39",
+    "name": "Ohio",
+    "population": 11774683,
+    "state_code": "OH",
+    "capital": "Columbus",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "40",
+    "name": "Oklahoma",
+    "population": 3970497,
+    "state_code": "OK",
+    "capital": "Oklahoma City",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "41",
+    "name": "Oregon",
+    "population": 4229374,
+    "state_code": "OR",
+    "capital": "Salem",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "42",
+    "name": "Pennsylvania",
+    "population": 12989208,
+    "state_code": "PA",
+    "capital": "Harrisburg",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "44",
+    "name": "Rhode Island",
+    "population": 1094250,
+    "state_code": "RI",
+    "capital": "Providence",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "45",
+    "name": "South Carolina",
+    "population": 5142750,
+    "state_code": "SC",
+    "capital": "Columbia",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "46",
+    "name": "South Dakota",
+    "population": 890342,
+    "state_code": "SD",
+    "capital": "Pierre",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "47",
+    "name": "Tennessee",
+    "population": 6923772,
+    "state_code": "TN",
+    "capital": "Nashville",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "48",
+    "name": "Texas",
+    "population": 29243342,
+    "state_code": "TX",
+    "capital": "Austin",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "49",
+    "name": "Utah",
+    "population": 3283809,
+    "state_code": "UT",
+    "capital": "Salt Lake City",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "50",
+    "name": "Vermont",
+    "population": 643816,
+    "state_code": "VT",
+    "capital": "Montpelier",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "51",
+    "name": "Virginia",
+    "population": 8624511,
+    "state_code": "VA",
+    "capital": "Richmond",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "53",
+    "name": "Washington",
+    "population": 7688549,
+    "state_code": "WA",
+    "capital": "Olympia",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "54",
+    "name": "West Virginia",
+    "population": 1792967,
+    "state_code": "WV",
+    "capital": "Charleston",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "55",
+    "name": "Wisconsin",
+    "population": 5882128,
+    "state_code": "WI",
+    "capital": "Madison",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "56",
+    "name": "Wyoming",
+    "population": 577929,
+    "state_code": "WY",
+    "capital": "Cheyenne",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  },
+  {
+    "fips_code": "72",
+    "name": "Puerto Rico",
+    "population": 3272382,
+    "state_code": "",
+    "capital": "",
+    "data_year": 2022,
+    "last_updated": "2025-09-28T13:03:29.128716"
+  }
+]

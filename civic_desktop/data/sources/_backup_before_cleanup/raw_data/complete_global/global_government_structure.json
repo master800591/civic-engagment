@@ -1,0 +1,61 @@
+{
+  "international_level": {
+    "united_nations": {
+      "type": "Global Organization",
+      "members": 193,
+      "purpose": "International cooperation and peace",
+      "headquarters": "New York City, United States"
+    }
+  },
+  "continental_level": {
+    "african_union": {
+      "members": 55,
+      "region": "Africa"
+    },
+    "european_union": {
+      "members": 27,
+      "region": "Europe"
+    },
+    "organization_of_american_states": {
+      "members": 35,
+      "region": "Americas"
+    },
+    "asean": {
+      "members": 10,
+      "region": "Southeast Asia"
+    },
+    "arab_league": {
+      "members": 22,
+      "region": "Middle East/North Africa"
+    }
+  },
+  "national_level": {
+    "description": "Individual country governments",
+    "coverage": "All 195+ recognized sovereign states",
+    "government_types": [
+      "Federal Presidential Republic",
+      "Federal Parliamentary Republic",
+      "Constitutional Monarchy",
+      "Parliamentary Republic",
+      "Presidential Republic",
+      "Semi-presidential Republic",
+      "One-party Socialist Republic",
+      "Federal Parliamentary Democracy",
+      "Absolute Monarchy",
+      "Theocracy"
+    ]
+  },
+  "subnational_level": {
+    "states_provinces": "First-level administrative divisions",
+    "counties_districts": "Second-level administrative divisions",
+    "municipalities": "Local government level"
+  },
+  "local_level": {
+    "cities": "Urban municipal governments",
+    "towns": "Smaller municipal governments",
+    "villages": "Rural local governments",
+    "special_districts": "Special-purpose local authorities"
+  },
+  "last_updated": "2025-09-28T13:07:14.822106",
+  "data_source": "curated_global_structure"
+}

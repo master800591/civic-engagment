@@ -1,0 +1,265 @@
+{
+  "contract_roles": {
+    "citizens": {
+      "bob.blockchain.20250928140258@civic-platform.org": {
+        "user_email": "bob.blockchain.20250928140258@civic-platform.org",
+        "role": "contract_citizen",
+        "assignment_method": "initial_setup",
+        "assigned_by": "system",
+        "assigned_at": "2025-09-28T14:02:58.445173",
+        "term_start": "2025-09-28T14:02:58.445173",
+        "term_end": null,
+        "active": true,
+        "assignment_id": "contract_citizen_1759093378.445173"
+      }
+    },
+    "representatives": {},
+    "senators": {},
+    "elders": {},
+    "founders": {}
+  },
+  "role_assignments": [
+    {
+      "user_email": "bob.blockchain.20250928140258@civic-platform.org",
+      "role": "contract_citizen",
+      "assignment_method": "initial_setup",
+      "assigned_by": "system",
+      "assigned_at": "2025-09-28T14:02:58.445173",
+      "term_start": "2025-09-28T14:02:58.445173",
+      "term_end": null,
+      "active": true,
+      "assignment_id": "contract_citizen_1759093378.445173"
+    }
+  ],
+  "permission_matrix": {
+    "contract_citizen": {
+      "electoral_rights": [
+        "vote_in_elections",
+        "run_for_representative",
+        "run_for_senator",
+        "participate_referendums"
+      ],
+      "participation_rights": [
+        "create_debate_topics",
+        "submit_arguments",
+        "vote_on_arguments",
+        "flag_content",
+        "appeal_moderation"
+      ],
+      "civic_rights": [
+        "access_blockchain_records",
+        "petition_for_amendments",
+        "recall_officials",
+        "access_public_documents"
+      ],
+      "constitutional_protections": [
+        "due_process_rights",
+        "equal_participation",
+        "free_expression",
+        "privacy_protection"
+      ]
+    },
+    "contract_representative": {
+      "electoral_rights": [
+        "vote_in_elections",
+        "run_for_representative",
+        "run_for_senator",
+        "participate_referendums"
+      ],
+      "participation_rights": [
+        "create_debate_topics",
+        "submit_arguments",
+        "vote_on_arguments",
+        "flag_content",
+        "appeal_moderation"
+      ],
+      "civic_rights": [
+        "access_blockchain_records",
+        "petition_for_amendments",
+        "recall_officials",
+        "access_public_documents"
+      ],
+      "constitutional_protections": [
+        "due_process_rights",
+        "equal_participation",
+        "free_expression",
+        "privacy_protection"
+      ],
+      "legislative_powers": [
+        "propose_legislation",
+        "budget_authority",
+        "impeachment_power",
+        "platform_oversight",
+        "committee_creation"
+      ],
+      "blockchain_authority": [
+        "validator_eligibility",
+        "block_signing_rights",
+        "consensus_participation"
+      ],
+      "term_info": {
+        "term_length": "2_years",
+        "term_limit": "unlimited",
+        "election_cycle": "biennial"
+      }
+    },
+    "contract_senator": {
+      "electoral_rights": [
+        "vote_in_elections",
+        "run_for_representative",
+        "run_for_senator",
+        "participate_referendums"
+      ],
+      "participation_rights": [
+        "create_debate_topics",
+        "submit_arguments",
+        "vote_on_arguments",
+        "flag_content",
+        "appeal_moderation"
+      ],
+      "civic_rights": [
+        "access_blockchain_records",
+        "petition_for_amendments",
+        "recall_officials",
+        "access_public_documents"
+      ],
+      "constitutional_protections": [
+        "due_process_rights",
+        "equal_participation",
+        "free_expression",
+        "privacy_protection"
+      ],
+      "legislative_powers": [
+        "review_representative_proposals",
+        "deliberative_delay_authority",
+        "confirmation_power",
+        "elder_veto_override",
+        "treaty_ratification"
+      ],
+      "blockchain_authority": [
+        "validator_eligibility",
+        "block_signing_rights",
+        "consensus_participation"
+      ],
+      "checks_powers": [
+        "override_elder_veto",
+        "judicial_appointment_confirmation",
+        "emergency_protocol_review"
+      ],
+      "term_info": {
+        "term_length": "6_years",
+        "term_limit": "2_consecutive_terms",
+        "election_cycle": "staggered_thirds"
+      }
+    },
+    "contract_elder": {
+      "electoral_rights": [
+        "vote_in_elections",
+        "run_for_representative",
+        "run_for_senator",
+        "participate_referendums"
+      ],
+      "participation_rights": [
+        "create_debate_topics",
+        "submit_arguments",
+        "vote_on_arguments",
+        "flag_content",
+        "appeal_moderation"
+      ],
+      "civic_rights": [
+        "access_blockchain_records",
+        "petition_for_amendments",
+        "recall_officials",
+        "access_public_documents"
+      ],
+      "constitutional_protections": [
+        "due_process_rights",
+        "equal_participation",
+        "free_expression",
+        "privacy_protection"
+      ],
+      "constitutional_powers": [
+        "constitutional_veto",
+        "judicial_review",
+        "contract_interpretation",
+        "elder_veto_authority",
+        "appointment_authority"
+      ],
+      "oversight_powers": [
+        "monitor_constitutional_compliance",
+        "resolve_branch_disputes",
+        "emergency_mediation",
+        "precedent_establishment"
+      ],
+      "limitations": [
+        "cannot_initiate_legislation",
+        "cannot_directly_govern",
+        "subject_to_citizen_recall",
+        "cannot_override_founder_emergency"
+      ],
+      "term_info": {
+        "term_length": "4_years",
+        "term_limit": "3_consecutive_terms",
+        "selection_method": "elected_by_representatives_and_senators"
+      }
+    },
+    "contract_founder": {
+      "electoral_rights": [
+        "vote_in_elections",
+        "run_for_representative",
+        "run_for_senator",
+        "participate_referendums"
+      ],
+      "participation_rights": [
+        "create_debate_topics",
+        "submit_arguments",
+        "vote_on_arguments",
+        "flag_content",
+        "appeal_moderation"
+      ],
+      "civic_rights": [
+        "access_blockchain_records",
+        "petition_for_amendments",
+        "recall_officials",
+        "access_public_documents"
+      ],
+      "constitutional_protections": [
+        "due_process_rights",
+        "equal_participation",
+        "free_expression",
+        "privacy_protection"
+      ],
+      "constitutional_authority": [
+        "modify_core_governance_contracts",
+        "emergency_protocol_override",
+        "initial_elder_appointment",
+        "platform_architecture_changes"
+      ],
+      "emergency_powers": [
+        "constitutional_emergency_declaration",
+        "platform_threat_response",
+        "critical_system_override"
+      ],
+      "limitations": [
+        "cannot_directly_govern_operations",
+        "cannot_override_elected_decisions",
+        "subject_to_elder_senator_removal",
+        "supermajority_consensus_required"
+      ],
+      "term_info": {
+        "term_length": "lifetime",
+        "term_limit": "max_7_founders",
+        "removal_process": "elder_senator_consensus"
+      }
+    }
+  },
+  "governance_structure": {
+    "max_founders": 7,
+    "representative_terms": "2_years",
+    "senator_terms": "6_years",
+    "elder_terms": "4_years",
+    "founder_terms": "lifetime"
+  },
+  "created_at": "2025-09-28T14:02:58.437097",
+  "last_updated": "2025-09-28T14:02:58.445173"
+}

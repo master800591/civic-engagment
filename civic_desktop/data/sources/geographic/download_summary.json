@@ -1,0 +1,42 @@
+{
+  "download_date": "2025-09-28 12:59:31",
+  "data_directory": "raw_data\\natural_earth",
+  "datasets": {
+    "countries": {
+      "downloaded": true,
+      "files_count": 7,
+      "directory_size_mb": 2.327944755554199
+    },
+    "states_provinces": {
+      "downloaded": true,
+      "files_count": 7,
+      "directory_size_mb": 1.775193214416504
+    },
+    "populated_places": {
+      "downloaded": true,
+      "files_count": 7,
+      "directory_size_mb": 7.9293317794799805
+    },
+    "urban_areas": {
+      "downloaded": false
+    },
+    "coastline": {
+      "downloaded": false
+    },
+    "land": {
+      "downloaded": false
+    },
+    "ocean": {
+      "downloaded": false
+    },
+    "rivers_lakes": {
+      "downloaded": false
+    },
+    "admin_0_boundary_lines": {
+      "downloaded": false
+    },
+    "admin_1_boundary_lines": {
+      "downloaded": false
+    }
+  }
+}
