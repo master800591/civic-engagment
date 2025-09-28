@@ -1,1 +1,0 @@
-# Training Module - Civic education and role-based training system

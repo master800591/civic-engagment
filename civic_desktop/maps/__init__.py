@@ -1,1 +1,0 @@
-# Map integration module for OpenStreetMap features
