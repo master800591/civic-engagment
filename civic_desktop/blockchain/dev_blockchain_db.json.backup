@@ -102,6 +102,61 @@
       "validator": "citizen@example.com",
       "signature": "UNSIGNED",
       "hash": "cc9ffc0f443608539a52904d1dfa7cefd092a25622c251503b5a95f24430d517"
+    },
+    {
+      "index": 6,
+      "previous_hash": "cc9ffc0f443608539a52904d1dfa7cefd092a25622c251503b5a95f24430d517",
+      "timestamp": "2025-09-29T12:38:13.323860Z",
+      "data": {
+        "action": "test_action",
+        "user_email": "test@example.com",
+        "timestamp": "2025-09-16T00:00:00Z"
+      },
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "f61ba6f5f3b6f9b31ff6effed1c626de2b5f79be9bb8563654b1ba6989799e97"
+    },
+    {
+      "index": 7,
+      "previous_hash": "f61ba6f5f3b6f9b31ff6effed1c626de2b5f79be9bb8563654b1ba6989799e97",
+      "timestamp": "2025-09-29T12:38:13.353362Z",
+      "data": {
+        "action": "flag_content",
+        "flag_id": "ef3aacd8-bf81-45c4-94d5-79ae0e0a5f1e",
+        "content_type": "debate",
+        "content_id": "topic123",
+        "reporter_email": "citizen@example.com",
+        "severity": "medium",
+        "timestamp": "2025-09-29T12:38:13.353229Z"
+      },
+      "validator": "citizen@example.com",
+      "signature": "UNSIGNED",
+      "hash": "e5014f6e268dbfc70f0a220fb3371c3f734bb2745ec9f9fb36c79f31e414cfac"
+    },
+    {
+      "index": 8,
+      "previous_hash": "e5014f6e268dbfc70f0a220fb3371c3f734bb2745ec9f9fb36c79f31e414cfac",
+      "timestamp": "2025-09-29T12:39:09.052751Z",
+      "data": {
+        "action": "register_user",
+        "user_email": "rep@example.com",
+        "first_name": "Test",
+        "last_name": "Representative",
+        "address": "123 Test Street",
+        "city": "TestCity",
+        "state": "TestState",
+        "country": "TestCountry",
+        "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvZJRqEp7Yut04oy83mOMQaUBZYUogo87d+eJDwugH9iez+qc2DYYTnXNzf5TrOm6KFxdKjVCeTihW1ctaVkZcgsn25lu2QZGn1LAWyt+Swi4nYZvfJ01Q3k5jiM1r57bZsVO0RCh6ZXv3xGZ72LGHi0rEWV5bGoJCUsqZGCZfe0DhQdWifmXBeK8p38PU9k5FYmSbg5t6i9vFXhfMx+9LEBrki/QEDlZ0z/JjtHYuK83m4tqW2j56q1OMMhEdo9EZrRqvylOZoQLdkVT/gabSf6+qg39UW3gscm+EwpuSD7jTMhzxsr5q9I6VtFN37UYg3fjqJv4d5fFFw4ACPN8KQIDAQAB-----END PUBLIC KEY-----",
+        "roles": [
+          "Prospect Contract Citizen"
+        ],
+        "password_hash": "$2b$12$g2EJHbqjV/QqkwUK0WniiOSYVY4gz4S5o5TP6Vx8VoByQrodiX6jS",
+        "id_document_hash": "550d6ad971ff1eaaf03d82c6c6aff2059ad8f0b8d004022bf1f7cb4f6d0302aa",
+        "timestamp": "2025-09-29T12:39:09.052037Z"
+      },
+      "validator": "SYSTEM",
+      "signature": "SYSTEM",
+      "hash": "c88ceb863fd9dfed2e04a1fe80f657570e7b5310c0e671111f55c4c90d9b4d00"
     }
   ],
   "chapters": [
