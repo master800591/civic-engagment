@@ -1,0 +1,355 @@
+name: Update Onboarding Modules
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'civic_desktop/system_guide/onboarding/**'
+      - 'civic_desktop/system_guide/onboarding_backend.py'
+      - 'civic_desktop/system_guide/guide_tab.py'
+  workflow_dispatch:
+    inputs:
+      update_type:
+        description: 'Type of onboarding update'
+        required: true
+        default: 'content'
+        type: choice
+        options:
+        - content
+        - structure
+        - validation
+        - all
+      role_scope:
+        description: 'Scope of update (leave empty for all roles)'
+        required: false
+        type: choice
+        options:
+        - ''
+        - Contract Member
+        - Contract Representative
+        - Contract Senator
+        - Contract Elder
+        - Contract Founder
+
+jobs:
+  validate-onboarding-updates:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install dependencies
+      run: |
+        cd civic_desktop
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Validate updated onboarding modules
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        
+        print('🔍 Validating onboarding updates...')
+        
+        try:
+            from system_guide.onboarding_backend import UserOnboardingSystem
+            from system_guide.onboarding import ALL_ROLE_MODULES, COMPETENCY_THRESHOLDS
+            
+            # Test system initialization
+            onboarding = UserOnboardingSystem()
+            pathways = onboarding.load_onboarding_pathways()
+            
+            print(f'✅ Onboarding system loads successfully')
+            print(f'   Available roles: {list(pathways.keys())}')
+            
+            # Validate each role's modules
+            total_modules = 0
+            for role, pathway in pathways.items():
+                modules_count = len(pathway['modules'])
+                total_modules += modules_count
+                duration = pathway['estimated_duration_minutes']
+                threshold = pathway['competency_threshold']
+                
+                print(f'✅ {role}:')
+                print(f'   - Modules: {modules_count}')
+                print(f'   - Duration: {duration} minutes')
+                print(f'   - Threshold: {threshold}%')
+                
+                # Test module content loading
+                for module_name in pathway['modules'][:2]:  # Test first 2 modules for speed
+                    content = onboarding.get_module_content(module_name)
+                    if not content.get('title'):
+                        print(f'⚠️  Warning: Module {module_name} missing title')
+                    if not content.get('description'):
+                        print(f'⚠️  Warning: Module {module_name} missing description')
+            
+            print(f'✅ Total modules available: {total_modules}')
+            
+        except Exception as e:
+            print(f'❌ Validation failed: {e}')
+            sys.exit(1)
+        "
+    
+    - name: Check module content quality
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding import ALL_ROLE_MODULES
+        
+        print('🔍 Checking module content quality...')
+        
+        quality_issues = []
+        
+        for role, modules in ALL_ROLE_MODULES.items():
+            for module_name, module_data in modules.items():
+                # Check required fields
+                required_fields = ['title', 'description', 'interactive_elements', 'competency_questions']
+                
+                for field in required_fields:
+                    if field not in module_data:
+                        quality_issues.append(f'{role}.{module_name} missing {field}')
+                    elif not module_data[field]:
+                        quality_issues.append(f'{role}.{module_name} has empty {field}')
+                
+                # Check interactive elements structure
+                interactive_elements = module_data.get('interactive_elements', [])
+                for i, element in enumerate(interactive_elements):
+                    if not isinstance(element, dict):
+                        quality_issues.append(f'{role}.{module_name} interactive element {i} not a dict')
+                    elif 'type' not in element:
+                        quality_issues.append(f'{role}.{module_name} interactive element {i} missing type')
+                
+                # Check competency questions
+                questions = module_data.get('competency_questions', [])
+                for i, question in enumerate(questions):
+                    if not isinstance(question, dict):
+                        quality_issues.append(f'{role}.{module_name} question {i} not a dict')
+                    elif 'question' not in question:
+                        quality_issues.append(f'{role}.{module_name} question {i} missing question text')
+                    elif 'correct_answer' not in question:
+                        quality_issues.append(f'{role}.{module_name} question {i} missing correct answer')
+        
+        if quality_issues:
+            print('⚠️  Quality issues found:')
+            for issue in quality_issues[:10]:  # Show first 10 issues
+                print(f'   - {issue}')
+            if len(quality_issues) > 10:
+                print(f'   ... and {len(quality_issues) - 10} more issues')
+            print('✅ Issues logged for review (not blocking)')
+        else:
+            print('✅ No quality issues found')
+        "
+    
+    - name: Test role-specific updates (if specified)
+      if: ${{ github.event.inputs.role_scope != '' }}
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding import ALL_ROLE_MODULES
+        from system_guide.onboarding_backend import UserOnboardingSystem
+        
+        role_scope = '${{ github.event.inputs.role_scope }}'
+        
+        if role_scope in ALL_ROLE_MODULES:
+            print(f'🔍 Testing updates for {role_scope}...')
+            
+            # Test module loading for this specific role
+            onboarding = UserOnboardingSystem()
+            pathways = onboarding.load_onboarding_pathways()
+            
+            if role_scope in pathways:
+                pathway = pathways[role_scope]
+                modules = pathway['modules']
+                
+                print(f'✅ {role_scope} pathway loaded successfully')
+                print(f'   - Modules: {len(modules)}')
+                print(f'   - Duration: {pathway[\"estimated_duration_minutes\"]} minutes')
+                
+                # Test each module
+                for module_name in modules:
+                    content = onboarding.get_module_content(module_name)
+                    print(f'   ✅ {module_name}: {content.get(\"title\", \"No title\")}')
+            else:
+                print(f'❌ {role_scope} not found in pathways')
+                sys.exit(1)
+        else:
+            print(f'❌ {role_scope} not found in available modules')
+            sys.exit(1)
+        "
+    
+    - name: Generate update report
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding import ALL_ROLE_MODULES, COMPETENCY_THRESHOLDS
+        from system_guide.onboarding_backend import UserOnboardingSystem
+        import json
+        from datetime import datetime
+        
+        print('📊 Generating onboarding update report...')
+        
+        # Collect metrics
+        onboarding = UserOnboardingSystem()
+        pathways = onboarding.load_onboarding_pathways()
+        
+        report = {
+            'timestamp': datetime.now().isoformat(),
+            'update_type': '${{ github.event.inputs.update_type }}' or 'push',
+            'role_scope': '${{ github.event.inputs.role_scope }}' or 'all',
+            'statistics': {
+                'total_roles': len(pathways),
+                'total_modules': sum(len(p['modules']) for p in pathways.values()),
+                'total_estimated_minutes': sum(p['estimated_duration_minutes'] for p in pathways.values()),
+                'average_competency_threshold': sum(COMPETENCY_THRESHOLDS.values()) / len(COMPETENCY_THRESHOLDS)
+            },
+            'role_breakdown': {}
+        }
+        
+        for role, pathway in pathways.items():
+            report['role_breakdown'][role] = {
+                'modules_count': len(pathway['modules']),
+                'estimated_duration': pathway['estimated_duration_minutes'],
+                'competency_threshold': pathway['competency_threshold'],
+                'complexity_level': pathway['complexity_level']
+            }
+        
+        print('📈 Update Report:')
+        print(f\"   Total Roles: {report['statistics']['total_roles']}\")
+        print(f\"   Total Modules: {report['statistics']['total_modules']}\")
+        print(f\"   Total Duration: {report['statistics']['total_estimated_minutes']} minutes\")
+        print(f\"   Avg Threshold: {report['statistics']['average_competency_threshold']:.1f}%\")
+        
+        # Save report for artifacts
+        with open('/tmp/onboarding_update_report.json', 'w') as f:
+            json.dump(report, f, indent=2)
+        
+        print('✅ Report generated successfully')
+        "
+    
+    - name: Upload update report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: onboarding-update-report
+        path: /tmp/onboarding_update_report.json
+        retention-days: 30
+
+  update-documentation:
+    runs-on: ubuntu-latest
+    needs: validate-onboarding-updates
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install dependencies
+      run: |
+        cd civic_desktop
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Update onboarding documentation
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding import ALL_ROLE_MODULES, COMPETENCY_THRESHOLDS
+        from datetime import datetime
+        
+        print('📝 Updating onboarding documentation...')
+        
+        # Generate comprehensive documentation
+        doc_content = f'''# Onboarding Modules Documentation
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Overview
+Interactive onboarding modules for all civic engagement platform roles.
+
+## Role Pathways
+
+'''
+        
+        for role, modules in ALL_ROLE_MODULES.items():
+            threshold = COMPETENCY_THRESHOLDS.get(role, 70)
+            total_duration = sum(m.get('estimated_duration_minutes', 15) for m in modules.values())
+            
+            doc_content += f'''### {role}
+- **Competency Threshold**: {threshold}%
+- **Estimated Duration**: {total_duration} minutes
+- **Modules**: {len(modules)}
+
+'''
+            
+            for module_name, module_data in modules.items():
+                title = module_data.get('title', module_name.replace('_', ' ').title())
+                duration = module_data.get('estimated_duration_minutes', 15)
+                questions = len(module_data.get('competency_questions', []))
+                
+                doc_content += f'''#### {title}
+- **Duration**: {duration} minutes
+- **Competency Questions**: {questions}
+- **Interactive Elements**: {len(module_data.get('interactive_elements', []))}
+
+'''
+        
+        # Write documentation
+        with open('system_guide/onboarding/README.md', 'w') as f:
+            f.write(doc_content)
+        
+        print('✅ Documentation updated')
+        "
+    
+    - name: Commit documentation updates
+      run: |
+        git config --local user.email 'action@github.com'
+        git config --local user.name 'GitHub Action'
+        
+        if [ -n '$(git status --porcelain)' ]; then
+          git add civic_desktop/system_guide/onboarding/README.md
+          git commit -m 'docs: Update onboarding module documentation [skip ci]'
+          git push
+          echo '✅ Documentation committed and pushed'
+        else
+          echo 'ℹ️  No documentation changes to commit'
+        fi
+
+  notification:
+    runs-on: ubuntu-latest
+    needs: [validate-onboarding-updates, update-documentation]
+    if: always()
+    
+    steps:
+    - name: Send update notification
+      run: |
+        echo '📢 Onboarding Update Notification'
+        echo 'Validation Status: ${{ needs.validate-onboarding-updates.result }}'
+        echo 'Documentation Status: ${{ needs.update-documentation.result }}'
+        
+        if [ '${{ needs.validate-onboarding-updates.result }}' == 'success' ]; then
+          echo '✅ Onboarding modules updated successfully'
+        else
+          echo '❌ Onboarding validation failed'
+        fi
+        
+        echo 'Update completed at: $(date)'

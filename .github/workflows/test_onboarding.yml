@@ -1,0 +1,283 @@
+name: Test Onboarding Modules
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'civic_desktop/system_guide/onboarding/**'
+      - 'civic_desktop/system_guide/onboarding_backend.py'
+      - 'civic_desktop/system_guide/guide_tab.py'
+      - 'civic_desktop/tests/**onboard**'
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Type of onboarding test to run'
+        required: true
+        default: 'comprehensive'
+        type: choice
+        options:
+        - comprehensive
+        - unit
+        - integration
+        - ui
+      role_filter:
+        description: 'Test specific role (leave empty for all)'
+        required: false
+        type: choice
+        options:
+        - ''
+        - Contract Member
+        - Contract Representative  
+        - Contract Senator
+        - Contract Elder
+        - Contract Founder
+
+jobs:
+  test-onboarding-modules:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11, 3.12]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install system dependencies for PyQt5
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb libegl1-mesa libgl1-mesa-glx libxkbcommon-x11-0
+    
+    - name: Install Python dependencies
+      run: |
+        cd civic_desktop
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Test onboarding module imports
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding_backend import UserOnboardingSystem
+        from system_guide.onboarding import ALL_ROLE_MODULES, COMPETENCY_THRESHOLDS
+        print('✅ All onboarding imports successful')
+        "
+    
+    - name: Test onboarding system initialization
+      run: |
+        cd civic_desktop
+        xvfb-run -a python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding_backend import UserOnboardingSystem
+        
+        # Test system initialization
+        onboarding = UserOnboardingSystem()
+        pathways = onboarding.load_onboarding_pathways()
+        
+        print('✅ Onboarding system initialized')
+        print(f'Available roles: {list(pathways.keys())}')
+        
+        # Test each role has required components
+        for role, pathway in pathways.items():
+            assert 'modules' in pathway, f'Role {role} missing modules'
+            assert len(pathway['modules']) > 0, f'Role {role} has no modules'
+            assert 'competency_threshold' in pathway, f'Role {role} missing competency threshold'
+            print(f'✅ {role}: {len(pathway[\"modules\"])} modules, threshold {pathway[\"competency_threshold\"]}%')
+        "
+    
+    - name: Test module content loading
+      run: |
+        cd civic_desktop
+        xvfb-run -a python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding_backend import UserOnboardingSystem
+        
+        onboarding = UserOnboardingSystem()
+        pathways = onboarding.load_onboarding_pathways()
+        
+        # Test module content for each role
+        for role, pathway in pathways.items():
+            for module_name in pathway['modules']:
+                content = onboarding.get_module_content(module_name)
+                assert 'title' in content, f'Module {module_name} missing title'
+                assert 'description' in content, f'Module {module_name} missing description'
+                print(f'✅ {role}.{module_name}: {content[\"title\"]}')
+        "
+    
+    - name: Test onboarding session creation
+      run: |
+        cd civic_desktop
+        xvfb-run -a python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding_backend import UserOnboardingSystem
+        
+        onboarding = UserOnboardingSystem()
+        
+        # Test session creation
+        success, message, session_data = onboarding.initiate_user_onboarding(
+            user_email='test@civic.platform',
+            onboarding_preferences={'pathway': 'guided', 'pace': 'normal'}
+        )
+        
+        assert success, f'Session creation failed: {message}'
+        assert 'id' in session_data, 'Session missing ID'
+        assert 'pathway_configuration' in session_data, 'Session missing pathway configuration'
+        print(f'✅ Session created: {session_data[\"id\"]}')
+        "
+    
+    - name: Test role-specific workflows (if specified)
+      if: ${{ github.event.inputs.role_filter != '' }}
+      run: |
+        cd civic_desktop
+        xvfb-run -a python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding_backend import UserOnboardingSystem
+        from system_guide.onboarding import ALL_ROLE_MODULES
+        
+        role_filter = '${{ github.event.inputs.role_filter }}'
+        
+        if role_filter in ALL_ROLE_MODULES:
+            modules = ALL_ROLE_MODULES[role_filter]
+            print(f'Testing {role_filter} modules:')
+            for module_name, module_data in modules.items():
+                print(f'  ✅ {module_name}: {module_data.get(\"title\", \"No title\")}')
+                
+                # Validate module structure
+                assert 'interactive_elements' in module_data, f'{module_name} missing interactive elements'
+                assert 'competency_questions' in module_data, f'{module_name} missing competency questions'
+                print(f'    - Interactive elements: {len(module_data[\"interactive_elements\"])}')
+                print(f'    - Competency questions: {len(module_data[\"competency_questions\"])}')
+        else:
+            print(f'Role {role_filter} not found in available modules')
+        "
+    
+    - name: Test troubleshooting workflows
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding.troubleshooting import troubleshooting_workflows, contextual_help_triggers
+        
+        print('Testing troubleshooting workflows:')
+        for workflow_name, workflow_data in troubleshooting_workflows.items():
+            assert 'title' in workflow_data, f'Workflow {workflow_name} missing title'
+            assert 'steps' in workflow_data, f'Workflow {workflow_name} missing steps'
+            print(f'  ✅ {workflow_name}: {len(workflow_data[\"steps\"])} steps')
+        
+        print('Testing contextual help triggers:')
+        for trigger_name, trigger_data in contextual_help_triggers.items():
+            assert 'trigger' in trigger_data, f'Trigger {trigger_name} missing trigger condition'
+            assert 'recommended_action' in trigger_data, f'Trigger {trigger_name} missing recommended action'
+            print(f'  ✅ {trigger_name}: {trigger_data[\"recommended_action\"]}')
+        "
+    
+    - name: Run unit tests for onboarding
+      run: |
+        cd civic_desktop
+        if [ -f tests/test_comprehensive.py ]; then
+          xvfb-run -a python -m pytest tests/test_comprehensive.py::TestSystemGuideModule -v --tb=short
+        else
+          echo "No specific onboarding tests found, running basic import tests"
+          python -c "
+          import sys
+          sys.path.append('.')
+          from tests.test_comprehensive import TestSystemGuideModule
+          import unittest
+          
+          suite = unittest.TestLoader().loadTestsFromTestCase(TestSystemGuideModule)
+          runner = unittest.TextTestRunner(verbosity=2)
+          result = runner.run(suite)
+          
+          if result.failures or result.errors:
+              sys.exit(1)
+          "
+        fi
+
+  validate-onboarding-structure:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Validate onboarding module structure
+      run: |
+        echo "Validating onboarding directory structure..."
+        
+        # Check required directories exist
+        if [ ! -d "civic_desktop/system_guide/onboarding" ]; then
+          echo "❌ Missing onboarding directory"
+          exit 1
+        fi
+        
+        # Check required files exist
+        required_files=(
+          "civic_desktop/system_guide/onboarding/__init__.py"
+          "civic_desktop/system_guide/onboarding/modules.py"
+          "civic_desktop/system_guide/onboarding/representative_modules.py"
+          "civic_desktop/system_guide/onboarding/senator_modules.py"
+          "civic_desktop/system_guide/onboarding/elder_modules.py"
+          "civic_desktop/system_guide/onboarding/founder_modules.py"
+          "civic_desktop/system_guide/onboarding/troubleshooting.py"
+        )
+        
+        for file in "${required_files[@]}"; do
+          if [ ! -f "$file" ]; then
+            echo "❌ Missing required file: $file"
+            exit 1
+          else
+            echo "✅ Found: $file"
+          fi
+        done
+        
+        echo "✅ All onboarding module files present"
+    
+    - name: Check module completeness
+      run: |
+        cd civic_desktop
+        python3 -c "
+        import sys
+        sys.path.append('.')
+        from system_guide.onboarding import ALL_ROLE_MODULES, COMPETENCY_THRESHOLDS
+        
+        print('Checking module completeness...')
+        
+        # Check all roles have modules
+        expected_roles = ['Contract Member', 'Contract Representative', 'Contract Senator', 'Contract Elder', 'Contract Founder']
+        
+        for role in expected_roles:
+            if role not in ALL_ROLE_MODULES:
+                print(f'❌ Missing modules for role: {role}')
+                sys.exit(1)
+            else:
+                modules = ALL_ROLE_MODULES[role]
+                if len(modules) == 0:
+                    print(f'❌ No modules defined for role: {role}')
+                    sys.exit(1)
+                print(f'✅ {role}: {len(modules)} modules')
+        
+        # Check competency thresholds exist
+        for role in expected_roles:
+            if role not in COMPETENCY_THRESHOLDS:
+                print(f'❌ Missing competency threshold for role: {role}')
+                sys.exit(1)
+            else:
+                threshold = COMPETENCY_THRESHOLDS[role]
+                if not 0 <= threshold <= 100:
+                    print(f'❌ Invalid competency threshold for {role}: {threshold}')
+                    sys.exit(1)
+                print(f'✅ {role}: {threshold}% competency threshold')
+        
+        print('✅ All modules and thresholds properly configured')
+        "

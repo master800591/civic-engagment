@@ -11,7 +11,7 @@ from typing import Dict, List, Optional, Tuple, Any
 try:
     from main import ENV_CONFIG
     from users.session import SessionManager
-    from blockchain.blockchain import Blockchain
+    from blockchain.blockchain import CivicBlockchain
 except ImportError as e:
     print(f"Warning: Import error in help system: {e}")
     ENV_CONFIG = {}
@@ -942,5 +942,7 @@ class ContextualHelpSystem:
             print(f"Error saving help data: {e}")
 
 
-# Export the main class
+# Export the main classes
+HelpSystem = ContextualHelpSystem
+__all__ = ['ContextualHelpSystem', 'HelpSystem']
 __all__ = ['ContextualHelpSystem']
