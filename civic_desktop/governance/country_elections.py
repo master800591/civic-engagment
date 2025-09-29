@@ -81,7 +81,8 @@ class CountryElectionConfig:
     
     # Term settings
     term_length_years: int = 1                 # Term length in years
-    max_consecutive_terms: int = 4             # Maximum consecutive terms
+    max_total_terms: int = 4                   # Max 4 terms total (not consecutive)
+    consecutive_term_restriction: bool = True   # Cannot be consecutive
     
     # Election timing
     registration_period_days: int = 30         # Candidate registration period
@@ -475,15 +476,27 @@ class CountryElectionManager:
             return True  # Allow if verification fails
     
     def _check_country_term_limits(self, user_email: str, office: CountryOffice) -> bool:
-        """Check if candidate has reached term limits"""
+        """Check if candidate has reached term limits
+        
+        Rule: Max 4 terms total, cannot be consecutive (1-year break required)
+        """
         
         try:
-            # Get candidate's country election history
-            consecutive_terms = self._get_consecutive_country_terms(user_email, office)
-            return consecutive_terms < 4  # Max 4 consecutive terms
+            # Get all previous terms for this office
+            previous_terms = self._get_all_country_terms(user_email, office)
+            
+            # Check maximum total terms (4)
+            if len(previous_terms) >= 4:
+                return False  # Maximum 4 terms total reached
+            
+            # Check consecutive terms restriction (1-year break required)
+            if previous_terms and self._has_consecutive_country_terms_issue(previous_terms):
+                return False  # Cannot serve consecutive terms
+            
+            return True  # Eligible to run
             
         except Exception:
-            return True  # Allow if check fails
+            return False  # Err on side of caution - block if can't verify
     
     def _get_previous_country_terms(self, user_email: str, office: CountryOffice) -> int:
         """Get number of previous terms served in country office"""

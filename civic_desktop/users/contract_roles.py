@@ -106,9 +106,10 @@ class ContractPermissions:
             'emergency_protocol_review'
         ],
         'term_info': {
-            'term_length': '6_years',
-            'term_limit': '2_consecutive_terms',
-            'election_cycle': 'staggered_thirds'
+            'term_length': '1_year',
+            'term_limit': '4_total_terms',
+            'consecutive_restriction': True,  # Cannot serve consecutive terms
+            'election_cycle': 'annual'
         }
     }
     
@@ -135,8 +136,9 @@ class ContractPermissions:
             'cannot_override_founder_emergency'
         ],
         'term_info': {
-            'term_length': '4_years',
-            'term_limit': '3_consecutive_terms',
+            'term_length': '1_year',
+            'term_limit': '4_total_terms',
+            'consecutive_restriction': True,  # Cannot serve consecutive terms
             'selection_method': 'elected_by_representatives_and_senators'
         }
     }

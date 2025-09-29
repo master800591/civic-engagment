@@ -47,6 +47,15 @@ try:
     
     # Import World Elections module
     from governance.world_election_ui import WorldElectionTab
+    
+    # Import Real-World Government Integration module
+    from government.government_ui import RealWorldGovernmentTab
+    
+    # Import Government Directory module
+    from government.directory_ui import GovernmentDirectoryTab
+    
+    # Import Citizen Verification module
+    from government.citizen_verification_ui import CitizenVerificationTab
 
 except ImportError as e:
     print(f"Warning: Some modules not available: {e}")
@@ -247,6 +256,33 @@ class MainWindow(QMainWindow):
             self.tab_widget.addTab(self.tabs['blockchain'], "⛓️ Blockchain")
         except Exception as e:
             print(f"Error creating Blockchain tab: {e}")
+        
+        # Real-World Government Integration
+        try:
+            self.tabs['government'] = RealWorldGovernmentTab()
+            self.tab_widget.addTab(self.tabs['government'], "🏛️ Real Government")
+        except Exception as e:
+            print(f"Error creating Real Government tab: {e}")
+            self.tabs['government'] = PlaceholderWidget("Real Government")
+            self.tab_widget.addTab(self.tabs['government'], "🏛️ Real Government")
+        
+        # Government Officials Directory
+        try:
+            self.tabs['government_directory'] = GovernmentDirectoryTab()
+            self.tab_widget.addTab(self.tabs['government_directory'], "🌍 Government Directory")
+        except Exception as e:
+            print(f"Error creating Government Directory tab: {e}")
+            self.tabs['government_directory'] = PlaceholderWidget("Government Directory")
+            self.tab_widget.addTab(self.tabs['government_directory'], "🌍 Government Directory")
+        
+        # Citizen Verification System
+        try:
+            self.tabs['citizen_verification'] = CitizenVerificationTab()
+            self.tab_widget.addTab(self.tabs['citizen_verification'], "🏆 Citizen Verification")
+        except Exception as e:
+            print(f"Error creating Citizen Verification tab: {e}")
+            self.tabs['citizen_verification'] = PlaceholderWidget("Citizen Verification")
+            self.tab_widget.addTab(self.tabs['citizen_verification'], "🏆 Citizen Verification")
         
         # City/Town Elections and Local Governance
         try:

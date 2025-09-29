@@ -92,7 +92,7 @@ class StateElectionConfig:
     
     # Term limits and rules (same as city level)
     term_length_years: int = 1                 # 1 year terms
-    max_consecutive_terms: int = 4             # Max 4 terms
+    max_total_terms: int = 4                   # Max 4 terms total (not consecutive)
     consecutive_term_restriction: bool = True   # Cannot be consecutive
     
     # Election timing

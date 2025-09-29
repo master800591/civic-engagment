@@ -14,17 +14,28 @@ from dataclasses import dataclass, asdict
 import hashlib
 
 # Import blockchain for recording elections
+try:
+    from civic_desktop.blockchain.blockchain import CivicBlockchain
+    BLOCKCHAIN_AVAILABLE = True
+except ImportError:
+    print("Warning: Blockchain not available for city elections")
+    BLOCKCHAIN_AVAILABLE = False
+
+# Import blockchain term limit verification
+try:
+    from civic_desktop.blockchain.term_limit_verification import (
+        BlockchainTermLimitManager, TermLimitLevel, TermLimitOffice
+    )
+    TERM_LIMIT_VERIFICATION_AVAILABLE = True
+except ImportError:
+    print("Warning: Blockchain term limit verification not available")
+    TERM_LIMIT_VERIFICATION_AVAILABLE = False
+
 # Import task system components
 try:
     from civic_desktop.tasks.task_types import TaskType
 except ImportError:
     TaskType = None
-try:
-    from blockchain.blockchain import CivicBlockchain
-    BLOCKCHAIN_AVAILABLE = True
-except ImportError:
-    print("Warning: Blockchain not available for city elections")
-    BLOCKCHAIN_AVAILABLE = False
 
 # Import user management
 try:
@@ -87,7 +98,7 @@ class CityElectionConfig:
     
     # Term limits and rules
     term_length_years: int = 1                 # 1 year terms
-    max_consecutive_terms: int = 4             # Max 4 terms
+    max_total_terms: int = 4                   # Max 4 terms total (not consecutive)
     consecutive_term_restriction: bool = True   # Cannot be consecutive
     
     # Office configuration - New representation structure
@@ -218,6 +229,7 @@ class CityElectionManager:
         self.blockchain = CivicBlockchain() if BLOCKCHAIN_AVAILABLE else None
         self.user_backend = UserBackend() if USER_BACKEND_AVAILABLE else None
         self.task_manager = TaskManager() if TASKS_AVAILABLE else None
+        self.term_limit_manager = BlockchainTermLimitManager() if TERM_LIMIT_VERIFICATION_AVAILABLE else None
         
         # Initialize databases
         self._init_databases()
@@ -841,29 +853,39 @@ class CityElectionManager:
             return False
     
     def _has_consecutive_terms_issue(self, previous_terms: List[Dict[str, Any]]) -> bool:
-        """Check if user has consecutive terms restriction issue"""
+        """Check if user has consecutive terms restriction issue
+        
+        Rule: Cannot serve consecutive terms - must have 1 year break between ANY terms
+        """
         
         try:
             if not previous_terms:
                 return False
             
-            # Sort terms by end date
-            sorted_terms = sorted(previous_terms, key=lambda x: x.get('end_date', ''))
+            # Sort terms by end date (most recent first)
+            sorted_terms = sorted(previous_terms, key=lambda x: x.get('end_date', ''), reverse=True)
             
-            # Check if last term ended recently (within 1 year)
-            if sorted_terms:
-                last_term_end = datetime.fromisoformat(sorted_terms[-1]['end_date'])
-                time_since_last_term = datetime.now() - last_term_end
-                
-                # If less than 1 year since last term ended, it would be consecutive
-                if time_since_last_term.days < 365:
-                    return True
+            # Check if ANY previous term ended less than 1 year ago
+            current_time = datetime.now()
             
-            return False
+            for term in sorted_terms:
+                try:
+                    term_end = datetime.fromisoformat(term['end_date'])
+                    time_since_term_end = current_time - term_end
+                    
+                    # If any term ended less than 365 days ago, cannot run (consecutive restriction)
+                    if time_since_term_end.days < 365:
+                        return True
+                        
+                except (ValueError, KeyError) as date_error:
+                    print(f"Error parsing term end date: {date_error}")
+                    continue
+            
+            return False  # No consecutive terms issue found
             
         except Exception as e:
             print(f"Error checking consecutive terms: {e}")
-            return False
+            return True  # Err on side of caution - block if can't verify
     
     def get_city_statistics(self) -> Dict[str, Any]:
         """Get comprehensive city election statistics"""

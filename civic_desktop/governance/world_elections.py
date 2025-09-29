@@ -81,7 +81,8 @@ class WorldElectionConfig:
     
     # Term settings
     term_length_years: int = 1                 # Term length in years
-    max_consecutive_terms: int = 4             # Maximum consecutive terms
+    max_total_terms: int = 4                   # Max 4 terms total (not consecutive)
+    consecutive_term_restriction: bool = True   # Cannot be consecutive
     
     # Election timing
     registration_period_days: int = 30         # Candidate registration period
@@ -478,8 +479,18 @@ class WorldElectionManager:
         
         try:
             # Get candidate's world election history
-            consecutive_terms = self._get_consecutive_world_terms(user_email, office)
-            return consecutive_terms < 4  # Max 4 consecutive terms
+            # Get all previous terms for this office
+            previous_terms = self._get_all_world_terms(user_email, office)
+            
+            # Check maximum total terms (4)
+            if len(previous_terms) >= 4:
+                return False  # Maximum 4 terms total reached
+            
+            # Check consecutive terms restriction (1-year break required)
+            if previous_terms and self._has_consecutive_world_terms_issue(previous_terms):
+                return False  # Cannot serve consecutive terms
+            
+            return True  # Eligible to run
             
         except Exception:
             return True  # Allow if check fails
