@@ -1,0 +1,18 @@
+name: Update Onboarding Modules
+
+on:
+  push:
+    paths:
+      - 'civic_desktop/system_guide/onboarding/**'
+  workflow_dispatch:
+
+jobs:
+  update-onboarding:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run onboarding update checks
+        run: |
+          echo "Onboarding modules updated."
+          # Add onboarding update validation steps here

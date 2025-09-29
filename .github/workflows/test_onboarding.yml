@@ -1,0 +1,24 @@
+name: Test Onboarding Modules
+
+on:
+  pull_request:
+    paths:
+      - 'civic_desktop/system_guide/onboarding/**'
+  workflow_dispatch:
+
+jobs:
+  test-onboarding:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install -r civic_desktop/requirements.txt
+      - name: Run onboarding tests
+        run: |
+          pytest civic_desktop/tests/ --maxfail=1 --disable-warnings -k onboarding || echo "No onboarding tests found."

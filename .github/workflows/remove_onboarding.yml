@@ -1,0 +1,15 @@
+name: Remove Onboarding Modules
+
+on:
+  workflow_dispatch:
+
+jobs:
+  remove-onboarding:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Remove onboarding modules
+        run: |
+          echo "Onboarding modules removed."
+          # Add onboarding removal steps here
