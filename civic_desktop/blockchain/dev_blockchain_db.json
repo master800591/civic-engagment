@@ -72,6 +72,36 @@
       "validator": "alice@example.com",
       "signature": "GENESIS",
       "hash": "377ea050b41a81860215586e2e7b11a5d7c9eba328900454ee544b3aea44081e"
+    },
+    {
+      "index": 4,
+      "previous_hash": "377ea050b41a81860215586e2e7b11a5d7c9eba328900454ee544b3aea44081e",
+      "timestamp": "2025-09-29T12:32:44.815858Z",
+      "data": {
+        "action": "test_action",
+        "user_email": "test@example.com",
+        "timestamp": "2025-09-16T00:00:00Z"
+      },
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "df06a3a4e9fc6649a67d16ecd22f350553ad34f32819aa0ade7c3dac6f72045f"
+    },
+    {
+      "index": 5,
+      "previous_hash": "df06a3a4e9fc6649a67d16ecd22f350553ad34f32819aa0ade7c3dac6f72045f",
+      "timestamp": "2025-09-29T12:32:44.837403Z",
+      "data": {
+        "action": "flag_content",
+        "flag_id": "69ed3d51-a818-40a5-92bc-19e75b92e237",
+        "content_type": "debate",
+        "content_id": "topic123",
+        "reporter_email": "citizen@example.com",
+        "severity": "medium",
+        "timestamp": "2025-09-29T12:32:44.837278Z"
+      },
+      "validator": "citizen@example.com",
+      "signature": "UNSIGNED",
+      "hash": "cc9ffc0f443608539a52904d1dfa7cefd092a25622c251503b5a95f24430d517"
     }
   ],
   "chapters": [
@@ -97,6 +127,89 @@
       "validator": "test@example.com",
       "signature": "UNSIGNED",
       "hash": "1c521b08f8c3fa7f1530d83cd0a1df1d286e8ed97190f26a445ed035b87b5dd0"
+    },
+    {
+      "index": 1,
+      "previous_hash": "1c521b08f8c3fa7f1530d83cd0a1df1d286e8ed97190f26a445ed035b87b5dd0",
+      "timestamp": "2025-09-29T12:32:44.816731Z",
+      "pages": [
+        {
+          "index": 1,
+          "previous_hash": "44f65019e8e6aeba1a3d73b7eadc5847e043aeeaa07d1ed9a3f919b97d8ed66b",
+          "timestamp": "2025-09-23T16:09:08.495282Z",
+          "data": {
+            "action": "create_topic",
+            "topic_id": "ffdad001-2d76-49c3-8cc1-ae731dec7080",
+            "title": "Test Topic",
+            "description": "Test Description",
+            "creator_email": "rep@example.com",
+            "jurisdiction": "city",
+            "location": "",
+            "timestamp": "2025-09-23T16:09:08.495282Z"
+          },
+          "validator": "rep@example.com",
+          "signature": "UNSIGNED",
+          "hash": "cdf9238bda3908a337a28260384fcf2feb06288bc645bb4017f03a214e08efab"
+        },
+        {
+          "index": 2,
+          "previous_hash": "cdf9238bda3908a337a28260384fcf2feb06288bc645bb4017f03a214e08efab",
+          "timestamp": "2025-09-23T16:09:08.506856Z",
+          "data": {
+            "action": "flag_content",
+            "flag_id": "b6f3103e-9dba-4174-860b-123608900412",
+            "content_type": "debate",
+            "content_id": "topic123",
+            "reporter_email": "citizen@example.com",
+            "severity": "medium",
+            "timestamp": "2025-09-23T16:09:08.506856Z"
+          },
+          "validator": "citizen@example.com",
+          "signature": "UNSIGNED",
+          "hash": "7bffee395f261b7d3c5f9be1a2c48c16b29208fb320750411f9e484a219468d6"
+        },
+        {
+          "index": 3,
+          "previous_hash": "7bffee395f261b7d3c5f9be1a2c48c16b29208fb320750411f9e484a219468d6",
+          "timestamp": "2025-09-23T16:09:09.488284Z",
+          "data": {
+            "action": "register_user",
+            "user_email": "alice@example.com",
+            "first_name": "Alice",
+            "last_name": "Smith",
+            "address": "123 Main St",
+            "city": "Testville",
+            "state": "TS",
+            "country": "Testland",
+            "public_key": "-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsmlqJsvqiCscgJUarPITAOQWGkblXRLPmfkiYXM3GHG4VALQ/fL2hw4t+hxuybaO8A632T0H51SrgWfTVEs692dtZ7A1tvFpbBfekZhUdRMih5Wqaf0wOHQ30++5YxHp9NIZ/uP51tQNz1gMFV4VhykeqwaADLxckyNiAAwSmgClvDDwm02iqqP5VxdUj1z2sMAsvNnbHT9eMvGJL+8xr4PmfV3ycd1gJqdA1GH1gj94QB1q4HofNY187DKWGrztoOwuAmb50t2psjjj4PUEhmqdONjrbLEX4QVvcv5qjMXsMhQIu1Hnt6KqeohfMOcrzC8EMwTh7HMKSut6e00/PQIDAQAB-----END PUBLIC KEY-----",
+            "roles": [
+              "Contract Founder"
+            ],
+            "password_hash": "$2b$12$eFe3x52hbsOV9ygoTlyOVOdPlERJf4jcX0duVLr2DNk4JoS4CYNca",
+            "id_document_hash": "bbd2ae648ef5cf2e46acdbf20176855721949326ee8d4d7ea33c61c983a65a93",
+            "timestamp": "2025-09-23T16:09:09.488284Z"
+          },
+          "validator": "alice@example.com",
+          "signature": "GENESIS",
+          "hash": "377ea050b41a81860215586e2e7b11a5d7c9eba328900454ee544b3aea44081e"
+        },
+        {
+          "index": 4,
+          "previous_hash": "377ea050b41a81860215586e2e7b11a5d7c9eba328900454ee544b3aea44081e",
+          "timestamp": "2025-09-29T12:32:44.815858Z",
+          "data": {
+            "action": "test_action",
+            "user_email": "test@example.com",
+            "timestamp": "2025-09-16T00:00:00Z"
+          },
+          "validator": "test@example.com",
+          "signature": "UNSIGNED",
+          "hash": "df06a3a4e9fc6649a67d16ecd22f350553ad34f32819aa0ade7c3dac6f72045f"
+        }
+      ],
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "3f64ff418de38ca10c850cdef67b54a08b48b6c99a3c15a6ff5201b7fd7667e7"
     }
   ],
   "books": [
