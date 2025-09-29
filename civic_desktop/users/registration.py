@@ -1,12 +1,44 @@
 from PyQt5.QtWidgets import (
 	QWidget, QVBoxLayout, QFormLayout, QGroupBox, QLineEdit, QLabel, QPushButton, 
 	QHBoxLayout, QFileDialog, QMessageBox, QSizePolicy, QSpacerItem, QDateEdit, 
-	QComboBox, QCheckBox
+	QComboBox, QCheckBox, QProgressBar, QApplication
 )
-from PyQt5.QtCore import QDate
+from PyQt5.QtCore import QDate, QThread, pyqtSignal
 from civic_desktop.users.backend import UserBackend
 from civic_desktop.utils.validation import DataValidator
 from civic_desktop.contracts.contract_ui import show_contract_acceptance_dialog
+
+class RegistrationWorker(QThread):
+	"""Worker thread for user registration to prevent UI blocking"""
+	progress_update = pyqtSignal(int, str)  # progress_value, status_message
+	registration_complete = pyqtSignal(bool, str)  # success, message
+	
+	def __init__(self, user_data, id_document_path):
+		super().__init__()
+		self.user_data = user_data
+		self.id_document_path = id_document_path
+	
+	def run(self):
+		try:
+			self.progress_update.emit(10, "Validating user data...")
+			QThread.msleep(500)  # Small delay for user feedback
+			
+			self.progress_update.emit(25, "Verifying government ID...")
+			QThread.msleep(1000)  # Simulate ID verification time
+			
+			self.progress_update.emit(50, "Checking for duplicate accounts...")
+			QThread.msleep(500)
+			
+			self.progress_update.emit(75, "Creating account and blockchain entry...")
+			success, result = UserBackend.register_user(self.user_data, self.id_document_path)
+			
+			self.progress_update.emit(100, "Registration complete!")
+			QThread.msleep(500)
+			
+			self.registration_complete.emit(success, result)
+			
+		except Exception as e:
+			self.registration_complete.emit(False, f"Registration error: {str(e)}")
 
 class RegistrationForm(QWidget):
 	def __init__(self, parent=None):
@@ -15,6 +47,7 @@ class RegistrationForm(QWidget):
 		self.fields = {}
 		self.contracts_accepted = False
 		self.id_document_path = None
+		self.registration_worker = None
 		self._build_ui()
 
 	def _build_ui(self):
@@ -123,6 +156,18 @@ class RegistrationForm(QWidget):
 		contract_vbox.addLayout(contract_button_layout)
 		contract_group.setLayout(contract_vbox)
 		main_vbox.addWidget(contract_group)
+
+		# Progress bar (initially hidden)
+		self.progress_bar = QProgressBar()
+		self.progress_bar.setVisible(False)
+		self.progress_bar.setTextVisible(True)
+		main_vbox.addWidget(self.progress_bar)
+		
+		# Status label for progress
+		self.progress_label = QLabel("")
+		self.progress_label.setVisible(False)
+		self.progress_label.setStyleSheet("color: #666; font-style: italic;")
+		main_vbox.addWidget(self.progress_label)
 
 		# Register button
 		main_vbox.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Expanding))
@@ -248,22 +293,68 @@ class RegistrationForm(QWidget):
 		
 		# Other existing validations...
 		if not self.contracts_accepted:
-			QMessageBox.warning(self, "Contracts Required", 
-				"You must accept the governance contracts before registering.")
+			QMessageBox.warning(self, "Governance Contracts Required", 
+				"📋 You must review and accept all applicable governance contracts before completing your registration.\n\n"
+				"These contracts establish your rights and responsibilities as a civic participant.\n"
+				"Please click 'Review Contracts' to continue.")
 			return
 		if not self.id_document_path:
-			QMessageBox.warning(self, "ID Document Required", "Please upload your government ID document before registering.")
+			QMessageBox.warning(self, "Government ID Required", 
+				"🆔 Please upload a clear photo or scan of your government-issued ID document.\n\n"
+				"Supported formats: JPG, PNG, PDF\n"
+				"This helps us verify your identity and prevents duplicate accounts.")
 			return
 		valid, msg, _ = DataValidator.validate_registration_data(data)
 		if not valid:
 			QMessageBox.warning(self, "Validation Error", msg)
 			return
-		success, result = UserBackend.register_user(data, self.id_document_path)
+		
+		# Start the registration process with progress indicator
+		self._start_registration(data)
+	
+	def _start_registration(self, data):
+		"""Start the registration process with progress indicator"""
+		# Show progress bar and disable button
+		self.progress_bar.setVisible(True)
+		self.progress_label.setVisible(True)
+		self.register_button.setEnabled(False)
+		self.progress_bar.setValue(0)
+		
+		# Create and start worker thread
+		self.registration_worker = RegistrationWorker(data, self.id_document_path)
+		self.registration_worker.progress_update.connect(self._on_progress_update)
+		self.registration_worker.registration_complete.connect(self._on_registration_complete)
+		self.registration_worker.start()
+	
+	def _on_progress_update(self, value, message):
+		"""Update progress bar and status message"""
+		self.progress_bar.setValue(value)
+		self.progress_label.setText(message)
+		QApplication.processEvents()  # Keep UI responsive
+	
+	def _on_registration_complete(self, success, result):
+		"""Handle registration completion"""
+		# Hide progress bar and re-enable button
+		self.progress_bar.setVisible(False)
+		self.progress_label.setVisible(False)
+		self.register_button.setEnabled(True)
+		
 		if success:
-			QMessageBox.information(self, "Registration Success", "Your account has been created.")
+			QMessageBox.information(self, "Registration Successful! 🎉", 
+				"Welcome to the Civic Engagement Platform!\n\n"
+				"✅ Your account has been created successfully\n"
+				"📧 You can now log in with your email and password\n"
+				"🏛️ Your civic participation journey begins now\n\n"
+				"Next steps:\n"
+				"• Complete your user training\n"
+				"• Explore debates and discussions\n"
+				"• Participate in elections")
 			self.clear_form()
 		else:
-			QMessageBox.critical(self, "Registration Failed", str(result))
+			QMessageBox.critical(self, "Registration Failed", 
+				f"❌ Unable to create your account:\n\n{result}\n\n"
+				"Please check your information and try again.\n"
+				"If the problem persists, contact support.")
 
 	def clear_form(self):
 		for f in self.fields.values():

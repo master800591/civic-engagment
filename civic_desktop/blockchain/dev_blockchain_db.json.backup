@@ -157,6 +157,66 @@
       "validator": "SYSTEM",
       "signature": "SYSTEM",
       "hash": "c88ceb863fd9dfed2e04a1fe80f657570e7b5310c0e671111f55c4c90d9b4d00"
+    },
+    {
+      "index": 9,
+      "previous_hash": "c88ceb863fd9dfed2e04a1fe80f657570e7b5310c0e671111f55c4c90d9b4d00",
+      "timestamp": "2025-09-29T12:42:26.612895Z",
+      "data": {
+        "action": "test_action",
+        "user_email": "test@example.com",
+        "timestamp": "2025-09-16T00:00:00Z"
+      },
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "bd87406a5ee1f28c29f3e94493d12bb0b2e117139f52a72f85d4ec39233e2c8c"
+    },
+    {
+      "index": 10,
+      "previous_hash": "bd87406a5ee1f28c29f3e94493d12bb0b2e117139f52a72f85d4ec39233e2c8c",
+      "timestamp": "2025-09-29T12:42:26.623524Z",
+      "data": {
+        "action": "flag_content",
+        "flag_id": "55a4405f-2dbe-4ae3-9507-537e04c3334f",
+        "content_type": "debate",
+        "content_id": "topic123",
+        "reporter_email": "citizen@example.com",
+        "severity": "medium",
+        "timestamp": "2025-09-29T12:42:26.623379Z"
+      },
+      "validator": "citizen@example.com",
+      "signature": "UNSIGNED",
+      "hash": "f9b363afa08777eef678ff1304de5626e4f014130b6f31e3d1da3f08d1d1576f"
+    },
+    {
+      "index": 11,
+      "previous_hash": "f9b363afa08777eef678ff1304de5626e4f014130b6f31e3d1da3f08d1d1576f",
+      "timestamp": "2025-09-29T12:44:52.799951Z",
+      "data": {
+        "action": "test_action",
+        "user_email": "test@example.com",
+        "timestamp": "2025-09-16T00:00:00Z"
+      },
+      "validator": "test@example.com",
+      "signature": "UNSIGNED",
+      "hash": "7512642b93583046fede902f4fe36d7d81d5f12d6b5a4f824195b8f325e6d1fb"
+    },
+    {
+      "index": 12,
+      "previous_hash": "7512642b93583046fede902f4fe36d7d81d5f12d6b5a4f824195b8f325e6d1fb",
+      "timestamp": "2025-09-29T12:44:52.809483Z",
+      "data": {
+        "action": "flag_content",
+        "flag_id": "7db5818a-d944-44f0-8e8b-656a1ce400df",
+        "content_type": "debate",
+        "content_id": "topic123",
+        "reporter_email": "citizen@example.com",
+        "severity": "medium",
+        "timestamp": "2025-09-29T12:44:52.809340Z"
+      },
+      "validator": "citizen@example.com",
+      "signature": "UNSIGNED",
+      "hash": "7ba385610821493d5b7c36a69a7434574dc572b6d6f1732323467b13dac67346"
     }
   ],
   "chapters": [

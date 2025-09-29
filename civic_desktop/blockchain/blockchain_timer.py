@@ -3,6 +3,10 @@ from PyQt5.QtCore import QTimer, QObject
 from datetime import datetime, timezone
 from .blockchain import Blockchain
 from .p2p import broadcast_block
+from ..utils.logging_config import get_blockchain_logger
+
+# Get logger for this module
+logger = get_blockchain_logger()
 
 class BlockchainTimer(QObject):
     def __init__(self, parent=None):
@@ -57,19 +61,19 @@ class BlockchainTimer(QObject):
                 if p2p_manager.running:
                     result = p2p_manager.broadcast_block(latest_block)
                     if result['sent_to']:
-                        print(f"✅ Block broadcast to {len(result['sent_to'])} peers")
+                        logger.info(f"Block broadcast to {len(result['sent_to'])} peers")
                     elif result['failed'] or result['unreachable']:
-                        print(f"⚠️ Block broadcast issues: {len(result['failed'])} failed, {len(result['unreachable'])} unreachable")
+                        logger.warning(f"Block broadcast issues: {len(result['failed'])} failed, {len(result['unreachable'])} unreachable")
                 else:
-                    print("📡 P2P not running - block not broadcast")
+                    logger.info("P2P not running - block not broadcast")
             except Exception as e:
-                print(f"❌ Block broadcast error: {e}")
+                logger.error(f"Block broadcast error: {e}")
                 # Fallback to old broadcast method
                 try:
                     from .p2p import broadcast_block
                     broadcast_block(latest_block)
                 except Exception as fallback_e:
-                    print(f"❌ Fallback broadcast also failed: {fallback_e}")
+                    logger.error(f"Fallback broadcast also failed: {fallback_e}")
         # Try to refresh the BlockchainTab if it exists
         try:
             from ..main_window import MainWindow
