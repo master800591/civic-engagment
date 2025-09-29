@@ -23,7 +23,7 @@ python main.py
 - `moderation/` - Constitutional Content Review
 - `contracts/` - Constitutional Governance Framework
 - `training/` - Civic Education System
-- `crypto/` - Civic Token Economy & Rewards
+- `crypto/` - CivicCoin DeFi Ecosystem & Rewards
 - `blockchain/` - Immutable Audit & Consensus System
 - `github_integration/` - Version Control & Updates
 - `maps/` - Geographic Civic Engagement

@@ -115,7 +115,7 @@ def vote_on_argument(argument_id, vote_type, voter_email):
     
     # Validate Voter Eligibility
     if not can_vote_on_arguments(voter_email):
-        return False, "Voting requires Contract Citizen status or higher"
+        return False, "Voting requires Contract Member status or higher"
     
     # Prevent Self-Voting
     argument = load_argument(argument_id)

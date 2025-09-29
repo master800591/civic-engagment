@@ -54,7 +54,7 @@ class CourseRecommendationEngine:
         """Create structured learning progression"""
         
         LEARNING_PATHS = {
-            'Contract Citizen': [
+            'Contract Member': [
                 'civic_basics_101',
                 'constitutional_rights', 
                 'voting_and_elections',
@@ -85,7 +85,7 @@ class CourseRecommendationEngine:
             ]
         }
         
-        base_path = LEARNING_PATHS.get(user_profile['role'], LEARNING_PATHS['Contract Citizen'])
+        base_path = LEARNING_PATHS.get(user_profile['role'], LEARNING_PATHS['Contract Member'])
         
         # Customize based on jurisdiction and interests
         customized_path = self.customize_learning_path(base_path, user_profile)

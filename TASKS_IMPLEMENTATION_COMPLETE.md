@@ -24,7 +24,7 @@ I have successfully created a comprehensive **Tasks Module** for the Civic Engag
    - Complete TaskManager class with database operations
    - Task creation, completion, and lifecycle management
    - Blockchain integration for audit trails
-   - Reward system and civic token integration
+   - Reward system and CivicCoin (CVC) integration
    - Statistics and analytics generation
 
 4. **`tasks/task_ui.py`** (600+ lines)
@@ -66,7 +66,7 @@ I have successfully created a comprehensive **Tasks Module** for the Civic Engag
 
 ## 🏛️ How the Tasks Module Works
 
-### **For Users (Contract Citizens)**
+### **For Users (Contract Members)**
 When you open the Civic Engagement Platform, the **Tasks tab is now your main dashboard** where you'll find:
 
 - **🗳️ Validation Tasks**: When blockchain transactions need your approval
@@ -88,7 +88,7 @@ The system automatically creates tasks for you based on:
 2. **Notification**: You receive alerts through your preferred channels
 3. **Action**: Complete tasks through intuitive interfaces
 4. **Verification**: Your actions are recorded on the blockchain
-5. **Rewards**: Earn civic tokens for responsible participation
+5. **Rewards**: Earn CivicCoin (CVC) for responsible participation
 
 ## 🔄 Cross-Module Integration
 
@@ -147,7 +147,7 @@ Development mode includes:
 ### **🤖 Automation**
 - **Smart Assignment**: Tasks automatically assigned based on roles and location
 - **Deadline Management**: Automatic expiration of overdue tasks
-- **Reward Processing**: Civic tokens awarded for timely completion
+- **Reward Processing**: CivicCoin (CVC) awarded for timely completion
 - **Cross-Module Triggers**: Tasks created from events in other modules
 
 ### **📊 Analytics**

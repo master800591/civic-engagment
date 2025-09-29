@@ -42,7 +42,7 @@ The Civic Engagement Platform uses a cryptographic Founder Key System to securel
    ├─ Budget authority
    └─ Impeachment power
 
-5. Contract Citizen     ← Base democratic participation
+5. Contract Member     ← Base democratic participation
    ├─ Electoral rights
    ├─ Debate participation
    └─ Constitutional protections
@@ -57,7 +57,7 @@ User Registration Form
 ├─ Location (city, state, country) 
 ├─ Identity Verification (ID document)
 ├─ Terms Agreement
-└─ Result: Contract Citizen role assigned
+└─ Result: Contract Member role assigned
 ```
 
 ### Founder Registration (with Private Key)
@@ -71,7 +71,7 @@ User Registration Form
 └─ System Process:
     ├─ Validate key against master database
     ├─ If VALID: Contract Founder role assigned
-    ├─ If INVALID: Contract Citizen role assigned  
+    ├─ If INVALID: Contract Member role assigned  
     ├─ Record assignment on blockchain
     └─ Update Founder registry
 ```
@@ -82,7 +82,7 @@ User Registration Form
 ```python
 def register_user(self, user_data):
     # Check for Founder key during registration
-    user_role = 'contract_citizen'  # Default role
+    user_role = 'contract_member'  # Default role
     founder_info = None
     
     if user_data.get('founder_private_key') and FOUNDER_SYSTEM_AVAILABLE:
@@ -103,14 +103,14 @@ def register_user(self, user_data):
     
     # Create user with determined role
     new_user = {
-        'role': user_role,  # 'contract_founder' or 'contract_citizen'
+        'role': user_role,  # 'contract_founder' or 'contract_member'
         'metadata': {'founder_info': founder_info}
         # ... other fields
     }
     
     # Register contract role
     role_manager = ContractRoleManager()
-    contract_role = ContractRole.CONTRACT_FOUNDER if user_role == 'contract_founder' else ContractRole.CONTRACT_CITIZEN
+    contract_role = ContractRole.CONTRACT_FOUNDER if user_role == 'contract_founder' else ContractRole.CONTRACT_MEMBER
     role_manager.assign_contract_role(user_email, contract_role, 'founder_key')
     
     # Record on blockchain for transparency
@@ -160,7 +160,7 @@ def validate_founder_key(self, provided_private_key: str):
 ### 🏛️ Democratic Accountability
 - **Term Limits**: Other roles have limited terms (Representatives: 2yr, Senators: 6yr, Elders: 4yr)
 - **Staggered Elections**: Prevents sudden complete power shifts
-- **Recall Rights**: Citizens can recall officials through special elections
+- **Recall Rights**: Contract Members can recall officials through special elections
 - **Appeals Process**: Due process protections for all governance decisions
 - **Public Audit**: Blockchain provides transparent audit trail
 
@@ -296,7 +296,7 @@ python demo_founder_keys.py
 ### Democratic Legitimacy  
 - **Citizen Sovereignty**: Ultimate authority rests with citizens
 - **Electoral Accountability**: Regular elections for Representatives/Senators
-- **Recall Mechanisms**: Citizens can remove officials
+- **Recall Mechanisms**: Contract Members can remove officials
 - **Transparent Governance**: Blockchain records all decisions
 
 ### Rights Protection

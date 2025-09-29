@@ -28,7 +28,7 @@ class SurveyCreationEngine:
         # Survey Types and Authority Requirements
         SURVEY_TYPES = {
             'opinion_poll': {
-                'required_role': 'Contract Citizen',
+                'required_role': 'Contract Member',
                 'constitutional_review': False,
                 'public_results': True,
                 'anonymity_required': True
@@ -261,7 +261,7 @@ class ReferendumManager:
                 'constitutional_review': True
             },
             'recall_election': {
-                'required_role': 'Contract Citizen',
+                'required_role': 'Contract Member',
                 'petition_threshold': 0.20,  # 20% of constituency
                 'approval_threshold': 0.60,  # 60% to recall
                 'constitutional_review': True

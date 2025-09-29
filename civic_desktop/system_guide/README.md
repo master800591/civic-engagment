@@ -28,7 +28,7 @@ class UserOnboardingSystem:
         
         # Onboarding Pathways by User Role
         ONBOARDING_PATHWAYS = {
-            'Contract Citizen': {
+            'Contract Member': {
                 'modules': [
                     'platform_introduction',
                     'democratic_participation_basics',
@@ -101,8 +101,8 @@ class UserOnboardingSystem:
         }
         
         # Get Role-Specific Onboarding Pathway
-        user_role = user.get('role', 'Contract Citizen')
-        onboarding_pathway = ONBOARDING_PATHWAYS.get(user_role, ONBOARDING_PATHWAYS['Contract Citizen'])
+        user_role = user.get('role', 'Contract Member')
+        onboarding_pathway = ONBOARDING_PATHWAYS.get(user_role, ONBOARDING_PATHWAYS['Contract Member'])
         
         # Customize Based on User Preferences
         customized_pathway = self.customize_onboarding_pathway(

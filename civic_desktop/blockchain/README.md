@@ -1,17 +1,17 @@
-# Blockchain Module - Immutable Audit & Consensus System
+# Blockchain Module - Immutable Audit & Consensus System + Crypto Transaction Recording
 
 ## Purpose
-Transparent audit trail with hierarchical structure, validator consensus, and immutable record-keeping for all platform governance activities.
+Transparent audit trail with hierarchical structure, validator consensus, and immutable record-keeping for all platform governance activities **and cryptocurrency transactions**.
 
 ## Module Structure
 ```
 blockchain/
-├── blockchain.py         # Core blockchain logic and hierarchical structure
+├── blockchain.py         # Core blockchain logic, hierarchical structure, crypto integration
 ├── signatures.py         # RSA signing and verification
 ├── p2p.py               # Peer-to-peer networking foundation
-├── blockchain_tab.py    # Blockchain UI dashboard
+├── blockchain_tab.py    # Blockchain UI dashboard with crypto transaction viewing
 ├── blockchain_timer.py  # Automated block creation
-├── blockchain_db.json   # Blockchain data storage
+├── blockchain_db.json   # Blockchain data storage (includes crypto transactions)
 ├── validators_db.json   # Validator registry and management
 └── genesis_block.json   # Genesis block data
 ```

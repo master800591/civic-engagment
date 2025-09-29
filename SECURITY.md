@@ -2,7 +2,7 @@
 
 ## 🛡️ PROTECTED SENSITIVE DATA
 
-This repository has comprehensive protections for all private information and keys to prevent accidental exposure.
+This repository has comprehensive protections for all private information, cryptographic keys, and cryptocurrency data to prevent accidental exposure. **Version 2.0.0 includes enhanced crypto wallet security.**
 
 ### 🚨 CRITICAL - NEVER COMMIT THESE FILES:
 
@@ -13,12 +13,19 @@ This repository has comprehensive protections for all private information and ke
 - `**/master_key.pem` - Master encryption keys
 - `**/founder_keys/` - Founder authentication keys
 - `**/*.key` - Any key files
+- `**/crypto_wallets/` - **NEW**: CivicCoin wallet private keys
+- `**/wallet_keys/` - **NEW**: Cryptocurrency wallet data
+- `**/*_wallet.json` - **NEW**: Individual wallet configurations
 
 #### 👤 **User Data & Databases**
 - `**/users_db.json` - User registration database
 - `**/sessions_db.json` - Active user sessions
 - `**/blockchain_db.json` - Blockchain transaction data
 - `**/validators_db.json` - Network validator registry
+- `**/crypto_ledger.json` - **NEW**: CivicCoin transaction ledger
+- `**/exchange_orders.json` - **NEW**: Exchange order book data
+- `**/pool_positions.json` - **NEW**: Liquidity pool positions
+- `**/rewards_db.json` - **NEW**: Governance reward tracking
 - `**/*_db.json` - Any database files
 
 #### 📄 **PDF Documents & User Files** 

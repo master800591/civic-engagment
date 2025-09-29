@@ -224,7 +224,7 @@ class DataValidator:
     
     @staticmethod
     def validate_token_amount(amount: Any) -> Tuple[bool, str]:
-        """Validate civic token transaction amounts"""
+        """Validate CivicCoin (CVC) transaction amounts"""
         
         # Type validation
         if not isinstance(amount, (int, float)):

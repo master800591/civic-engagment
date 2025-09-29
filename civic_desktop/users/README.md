@@ -1,27 +1,28 @@
-# Users Module - Identity & Authentication System
+# Users Module - Identity & Authentication System + Crypto Integration
 
 ## Purpose
-Secure user registration, authentication, and role-based governance participation with enterprise-grade security and constitutional compliance.
+Secure user registration, authentication, role-based governance participation, and **integrated cryptocurrency management** with enterprise-grade security and constitutional compliance.
 
 ## Module Structure
 ```
 users/
-├── backend.py            # User data management, bcrypt hashing
+├── backend.py            # User data management, bcrypt hashing, crypto integration
 ├── auth.py               # Authentication logic and session management
 ├── login.py              # Login UI component with user-friendly interface
-├── registration.py       # Registration UI component (5-step wizard)
-├── dashboard.py          # User dashboard UI with role-based features
+├── registration.py       # Registration UI component (6-step wizard with crypto)
+├── dashboard.py          # User dashboard UI with crypto portfolio tab
 ├── elections.py          # Election backend logic for contract roles
 ├── election_ui.py        # Election UI components and voting interface
 ├── session.py            # Session management and state tracking
 ├── keys.py               # RSA key management and cryptographic operations
+├── crypto_integration.py # Complete crypto-user integration bridge (300+ lines)
 ├── users_db.json         # User database (environment-specific path)
 └── private_keys/         # RSA private key storage directory
 ```
 
 ## AI Implementation Instructions
 
-### 1. User Registration Workflow (5-Step Process)
+### 1. User Registration Workflow (6-Step Process with Crypto)
 ```python
 # Step 1: Personal Information
 def collect_personal_info():
@@ -48,6 +49,18 @@ def create_password():
     # UI: Password strength indicator, confirmation field
 
 # Step 5: Terms Agreement & Key Generation
+def generate_keys_and_terms():
+    # Automatic: RSA key pair generation for blockchain participation
+    # Required: User agreement to platform terms of service
+    # Security: Private keys stored locally, never transmitted
+    # UI: Terms display with clear explanations
+
+# Step 6: CRYPTO WALLET CREATION (NEW)
+def create_crypto_wallet():
+    # Automatic: CivicCoin wallet creation using UserCryptoIntegration
+    # Role-Based Funding: Contract Founders (1000 CVC), Members (100 CVC)
+    # Blockchain Recording: Wallet creation and initial funding recorded
+    # UI: Success confirmation with wallet address and initial balance
 def finalize_registration():
     # Required: Terms acceptance, automatic RSA key generation
     # Blockchain: Record registration action with full audit trail

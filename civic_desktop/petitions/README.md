@@ -22,8 +22,8 @@ class PetitionCreationSystem:
         
         # Validate Petition Creator
         creator = load_user(creator_email)
-        if creator['role'] != 'Contract Citizen':
-            return False, "Only Contract Citizens can create petitions"
+        if creator['role'] != 'Contract Member':
+            return False, "Only Contract Members can create petitions"
         
         # Petition Types and Requirements
         PETITION_TYPES = {

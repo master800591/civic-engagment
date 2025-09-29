@@ -331,7 +331,7 @@ class EventParticipationManager:
         participant_registration['check_in_time'] = datetime.now().isoformat()
         participant_registration['check_in_method'] = check_in_method
         
-        # Award Civic Tokens for Attendance
+        # Award CivicCoin (CVC) for Attendance
         attendance_reward = self.calculate_attendance_reward(event, participant_email)
         if attendance_reward > 0:
             from civic_desktop.crypto.ledger import CivicTokenEconomy
