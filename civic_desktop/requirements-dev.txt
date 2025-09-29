@@ -1,0 +1,39 @@
+# Development dependencies for Civic Engagement Platform
+
+# Testing framework
+pytest>=8.0.0
+pytest-cov>=7.0.0
+pytest-xvfb>=3.0.0  # For GUI testing in CI
+
+# Security scanning
+bandit>=1.8.0  # Security vulnerability scanner
+safety>=3.0.0  # Check for known security vulnerabilities
+
+# Code quality and linting
+flake8>=6.0.0  # Code style linting
+black>=23.0.0  # Code formatting
+isort>=5.12.0  # Import sorting
+mypy>=1.0.0  # Type checking
+
+# Documentation
+sphinx>=6.0.0  # Documentation generation
+sphinx-rtd-theme>=1.2.0  # ReadTheDocs theme
+
+# Development tools
+ipython>=8.0.0  # Enhanced Python shell
+pre-commit>=3.0.0  # Git hooks
+tox>=4.0.0  # Testing across multiple environments
+
+# Platform-specific dependencies for testing
+# Windows specific
+pywin32>=306 ; sys_platform == "win32"
+
+# macOS specific  
+pyobjc-framework-Cocoa>=9.0 ; sys_platform == "darwin"
+
+# Linux specific
+python-xlib>=0.33 ; sys_platform == "linux"
+
+# CI/CD specific
+coverage>=7.0.0  # Code coverage reporting
+codecov>=2.1.0  # Coverage reporting service
