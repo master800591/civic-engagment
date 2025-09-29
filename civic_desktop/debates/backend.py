@@ -6,6 +6,10 @@ from typing import List, Dict, Any, Optional, Tuple
 from ..blockchain.blockchain import Blockchain
 from ..blockchain.integration_manager import BlockchainIntegrationManager, record_debate_action
 from ..users.backend import UserBackend
+from ..utils.logging_config import get_debate_logger
+
+# Get logger for this module
+logger = get_debate_logger()
 
 def get_debates_db_path() -> str:
     try:
@@ -204,7 +208,7 @@ class DebateBackend:
                 validator=author_email
             )
         except Exception as e:
-            print(f"Failed to log argument to blockchain: {e}")
+            logger.error(f"Failed to log argument to blockchain: {e}")
         return True, "Argument added successfully"
 
     # Removed duplicate get_topics_by_jurisdiction (single implementation above)
@@ -240,7 +244,7 @@ class DebateBackend:
                 validator=voter_email
             )
         except Exception as e:
-            print(f"Failed to log vote to blockchain: {e}")
+            logger.error(f"Failed to log vote to blockchain: {e}")
         return True, f"Vote '{vote}' cast successfully"
 
 def create_topic(title: str, description: str, creator_email: str, jurisdiction: str = 'city', location: str = '') -> Tuple[bool, str]:

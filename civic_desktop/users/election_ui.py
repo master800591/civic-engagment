@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QListWidget, QLineEdit, QMessageBox
 from .elections import ElectionManager
+from .session import SessionManager
 
 class ElectionWidget(QWidget):
     def __init__(self, jur, value, role, parent=None):
@@ -49,8 +50,14 @@ class ElectionWidget(QWidget):
         if not candidate_email:
             QMessageBox.warning(self, "Missing", "Enter a candidate email.")
             return
-        # TODO: Replace with actual logged-in user email
-        voter_email = "test@example.com"
+        
+        # Get current authenticated user
+        current_user = SessionManager.get_current_user()
+        if not current_user:
+            QMessageBox.warning(self, "Authentication Required", "Please log in to vote.")
+            return
+        
+        voter_email = current_user['email']
         ElectionManager.cast_vote(self.election_id, voter_email, candidate_email)
         QMessageBox.information(self, "Vote Cast", f"Vote for {candidate_email} submitted.")
         self.vote_input.clear()

@@ -212,7 +212,9 @@ class UserBackend:
         """Verify a password against its hash"""
         try:
             return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
-        except Exception:
+        except (ValueError, TypeError) as e:
+            # Log the specific error for debugging
+            print(f"Password verification error: {e}")
             return False
 
 
@@ -229,7 +231,8 @@ class UserBackend:
     def register_user(data: Dict[str, Any], id_document_path: str) -> Tuple[bool, str]:
         try:
             from .id_verification_api import GovernmentIDVerificationAPI
-        except Exception:
+        except ImportError:
+            # Module not available, use fallback
             class GovernmentIDVerificationAPI:  # fallback stub
                 def __init__(self, api_url: str):
                     pass

@@ -13,7 +13,8 @@ def get_moderation_db_path() -> str:
     try:
         from civic_desktop.main import ENV_CONFIG
         return ENV_CONFIG.get('moderation_db_path', os.path.join(os.path.dirname(__file__), 'moderation_db.json'))
-    except Exception:
+    except ImportError:
+        # ENV_CONFIG not available, use default path
         return os.path.join(os.path.dirname(__file__), 'moderation_db.json')
 
 
