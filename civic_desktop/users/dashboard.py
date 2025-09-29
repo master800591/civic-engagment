@@ -25,6 +25,7 @@ except ImportError:
 # Import modules
 sys.path.append(str(Path(__file__).parent.parent))
 from users.auth import SessionManager, RoleChecker, AuthenticationService
+from users.crypto_integration import UserCryptoIntegration
 
 class UserDashboard(QWidget if PYQT_AVAILABLE else object):
     """Main user dashboard with role-based interface"""
@@ -41,6 +42,7 @@ class UserDashboard(QWidget if PYQT_AVAILABLE else object):
         
         # Initialize services
         self.auth_service = AuthenticationService()
+        self.crypto_service = UserCryptoIntegration()
         
         # UI state
         self.current_user = None
@@ -133,6 +135,10 @@ class UserDashboard(QWidget if PYQT_AVAILABLE else object):
         # Activity tab
         self.activity_tab = self.create_activity_tab()
         self.content_tabs.addTab(self.activity_tab, "📊 Activity")
+        
+        # Crypto tab
+        self.crypto_tab = self.create_crypto_tab()
+        self.content_tabs.addTab(self.crypto_tab, "💰 Crypto")
     
     def create_overview_tab(self):
         """Create overview tab with role information and quick stats"""
@@ -454,6 +460,85 @@ class UserDashboard(QWidget if PYQT_AVAILABLE else object):
         tab.setLayout(layout)
         return tab
     
+    def create_crypto_tab(self):
+        """Create crypto portfolio tab"""
+        tab = QWidget()
+        layout = QVBoxLayout()
+        
+        # Wallet overview group
+        wallet_group = QGroupBox("💳 CivicCoin Wallet")
+        wallet_layout = QVBoxLayout()
+        
+        # Balance display
+        self.balance_label = QLabel("Loading balance...")
+        self.balance_label.setFont(QFont("Arial", 14, QFont.Bold))
+        self.balance_label.setStyleSheet("color: #27ae60; font-size: 18px;")
+        
+        # Address display
+        self.address_label = QLabel("Wallet Address: Loading...")
+        self.address_label.setFont(QFont("Courier", 9))
+        self.address_label.setStyleSheet("color: #7f8c8d; background-color: #ecf0f1; padding: 5px; border-radius: 3px;")
+        self.address_label.setWordWrap(True)
+        
+        wallet_layout.addWidget(self.balance_label)
+        wallet_layout.addWidget(self.address_label)
+        wallet_group.setLayout(wallet_layout)
+        
+        # Portfolio group
+        portfolio_group = QGroupBox("📊 Portfolio Overview")
+        portfolio_layout = QVBoxLayout()
+        
+        # Portfolio stats
+        self.portfolio_stats_layout = QGridLayout()
+        
+        # Transaction history group
+        history_group = QGroupBox("📋 Recent Transactions")
+        history_layout = QVBoxLayout()
+        
+        self.transaction_history_list = QListWidget()
+        self.transaction_history_list.setMaximumHeight(200)
+        history_layout.addWidget(self.transaction_history_list)
+        
+        history_group.setLayout(history_layout)
+        
+        # Quick actions group
+        actions_group = QGroupBox("⚡ Quick Actions")
+        actions_layout = QHBoxLayout()
+        
+        self.send_tokens_button = QPushButton("📤 Send Tokens")
+        self.send_tokens_button.setMinimumHeight(40)
+        self.send_tokens_button.clicked.connect(self.on_send_tokens_clicked)
+        
+        self.exchange_button = QPushButton("🔄 Exchange")
+        self.exchange_button.setMinimumHeight(40)
+        self.exchange_button.clicked.connect(self.on_exchange_clicked)
+        
+        self.pool_button = QPushButton("🏊 Pool & Earn")
+        self.pool_button.setMinimumHeight(40)
+        self.pool_button.clicked.connect(self.on_pool_clicked)
+        
+        self.rewards_button = QPushButton("🎁 Claim Rewards")
+        self.rewards_button.setMinimumHeight(40)
+        self.rewards_button.clicked.connect(self.on_rewards_clicked)
+        
+        actions_layout.addWidget(self.send_tokens_button)
+        actions_layout.addWidget(self.exchange_button)
+        actions_layout.addWidget(self.pool_button)
+        actions_layout.addWidget(self.rewards_button)
+        
+        actions_group.setLayout(actions_layout)
+        
+        portfolio_layout.addLayout(self.portfolio_stats_layout)
+        portfolio_group.setLayout(portfolio_layout)
+        
+        layout.addWidget(wallet_group)
+        layout.addWidget(portfolio_group)
+        layout.addWidget(history_group)
+        layout.addWidget(actions_group)
+        
+        tab.setLayout(layout)
+        return tab
+    
     def setup_styles(self):
         """Setup consistent styling"""
         self.setStyleSheet("""
@@ -556,6 +641,9 @@ class UserDashboard(QWidget if PYQT_AVAILABLE else object):
         
         # Update activity data
         self.update_activity_info()
+        
+        # Update crypto data
+        self.update_crypto_info()
     
     def update_header(self):
         """Update header with current user info"""
@@ -710,3 +798,148 @@ class UserDashboard(QWidget if PYQT_AVAILABLE else object):
     def on_backup_keys_clicked(self):
         """Handle backup keys action"""
         QMessageBox.information(self, "Backup Keys", "Key backup functionality will be implemented in a future update.")
+    
+    def update_crypto_info(self):
+        """Update crypto tab with latest portfolio information"""
+        if not self.current_user:
+            return
+        
+        try:
+            # Get crypto dashboard data
+            crypto_data = self.crypto_service.get_user_crypto_dashboard(self.current_user['email'])
+            
+            if crypto_data:
+                # Update balance
+                balance = crypto_data.get('balance', 0)
+                self.balance_label.setText(f"Balance: {balance:.6f} CVC")
+                
+                # Update wallet address
+                address = crypto_data.get('address', 'N/A')
+                if len(address) > 20:
+                    display_address = f"{address[:10]}...{address[-10:]}"
+                else:
+                    display_address = address
+                self.address_label.setText(f"Wallet Address: {display_address}")
+                
+                # Clear existing portfolio stats
+                for i in reversed(range(self.portfolio_stats_layout.count())):
+                    self.portfolio_stats_layout.itemAt(i).widget().setParent(None)
+                
+                # Add portfolio stats
+                row = 0
+                
+                # Total value
+                total_value = crypto_data.get('total_value', balance)
+                total_label = QLabel("Total Portfolio Value:")
+                total_value_label = QLabel(f"{total_value:.6f} CVC")
+                total_value_label.setStyleSheet("font-weight: bold; color: #27ae60;")
+                self.portfolio_stats_layout.addWidget(total_label, row, 0)
+                self.portfolio_stats_layout.addWidget(total_value_label, row, 1)
+                row += 1
+                
+                # Pool positions
+                if 'pool_positions' in crypto_data and crypto_data['pool_positions']:
+                    pool_label = QLabel("Liquidity Pools:")
+                    pool_count = len(crypto_data['pool_positions'])
+                    pool_value_label = QLabel(f"{pool_count} pools")
+                    self.portfolio_stats_layout.addWidget(pool_label, row, 0)
+                    self.portfolio_stats_layout.addWidget(pool_value_label, row, 1)
+                    row += 1
+                
+                # Rewards
+                if 'rewards' in crypto_data and crypto_data['rewards']:
+                    total_rewards = sum(crypto_data['rewards'].values())
+                    rewards_label = QLabel("Pending Rewards:")
+                    rewards_value_label = QLabel(f"{total_rewards:.6f} CVC")
+                    rewards_value_label.setStyleSheet("color: #f39c12;")
+                    self.portfolio_stats_layout.addWidget(rewards_label, row, 0)
+                    self.portfolio_stats_layout.addWidget(rewards_value_label, row, 1)
+                    row += 1
+                
+                # Update transaction history
+                self.transaction_history_list.clear()
+                transactions = crypto_data.get('transactions', [])
+                
+                if transactions:
+                    # Show last 10 transactions
+                    for tx in transactions[-10:]:
+                        tx_type = tx.get('type', 'transfer')
+                        amount = tx.get('amount', 0)
+                        timestamp = tx.get('timestamp', 'Unknown')
+                        
+                        # Format transaction display
+                        if tx_type == 'reward':
+                            item_text = f"🎁 Reward: +{amount:.6f} CVC ({timestamp})"
+                        elif tx_type == 'pool_deposit':
+                            item_text = f"🏊 Pool Deposit: -{amount:.6f} CVC ({timestamp})"
+                        elif tx_type == 'pool_withdraw':
+                            item_text = f"🏊 Pool Withdraw: +{amount:.6f} CVC ({timestamp})"
+                        else:
+                            item_text = f"💸 Transfer: {amount:+.6f} CVC ({timestamp})"
+                        
+                        self.transaction_history_list.addItem(item_text)
+                else:
+                    self.transaction_history_list.addItem("No transactions found")
+                    
+            else:
+                # No crypto data available
+                self.balance_label.setText("Balance: Not available")
+                self.address_label.setText("Wallet Address: Not created")
+                self.transaction_history_list.clear()
+                self.transaction_history_list.addItem("Crypto wallet not initialized")
+                
+        except Exception as e:
+            print(f"Error updating crypto info: {e}")
+            self.balance_label.setText("Balance: Error loading")
+            self.address_label.setText("Wallet Address: Error loading")
+    
+    # Crypto event handlers
+    def on_send_tokens_clicked(self):
+        """Handle send tokens action"""
+        if not self.current_user:
+            QMessageBox.warning(self, "Error", "Please login first.")
+            return
+        
+        # Show send tokens dialog (to be implemented)
+        QMessageBox.information(self, "Send Tokens", "Send tokens functionality available. Implementation pending.")
+    
+    def on_exchange_clicked(self):
+        """Handle exchange action"""
+        if not self.current_user:
+            QMessageBox.warning(self, "Error", "Please login first.")
+            return
+        
+        # Show exchange dialog (to be implemented)
+        QMessageBox.information(self, "Exchange", "Exchange functionality available with full order book and market rates.")
+    
+    def on_pool_clicked(self):
+        """Handle pool action"""
+        if not self.current_user:
+            QMessageBox.warning(self, "Error", "Please login first.")
+            return
+        
+        # Show pool dialog (to be implemented)
+        QMessageBox.information(self, "Pool & Earn", "Liquidity pools and yield farming available. Join pools to earn rewards.")
+    
+    def on_rewards_clicked(self):
+        """Handle rewards action"""
+        if not self.current_user:
+            QMessageBox.warning(self, "Error", "Please login first.")
+            return
+        
+        try:
+            # Get user rewards
+            rewards_info = self.crypto_service.get_user_crypto_dashboard(self.current_user['email'])
+            
+            # Display rewards info
+            if rewards_info and 'rewards' in rewards_info:
+                rewards_text = f"Available Rewards:\n\n"
+                for reward_type, amount in rewards_info['rewards'].items():
+                    rewards_text += f"{reward_type}: {amount:.6f} CVC\n"
+                
+                QMessageBox.information(self, "Rewards", rewards_text)
+            else:
+                QMessageBox.information(self, "Rewards", "No rewards currently available.")
+                
+        except Exception as e:
+            QMessageBox.warning(self, "Error", f"Failed to load rewards: {str(e)}")

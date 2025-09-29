@@ -35,6 +35,14 @@ except ImportError:
     print("Warning: PDF generation not available")
     PDF_GENERATION_AVAILABLE = False
 
+# Import crypto integration
+try:
+    from users.crypto_integration import UserCryptoIntegration
+    CRYPTO_INTEGRATION_AVAILABLE = True
+except ImportError:
+    print("Warning: Crypto integration not available")
+    CRYPTO_INTEGRATION_AVAILABLE = False
+
 class UserBackend:
     """Core user management backend with security and validation"""
     
@@ -55,6 +63,14 @@ class UserBackend:
         
         # Initialize databases
         self._init_databases()
+        
+        # Initialize crypto integration
+        if CRYPTO_INTEGRATION_AVAILABLE:
+            self.crypto_integration = UserCryptoIntegration()
+            print("✅ Crypto integration initialized in user backend")
+        else:
+            self.crypto_integration = None
+            print("⚠️ Crypto integration not available")
     
     def _load_config(self) -> Dict[str, Any]:
         """Load environment-specific configuration"""
@@ -372,7 +388,49 @@ class UserBackend:
         except Exception as e:
             print(f"⚠️ Blockchain recording error: {e}")
         
-        return True, "User registered successfully", safe_user_record
+        # Create cryptocurrency wallet for the user
+        wallet_created = False
+        if CRYPTO_INTEGRATION_AVAILABLE and hasattr(self, 'crypto_integration') and self.crypto_integration:
+            # Determine initial balance based on role
+            from decimal import Decimal
+            initial_balance = Decimal('0')
+            if user_role == 'contract_founder':
+                initial_balance = Decimal('1000')  # Founders get substantial initial balance
+            elif user_role == 'contract_member':
+                initial_balance = Decimal('100')   # Regular members get welcome bonus
+            
+            # Create crypto wallet
+            wallet_success, wallet_message, wallet_id = self.crypto_integration.create_user_wallet(
+                user_email=new_user['email'],
+                user_name=f"{new_user['first_name']} {new_user['last_name']}",
+                initial_balance=initial_balance
+            )
+            
+            if wallet_success:
+                # Update user record with wallet info
+                new_user['crypto_wallet_id'] = wallet_id
+                new_user['initial_crypto_balance'] = str(initial_balance)
+                safe_user_record['crypto_wallet_id'] = wallet_id
+                safe_user_record['initial_crypto_balance'] = str(initial_balance)
+                wallet_created = True
+                
+                # Re-save user data with wallet info
+                users_data = self._load_users_db()
+                for i, user in enumerate(users_data['users']):
+                    if user['user_id'] == new_user['user_id']:
+                        users_data['users'][i] = new_user
+                        break
+                self._save_users_db(users_data)
+                
+                print(f"✅ Crypto wallet created for {new_user['email']}: {wallet_id}")
+            else:
+                print(f"⚠️ Crypto wallet creation failed: {wallet_message}")
+        
+        success_message = "User registered successfully"
+        if wallet_created:
+            success_message += f" with crypto wallet ({initial_balance} CVC initial balance)"
+        
+        return True, success_message, safe_user_record
     
     def authenticate_user(self, email: str, password: str) -> Tuple[bool, str, Optional[Dict]]:
         """
@@ -630,3 +688,44 @@ class UserBackend:
         
         removed_count = initial_count - len(active_sessions)
         return removed_count
+    
+    # Cryptocurrency integration methods
+    
+    def get_user_crypto_summary(self, user_email: str) -> Dict[str, Any]:
+        """Get cryptocurrency summary for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return {'error': 'Crypto system not available'}
+        
+        return self.crypto_integration.get_user_crypto_summary(user_email)
+    
+    def get_user_crypto_dashboard(self, user_email: str) -> Dict[str, Any]:
+        """Get full cryptocurrency dashboard for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return {'error': 'Crypto system not available'}
+        
+        return self.crypto_integration.get_user_crypto_dashboard(user_email)
+    
+    def execute_crypto_transaction(self, user_email: str, transaction_type: str, **kwargs) -> Tuple[bool, str, Optional[Dict]]:
+        """Execute a cryptocurrency transaction for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return False, "Crypto system not available", None
+        
+        return self.crypto_integration.execute_user_transaction(user_email, transaction_type, **kwargs)
+    
+    def get_crypto_wallet_id(self, user_email: str) -> Optional[str]:
+        """Get crypto wallet ID for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return None
+        
+        return self.crypto_integration.get_user_wallet_id(user_email)
+    
+    def is_crypto_available(self) -> bool:
+        """Check if crypto system is available"""
+        
+        return (CRYPTO_INTEGRATION_AVAILABLE and 
+                hasattr(self, 'crypto_integration') and 
+                self.crypto_integration is not None)
