@@ -1,0 +1,108 @@
+name: Civic Engagement Platform CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11, 3.12]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb libegl1-mesa libgl1-mesa-glx
+    
+    - name: Install Python dependencies
+      run: |
+        cd civic_desktop
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+    
+    - name: Run linting
+      run: |
+        cd civic_desktop
+        # Add linting commands when linter is configured
+        python -m py_compile main.py
+    
+    - name: Run tests with xvfb (for PyQt5)
+      run: |
+        cd civic_desktop
+        xvfb-run -a python -m pytest tests/ -v --tb=short
+    
+    - name: Check import structure
+      run: |
+        cd civic_desktop
+        python -c "import main; print('Main module imports successfully')"
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install security scanning tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit safety
+    
+    - name: Run security scan
+      run: |
+        # Scan for security issues
+        bandit -r civic_desktop/ -f json -o bandit-report.json || true
+        # Check for known vulnerabilities in dependencies
+        cd civic_desktop
+        safety check --json || true
+    
+    - name: Check for secrets
+      run: |
+        # Basic check for accidentally committed secrets
+        if find . -name "*.pem" -o -name "*.key" | grep -v /tmp/; then
+          echo "Warning: Found potential private key files"
+          exit 1
+        fi
+
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Check code structure
+      run: |
+        cd civic_desktop
+        # Check for TODO comments that should be addressed
+        if grep -r "TODO:" . --include="*.py" | grep -v "test_"; then
+          echo "Found TODO comments that should be addressed:"
+          grep -r "TODO:" . --include="*.py" | grep -v "test_"
+          exit 1
+        fi
+        
+        # Check for print statements that should be logging
+        if grep -r "print(" . --include="*.py" | grep -v "test_" | grep -v "__main__"; then
+          echo "Found print statements that should use logging:"
+          grep -r "print(" . --include="*.py" | grep -v "test_" | grep -v "__main__" | head -10
+          # Don't fail the build for this, just warn
+        fi
