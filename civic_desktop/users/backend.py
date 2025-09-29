@@ -160,9 +160,10 @@ class UserBackend:
     def _verify_password(self, password: str, hashed_password: str) -> bool:
         """Verify password against stored hash"""
         try:
-<<<<<<< HEAD
             return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
-        except Exception:
+        except (ValueError, TypeError) as e:
+            # Log the specific error for debugging
+            print(f"Password verification error: {e}")
             return False
     
     def _generate_user_id(self) -> str:
@@ -173,6 +174,14 @@ class UserBackend:
         """Generate secure session ID"""
         return hashlib.sha256(f"{uuid.uuid4()}{datetime.now()}".encode()).hexdigest()
     
+    @staticmethod
+    def is_duplicate_id(id_document_hash: str) -> bool:
+        users = UserBackend.load_users()
+        for user in users:
+            if user.get('id_document_hash') == id_document_hash:
+                return True
+        return False
+
     def register_user(self, user_data: Dict[str, Any]) -> Tuple[bool, str, Optional[Dict]]:
         """
         Register new user with comprehensive validation
@@ -218,80 +227,6 @@ class UserBackend:
                 # Use hardcoded founder keys for single-use promotion
                 is_valid_founder, founder_message, founder_data = HardcodedFounderKeys.validate_founder_key(
                     user_data['founder_private_key']
-=======
-            return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
-        except (ValueError, TypeError) as e:
-            # Log the specific error for debugging
-            print(f"Password verification error: {e}")
-            return False
-
-
-    @staticmethod
-    def is_duplicate_id(id_document_hash: str) -> bool:
-        users = UserBackend.load_users()
-        for user in users:
-            if user.get('id_document_hash') == id_document_hash:
-                return True
-        return False
-
-
-    @staticmethod
-    def register_user(data: Dict[str, Any], id_document_path: str) -> Tuple[bool, str]:
-        try:
-            from .id_verification_api import GovernmentIDVerificationAPI
-        except ImportError:
-            # Module not available, use fallback
-            class GovernmentIDVerificationAPI:  # fallback stub
-                def __init__(self, api_url: str):
-                    pass
-                def verify_id(self, **kwargs):
-                    return {'success': True, 'status': 'verified'}
-        user_location = {
-            'country': data.get('country', ''),
-            'state': data.get('state', ''),
-            'city': data.get('city', '')
-        }
-        users = UserBackend.load_users()
-        is_founder = len(users) == 0
-        with open(id_document_path, 'rb') as f:
-            id_document_hash = hashlib.sha256(f.read()).hexdigest()
-        if UserBackend.is_duplicate_id(id_document_hash):
-            return False, 'Duplicate ID document detected.'
-
-        # Government ID Verification step
-        gov_api = GovernmentIDVerificationAPI(api_url="https://gov-id-verification.example/api")
-        id_type = data.get('id_type', 'national_id')
-        id_number = data.get('id_number', '')
-        first_name = data.get('first_name', '')
-        last_name = data.get('last_name', '')
-        date_of_birth = data.get('date_of_birth', '')
-        verification_result = gov_api.verify_id(
-            id_type=id_type,
-            id_number=id_number,
-            first_name=first_name,
-            last_name=last_name,
-            date_of_birth=date_of_birth,
-            document_image_path=id_document_path
-        )
-        if not verification_result.get('success'):
-            error_msg = verification_result.get('error', 'Government ID verification failed.')
-            return False, f'ID Verification Error: {error_msg}'
-        if verification_result.get('status') != 'verified':
-            return False, f'ID Verification failed: {verification_result.get("status")}'
-
-        all_accepted, missing_contracts = contract_manager.check_all_required_accepted(
-            user_email=data['email'],
-            user_location=user_location
-        )
-        # Do not hard-fail here; UI enforces acceptance. Backend records state.
-        for contract in contract_manager.get_applicable_contracts(user_location):
-            if contract.acceptance_required:
-                contract_manager.record_acceptance(
-                    user_email=data['email'],
-                    contract_id=contract.contract_id,
-                    ip_address="",
-                    user_agent=""
->>>>>>> 4d71077bf1a4fea57ebc06c2c295cb4c305095ab
                 )
                 
                 if is_valid_founder:

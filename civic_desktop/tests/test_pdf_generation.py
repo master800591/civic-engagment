@@ -146,6 +146,16 @@ def test_pdf_generation_system():
         print("-" * 35)
         print("   💡 See test_pdf_examples.py for detailed PDF output examples")
         print("   📄 Run: py tests\\test_pdf_examples.py")
+        
+    except ImportError as e:
+        print(f"❌ Import error: {e}")
+        print("PDF generation modules not available - this is expected in some environments")
+        
+    except Exception as e:
+        print(f"❌ Error during PDF generation test: {e}")
+        print("Check that all dependencies are installed and systems are configured.")
+
+def show_detailed_pdf_examples():
     """Show detailed examples of what the generated PDFs contain"""
     
     print("\n" + "=" * 80)
@@ -333,69 +343,59 @@ def test_pdf_generation_system():
     print("✅ Academic credential verification for education")
     
     print("\n" + "=" * 80)
-        
-        # Step 7: Show usage scenarios
-        print(f"\n💡 USAGE SCENARIOS")
-        print("-" * 30)
-        
-        print("📤 PUBLIC PDF USE CASES:")
-        print("   • Share with government agencies for ID verification")
-        print("   • Provide to employers for blockchain credential validation")
-        print("   • Submit to educational institutions for enrollment")
-        print("   • Use in legal proceedings as identity evidence")
-        print("   • Share with service providers requiring crypto verification")
-        
-        print("\n🔐 PRIVATE PDF USE CASES:")
-        print("   • Account recovery when password is forgotten")
-        print("   • Device replacement or loss scenarios")
-        print("   • Platform migration or backup restoration")
-        print("   • Emergency access by authorized family/legal representatives")
-        print("   • Security audit and key management verification")
-        
-        # Step 8: Security recommendations
-        print(f"\n🛡️ SECURITY RECOMMENDATIONS")
-        print("-" * 35)
-        
-        print("📁 PUBLIC PDF SECURITY:")
-        print("   ✅ Safe to share - contains no sensitive information")
-        print("   ✅ Can be stored in cloud services")
-        print("   ✅ Can be emailed or transmitted electronically")
-        print("   ✅ Print copies for physical documentation")
-        
-        print("\n🚨 PRIVATE PDF SECURITY:")
-        print("   🚫 NEVER share with anyone")
-        print("   🔒 Store in encrypted, secure locations only")
-        print("   💾 Create multiple secure backups")
-        print("   📍 Store separately from private key files")
-        print("   🔐 Consider hardware security modules for storage")
-        print("   ⏰ Regular access verification (quarterly)")
-        
-        # Step 9: Test recovery code
-        print(f"\n🔢 RECOVERY CODE TESTING")
-        print("-" * 30)
-        
-        recovery_code = pdf_generator._generate_recovery_code(test_user_data, key_info)
-        print(f"Generated Recovery Code: {recovery_code}")
-        print(f"Code Length: {len(recovery_code)} characters")
-        print(f"Format: Groups of 4 characters separated by dashes")
-        print(f"Security: SHA-256 hash of user data + key fingerprint")
-        
-        print("\n" + "=" * 70)
-        print("🎉 PDF GENERATION SYSTEM TEST COMPLETED SUCCESSFULLY!")
-        print(f"📄 Generated comprehensive user documentation")
-        print(f"🔐 Public PDF: Ready for sharing and verification")
-        print(f"🚨 Private PDF: Secure account recovery document")
-        print("=" * 70)
-        
-    except ImportError as e:
-        print(f"❌ Import error: {e}")
-        print("💡 Make sure reportlab and qrcode are installed:")
-        print("   pip install reportlab qrcode[pil]")
     
-    except Exception as e:
-        print(f"❌ Test failed: {e}")
-        import traceback
-        traceback.print_exc()
+    # Step 7: Show usage scenarios
+    print(f"\n💡 USAGE SCENARIOS")
+    print("-" * 30)
+    
+    print("📤 PUBLIC PDF USE CASES:")
+    print("   • Share with government agencies for ID verification")
+    print("   • Provide to employers for blockchain credential validation")
+    print("   • Submit to educational institutions for enrollment")
+    print("   • Use in legal proceedings as identity evidence")
+    print("   • Share with service providers requiring crypto verification")
+    
+    print("\n🔐 PRIVATE PDF USE CASES:")
+    print("   • Account recovery when password is forgotten")
+    print("   • Device replacement or loss scenarios")
+    print("   • Platform migration or backup restoration")
+    print("   • Emergency access by authorized family/legal representatives")
+    print("   • Security audit and key management verification")
+    
+    # Step 8: Security recommendations
+    print(f"\n🛡️ SECURITY RECOMMENDATIONS")
+    print("-" * 35)
+    
+    print("📁 PUBLIC PDF SECURITY:")
+    print("   ✅ Safe to share - contains no sensitive information")
+    print("   ✅ Can be stored in cloud services")
+    print("   ✅ Can be emailed or transmitted electronically")
+    print("   ✅ Print copies for physical documentation")
+    
+    print("\n🚨 PRIVATE PDF SECURITY:")
+    print("   🚫 NEVER share with anyone")
+    print("   🔒 Store in encrypted, secure locations only")
+    print("   💾 Create multiple secure backups")
+    print("   📍 Store separately from private key files")
+    print("   🔐 Consider hardware security modules for storage")
+    print("   ⏰ Regular access verification (quarterly)")
+    
+    # Step 9: Test recovery code
+    print(f"\n🔢 RECOVERY CODE TESTING")
+    print("-" * 30)
+    
+    recovery_code = pdf_generator._generate_recovery_code(test_user_data, key_info)
+    print(f"Generated Recovery Code: {recovery_code}")
+    print(f"Code Length: {len(recovery_code)} characters")
+    print(f"Format: Groups of 4 characters separated by dashes")
+    print(f"Security: SHA-256 hash of user data + key fingerprint")
+    
+    print("\n" + "=" * 70)
+    print("🎉 PDF GENERATION SYSTEM TEST COMPLETED SUCCESSFULLY!")
+    print(f"📄 Generated comprehensive user documentation")
+    print(f"🔐 Public PDF: Ready for sharing and verification")
+    print(f"🚨 Private PDF: Secure account recovery document")
+    print("=" * 70)
 
 def test_pdf_integration_with_registration():
     """Test PDF generation integrated with user registration"""
