@@ -1,19 +1,90 @@
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
+CIVIC ENGAGEMENT PLATFORM PROPRIETARY LICENSE
+Version 1.0, December 2024
 
-Copyright (C) 2025 Civic-Engagement (https://github.com/Civic-Engagement)
+Copyright (C) 2025 Civic-Engagement Platform (https://github.com/master800591/civic-engagment)
+All Rights Reserved.
 
-Special Project Policy:
-This project does NOT permit forking, copying, or creation of derivative works in any form. All contributions MUST be made directly to the main repository via pull requests. Any attempt to fork, clone, or otherwise reproduce this repository outside the main project is strictly prohibited. By accessing, using, or contributing to this repository, you agree to these terms.
+RESTRICTIVE CONTRIBUTION-ONLY LICENSE
 
-Full text of the GPL v3.0 license: https://www.gnu.org/licenses/gpl-3.0.en.html
+PREAMBLE:
+The Civic Engagement Platform is designed to be a unified, singular democratic platform. The integrity and unity of this system is essential to its mission of providing transparent, constitutional governance. Therefore, this license strictly prohibits any fragmentation, forking, or creation of competing networks.
+
+TERMS AND CONDITIONS:
+
+1. PERMITTED ACTIVITIES:
+   a) You MAY view and study the source code for educational purposes
+   b) You MAY contribute improvements, features, and bug fixes to the main repository
+   c) You MAY deploy and use the official releases for legitimate civic engagement purposes
+   d) You MAY report issues, suggest improvements, and participate in community discussions
+
+2. STRICTLY PROHIBITED ACTIVITIES:
+   a) You may NOT fork, clone, or create copies of this repository
+   b) You may NOT create derivative works or competing platforms based on this code
+   c) You may NOT establish separate networks, blockchains, or governance systems using this code
+   d) You may NOT redistribute, sell, or sublicense this software or any portion thereof
+   e) You may NOT remove or modify this license or any copyright notices
+   f) You may NOT use this code to create commercial platforms or services
+
+3. CONTRIBUTION REQUIREMENTS:
+   a) All contributions MUST be submitted via pull requests to the main repository
+   b) Contributors grant perpetual, irrevocable rights to their contributions to this project
+   c) Contributions must comply with the project's constitutional governance framework
+   d) Contributors agree their work becomes part of this unified platform
+
+4. NETWORK INTEGRITY PROTECTION:
+   a) Only ONE official Civic Engagement Platform network may exist
+   b) All validators must be part of the official network
+   c) Creating competing governance networks is strictly prohibited
+   d) Blockchain data and governance contracts remain proprietary to this platform
+
+5. ENFORCEMENT:
+   a) Violations will result in immediate legal action
+   b) Violators forfeit any rights to use this software
+   c) The project maintainers reserve all rights to protect platform unity
+   d) This license may be updated to strengthen protections as needed
+
+6. WARRANTY DISCLAIMER:
+   This software is provided "AS IS" without warranty of any kind. The copyright holders
+   are not liable for any damages arising from the use of this software.
+
+7. JURISDICTION:
+   This license is governed by the laws of [Your Jurisdiction]. Any disputes must be
+   resolved in the courts of [Your Jurisdiction].
+
+BY ACCESSING, DOWNLOADING, USING, OR CONTRIBUTING TO THIS REPOSITORY, YOU AGREE TO BE
+BOUND BY ALL TERMS OF THIS LICENSE. IF YOU DO NOT AGREE, DO NOT USE THIS SOFTWARE.
 
 ---
 
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
+ADDITIONAL PROTECTIONS FOR CIVIC ENGAGEMENT PLATFORM:
 
-Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
-Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+8. CONSTITUTIONAL GOVERNANCE PROTECTION:
+   The governance contracts, constitutional framework, and democratic processes defined in
+   this platform are proprietary intellectual property. No person or entity may create
+   alternative governance systems based on these constitutional designs.
 
-<...full GPL v3.0 text continues...>
+9. BLOCKCHAIN AND CONSENSUS PROTECTION:
+   The hierarchical blockchain structure, validator consensus mechanism, and audit trail
+   system are unique to this platform. Creating competing blockchain networks using 
+   these innovations is strictly prohibited.
+
+10. COMMUNITY UNITY CLAUSE:
+    This platform is designed to unite civic engagement under one constitutional framework.
+    Any attempt to fragment the community by creating alternative platforms undermines
+    the democratic mission and is prohibited.
+
+11. TRADEMARK AND BRANDING:
+    The name "Civic Engagement Platform," associated logos, and branding elements are
+    protected trademarks. Use of similar names or branding for competing platforms is
+    prohibited.
+
+12. OPEN SOURCE CONTRIBUTIONS:
+    While the code is viewable for transparency, this is NOT an open source license.
+    This is a restrictive, contribution-only license designed to maintain platform unity
+    while allowing community improvement through controlled contributions.
+
+For questions about this license or to request specific permissions, contact:
+[Your Contact Information]
+
+Last Updated: December 2024
+License Version: 1.0

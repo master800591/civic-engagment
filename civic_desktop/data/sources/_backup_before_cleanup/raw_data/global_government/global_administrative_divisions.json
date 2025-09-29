@@ -1,0 +1,138 @@
+[
+  {
+    "country_name": "United States",
+    "country_iso": "US",
+    "division_type": "states",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Canada",
+    "country_iso": "CA",
+    "division_type": "provinces_territories",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Germany",
+    "country_iso": "DE",
+    "division_type": "states",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "India",
+    "country_iso": "IN",
+    "division_type": "states_territories",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "China",
+    "country_iso": "CN",
+    "division_type": "provinces_regions",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Brazil",
+    "country_iso": "BR",
+    "division_type": "states",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Australia",
+    "country_iso": "AU",
+    "division_type": "states_territories",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Russia",
+    "country_iso": "RU",
+    "division_type": "federal_subjects",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "United Kingdom",
+    "country_iso": "GB",
+    "division_type": "countries_regions",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "France",
+    "country_iso": "FR",
+    "division_type": "regions_departments",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Japan",
+    "country_iso": "JP",
+    "division_type": "prefectures",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Mexico",
+    "country_iso": "MX",
+    "division_type": "states",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Argentina",
+    "country_iso": "AR",
+    "division_type": "provinces",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "South Africa",
+    "country_iso": "ZA",
+    "division_type": "provinces",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Nigeria",
+    "country_iso": "NG",
+    "division_type": "states",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Italy",
+    "country_iso": "IT",
+    "division_type": "regions",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  },
+  {
+    "country_name": "Spain",
+    "country_iso": "ES",
+    "division_type": "autonomous_communities",
+    "data_available": true,
+    "notes": "Administrative divisions available in Natural Earth dataset",
+    "last_updated": "2025-09-28T13:06:07.597629"
+  }
+]

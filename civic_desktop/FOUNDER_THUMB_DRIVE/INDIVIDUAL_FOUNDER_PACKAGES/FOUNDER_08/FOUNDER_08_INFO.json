@@ -1,0 +1,15 @@
+{
+  "founder_id": "FOUNDER_08",
+  "key_fingerprint": "3c424af2fcc2174ba99e92ee37bb3dda7b4b77e3c563c65274cb6bcbf1da89b6",
+  "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArnF5zCT0EtcZtIwJBh+7\nZlRo60241do7ufGucw6MiuO3SijdzdyvWaX7wS32n8yV56nKOFDnhzuIHh7dzFes\n6ECUfT8vHB+9Aeh/T24P4ljRS0G088YgzS++7rmb4dqXz8gAqreNqS+bSa01T4fa\nweWyJ1oMk9CgcVCTgaas9lp8/1jL+Thuok7vU8ja0SAJs3vUlowvk1QQ70rYKfaK\nXlJ3FE/b1bZqyG++rShQuuNVRAuexSk7wHNODUvDz5b4uWHjPUoHDGcNIXX7SJVj\n8vqtxToyTtT8eke7eSJADd4a1kkseWVm/3KAwxALoIJ2JZiInFG765BKgZ8bwHgX\nnwIDAQAB\n-----END PUBLIC KEY-----\n",
+  "blockchain_address": "civic_3c424af2fcc2174ba99e",
+  "created_at": "2025-09-28T14:25:26.032980",
+  "pdf_locations": {
+    "public_pdf": "founder_distributions\\pdfs\\FOUNDER_08_public_pdf.pdf",
+    "private_pdf": "founder_distributions\\pdfs\\FOUNDER_08_private_pdf.pdf",
+    "public_qr": "founder_distributions\\pdfs\\FOUNDER_08_public_qr.pdf",
+    "private_qr": "founder_distributions\\pdfs\\FOUNDER_08_private_qr.pdf"
+  },
+  "usage_status": "unused",
+  "single_use_only": true
+}

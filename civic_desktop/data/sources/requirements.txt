@@ -1,0 +1,100 @@
+# Requirements for Data Acquisition Scripts
+# Install with: pip install -r requirements.txt
+
+# Core HTTP requests library
+requests>=2.31.0
+
+# Geographic data processing (optional but recommended)
+# Note: geopandas has complex dependencies - see installation guide below
+geopandas>=0.14.0
+
+# Data processing libraries
+pandas>=2.1.0
+numpy>=1.24.0
+
+# File compression and archives
+zipfile36  # For older Python versions, built-in for Python 3.6+
+
+# JSON handling (built-in with Python)
+# json - included in standard library
+
+# Path handling (built-in with Python 3.4+)
+# pathlib - included in standard library
+
+# Logging (built-in with Python)
+# logging - included in standard library
+
+# Date and time handling (built-in with Python)
+# datetime - included in standard library
+
+# Type hints (built-in with Python 3.5+)
+# typing - included in standard library
+
+# ==================================================
+# INSTALLATION GUIDE
+# ==================================================
+
+# BASIC INSTALLATION (minimum requirements):
+# pip install requests pandas numpy
+
+# FULL INSTALLATION (with geographic processing):
+# Option 1 - Using conda (RECOMMENDED for Windows):
+# conda install -c conda-forge geopandas
+
+# Option 2 - Using pip (Linux/Mac):
+# pip install geopandas
+
+# Option 3 - System dependencies first (Ubuntu/Debian):
+# sudo apt-get update
+# sudo apt-get install gdal-bin libgdal-dev
+# pip install geopandas
+
+# ==================================================
+# OPTIONAL DEPENDENCIES
+# ==================================================
+
+# For enhanced data validation
+jsonschema>=4.17.0
+
+# For data visualization (future use)
+matplotlib>=3.7.0
+plotly>=5.17.0
+
+# For database storage (future use)
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0  # PostgreSQL adapter
+
+# For API key management
+python-dotenv>=1.0.0
+
+# ==================================================
+# DEVELOPMENT DEPENDENCIES (optional)
+# ==================================================
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Code formatting
+black>=23.7.0
+isort>=5.12.0
+
+# Linting
+flake8>=6.0.0
+mypy>=1.5.0
+
+# ==================================================
+# TROUBLESHOOTING NOTES
+# ==================================================
+
+# If geopandas installation fails:
+# 1. Try conda instead of pip
+# 2. Install system GDAL libraries first
+# 3. Use pre-compiled wheels: pip install --find-links https://girder.github.io/large_image_wheels geopandas
+# 4. For Windows: Download from https://www.lfd.uci.edu/~gohlke/pythonlibs/
+
+# If requests fails with SSL errors:
+# pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org requests
+
+# Minimum Python version: 3.8+
+# Recommended Python version: 3.11+

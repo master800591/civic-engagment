@@ -1,0 +1,120 @@
+[
+  {
+    "name": "United Nations",
+    "acronym": "UN",
+    "type": "International Organization",
+    "headquarters": "New York City, United States",
+    "established": "1945-10-24",
+    "members": 193,
+    "purpose": "International cooperation, peace, security, human rights",
+    "website": "https://www.un.org",
+    "languages": [
+      "English",
+      "French",
+      "Spanish",
+      "Russian",
+      "Chinese",
+      "Arabic"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642",
+    "data_source": "curated_organizational_data"
+  },
+  {
+    "name": "European Union",
+    "acronym": "EU",
+    "type": "Political and Economic Union",
+    "headquarters": "Brussels, Belgium",
+    "established": "1993-11-01",
+    "members": 27,
+    "purpose": "Political and economic integration",
+    "website": "https://europa.eu",
+    "languages": [
+      "Multiple official EU languages"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642",
+    "data_source": "curated_organizational_data"
+  },
+  {
+    "name": "African Union",
+    "acronym": "AU",
+    "type": "Continental Union",
+    "headquarters": "Addis Ababa, Ethiopia",
+    "established": "2001-05-26",
+    "members": 55,
+    "purpose": "African political and economic integration",
+    "website": "https://au.int",
+    "languages": [
+      "English",
+      "French",
+      "Arabic",
+      "Portuguese",
+      "Spanish",
+      "Swahili"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642",
+    "data_source": "curated_organizational_data"
+  },
+  {
+    "name": "Organization of American States",
+    "acronym": "OAS",
+    "type": "Regional Organization",
+    "headquarters": "Washington, D.C., United States",
+    "established": "1948-04-30",
+    "members": 35,
+    "purpose": "Inter-American cooperation",
+    "website": "https://www.oas.org",
+    "languages": [
+      "English",
+      "Spanish",
+      "French",
+      "Portuguese"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642",
+    "data_source": "curated_organizational_data"
+  },
+  {
+    "name": "Association of Southeast Asian Nations",
+    "acronym": "ASEAN",
+    "type": "Regional Organization",
+    "headquarters": "Jakarta, Indonesia",
+    "established": "1967-08-08",
+    "members": 10,
+    "purpose": "Economic, political, and security cooperation",
+    "website": "https://asean.org",
+    "languages": [
+      "English"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642",
+    "data_source": "curated_organizational_data"
+  },
+  {
+    "name": "Commonwealth of Nations",
+    "acronym": "Commonwealth",
+    "type": "Voluntary Association",
+    "headquarters": "London, United Kingdom",
+    "established": "1949-04-28",
+    "members": 54,
+    "purpose": "Cooperation among former British territories",
+    "website": "https://thecommonwealth.org",
+    "languages": [
+      "English"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642",
+    "data_source": "curated_organizational_data"
+  },
+  {
+    "name": "Arab League",
+    "acronym": "AL",
+    "type": "Regional Organization",
+    "headquarters": "Cairo, Egypt",
+    "established": "1945-03-22",
+    "members": 22,
+    "purpose": "Arab political and economic cooperation",
+    "website": "https://www.arableagueonline.org",
+    "languages": [
+      "Arabic"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642",
+    "data_source": "curated_organizational_data"
+  }
+]

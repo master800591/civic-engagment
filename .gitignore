@@ -85,20 +85,20 @@ ipython_config.py
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
 #   intended to run in multiple environments; otherwise, check them in:
-# .python-version
+.python-version
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
-#Pipfile.lock
+Pipfile.lock
 
 # UV
 #   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
 #   commonly ignored for libraries.
-#uv.lock
+uv.lock
 
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
@@ -112,8 +112,8 @@ ipython_config.py
 #   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
 #   pdm recommends including project-wide configuration in pdm.toml, but excluding .pdm-python.
 #   https://pdm-project.org/en/latest/usage/project/#working-with-version-control
-#pdm.lock
-#pdm.toml
+pdm.lock
+pdm.toml
 .pdm-python
 .pdm-build/
 
@@ -173,7 +173,7 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+.idea/
 
 # Abstra
 # Abstra is an AI-powered process automation framework.
@@ -186,7 +186,7 @@ cython_debug/
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 #  and can be added to the global gitignore or merged into this file. However, if you prefer, 
 #  you could uncomment the following to ignore the entire vscode folder
-# .vscode/
+ .vscode/
 
 # Ruff stuff:
 .ruff_cache/
@@ -206,6 +206,156 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+<<<<<<< HEAD
+# =============================================================================
+# CIVIC ENGAGEMENT PLATFORM - PRIVATE & SENSITIVE DATA
+# =============================================================================
+
+# Private Keys & Cryptographic Materials (CRITICAL - NEVER COMMIT)
+**/private_keys/
+**/*private*.pem
+**/*_private.pem
+**/private_key.pem
+**/master_key.pem
+**/founder_keys/
+**/*founder*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*.keystore
+
+# User Data & Databases (Contains PII)
+**/users_db.json
+**/sessions_db.json
+**/blockchain_db.json
+**/validators_db.json
+**/training_db.json
+**/debates_db.json
+**/moderation_db.json
+**/analytics_db.json
+**/events_db.json
+**/messages_db.json
+**/surveys_db.json
+**/petitions_db.json
+**/documents_db.json
+**/transparency_db.json
+**/collaboration_db.json
+**/*_database.json
+**/*_data.json
+**/*_db.json
+
+# PDF Documents & User Files (Contains Private Information)
+**/user_pdfs/
+**/*_public_profile.pdf
+**/*_private_recovery.pdf
+**/public/*.pdf
+**/private/*.pdf
+**/qr_codes/
+**/*_qr.png
+**/*_recovery.pdf
+**/user_documents/
+
+# Blockchain Data Directories
+**/blockchain/data/
+**/blockchain/blocks/
+**/blockchain/chain/
+**/genesis_block.json
+
+# Configuration Files with Secrets
+**/config/*_secrets.json
+**/config/production_config.json
+**/.env.production
+**/.env.local
+**/secrets.json
+**/credentials.json
+**/auth_config.json
+
+# Session & Authentication Files
+**/sessions/
+**/auth_tokens/
+**/session_*.json
+**/login_attempts.json
+**/security_logs.json
+
+# Logs with Potential Sensitive Information
+**/logs/
+**/*.log
+**/debug.log
+**/error.log
+**/security.log
+**/access.log
+**/audit.log
+
+# Backup Files
+**/backups/
+**/*.backup
+**/*.bak
+**/*_backup.json
+**/*_archive.json
+
+# Temporary & Cache Files
+**/temp/
+**/tmp/
+**/cache/
+**/.cache/
+**/temp_*.json
+**/cache_*.json
+
+# Development & Test Data (May contain sensitive test data)
+**/test_data/
+**/test_users/
+**/mock_data/
+**/sample_*.json
+**/test_*.pem
+**/demo_*.json
+# Note: Keep test files but exclude ones with real-looking data
+
+# Platform-Specific Sensitive Files
+**/founder_setup.json
+**/admin_config.json
+**/master_config.json
+**/deployment_secrets.json
+**/production_keys/
+**/staging_keys/
+
+# User Uploads & Media (May contain private documents)
+**/uploads/
+**/media/private/
+**/attachments/
+**/user_files/
+
+# IDE & Editor Specific (May contain sensitive project data)
+**/.vscode/settings.json
+**/.idea/workspace.xml
+**/.idea/usage.statistics.xml
+
+# =============================================================================
+# SECURITY PATTERNS - BROAD PROTECTION
+# =============================================================================
+
+# Any file with 'private', 'secret', 'key', or 'password' in name
+**/*private*
+**/*secret*
+**/*password*
+**/*credential*
+**/*recovery*
+
+# Any file ending with sensitive extensions
+*.secret
+*.private
+*.credentials
+*.token
+*.session
+
+# Environment-specific sensitive files
+.env.*
+!.env.example
+!.env.template
+
+# =============================================================================
+# END CIVIC ENGAGEMENT PLATFORM PROTECTIONS
+# =============================================================================
+=======
 # Civic Engagement Platform - Security
 # Private keys and sensitive data
 civic_desktop/users/private_keys/
@@ -216,3 +366,4 @@ civic_desktop/users/private_keys/
 *users_db.json
 *blockchain_db.json
 *validators_db.json
+>>>>>>> 4d71077bf1a4fea57ebc06c2c295cb4c305095ab

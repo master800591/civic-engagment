@@ -1,0 +1,26 @@
+# Civic Engagement Platform - Maps Module Requirements
+
+# Core mapping libraries
+folium>=0.14.0              # Interactive mapping with OpenStreetMap
+branca>=0.6.0               # Map styling and utilities
+requests>=2.28.0            # HTTP requests for data fetching
+
+# Geospatial data processing
+geojson>=2.5.0              # GeoJSON data handling
+shapely>=1.8.0              # Geometric operations
+geopandas>=0.12.0           # Geospatial data analysis (optional)
+
+# Data processing
+pandas>=1.5.0               # Data manipulation
+numpy>=1.21.0               # Numerical computing
+
+# Web and visualization
+webbrowser                  # Built-in browser integration
+tempfile                   # Built-in temporary file handling
+json                       # Built-in JSON handling
+os                         # Built-in operating system interface
+datetime                   # Built-in date/time handling
+
+# Optional: Advanced mapping features
+# leaflet>=1.0.0            # Advanced leaflet integration
+# plotly>=5.0.0             # Interactive plotting

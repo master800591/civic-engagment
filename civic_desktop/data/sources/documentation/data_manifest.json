@@ -1,0 +1,24 @@
+{
+  "civic_engagement_data_manifest": {
+    "version": "1.0",
+    "last_updated": "2025-09-28",
+    "total_countries": 197,
+    "us_states": 52,
+    "us_counties": 3222,
+    "government_types": 15,
+    "data_quality": "Production ready",
+    "deployment_status": "Ready for global civic platform",
+    "core_files": {
+      "world_civic_data.json": "Master comprehensive database",
+      "countries.json": "All world countries by continent",
+      "government_types.json": "Government system classifications",
+      "us_states.json": "US states with population data",
+      "us_counties.json": "US counties with demographics"
+    },
+    "geographic_data": {
+      "format": "Natural Earth shapefiles",
+      "scale": "1:50,000,000",
+      "coverage": "Global countries, states/provinces, cities"
+    }
+  }
+}

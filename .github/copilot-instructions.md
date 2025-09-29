@@ -1,112 +1,740 @@
 # Copilot Instructions for Civic Engagement Platform
 
 ## Project Overview
-- **Implementation Status**: Fully functional desktop GUI application with all core modules implemented
-- **Architecture**: PyQt5-based desktop application with modular design: `users`, `debates`, `moderation`, and `blockchain`
-- **Data Storage**: JSON-based file storage with blockchain integration for audit trails
-- **Security**: bcrypt password hashing, RSA cryptographic signatures, comprehensive input validation
-- **Blockchain**: Custom hierarchical PoA blockchain (Page→Chapter→Book→Part→Series) with validator network
+- **Implementation Status**: Production-ready desktop application with full DeFi integration (v2.0.0)
+- **Architecture**: PyQt5-based multi-tab interface with integrated cryptocurrency ecosystem
+- **Core Modules**: `users`, `debates`, `moderation`, `blockchain`, `contracts`, `training`, `crypto`, `github_integration`, `maps` + 8 extended modules
+- **Crypto Integration**: Complete CivicCoin DeFi ecosystem with automatic wallet creation, exchange, pools, and rewards
+- **Data Storage**: Environment-specific JSON databases with blockchain audit trails and crypto transaction records
+- **Configuration**: Environment-aware system using `ENV_CONFIG` from `config/{env}_config.json` 
+- **Security**: Enterprise-grade bcrypt + RSA-2048, comprehensive validation, local key storage, crypto wallet security
+- **Blockchain**: Custom hierarchical PoA with P2P networking, validator consensus, and DeFi transaction recording
 
 ## Current Implementation Status ✅
 
-### ✅ Fully Implemented Modules:
-1. **Users Module** (`civic_desktop/users/`)
-   - ✅ Registration with comprehensive validation (`registration.py`)
-   - ✅ Authentication with bcrypt password hashing (`auth.py`, `login.py`)
-   - ✅ User dashboard with role management (`dashboard.py`)
-   - ✅ Election system for representatives (`elections.py`, `election_ui.py`)
-   - ✅ Session management (`session.py`)
-   - ✅ Private key management (`keys.py`)
+### ✅ Module Workflow Instructions:
 
-2. **Debates Module** (`civic_desktop/debates/`)
-   - ✅ Full backend with topic creation and management (`backend.py`)
-   - ✅ Complete UI with debate viewer and voting (`ui.py`)
-   - ✅ Role-based topic creation and moderation
-   - ✅ Blockchain integration for transparency
+#### 1. **Users Module** (`civic_desktop/users/`) - **Identity & Authentication System + Crypto Integration**
+**Purpose**: Secure user registration, authentication, role-based governance participation, and integrated cryptocurrency management
+**UI Requirements**: Clear registration forms, intuitive login, role-based dashboards, crypto portfolio interface
+**Blockchain Integration**: ALL user actions, registrations, role changes, AND crypto transactions MUST be recorded
+**Crypto Integration**: Automatic CivicCoin wallet creation, role-based funding, seamless crypto operations
 
-3. **Moderation Module** (`civic_desktop/moderation/`)
-   - ✅ Comprehensive backend with flagging system (`backend.py`)
-   - ✅ Complete dashboard UI with role-based access (`ui.py`)
-   - ✅ Content review workflows and user warnings
-   - ✅ Audit logging and statistics
+**User-Friendly Workflow**:
+1. **New User Registration** (Enhanced 6-step process):
+   - Step 1: Personal Information (First Name, Last Name, Email)
+   - Step 2: Location Details (City, State, Country for voting jurisdiction)
+   - Step 3: ID Document Upload (Government verification)
+   - Step 4: Password Creation (Strong password requirements with visual feedback)
+   - Step 5: Terms Agreement & RSA Key Generation (automatic, explained simply)
+   - Step 6: **Automatic CivicCoin Wallet Creation** (seamless, with role-based initial funding)
+   
+2. **Login Process** (Enhanced with crypto access):
+   - Step 1: Email & Password entry with "Remember Me" option
+   - Step 2: Automatic session creation and redirect to personalized dashboard with crypto portfolio
 
-4. **Blockchain Module** (`civic_desktop/blockchain/`)
-   - ✅ Hierarchical blockchain structure (`blockchain.py`)
-   - ✅ PoA validator registry and signatures (`signatures.py`)
-   - ✅ P2P networking foundation (`p2p.py`)
-   - ✅ Blockchain dashboard UI (`blockchain_tab.py`)
-   - ✅ Automated block creation timer (`blockchain_timer.py`)
+3. **Crypto Portfolio Dashboard** (New crypto tab):
+   - **💳 Wallet Overview**: Real-time CVC balance, wallet address display
+   - **📊 Portfolio Stats**: Pool positions, pending rewards, total portfolio value
+   - **📋 Transaction History**: Categorized transactions with timestamps
+   - **⚡ Quick Actions**: Send tokens, exchange trading, pool participation, claim rewards
 
-5. **Utils Module** (`civic_desktop/utils/`)
-   - ✅ Comprehensive input validation (`validation.py`)
+**Blockchain Data Storage Requirements**:
+```python
+# ALL user data AND crypto data saved to blockchain with these action types:
+- "user_registration": Complete user profile, encrypted ID hash, wallet creation
+- "crypto_wallet_created": Wallet address, initial funding, role-based allocation
+- "user_login": Login timestamp, IP (if enabled), session start
+- "role_assignment": Role changes, election results, appointment records  
+- "profile_update": Any profile modifications with before/after values
+- "password_change": Timestamp and security event (not actual password)
+- "crypto_transaction": All CVC transactions, rewards, exchanges, pool operations
+- "reward_claimed": Governance participation rewards, amounts, timestamps
+```
+
+**Role-Based Initial Crypto Funding**:
+- **Contract Founders**: 1,000 CVC starting balance
+- **Contract Members**: 100 CVC starting balance
+- **All Roles**: Access to complete DeFi ecosystem (exchange, pools, rewards)
+
+#### 2. **Debates Module** (`civic_desktop/debates/`) - **Democratic Discussion Platform**
+**Purpose**: Structured civic debate with constitutional oversight and transparent voting
+**UI Requirements**: Topic browser, threaded discussions, clear voting interfaces, argument quality indicators
+**Blockchain Integration**: Every debate action, vote, and argument MUST be permanently recorded
+
+**User-Friendly Workflow**:
+1. **Browse Debates** (Intuitive navigation):
+   - Featured Topics (trending, urgent, constitutional)
+   - Filter by Category (Local, State, Federal, Constitutional)
+   - Search functionality with relevance ranking
+   - Visual indicators for user participation status
+
+2. **Topic Creation** (Role-based, guided process):
+   - Constitutional Check: Automatic review against governance contracts
+   - Category Selection: Local → State → Federal with jurisdiction validation
+   - Topic Framing: Title, description, scope, time limits
+   - Elder Review: Automatic constitutional compliance notification
+
+3. **Participate in Debates** (Structured engagement):
+   - Read Arguments: Organized by position (For/Against/Neutral)
+   - Submit Arguments: Character limits, quality guidelines, source requirements
+   - Vote on Arguments: Quality rating system, helpful/unhelpful feedback
+   - Final Position Voting: Citizen ballot with constitutional safeguards
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL debate data saved to blockchain:
+- "topic_created": Full topic data, creator, constitutional review status
+- "argument_submitted": Argument text, author, position, references
+- "argument_voted": Vote details, voter role, quality rating
+- "topic_voted": Final position votes, voter eligibility verification
+- "elder_review": Constitutional review decisions and reasoning
+```
+
+#### 3. **Moderation Module** (`civic_desktop/moderation/`) - **Constitutional Content Review**
+**Purpose**: Community-driven content moderation with constitutional appeals and due process
+**UI Requirements**: Easy flagging interface, clear review workflow, appeals process dashboard
+**Blockchain Integration**: Complete moderation audit trail for transparency and accountability
+
+**User-Friendly Workflow**:
+1. **Content Flagging** (Simple reporting):
+   - One-click flag button on all content
+   - Guided flag categories: Spam, Harassment, Constitutional Violation, Misinformation
+   - Severity selection with clear descriptions
+   - Optional detailed explanation field
+
+2. **Moderation Review** (Role-based workflow):
+   - Flag Queue: Organized by severity, age, jurisdiction
+   - Evidence Collection: Screenshot tools, reference gathering
+   - Bicameral Review: Representatives and Senators collaboration
+   - Constitutional Check: Elder oversight notification system
+
+3. **Appeals Process** (Due process protection):
+   - Appeal Submission: Simple form with evidence upload
+   - Review Timeline: Clear status updates and expected resolution time
+   - Constitutional Review: Elder constitutional interpretation
+   - Final Decision: Transparent reasoning and precedent documentation
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL moderation actions saved to blockchain:
+- "content_flagged": Flag details, reporter, content reference, severity
+- "moderation_review": Reviewer actions, evidence, decision rationale
+- "appeal_submitted": Appeal details, evidence, constitutional claims
+- "constitutional_review": Elder decisions, constitutional interpretation
+- "resolution_final": Final decision, enforcement actions, precedent value
+```
+
+#### 4. **Contracts Module** (`civic_desktop/contracts/`) - **Constitutional Governance Framework**
+**Purpose**: Hierarchical governance contracts with amendment system and constitutional enforcement
+**UI Requirements**: Contract browser, amendment proposal interface, voting dashboards, constitutional reference
+**Blockchain Integration**: All governance actions, amendments, and constitutional decisions recorded
+
+**User-Friendly Workflow**:
+1. **Browse Contracts** (Clear hierarchy):
+   - Master Contract: Constitutional foundation (read-only except amendments)
+   - Country/State/City Contracts: Jurisdiction-specific governance
+   - Visual hierarchy tree showing contract relationships
+   - Search and filter by governance topic
+
+2. **Propose Amendments** (Guided constitutional process):
+   - Amendment Type: Constitutional, Country, State, City level
+   - Impact Analysis: Automatic conflict detection with existing contracts
+   - Public Comment Period: Structured feedback collection
+   - Multi-Branch Review: Representatives, Senators, Elders workflow
+
+3. **Vote on Amendments** (Constitutional safeguards):
+   - Eligibility Check: Role-based voting permissions
+   - Information Package: Amendment text, analysis, public comments
+   - Voting Interface: Clear yes/no/abstain with reasoning option
+   - Results Display: Real-time tallies with constitutional thresholds
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL contract governance saved to blockchain:
+- "contract_created": Full contract text, hierarchy level, authorities
+- "amendment_proposed": Amendment text, proposer, impact analysis
+- "amendment_voted": Vote records, voter eligibility, constitutional review
+- "contract_amended": Final amended text, approval process record
+- "constitutional_decision": Elder interpretations, precedent establishment
+```
+
+#### 5. **Training Module** (`civic_desktop/training/`) - **Civic Education System**
+**Purpose**: Comprehensive civic education with progress tracking and certification
+**UI Requirements**: Course catalog, interactive lessons, progress tracking, achievement system
+**Blockchain Integration**: Learning progress, completions, and certifications recorded for verification
+
+**User-Friendly Workflow**:
+1. **Course Discovery** (Personalized learning):
+   - Recommended Courses: Based on user role and participation
+   - Learning Paths: Beginner → Intermediate → Advanced civic knowledge
+   - Skill Assessment: Pre-course evaluation for personalized content
+   - Time Estimates: Realistic completion time expectations
+
+2. **Interactive Learning** (Engaging education):
+   - Multi-media Lessons: Video, text, interactive elements
+   - Knowledge Checks: Regular quizzes with immediate feedback
+   - Practical Application: Real platform integration exercises
+   - Discussion Forums: Peer learning and expert Q&A
+
+3. **Progress & Certification** (Achievement tracking):
+   - Visual Progress: Completion bars, achievement badges
+   - Skill Verification: Competency testing and certification
+   - Civic Participation Credits: Verified learning for governance participation
+   - Continuing Education: Advanced courses for ongoing development
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL training data saved to blockchain:
+- "course_enrolled": Course selection, user profile, learning path
+- "lesson_completed": Lesson progress, time spent, comprehension scores
+- "quiz_attempted": Quiz results, attempts, improvement tracking
+- "certification_earned": Certification type, requirements met, verification data
+- "skill_verified": Competency demonstrations, practical applications
+```
+
+#### 6. **Crypto Module** (`civic_desktop/crypto/`) - **Complete DeFi Ecosystem & Rewards System**
+**Purpose**: Full-featured cryptocurrency ecosystem with CivicCoin (CVC), exchange, liquidity pools, yield farming, governance rewards, and seamless user integration
+**UI Requirements**: Advanced wallet interface, trading dashboard, pool management, reward claiming, portfolio analytics
+**Blockchain Integration**: All token transactions, exchange operations, pool activities, and rewards permanently recorded on blockchain
+
+**User-Friendly Workflow**:
+1. **Integrated Wallet System** (Seamless user experience):
+   - Automatic Wallet Creation: Every user registration creates CivicCoin wallet automatically
+   - Role-Based Initial Funding: Contract Founders (1,000 CVC), Contract Members (100 CVC)
+   - Real-Time Balance Display: Live CVC balance with transaction history in user dashboard
+   - Secure Key Management: Private keys stored locally, never transmitted, enterprise-grade security
+
+2. **Advanced Exchange System** (Professional trading platform):
+   - Full Order Book: Real-time buy/sell orders with market depth visualization
+   - Market Rates: Dynamic pricing based on supply/demand with automated market making
+   - Order Types: Market orders, limit orders, stop-loss, and conditional orders
+   - Trading Interface: Professional-grade trading dashboard with charts and analytics
+
+3. **Liquidity Pools & Yield Farming** (DeFi ecosystem):
+   - Pool Participation: Deposit CVC to earn yield and governance tokens
+   - Automated Market Making: Provide liquidity and earn trading fees
+   - Yield Optimization: Multi-pool strategies with compound reward calculations
+   - Pool Analytics: Real-time APY tracking, impermanent loss calculations, performance metrics
+
+4. **Governance Rewards Integration** (Incentivized civic participation):
+   - Participation Rewards: CVC tokens earned for quality debate contributions, voting, community engagement
+   - Achievement Bonuses: Milestone rewards for training completion, leadership roles, constitutional compliance
+   - Staking Benefits: Enhanced voting power through CVC staking with reward multipliers
+   - Community Recognition: Peer-nominated rewards for exceptional civic contributions, measurable impact
+
+5. **Advanced Portfolio Management** (Complete financial overview):
+   - Portfolio Dashboard: Total value, asset allocation, performance tracking, profit/loss analysis
+   - Transaction History: Detailed transaction log with categorization, search, and filtering
+   - Reward Tracking: Governance participation rewards, pool earnings, staking returns
+   - Analytics Suite: Portfolio performance metrics, risk analysis, optimization recommendations
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL crypto ecosystem data saved to blockchain:
+- "wallet_created": Wallet address, initial funding, role-based allocation, security setup
+- "token_transaction": All CVC transfers with sender, recipient, amount, transaction type, timestamp
+- "exchange_order": Order placement, execution, fills, market data, trading fees
+- "pool_operation": Liquidity deposits/withdrawals, reward distribution, yield calculations
+- "reward_earned": Governance participation rewards, calculation basis, bonus multipliers
+- "staking_activity": CVC staking for governance, reward calculations, voting power changes
+- "governance_incentive": Civic participation rewards, quality metrics, community impact
+- "defi_interaction": Advanced DeFi operations, cross-pool strategies, yield optimization
+```
+
+**Advanced DeFi Features**:
+- **Automated Market Making**: Sophisticated AMM with dynamic pricing algorithms
+- **Cross-Pool Strategies**: Multi-pool yield optimization with risk management
+- **Governance Staking**: CVC staking for enhanced voting power and reward multipliers
+- **Reward Compounding**: Automatic compound strategies for optimal return optimization
+- **Portfolio Rebalancing**: Intelligent asset allocation with risk-adjusted returns
+- **Liquidity Mining**: Additional rewards for providing liquidity to specific pools
+
+#### 7. **Blockchain Module** (`civic_desktop/blockchain/`) - **Immutable Audit & Consensus System**
+**Purpose**: Transparent audit trail with hierarchical structure and validator consensus
+**UI Requirements**: Blockchain explorer, validator dashboard, audit search, consensus monitoring
+**Blockchain Integration**: Core system - all other modules write to and read from blockchain
+
+**User-Friendly Workflow**:
+1. **Blockchain Explorer** (Transparent audit):
+   - Recent Activity: Real-time feed of platform actions
+   - Search by User: Find all actions by specific users
+   - Search by Type: Filter by action type (votes, registrations, etc.)
+   - Hierarchical View: Pages → Chapters → Books → Parts → Series
+
+2. **Validator Dashboard** (Consensus participation):
+   - Validator Status: Active/inactive, signing performance
+   - Block Creation: Automatic signing with manual override
+   - Consensus Monitoring: Network health, peer connections
+   - Audit Participation: Review and validate peer transactions
+
+**Blockchain Data Storage Requirements**: Core system that stores ALL platform data
+
+#### 8. **GitHub Integration** (`civic_desktop/github_integration/) - **Version Control & Updates**
+**Purpose**: Automated platform updates, version control, and development transparency
+**UI Requirements**: Update notifications, version history, development roadmap
+**Blockchain Integration**: Update logs, version changes, security patches recorded
+
+**User-Friendly Workflow**:
+1. **Update Management** (Seamless updates):
+   - Update Notifications: Clear security/feature update alerts
+   - Release Notes: User-friendly change descriptions
+   - Automatic Updates: Background installation with restart prompts
+   - Rollback Options: Previous version restoration capability
+
+**Blockchain Data Storage Requirements**:
+```python
+# Update and version control data:
+- "update_installed": Version changes, security patches, feature additions
+- "repository_sync": Code changes, development transparency
+- "security_patch": Critical security updates and vulnerability fixes
+```
+
+#### 9. **Maps Integration** (`civic_desktop/maps/`) - **Geographic Civic Engagement**
+**Purpose**: Location-based civic participation and geographic governance visualization
+**UI Requirements**: Interactive maps, location-based content, jurisdiction visualization
+**Blockchain Integration**: Location-based votes, geographic governance decisions recorded
+
+**User-Friendly Workflow**:
+1. **Geographic Participation** (Location-aware governance):
+   - Jurisdiction Mapping: Visual representation of governance boundaries
+   - Location-based Issues: Local, state, federal issue mapping
+   - Civic Event Locations: Town halls, voting locations, public meetings
+   - Representative Districts: Visual district mapping and representative contact
+
+**Blockchain Data Storage Requirements**:
+```python
+# Geographic civic engagement data:
+- "location_based_vote": Geographic jurisdiction validation for voting eligibility
+- "district_assignment": Representative district assignments and boundary changes
+- "local_issue_created": Location-specific civic issues and resolutions
+```
+
+#### 10. **System Guide** (`civic_desktop/system_guide/`) - **User Onboarding & Help**
+**Purpose**: Comprehensive help system and user onboarding for platform features
+**UI Requirements**: Interactive tutorials, searchable help, contextual assistance
+**Blockchain Integration**: Help usage patterns and user assistance requests logged
+
+**User-Friendly Workflow**:
+1. **New User Onboarding** (Guided introduction):
+   - Platform Tour: Interactive walkthrough of all features
+   - Role-based Training: Customized tutorials based on user's civic role
+   - Progress Tracking: Completion of onboarding milestones
+   - Quick Reference: Always-accessible help tooltips and guides
+
+**Blockchain Data Storage Requirements**:
+```python
+# User assistance and learning data:
+- "onboarding_completed": Training milestones, user competency verification
+- "help_accessed": Feature usage patterns, common user questions
+- "tutorial_progress": Learning completion, user engagement metrics
+```
+
+#### 11. **Analytics & Reports Module** (`civic_desktop/analytics/`) - **Data-Driven Governance Insights**
+**Purpose**: Comprehensive analytics for civic participation, governance effectiveness, and platform health
+**UI Requirements**: Interactive dashboards, data visualizations, export capabilities, filtering and search
+**Blockchain Integration**: All analytics queries, report generation, and data access logged for transparency
+
+**User-Friendly Workflow**:
+1. **Participation Analytics** (Civic engagement metrics):
+   - User Engagement Dashboard: Login frequency, feature usage, participation trends
+   - Voting Analytics: Turnout rates, demographic breakdowns, issue engagement
+   - Debate Participation: Argument quality scores, topic popularity, user contributions
+   - Geographic Insights: Participation by jurisdiction, regional engagement patterns
+
+2. **Governance Effectiveness** (Constitutional oversight):
+   - Decision Timeline Analysis: Amendment process efficiency, debate duration trends
+   - Constitutional Compliance: Elder oversight frequency, appeal success rates
+   - Representative Performance: Response times, constituency engagement, voting patterns
+   - System Health Monitoring: Error rates, security incidents, blockchain integrity
+
+3. **Platform Analytics** (System performance):
+   - User Growth: Registration trends, retention rates, role progression
+   - Content Moderation: Flag resolution times, appeal outcomes, quality metrics
+   - Token Economy: Reward distribution, transaction patterns, economic health
+   - Technical Metrics: Response times, uptime, security audit results
+
+4. **Report Generation** (Transparency tools):
+   - Automated Reports: Daily, weekly, monthly governance summaries
+   - Custom Analysis: User-defined queries with constitutional safeguards
+   - Public Dashboards: Transparency reports for citizen oversight
+   - Research Exports: Anonymized data for academic and policy research
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL analytics activities saved to blockchain:
+- "report_generated": Report type, parameters, user access, data scope
+- "analytics_query": Query details, user role, constitutional compliance check
+- "dashboard_accessed": User, dashboard type, time spent, data viewed
+- "data_exported": Export type, user authorization, privacy compliance
+- "metric_calculated": Calculation type, input data, result summary, methodology
+```
+
+#### 12. **Events & Calendar Module** (`civic_desktop/events/`) - **Civic Event Management & Community Organizing**
+**Purpose**: Comprehensive event management for civic participation and democratic engagement
+**UI Requirements**: Calendar interface, event creation wizards, RSVP management, notification system
+**Blockchain Integration**: All civic events, attendance, and community organizing activities recorded
+
+**User-Friendly Workflow**:
+1. **Event Discovery** (Community engagement):
+   - Event Calendar: Visual monthly/weekly calendar with civic events
+   - Filter & Search: By event type, jurisdiction, date range, participant role
+   - Event Details: Location (Maps integration), agenda, required preparation
+   - RSVP Management: Registration with capacity limits and waiting lists
+
+2. **Event Creation** (Role-based organizing):
+   - Event Type Selection: Town halls, debates, training sessions, elections
+   - Constitutional Review: Automatic compliance checking for public events
+   - Resource Booking: Integration with Maps for venue selection and booking
+   - Invitation System: Role-based invitations with automated notifications
+
+3. **Event Participation** (Democratic engagement):
+   - Check-in System: QR codes or digital attendance verification
+   - Live Participation: Integration with Debates module for real-time discussion
+   - Documentation: Meeting minutes, decisions made, action items
+   - Follow-up Actions: Post-event surveys, task assignments, next steps
+
+4. **Community Organizing** (Grassroots democracy):
+   - Working Groups: Formation and coordination of citizen committees
+   - Recurring Events: Automated scheduling for regular meetings
+   - Event Templates: Standardized formats for different civic event types
+   - Cross-Jurisdiction: Multi-city/state event coordination and collaboration
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL event activities saved to blockchain:
+- "event_created": Event details, creator, constitutional approval status
+- "event_attendance": Participant list, check-in times, participation level
+- "meeting_minutes": Decisions made, votes taken, action items assigned
+- "community_organizing": Group formation, leadership roles, coordination activities
+- "event_outcome": Results, follow-up actions, impact assessment
+```
+
+#### 13. **Communications Module** (`civic_desktop/communications/`) - **Secure Civic Messaging & Announcements**
+**Purpose**: Constitutional messaging system for citizen-representative communication and official announcements
+**UI Requirements**: Message interface, contact directories, notification center, privacy controls
+**Blockchain Integration**: Communication logs, official announcements, and message authenticity verification
+
+**User-Friendly Workflow**:
+1. **Direct Messaging** (Citizen-representative communication):
+   - Contact Directory: Find representatives by jurisdiction and role
+   - Message Composition: Rich text with file attachments and priority levels
+   - Response Tracking: Read receipts, response time monitoring, follow-up reminders
+   - Privacy Controls: End-to-end encryption with constitutional privacy protections
+
+2. **Official Announcements** (Government transparency):
+   - Announcement Creation: Role-based authority for official communications
+   - Distribution Lists: Jurisdiction-based, role-based, and interest-based targeting
+   - Emergency Communications: High-priority system for urgent civic information
+   - Public Archive: Searchable history of all official announcements
+
+3. **Group Communications** (Committee collaboration):
+   - Working Group Chats: Secure channels for committee and council discussions
+   - Document Sharing: Secure file transfer with version control
+   - Meeting Coordination: Integration with Events module for scheduling
+   - Decision Tracking: Formal votes and consensus building within groups
+
+4. **Notification Management** (Information awareness):
+   - Notification Center: Centralized hub for all platform communications
+   - Preference Controls: User-defined notification types and delivery methods
+   - Digest Options: Daily/weekly summaries of civic activity and announcements
+   - Constitutional Alerts: Automatic notifications for rights-affecting decisions
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL communications saved to blockchain:
+- "message_sent": Sender, recipient, timestamp, message hash (not content for privacy)
+- "announcement_published": Authority, distribution scope, content hash, reach
+- "group_communication": Group ID, participants, decisions made, consensus reached
+- "emergency_communication": Alert type, distribution, response tracking, effectiveness
+- "notification_delivered": User, notification type, delivery method, engagement
+```
+
+#### 14. **Surveys & Polling Module** (`civic_desktop/surveys/`) - **Democratic Opinion Gathering & Research**
+**Purpose**: Structured public opinion collection, referendum management, and policy research tools
+**UI Requirements**: Survey creation interface, polling dashboards, results visualization, statistical analysis
+**Blockchain Integration**: All survey responses, polling data, and research activities with privacy protections
+
+**User-Friendly Workflow**:
+1. **Survey Creation** (Opinion gathering):
+   - Survey Builder: Drag-and-drop interface with question types and logic branching
+   - Target Audience: Demographic filtering, geographic selection, role-based targeting
+   - Constitutional Review: Automatic compliance checking for sensitive topics
+   - Privacy Configuration: Anonymous vs. verified responses with transparency controls
+
+2. **Referendum Management** (Direct democracy):
+   - Ballot Creation: Official referendum design with clear language requirements
+   - Voter Eligibility: Automatic jurisdiction and role verification
+   - Campaign Period: Fair access rules for pro/con advocacy
+   - Results Certification: Transparent counting with blockchain verification
+
+3. **Public Opinion Polling** (Policy guidance):
+   - Quick Polls: Real-time opinion gathering on current issues
+   - Longitudinal Studies: Tracking opinion changes over time
+   - Demographic Analysis: Statistical breakdowns with privacy protections
+   - Policy Impact Assessment: Before/after polling for legislative effectiveness
+
+4. **Research & Analytics** (Data-driven governance):
+   - Statistical Analysis: Professional-grade analysis tools with visualization
+   - Export Capabilities: Research data export with anonymization controls
+   - Academic Collaboration: Secure data sharing for peer-reviewed research
+   - Public Results: Transparent publication of findings with methodology disclosure
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL survey activities saved to blockchain:
+- "survey_created": Survey design, creator authority, target demographics
+- "response_submitted": Anonymous response hash, demographic data, verification status
+- "referendum_conducted": Ballot details, participation rate, results, certification
+- "poll_published": Question, response options, anonymized results, statistical analysis
+- "research_accessed": Data query, researcher credentials, privacy compliance
+```
+
+#### 15. **Petitions & Initiatives Module** (`civic_desktop/petitions/`) - **Citizen-Driven Legislative Process**
+**Purpose**: Constitutional petition system and citizen initiative management for direct democracy
+**UI Requirements**: Petition creation interface, signature collection, progress tracking, verification tools
+**Blockchain Integration**: All petitions, signatures, and initiative processes with cryptographic verification
+
+**User-Friendly Workflow**:
+1. **Petition Creation** (Citizen empowerment):
+   - Petition Builder: Guided interface for legislative or constitutional petitions
+   - Legal Review: Automatic constitutional compliance and legal feasibility check
+   - Signature Requirements: Automatic calculation based on jurisdiction and petition type
+   - Public Launch: Transparent publication with clear goals and timelines
+
+2. **Signature Collection** (Democratic participation):
+   - Digital Signatures: Cryptographically secure signature collection with identity verification
+   - Campaign Tools: Social sharing, progress tracking, supporter communication
+   - Geographic Tracking: Jurisdiction-based signature requirements and verification
+   - Fraud Prevention: Duplicate detection, identity verification, constitutional safeguards
+
+3. **Initiative Process** (Direct legislation):
+   - Initiative Development: Multi-stage process from petition to ballot measure
+   - Public Comment: Structured feedback period for initiative refinement
+   - Legislative Review: Optional legislative consideration before ballot placement
+   - Ballot Certification: Final verification and placement on official ballots
+
+4. **Progress & Transparency** (Democratic accountability):
+   - Public Dashboard: Real-time progress tracking for all active petitions
+   - Verification System: Public audit trail for signature authenticity
+   - Success Tracking: Follow-through monitoring for successful initiatives
+   - Impact Assessment: Long-term evaluation of petition outcomes
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL petition activities saved to blockchain:
+- "petition_created": Petition text, creator, legal review status, signature requirements
+- "signature_collected": Cryptographic signature hash, signer verification, timestamp
+- "initiative_advanced": Stage progression, legal review, constitutional compliance
+- "ballot_certified": Final petition status, ballot placement, election scheduling
+- "outcome_tracked": Implementation status, impact assessment, democratic effectiveness
+```
+
+#### 16. **Documents & Archive Module** (`civic_desktop/documents/`) - **Official Document Management & Transparency**
+**Purpose**: Comprehensive document management, public records, and transparency tools for democratic accountability
+**UI Requirements**: Document library, search interface, version control, access logging
+**Blockchain Integration**: Document authenticity, access logs, and transparency requirements with blockchain verification
+
+**User-Friendly Workflow**:
+1. **Document Management** (Official records):
+   - Document Upload: Secure upload with automatic metadata extraction and categorization
+   - Version Control: Complete revision history with diff tracking and approval workflows
+   - Digital Signatures: Cryptographic signing for document authenticity and integrity
+   - Access Controls: Role-based permissions with constitutional transparency requirements
+
+2. **Public Records Access** (Transparency):
+   - Document Search: Full-text search with advanced filtering by type, date, jurisdiction
+   - Public Portal: Citizen-friendly interface for accessing government documents
+   - FOIA Requests: Freedom of Information Act request system with tracking and appeals
+   - Automatic Disclosure: Constitutional requirements for proactive information release
+
+3. **Legislative Documents** (Governance transparency):
+   - Bill Tracking: Complete legislative history from introduction to final passage
+   - Amendment History: Detailed tracking of all constitutional and legislative changes
+   - Voting Records: Complete voting history linked to representatives and issues
+   - Impact Analysis: Policy effectiveness tracking with outcome measurement
+
+4. **Archive & Preservation** (Historical record):
+   - Long-term Storage: Permanent preservation with blockchain integrity verification
+   - Historical Research: Academic and public access to historical government records
+   - Data Migration: Future-proofing through format conversion and technology updates
+   - Audit Trail: Complete access and modification history for accountability
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL document activities saved to blockchain:
+- "document_uploaded": Document hash, uploader, classification, access permissions
+- "document_accessed": User, document ID, access time, constitutional compliance
+- "foia_request": Request details, requester, processing timeline, outcome
+- "document_modified": Change details, authorization, approval chain, version tracking
+- "transparency_audit": Access patterns, compliance checks, constitutional requirements
+```
+
+#### 17. **Transparency & Audit Module** (`civic_desktop/transparency/`) - **Enhanced Accountability & Public Oversight**
+**Purpose**: Advanced transparency tools, government accountability, and public oversight mechanisms
+**UI Requirements**: Audit dashboards, spending trackers, conflict monitoring, public data visualizations
+**Blockchain Integration**: All oversight activities, audit findings, and accountability measures recorded
+
+**User-Friendly Workflow**:
+1. **Financial Transparency** (Government accountability):
+   - Budget Tracking: Real-time government spending with detailed breakdowns
+   - Contract Monitoring: Public contract awards with vendor information and performance
+   - Expense Reporting: Detailed expenditure tracking with categorical analysis
+   - Fraud Detection: Automated anomaly detection with investigation triggers
+
+2. **Conflict of Interest Monitoring** (Ethical oversight):
+   - Asset Disclosure: Required financial disclosure tracking for public officials
+   - Relationship Mapping: Visual representation of potential conflicts and connections
+   - Business Interest Tracking: Monitoring of official business relationships and investments
+   - Ethics Violation Reporting: Secure reporting system for ethical concerns
+
+3. **Lobbying & Influence Tracking** (Democratic integrity):
+   - Lobbyist Registration: Comprehensive database of lobbying activities and expenditures
+   - Meeting Logs: Public calendar access for elected officials with visitor tracking
+   - Gift Registries: Transparent reporting of gifts and benefits received by officials
+   - Influence Analysis: Data visualization of lobbying patterns and policy outcomes
+
+4. **Public Accountability Dashboard** (Citizen oversight):
+   - Performance Metrics: Key performance indicators for government effectiveness
+   - Comparative Analysis: Cross-jurisdictional comparisons for best practices
+   - Citizen Scorecards: Public rating system for representative performance
+   - Transparency Index: Measurable transparency scoring with improvement recommendations
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL transparency activities saved to blockchain:
+- "financial_transaction": Transaction details, authorization, public disclosure status
+- "conflict_disclosed": Official, relationship details, potential conflicts, mitigation
+- "lobbying_activity": Lobbyist, official contact, expenditure, issue advocacy
+- "audit_conducted": Audit type, findings, recommendations, follow-up actions
+- "transparency_score": Metric calculation, data sources, improvement areas
+```
+
+#### 18. **Collaboration Module** (`civic_desktop/collaboration/`) - **Inter-Jurisdictional Cooperation & Working Groups**
+**Purpose**: Cross-jurisdictional collaboration, shared governance projects, and multi-level coordination
+**UI Requirements**: Project management interface, collaboration tools, resource sharing, coordination dashboards
+**Blockchain Integration**: All collaboration agreements, resource sharing, and joint governance activities
+
+**User-Friendly Workflow**:
+1. **Inter-Jurisdictional Projects** (Regional cooperation):
+   - Project Initiation: Multi-jurisdiction project setup with governance structure
+   - Resource Pooling: Shared funding, personnel, and infrastructure coordination
+   - Decision Making: Consensus mechanisms for multi-party governance decisions
+   - Progress Tracking: Milestone management with accountability across jurisdictions
+
+2. **Working Group Management** (Specialized collaboration):
+   - Group Formation: Topic-specific working groups with expert participation
+   - Knowledge Sharing: Best practices exchange and collaborative problem-solving
+   - Report Generation: Joint analysis and recommendation development
+   - Implementation Coordination: Multi-jurisdiction policy implementation support
+
+3. **Resource Sharing** (Efficiency optimization):
+   - Service Agreements: Inter-governmental service sharing contracts and management
+   - Equipment Sharing: Shared infrastructure and resource optimization
+   - Personnel Exchange: Expert sharing and cross-training programs
+   - Emergency Coordination: Mutual aid agreements and disaster response collaboration
+
+4. **Policy Coordination** (Governance alignment):
+   - Policy Harmonization: Cross-jurisdiction policy alignment and consistency
+   - Legal Framework Coordination: Model legislation development and sharing
+   - Regulatory Cooperation: Joint regulatory development and enforcement
+   - Standards Development: Common standards for inter-jurisdictional compatibility
+
+**Blockchain Data Storage Requirements**:
+```python
+# ALL collaboration activities saved to blockchain:
+- "collaboration_agreement": Parties, terms, resource commitments, governance structure
+- "resource_shared": Resource type, sharing terms, usage tracking, cost allocation
+- "joint_decision": Decision details, participating jurisdictions, consensus process
+- "project_milestone": Achievement details, participants, outcomes, next steps
+- "coordination_effectiveness": Performance metrics, outcomes, lessons learned
+```
 
 ## Data Flow & User Experience
 
-### 🚀 Application Startup
-1. **Entry Point**: `python main.py` → `MainWindow` with 4 tabs
-2. **Tabs Available**: Users, Debates, Moderation, Blockchain
-3. **Blockchain Timer**: Automatically starts for periodic block creation
-4. **Session State**: Checks for existing user sessions
+### 🚀 Application Startup & User-Friendly Interface
+1. **Entry Point**: `python main.py` with automatic environment detection and user session restoration
+2. **Configuration**: Environment-specific configs with user-friendly defaults and validation
+3. **Tab Interface**: 18 intuitive tabs with role-based visibility and clear navigation
+4. **Auto-Initialization**: Seamless background services (P2P, blockchain, updates, crypto) with user notifications
+5. **Environment Switching**: Developer-friendly environment controls with production safety
 
-### 👤 User Registration & Authentication Flow
-1. **Registration** (`Users Tab`):
-   ```
-   User Input → Validation → bcrypt Hash → Key Generation → Blockchain Record → Database Save
-   ```
-   - Required fields: First/Last Name, Email, Password, City/State/Country, ID Document
-   - Validation via `utils.validation.DataValidator`
-   - Automatic RSA key pair generation
-   - Private key saved to `users/private_keys/`
-   - User registered in blockchain as validator
+### 💡 User Interface Design Principles
+1. **Clarity First**: Every action has clear labels, tooltips, and expected outcomes
+2. **Progressive Disclosure**: Complex features revealed as users gain experience
+3. **Consistent Navigation**: Same patterns across all tabs and modules
+4. **Immediate Feedback**: Real-time validation, progress indicators, success/error states
+5. **Accessibility**: Keyboard navigation, screen reader support, high contrast options
 
-2. **Login** (`Users Tab`):
+### 👤 User Registration & Authentication Flow (User-Friendly Design)
+1. **Registration** (`Users Tab`) - **Clear 6-Step Wizard with Crypto Integration**:
    ```
-   Credentials → bcrypt Verify → Key Verification → Session Creation → Dashboard Update
+   Welcome Screen → Personal Info → Location → Document Upload → Password → Confirmation → Crypto Wallet Creation → Blockchain Registration
    ```
-   - Password verification with bcrypt
-   - Private key file validation
-   - Session management via `SessionManager`
+   - **Step-by-Step Guidance**: Progress bar, clear instructions, help tooltips
+   - **Real-Time Validation**: Immediate feedback on field completion and errors
+   - **Security Explanation**: User-friendly explanation of RSA key generation and blockchain registration
+   - **Crypto Wallet Creation**: Automatic CivicCoin wallet with role-based initial funding
+   - **Privacy Assurance**: Clear data usage and storage explanations
+   - **ALL registration data stored on blockchain for identity verification**
 
-### 🗳️ Election & Governance Flow
-1. **Role Assignment**:
+2. **Login** (`Users Tab`) - **Simple & Secure with Crypto Access**:
    ```
-   Registration → Default "Contract Citizen" role → Election candidacy → Voting → Role assignment
+   Email Entry → Password Entry → Two-Factor (optional) → Session Creation → Personalized Dashboard with Crypto Portfolio
    ```
-   - Automatic "Contract Citizen" role on registration
-   - Election system for Contract Representatives, Contract Senators, Contract Elders
-   - Blockchain-recorded voting and results with constitutional safeguards
+   - **Remember Me**: Secure session persistence across app restarts
+   - **Password Recovery**: Clear password reset process with email verification
+   - **Session Security**: Automatic logout after inactivity with warning
+   - **Crypto Portfolio Access**: Immediate access to CivicCoin wallet and DeFi features
+   - **ALL login events recorded on blockchain for security audit**
 
-2. **Contract-Based Permissions**:
-   - **Contract Citizens**: Vote in all elections, participate in debates, initiate referendums
-   - **Contract Representatives**: Legislative initiative, budget authority, impeachment power
-   - **Contract Senators**: Legislative review, confirmation authority, Elder veto override
-   - **Contract Elders**: Constitutional veto, judicial review, appointment authority  
-   - **Contract Founders**: Emergency protocols, constitutional amendments, Elder appointment
+### 🗳️ Election & Governance Flow (Constitutional Democracy)
+1. **Role Assignment** - **Democratic Progression**:
+   ```
+   Registration → Contract Member → Election Candidacy → Campaign Period → Voting → Role Assignment
+   ```
+   - **Clear Role Explanation**: Interactive guide explaining each governance role and responsibilities
+   - **Election Calendar**: Visual timeline showing upcoming elections and candidate deadlines
+   - **Candidate Profiles**: Detailed platform statements, qualifications, endorsements
+   - **Voting Interface**: Intuitive ballot design with candidate information and constitutional context
+   - **ALL election data permanently stored on blockchain with cryptographic verification**
 
-### 💬 Debate Participation Flow
-1. **Topic Creation** (Contract Representatives + Contract Senators):
-   ```
-   Topic Creation → Constitutional Review → Elder Approval → Public Debate
-   ```
-   - Bicameral topic creation permissions
-   - Contract Elder constitutional compliance review
-   - Automatic blockchain logging for transparency
+2. **Contract-Based Role System** - **Checks & Balances**:
+   - **Contract Members**: Core democratic rights (vote, debate, petition, appeal)
+   - **Contract Representatives**: People's voice (legislative initiative, budget authority, impeachment)
+   - **Contract Senators**: Deliberative review (legislative oversight, confirmation authority, veto override)
+   - **Contract Elders**: Constitutional guardians (judicial review, constitutional interpretation, appointment authority)
+   - **Contract Founders**: Emergency authority (crisis management, constitutional amendments, system integrity)
+   - **ALL role assignments, elections, and governance actions recorded on blockchain**
 
-2. **Debate Participation**:
+### 💬 Debate Participation Flow (Democratic Discourse)
+1. **Topic Creation** - **Guided Constitutional Process**:
    ```
-   User Login → Browse Topics → Submit Arguments → Voting → Blockchain Record
+   Idea Submission → Constitutional Review → Elder Approval → Category Assignment → Public Debate Launch
    ```
-   - All debate actions logged on blockchain
-   - Vote tallying and argument threading  
-   - Contract Elder oversight for constitutional violations
-   - Real-time updates via UI refresh
+   - **Idea Wizard**: Step-by-step topic creation with constitutional compliance checking
+   - **Impact Assessment**: Automatic analysis of potential effects on existing laws/contracts
+   - **Public Comment Period**: Community input phase before formal debate begins
+   - **Elder Constitutional Review**: Transparent constitutional compliance verification
+   - **ALL topic creation steps recorded on blockchain with full audit trail**
+
+2. **Citizen Debate Participation** - **Structured Democratic Engagement**:
+   ```
+   Topic Discovery → Background Reading → Argument Submission → Peer Review → Position Voting → Results
+   ```
+   - **Topic Browser**: Intuitive filtering by category, urgency, user participation status
+   - **Argument Threading**: Clear organization of pro/con positions with quality indicators
+   - **Peer Review System**: Community-driven argument quality assessment
+   - **Constitutional Safeguards**: Real-time Elder oversight for constitutional violations
+   - **Voting Dashboard**: Clear ballot interface with argument summaries and constitutional context
+   - **ALL debate actions, arguments, votes permanently stored on blockchain**
 
 ### 🛡️ Moderation Workflow
 1. **Content Flagging**:
    ```
    User Reports → Flag Creation → Jurisdictional Review → Resolution → Constitutional Appeal → Blockchain Audit
    ```
-   - Any Contract Citizen can flag content
+   - Any Contract Member can flag content
    - Severity levels: low, medium, high, critical, constitutional
    - Assigned to appropriate jurisdiction moderators
    - Contract Elder review for constitutional violations
@@ -125,7 +753,6 @@
 1. **Hierarchical Structure**:
    ```
    User Actions → Pages → Chapters (24h) → Books (Monthly) → Parts (Yearly) → Series (10yr)
-```
    ```
    - Immediate action recording in Pages
    - Automatic time-based rollups
@@ -147,16 +774,21 @@ civic_desktop/
 ├── main.py                     # Application entry point
 ├── main_window.py             # Main PyQt5 interface with tabs
 ├── requirements.txt           # Dependencies (PyQt5, bcrypt, cryptography, etc.)
+├── config/                    # Environment-aware configuration
+│   ├── dev_config.json       # Development settings & paths
+│   ├── test_config.json      # Test environment configuration
+│   └── prod_config.json      # Production configuration
 ├── users/                     # User management module
 │   ├── backend.py            # User data management, bcrypt hashing
 │   ├── auth.py               # Authentication logic
 │   ├── login.py              # Login UI component
 │   ├── registration.py       # Registration UI component
-│   ├── dashboard.py          # User dashboard UI
+│   ├── dashboard.py          # User dashboard UI with crypto tab
 │   ├── elections.py          # Election backend logic
 │   ├── election_ui.py        # Election UI components
 │   ├── session.py            # Session management
 │   ├── keys.py               # RSA key management
+│   ├── crypto_integration.py # Complete crypto-user integration bridge
 │   ├── users_db.json         # User database
 │   └── private_keys/         # RSA private key storage
 ├── debates/                   # Debate system module
@@ -174,6 +806,70 @@ civic_desktop/
 │   ├── blockchain_db.json    # Blockchain data storage
 │   ├── validators_db.json    # Validator registry
 │   └── genesis_block.json    # Genesis block data
+├── contracts/                 # Contract-based governance module
+│   ├── contract_types.py     # Constitutional contracts (Master/Country/State/City)
+│   ├── amendment_system.py   # Amendment proposals and voting
+│   ├── genesis_contract.py   # Foundational governance contract
+│   └── enhanced_contract_tab.py # Governance UI interface
+├── training/                  # Civic education module
+│   ├── backend.py            # Training lesson management
+│   ├── ui.py                 # Training interface
+│   └── training_db.json      # Lesson progress storage
+├── crypto/                    # Complete DeFi ecosystem module
+│   ├── civic_coin.py         # Core CivicCoin implementation
+│   ├── advanced_wallet.py    # Multi-signature wallet system
+│   ├── exchange_system.py    # Full exchange with order book
+│   ├── loans_bonds.py        # Pooled lending and yield farming
+│   ├── stock_options.py      # Equity token management
+│   ├── ledger.py             # Token ledger and transaction management
+│   └── wallet_ui.py          # Wallet interface and token transfers
+├── github_integration/        # Version control integration
+│   ├── github_manager.py     # Repository management
+│   ├── update_notifier.py    # Automated update checking
+│   └── github_tab.py         # GitHub interface tab
+├── maps/                      # Geographic integration
+│   ├── map_view.py           # OpenStreetMap integration
+│   └── map.html              # Web map component
+├── system_guide/              # In-app documentation
+│   └── guide_tab.py          # Help system interface
+├── analytics/                 # Data-driven governance insights
+│   ├── backend.py            # Analytics engine and data processing
+│   ├── reports_ui.py         # Report generation and visualization
+│   └── analytics_db.json     # Analytics data and metrics storage
+├── events/                    # Civic event management
+│   ├── event_manager.py      # Event creation and management logic
+│   ├── calendar_ui.py        # Calendar interface and scheduling
+│   └── events_db.json        # Event data and attendance records
+├── communications/            # Secure civic messaging
+│   ├── messaging_backend.py  # Message routing and encryption
+│   ├── communications_ui.py  # Messaging interface and notifications
+│   └── messages_db.json      # Message logs and communication records
+├── surveys/                   # Democratic polling and research
+│   ├── survey_engine.py      # Survey creation and statistical analysis
+│   ├── polling_ui.py         # Survey interface and results visualization
+│   └── surveys_db.json       # Survey data and response analytics
+├── petitions/                 # Citizen-driven legislative process
+│   ├── petition_system.py    # Petition management and signature verification
+│   ├── initiatives_ui.py     # Petition interface and progress tracking
+│   └── petitions_db.json     # Petition data and signature records
+├── documents/                 # Official document management
+│   ├── document_manager.py   # Document storage and version control
+│   ├── archive_ui.py         # Document search and public access
+│   └── documents_db.json     # Document metadata and access logs
+├── transparency/              # Accountability and oversight
+│   ├── audit_engine.py       # Transparency monitoring and analysis
+│   ├── oversight_ui.py       # Public accountability dashboards
+│   └── transparency_db.json  # Audit data and accountability metrics
+├── collaboration/             # Inter-jurisdictional cooperation
+│   ├── project_coordinator.py # Multi-jurisdiction project management
+│   ├── collaboration_ui.py   # Cooperation interface and coordination
+│   └── collaboration_db.json # Collaboration records and agreements
+├── tests/                     # Test suite
+│   ├── test_users.py         # User module tests
+│   ├── test_blockchain.py    # Blockchain tests
+│   ├── test_contracts.py     # Contract system tests
+│   ├── test_crypto_integration.py # Crypto integration tests
+│   └── test_*.py             # Module-specific tests
 └── utils/                     # Utility modules
     └── validation.py         # Input validation framework
 ```
@@ -186,23 +882,33 @@ civic_desktop/
 - **Session Management**: Secure session handling with automatic logout
 - **Input Validation**: Comprehensive validation for all user inputs
 - **File Security**: Private keys stored locally, never transmitted
+- **Crypto Wallet Security**: Enterprise-grade wallet encryption and key management
 
 #### Database & Storage
 - **Primary Storage**: JSON files for simplicity and transparency
 - **Backup**: Blockchain provides immutable audit trail
 - **Data Integrity**: Cryptographic signatures ensure tamper detection
 - **Migration**: Version-controlled schema changes
+- **Crypto Data**: Integrated transaction records and wallet information
 
 #### User Interface
 - **Framework**: PyQt5 for cross-platform desktop GUI
-- **Design Pattern**: Tabbed interface with module separation
+- **Design Pattern**: Tabbed interface with module separation including crypto tab
 - **State Management**: Reactive UI updates based on session state
 - **Error Handling**: User-friendly error messages and validation feedback
+- **Crypto Integration**: Seamless crypto operations through existing interface
 
 ## Development Patterns & Best Practices
 
 ### 🎯 Module Integration Patterns
-1. **Cross-Module Communication**:
+1. **Environment-Aware Data Access**:
+   ```python
+   # All modules use ENV_CONFIG for environment-specific paths
+   from civic_desktop.main import ENV_CONFIG
+   db_path = ENV_CONFIG.get('db_path', 'users/users_db.json')
+   ```
+
+2. **Cross-Module Communication**:
    ```python
    # Example: User action triggers blockchain record
    from civic_desktop.blockchain.blockchain import Blockchain
@@ -212,7 +918,7 @@ civic_desktop/
    Blockchain.add_page(action_type="debate_vote", data=vote_data, user_email=user['email'])
    ```
 
-2. **Role-Based Access Control**:
+3. **Role-Based Access Control**:
    ```python
    # Example: Check moderation permissions
    from civic_desktop.moderation.backend import ModerationBackend
@@ -221,7 +927,7 @@ civic_desktop/
        # Show moderation interface
    ```
 
-3. **Data Validation Pattern**:
+4. **Data Validation Pattern**:
    ```python
    # Example: Validate user input
    from civic_desktop.utils.validation import DataValidator
@@ -229,6 +935,17 @@ civic_desktop/
    is_valid, message = DataValidator.validate_email(email)
    if not is_valid:
        QMessageBox.warning(self, "Invalid Email", message)
+   ```
+
+5. **Crypto Integration Pattern**:
+   ```python
+   # Example: User crypto operations
+   from civic_desktop.users.backend import UserBackend
+   
+   user_backend = UserBackend()
+   success, message, data = user_backend.execute_crypto_transaction(
+       user_email, 'reward', amount=50.0, reward_type='participation'
+   )
    ```
 
 ### 🛠️ Development Workflow
@@ -239,9 +956,22 @@ civic_desktop/
    python main.py
    ```
 
-2. **Testing**: Each module includes test patterns (framework to be added)
+2. **Environment Switching**:
+   ```bash
+   # Use environment variable
+   set CIVIC_CONFIG=config/test_config.json
+   python main.py
+   
+   # Or modify main.py CONFIG_PATH directly
+   ```
 
-3. **Debugging**: Use PyQt5 debugging tools and console output
+3. **Testing**: Comprehensive pytest test suite in `tests/` directory
+   ```bash
+   cd civic_desktop
+   pytest tests/
+   ```
+
+4. **Debugging**: Use PyQt5 debugging tools and console output
 
 ### 📊 Performance Considerations
 - **Memory**: JSON files loaded on-demand, not cached
@@ -311,7 +1041,7 @@ The platform operates under a **Contract-Based Governance System** designed to p
 - **Term**: 6 years, maximum 2 consecutive terms
 - **Selection**: Mixed system - 1/3 elected by Representatives, 1/3 by citizen vote, 1/3 by Contract Elders
 
-#### 5. **Contract Citizens** (Sovereign Authority)
+#### 5. **Contract Members** (Sovereign Authority)
 - **Role**: Ultimate source of democratic legitimacy with constitutional rights
 - **Powers**:
   - **Electoral Authority**: Vote in all elections and referendums
@@ -336,8 +1066,8 @@ The platform operates under a **Contract-Based Governance System** designed to p
 #### **Preventing Minority Rule:**
 1. **Popular Mandate**: Contract Representatives directly elected by citizen majority
 2. **Override Powers**: Contract Senators can override Elder vetoes with supermajority
-3. **Recall Mechanisms**: Citizens can remove any official through special elections
-4. **Initiative Process**: Citizens can bypass government gridlock through direct proposals
+3. **Recall Mechanisms**: Contract Members can remove any official through special elections
+4. **Initiative Process**: Contract Members can bypass government gridlock through direct proposals
 5. **Regular Elections**: No permanent appointment except Contract Founders (with removal clause)
 6. **Transparency Requirements**: All decisions recorded on blockchain for public accountability
 
@@ -424,6 +1154,37 @@ The platform operates under a **Contract-Based Governance System** designed to p
 
 This governance structure creates a robust system of overlapping checks and balances that prevents any single person, group, majority, or minority from dominating the platform while ensuring democratic legitimacy and citizen sovereignty.
 
+## Critical AI Agent Knowledge
+
+### 🚨 Essential Integration Points
+1. **Environment Configuration**: All modules use `ENV_CONFIG` from `main.py` - never hardcode paths
+2. **Tab-Based Architecture**: Main window has 18 tabs - Users, Debates, Moderation, Blockchain, Contracts, Training, Crypto/Wallet, GitHub, P2P, Maps, Reports, Analytics, Events, Communications, Surveys, Petitions, Documents, Transparency, Collaboration
+3. **Session Management**: `SessionManager.get_current_user()` and `SessionManager.is_authenticated()` used throughout
+4. **Blockchain Recording**: All significant actions recorded via `Blockchain.add_page(action_type, data, user_email)`
+5. **Role-Based Access**: Use module-specific `can_*()` functions before UI/action access
+
+### ⚡ Key Workflow Commands
+```bash
+# Run application
+python civic_desktop/main.py
+
+# Switch environments
+set CIVIC_CONFIG=config/test_config.json && python civic_desktop/main.py
+
+# Run tests
+cd civic_desktop && pytest tests/
+
+# Common test files to run for debugging
+python test_integration_comprehensive.py
+python setup_founder.py  # Creates admin user
+```
+
+### 🔧 Common Development Patterns
+- **Adding New Features**: Create module in `civic_desktop/`, add tab in `main_window.py`, update `ENV_CONFIG` paths
+- **Database Access**: Use environment paths from config files, never hardcode JSON file names
+- **UI Development**: PyQt5 widgets, always check authentication state, use role-based visibility
+- **Testing**: Place tests in `civic_desktop/tests/`, follow `test_*.py` naming convention
+
 ## Developer Workflows & Setup
 
 ### 🚀 Quick Start
@@ -446,6 +1207,8 @@ bcrypt>=4.0.0        # Secure password hashing
 requests>=2.28.0     # HTTP requests for P2P networking  
 pytest>=7.0.0        # Testing framework
 validators>=0.20.0   # Email and data validation
+flask>=2.3.0         # P2P networking server components
+flask-cors>=4.0.0    # Cross-origin request handling
 ```
 
 ### 🧪 Testing Approach
@@ -467,6 +1230,7 @@ Users must provide during account creation:
 - ✅ **Contact**: Email address (unique identifier)
 - ✅ **Security**: Strong password, agreement to terms of service
 - ✅ **Cryptography**: Automatic RSA key pair generation for blockchain participation
+- ✅ **Crypto Wallet**: Automatic CivicCoin wallet creation with role-based initial funding
 
 **Validation & Security:**
 - ✅ Comprehensive input validation via `utils.validation.DataValidator`
@@ -474,6 +1238,7 @@ Users must provide during account creation:
 - ✅ One account per person enforced by unique email
 - ✅ Private key management with local file storage
 - ✅ Email format validation and password strength requirements
+- ✅ Automatic crypto wallet creation with enterprise-grade security
 
 ### 🔗 Blockchain Integration (Fully Implemented)
 - ✅ **Hierarchical Structure**: Page→Chapter→Book→Part→Series with time-based rollups
@@ -481,6 +1246,7 @@ Users must provide during account creation:
 - ✅ **Cryptographic Integrity**: RSA signatures for all blocks and transactions
 - ✅ **Audit Trail**: All governance actions permanently recorded
 - ✅ **Validator Registry**: Dynamic validator management with key rotation support
+- ✅ **Crypto Transaction Recording**: All DeFi operations logged on blockchain
 
 **Implementation Files:**
 - `blockchain/blockchain.py`: Core blockchain logic and hierarchical structure
@@ -501,6 +1267,21 @@ Users must provide during account creation:
 - `users/elections.py`: Contract-based election logic with multi-branch voting
 - `users/election_ui.py`: Constitutional election interface components
 - `users/dashboard.py`: Contract role dashboard with governance oversight
+
+### 💰 Crypto Integration Implementation (Fully Implemented)
+- ✅ **Complete DeFi Ecosystem**: CivicCoin with exchange, pools, lending, rewards
+- ✅ **Automatic Wallet Creation**: Every user registration creates crypto wallet
+- ✅ **Role-Based Funding**: Contract Founders (1,000 CVC), Contract Members (100 CVC)
+- ✅ **User Integration**: Seamless crypto operations through existing authentication
+- ✅ **Dashboard Integration**: Crypto portfolio tab with real-time data
+- ✅ **Transaction Management**: Complete audit trail and blockchain recording
+
+**Key Files:**
+- `users/crypto_integration.py`: 300+ line bridge between crypto and user systems
+- `crypto/civic_coin.py`: Core CivicCoin implementation
+- `crypto/exchange_system.py`: Full exchange with order book
+- `crypto/advanced_wallet.py`: Multi-signature wallet system
+- `crypto/loans_bonds.py`: Pooled lending and yield farming
 
 ## Integration Points & Communication Patterns
 
@@ -690,8 +1471,8 @@ def flag_content(content_type, content_id, reason, reporter_email, severity="med
 - **Advanced Moderation**: Multi-branch review process with constitutional appeals and due process
 - **Transparency**: All governance actions recorded on blockchain with full audit trails
 
-### 👥 Contract Citizen Participation
-- **Registration**: Comprehensive identity verification with automatic Contract Citizen status
+### 👥 Contract Member Participation
+- **Registration**: Comprehensive identity verification with automatic Contract Member status
 - **Electoral Rights**: Vote in all Contract Representative, Senator, and Elder elections
 - **Legislative Initiative**: Petition for constitutional amendments and direct referendums
 - **Debates**: Engage in constitutionally-protected political discussions  
@@ -730,6 +1511,11 @@ def flag_content(content_type, content_id, reason, reporter_email, severity="med
 **Current Status**: Core functionality complete and stable for local use
 **Production Readiness**: Suitable for demonstration and testing environments
 **Deployment**: Ready for pilot programs and controlled rollouts
+
+---
+
+### 📝 Development Notes
+For questions or unclear patterns, review the relevant module's implementation files. The codebase is designed for clarity and follows consistent patterns across all modules. Each action that affects platform state is automatically recorded in the blockchain for transparency and auditability.
 
 ---
 

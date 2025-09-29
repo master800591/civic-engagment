@@ -1,0 +1,21 @@
+[
+  {
+    "data_source": "natural_earth_populated_places",
+    "file_reference": "../natural_earth/ne_50m_populated_places.*",
+    "description": "Global populated places with population data and administrative information",
+    "coverage": "Worldwide",
+    "resolution": "50m (1:50,000,000)",
+    "total_features": "Thousands of global cities, towns, and populated places",
+    "attributes": [
+      "Name",
+      "Country",
+      "Admin1 (State/Province)",
+      "Population",
+      "Capital status",
+      "Coordinates",
+      "Time zone",
+      "Wikipedia reference"
+    ],
+    "last_updated": "2025-09-28T13:06:07.598642"
+  }
+]

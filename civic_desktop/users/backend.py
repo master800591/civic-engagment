@@ -1,216 +1,224 @@
-import hashlib
-import os
+"""
+USER BACKEND - Core user data management and authentication
+Handles user registration, authentication, role management, and database operations
+"""
+
 import json
 import bcrypt
-from datetime import datetime, timezone
-from typing import List, Dict, Any, Optional, Tuple
-from .elections import ElectionManager
- 
-from civic_desktop.blockchain.blockchain import Blockchain, ValidatorRegistry
-from .constants import USERS_DB
-from ..contracts.contract_terms import contract_manager
+import os
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Any
+import uuid
+import hashlib
+
+# Import validation framework
+import sys
+sys.path.append(str(Path(__file__).parent.parent))
+from utils.validation import DataValidator, SecurityValidator
+
+# Import Founder key and contract roles
+try:
+    from users.founder_keys import FounderKeyManager
+    from users.contract_roles import ContractRoleManager, ContractRole
+    from users.hardcoded_founder_keys import HardcodedFounderKeys
+    FOUNDER_SYSTEM_AVAILABLE = True
+except ImportError:
+    print("Warning: Founder key system not available")
+    FOUNDER_SYSTEM_AVAILABLE = False
+
+# Import PDF generator
+try:
+    from users.pdf_generator import UserPDFGenerator
+    PDF_GENERATION_AVAILABLE = True
+except ImportError:
+    print("Warning: PDF generation not available")
+    PDF_GENERATION_AVAILABLE = False
+
+# Import crypto integration
+try:
+    from users.crypto_integration import UserCryptoIntegration
+    CRYPTO_INTEGRATION_AVAILABLE = True
+except ImportError:
+    print("Warning: Crypto integration not available")
+    CRYPTO_INTEGRATION_AVAILABLE = False
 
 class UserBackend:
-    @staticmethod
-    def get_user_by_email(email: str) -> Optional[Dict[str, Any]]:
-        users = UserBackend.load_users()
-        for user in users:
-            if user.get('email', '').lower() == email.lower():
-                return user
-        return None
-
-    @staticmethod
-    def get_user_display_name(email: str) -> str:
-        """Get formatted display name with titles and roles for a user"""
-        if not email:
-            return "Unknown User"
+    """Core user management backend with security and validation"""
+    
+    def __init__(self, config_path: str = None):
+        """Initialize user backend with environment-specific configuration"""
+        self.config_path = config_path or "config/dev_config.json"
+        self.config = self._load_config()
         
-        # Handle system/agent accounts
-        if email.startswith('system.') or email.startswith('agent.'):
-            agent_name = email.replace('system.', '').replace('agent.', '').replace('_', ' ').title()
-            return f"🤖 Agent {agent_name}"
+        # Database paths
+        self.users_db_path = Path(self.config.get('users_db_path', 'users/users_db.json'))
+        self.sessions_db_path = Path(self.config.get('sessions_db_path', 'users/sessions_db.json'))
+        self.private_keys_dir = Path(self.config.get('private_keys_dir', 'users/private_keys'))
         
-        user = UserBackend.get_user_by_email(email)
-        if not user:
-            return f"User ({email.split('@')[0]})"
+        # Ensure directories exist
+        self.users_db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.sessions_db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.private_keys_dir.mkdir(parents=True, exist_ok=True)
         
-        # Build display name with titles
-        first_name = user.get('first_name', '').strip()
-        last_name = user.get('last_name', '').strip()
-        roles = user.get('roles', [])
+        # Initialize databases
+        self._init_databases()
         
-        # Base name
-        if first_name and last_name:
-            display_name = f"{first_name} {last_name}"
-        elif first_name:
-            display_name = first_name
+        # Initialize crypto integration
+        if CRYPTO_INTEGRATION_AVAILABLE:
+            self.crypto_integration = UserCryptoIntegration()
+            print("✅ Crypto integration initialized in user backend")
         else:
-            display_name = email.split('@')[0].title()
+            self.crypto_integration = None
+            print("⚠️ Crypto integration not available")
+    
+    def _load_config(self) -> Dict[str, Any]:
+        """Load environment-specific configuration"""
+        try:
+            config_file = Path(self.config_path)
+            if config_file.exists():
+                with open(config_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+        except Exception as e:
+            print(f"Warning: Could not load config from {self.config_path}: {e}")
         
-        # Add titles based on roles
-        titles = []
-        if 'Contract Founder' in roles:
-            titles.append('🏛️ Founder')
-        elif 'Contract Elder' in roles:
-            titles.append('👴 Elder')
-        elif 'Contract Senator' in roles:
-            titles.append('🏛️ Senator')
-        elif 'Contract Representative' in roles:
-            titles.append('🗳️ Representative')
-        elif 'Contract Citizen' in roles:
-            titles.append('👤 Citizen')
+        # Default configuration
+        return {
+            'users_db_path': 'users/users_db.json',
+            'sessions_db_path': 'users/sessions_db.json',
+            'private_keys_dir': 'users/private_keys',
+            'session_timeout_hours': 24,
+            'max_login_attempts': 5,
+            'lockout_duration_minutes': 30
+        }
+    
+    def _init_databases(self):
+        """Initialize database files if they don't exist"""
+        # Initialize users database
+        if not self.users_db_path.exists():
+            initial_users_data = {
+                'users': [],
+                'metadata': {
+                    'created_at': datetime.now().isoformat(),
+                    'version': '1.0',
+                    'total_users': 0
+                }
+            }
+            self._save_users_db(initial_users_data)
         
-        # Add CEO/leadership titles if applicable
-        if any('CEO' in role for role in roles):
-            titles.insert(0, '💼 CEO')
-        if any('Director' in role for role in roles):
-            titles.insert(0, '📋 Director')
-        if any('Manager' in role for role in roles):
-            titles.insert(0, '📊 Manager')
-        
-        # Format with titles
-        if titles:
-            return f"{' '.join(titles)} {display_name}"
-        else:
-            return display_name
-
-    @staticmethod
-    def load_users() -> List[Dict[str, Any]]:
-        """Derive users from the blockchain pages (single source of truth)."""
-        chain = Blockchain.load_chain()
-        users_by_email: Dict[str, Dict[str, Any]] = {}
-        for page in chain.get('pages', []):
-            data = page.get('data', {})
-            action = data.get('action')
-            if action == 'register_user':
-                email = data.get('user_email') or data.get('email')
-                if not email:
-                    continue
-                user: Dict[str, Any] = users_by_email.get(email, {})
-                # Populate fields from chain record
-                user.update({
-                    'first_name': data.get('first_name', user.get('first_name')),
-                    'last_name': data.get('last_name', user.get('last_name')),
-                    'address': data.get('address', user.get('address')),
-                    'city': data.get('city', user.get('city')),
-                    'state': data.get('state', user.get('state')),
-                    'country': data.get('country', user.get('country')),
-                    'email': email,
-                    'password_hash': data.get('password_hash', user.get('password_hash', '')),
-                    'roles': data.get('roles', user.get('roles', [])) or [],
-                    'public_key': data.get('public_key', user.get('public_key', '')),
-                    'id_document_hash': data.get('id_document_hash', user.get('id_document_hash', '')),
-                    # Initialize preliminary ranks fields if not present
-                    'birth_date': data.get('birth_date', user.get('birth_date', '')),
-                    'government_id_type': data.get('government_id_type', user.get('government_id_type', '')),
-                    'government_id_number': data.get('government_id_number', user.get('government_id_number', '')),
-                    'identity_verified': data.get('identity_verified', user.get('identity_verified', False)),
-                    'address_verified': data.get('address_verified', user.get('address_verified', False)),
-                    'email_verified': data.get('email_verified', user.get('email_verified', False)),
-                    'parental_consent': data.get('parental_consent', user.get('parental_consent', False)),
-                    'parent_email': data.get('parent_email', user.get('parent_email', '')),
-                    'parent_name': data.get('parent_name', user.get('parent_name', '')),
-                    'training_completed': data.get('training_completed', user.get('training_completed', [])),
-                    'verification_status': data.get('verification_status', user.get('verification_status', 'pending')),
-                    'rank_history': data.get('rank_history', user.get('rank_history', [])),
-                    'role': data.get('roles', [None])[0] if data.get('roles') else user.get('role', 'Contract Citizen')
-                })
-                users_by_email[email] = user
-            elif action == 'update_profile':
-                email = data.get('user_email')
-                if not email:
-                    continue
-                user = users_by_email.get(email, {'email': email})
-                updates = data.get('updates', {})
-                if isinstance(updates, dict):
-                    # Handle special cases for list fields
-                    for key, value in updates.items():
-                        if key in ['training_completed', 'rank_history'] and isinstance(value, list):
-                            # Append to existing list instead of replacing
-                            existing = user.get(key, [])
-                            if isinstance(existing, list):
-                                existing.extend(value)
-                                user[key] = existing
-                            else:
-                                user[key] = value
-                        else:
-                            user[key] = value
-                users_by_email[email] = user
-            elif action == 'role_update':
-                email = data.get('user_email')
-                if not email:
-                    continue
-                user = users_by_email.get(email, {'email': email})
-                new_role = data.get('new_role')
-                if new_role:
-                    user['role'] = new_role
-                    # Update roles list
-                    roles = user.get('roles', [])
-                    if new_role not in roles:
-                        roles.append(new_role)
-                    user['roles'] = roles
-                # Process any additional updates
-                updates = data.get('updates', {})
-                if isinstance(updates, dict):
-                    for key, value in updates.items():
-                        if key == 'rank_history' and isinstance(value, list):
-                            # Append to existing rank history
-                            existing_history = user.get('rank_history', [])
-                            if isinstance(existing_history, list):
-                                existing_history.extend(value)
-                                user['rank_history'] = existing_history
-                            else:
-                                user['rank_history'] = value
-                        else:
-                            user[key] = value
-                users_by_email[email] = user
-            elif action == 'training_completion':
-                email = data.get('user_email')
-                if not email:
-                    continue
-                user = users_by_email.get(email, {'email': email})
-                course_name = data.get('course_name')
-                if course_name:
-                    # Add to training completed list
-                    training_completed = user.get('training_completed', [])
-                    if course_name not in training_completed:
-                        training_completed.append(course_name)
-                        user['training_completed'] = training_completed
-                # Process any additional updates
-                updates = data.get('updates', {})
-                if isinstance(updates, dict):
-                    for key, value in updates.items():
-                        if key == 'training_completed' and isinstance(value, list):
-                            # Append to existing training list (avoid duplicates)
-                            existing_training = user.get('training_completed', [])
-                            for course in value:
-                                if course not in existing_training:
-                                    existing_training.append(course)
-                            user['training_completed'] = existing_training
-                        else:
-                            user[key] = value
-                users_by_email[email] = user
-        return list(users_by_email.values())
-
-
-    @staticmethod
-    def save_users(users: List[Dict[str, Any]]) -> None:
-        """Deprecated: Users are stored on-chain. This is a no-op."""
-        return None
-
-
-    @staticmethod
-    def hash_password(password: str) -> str:
-        """Hash password using bcrypt with salt"""
-        # Generate a salt and hash the password
+        # Initialize sessions database
+        if not self.sessions_db_path.exists():
+            initial_sessions_data = {
+                'active_sessions': {},
+                'metadata': {
+                    'created_at': datetime.now().isoformat(),
+                    'total_sessions': 0
+                }
+            }
+            self._save_sessions_db(initial_sessions_data)
+    
+    def _load_users_db(self) -> Dict[str, Any]:
+        """Load users database"""
+        try:
+            with open(self.users_db_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading users database: {e}")
+            return {'users': [], 'metadata': {}}
+    
+    def _save_users_db(self, data: Dict[str, Any]):
+        """Save users database"""
+        try:
+            with open(self.users_db_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"Error saving users database: {e}")
+    
+    def _load_sessions_db(self) -> Dict[str, Any]:
+        """Load sessions database"""
+        try:
+            with open(self.sessions_db_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading sessions database: {e}")
+            return {'active_sessions': {}, 'metadata': {}}
+    
+    def _save_sessions_db(self, data: Dict[str, Any]):
+        """Save sessions database"""
+        try:
+            with open(self.sessions_db_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"Error saving sessions database: {e}")
+    
+    def _hash_password(self, password: str) -> str:
+        """Hash password using bcrypt with automatic salt"""
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
         return hashed.decode('utf-8')
-
-    @staticmethod
-    def verify_password(password: str, hashed: str) -> bool:
-        """Verify a password against its hash"""
+    
+    def _verify_password(self, password: str, hashed_password: str) -> bool:
+        """Verify password against stored hash"""
         try:
+<<<<<<< HEAD
+            return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
+        except Exception:
+            return False
+    
+    def _generate_user_id(self) -> str:
+        """Generate unique user ID"""
+        return str(uuid.uuid4())
+    
+    def _generate_session_id(self) -> str:
+        """Generate secure session ID"""
+        return hashlib.sha256(f"{uuid.uuid4()}{datetime.now()}".encode()).hexdigest()
+    
+    def register_user(self, user_data: Dict[str, Any]) -> Tuple[bool, str, Optional[Dict]]:
+        """
+        Register new user with comprehensive validation
+        
+        Args:
+            user_data: Dictionary containing user registration information
+        
+        Returns:
+            Tuple of (success: bool, message: str, user_record: Optional[Dict])
+        """
+        
+        # Validate required fields
+        required_fields = ['first_name', 'last_name', 'email', 'password', 'city', 'state', 'country']
+        for field in required_fields:
+            if field not in user_data or not user_data[field]:
+                return False, f"Missing required field: {field}", None
+        
+        # Validate individual fields
+        validation_checks = [
+            DataValidator.validate_name(user_data['first_name'], "First name"),
+            DataValidator.validate_name(user_data['last_name'], "Last name"),
+            DataValidator.validate_email(user_data['email']),
+            DataValidator.validate_password(user_data['password'], user_data.get('confirm_password')),
+            DataValidator.validate_location(user_data['city'], user_data['state'], user_data['country'])
+        ]
+        
+        for is_valid, message in validation_checks:
+            if not is_valid:
+                return False, message, None
+        
+        # Check if email already exists
+        users_data = self._load_users_db()
+        existing_user = next((u for u in users_data['users'] if u['email'] == user_data['email']), None)
+        if existing_user:
+            return False, "Email address already registered", None
+        
+        # Check for Founder key during registration
+        user_role = 'contract_member'  # Default role
+        founder_info = None
+        
+        if user_data.get('founder_private_key') and FOUNDER_SYSTEM_AVAILABLE:
+            try:
+                # Use hardcoded founder keys for single-use promotion
+                is_valid_founder, founder_message, founder_data = HardcodedFounderKeys.validate_founder_key(
+                    user_data['founder_private_key']
+=======
             return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
         except (ValueError, TypeError) as e:
             # Log the specific error for debugging
@@ -283,428 +291,516 @@ class UserBackend:
                     contract_id=contract.contract_id,
                     ip_address="",
                     user_agent=""
+>>>>>>> 4d71077bf1a4fea57ebc06c2c295cb4c305095ab
                 )
-        role = 'Contract Founder' if is_founder else 'Contract Citizen'
-        
-        # Determine initial rank for non-founders using the new rank system
-        if not is_founder:
-            from .rank_manager import RankManager
-            role = RankManager.determine_initial_rank(data)
-        from .keys import generate_keypair
-        pub_key, priv_key = generate_keypair()
-        privkey_dir = os.path.join(os.path.dirname(__file__), 'private_keys')
-        os.makedirs(privkey_dir, exist_ok=True)
-        privkey_path = os.path.join(privkey_dir, f"{data['email'].replace('@','_at_')}.pem")
-        with open(privkey_path, 'w', encoding='utf-8') as f:
-            f.write(priv_key)
-        user: Dict[str, Any] = {
-            'first_name': data['first_name'],
-            'last_name': data['last_name'],
-            'address': data['address'],
-            'city': data['city'],
-            'state': data['state'],
-            'country': data['country'],
-            'email': data['email'],
-            'password_hash': UserBackend.hash_password(data['password']),
-            'id_document_hash': id_document_hash,
-            'agreed_to_contract': True,
-            'contracts_accepted': all_accepted,
-            'role': role,
-            'roles': [role],
-            'public_key': pub_key,
-            'registration_date': datetime.now(timezone.utc).isoformat(),
-            'contract_acceptance_date': datetime.now(timezone.utc).isoformat(),
-            'user_location': user_location,
-            'id_verification': verification_result,
-            # New fields for preliminary ranks system
-            'birth_date': data.get('birth_date', ''),
-            'government_id_type': data.get('id_type', ''),
-            'government_id_number': data.get('id_number', ''),
-            'identity_verified': verification_result.get('status') == 'verified',
-            'address_verified': False,  # Will be verified separately
-            'email_verified': False,   # Will be verified separately
-            'parental_consent': data.get('parental_consent', False),
-            'parent_email': data.get('parent_email', ''),
-            'parent_name': data.get('parent_name', ''),
-            'training_completed': [],  # List of completed training courses
-            'verification_status': 'pending',
-            'rank_history': [{
-                'rank': role,
-                'assigned_date': datetime.now(timezone.utc).isoformat(),
-                'reason': 'Initial registration'
-            }]
-        }
-        # Persist registration to blockchain (single source of truth)
-        chain_record = {
-            'action': 'register_user',
-            'user_email': user['email'],
-            'first_name': user['first_name'],
-            'last_name': user['last_name'],
-            'address': user['address'],
-            'city': user['city'],
-            'state': user['state'],
-            'country': user['country'],
-            'public_key': user['public_key'],
-            'roles': user['roles'],
-            'password_hash': user['password_hash'],
-            'id_document_hash': user['id_document_hash'],
-            'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
-        }
-        if is_founder:
-            ValidatorRegistry.add_validator(user['email'], public_key="GENESIS_PLACEHOLDER")
-            UserBackend.create_genesis_block(user)
-            Blockchain.add_page(
-                data=chain_record,
-                validator=user['email'],
-                signature='GENESIS'  # Mark as genesis/founder
-            )
-            return True, 'Founder account created. Genesis block initialized.'
-        else:
-            triggered: List[str] = []
-            for jur in ['city', 'state', 'country']:
-                if ElectionManager.should_trigger_election(jur, data[jur]):  # type: ignore
-                    triggered.append(jur)
-            # Always record registration to blockchain even if not a validator yet
-            Blockchain.add_page(
-                data=chain_record,
-                validator="SYSTEM"  # system-recorded until user becomes validator
-            )
-            if triggered:
-                return True, f"Registration successful. Election triggered for: {', '.join(triggered)}."
-            return True, 'Registration successful.'
-
-
-    @staticmethod
-    def create_genesis_block(founder_user: Dict[str, Any]) -> None:
-        """Create enhanced genesis block with real cryptographic keys and metadata"""
-        genesis_path = os.path.join(os.path.dirname(__file__), '../blockchain/genesis_block.json')
-        
-        # Generate real RSA keys for genesis founder
-        from ..blockchain.signatures import BlockchainSigner
-        from cryptography.hazmat.primitives import serialization
-        
-        try:
-            # Get founder's actual public key from validator registry
-            from ..blockchain.blockchain import ValidatorRegistry
-            public_key = ValidatorRegistry.get_validator_public_key(founder_user['email'])
-            
-            # If placeholder key found, generate real key
-            if not public_key or public_key == "GENESIS_PLACEHOLDER":
-                print(f"Generating real RSA keys for genesis founder: {founder_user['email']}")
-                # Load private key and extract public key
-                private_key = BlockchainSigner.load_private_key(founder_user['email'])
-                if private_key:
-                    public_key_obj = private_key.public_key()
-                    public_key = public_key_obj.public_key_bytes(
-                        encoding=serialization.Encoding.PEM,
-                        format=serialization.PublicFormat.SubjectPublicKeyInfo
-                    ).decode('utf-8')
+                
+                if is_valid_founder:
+                    user_role = 'contract_founder'
+                    founder_info = founder_data
+                    # Key marked as used automatically by HardcodedFounderKeys.validate_founder_key
                 else:
-                    public_key = "KEY_GENERATION_ERROR"
-            
-        except Exception as e:
-            print(f"Warning: Could not generate real keys for genesis: {e}")
-            public_key = "GENESIS_PLACEHOLDER"
+                    # Invalid founder key - continue with regular citizen registration
+                    pass
+                    
+            except Exception as e:
+                # Error validating founder key - continue with regular citizen registration
+                pass
         
-        # Enhanced genesis metadata
-        genesis: Dict[str, Any] = {
-            'type': 'genesis',
-            'version': '1.0.0',
-            'platform': 'Civic Engagement Platform',
-            'consensus': 'proof_of_authority',
-            'governance': 'contract_based_democracy',
-            'founder': {
-                'first_name': founder_user['first_name'],
-                'last_name': founder_user['last_name'],
-                'email': founder_user['email'],
-                'created_at': founder_user.get('created_at'),
-                'public_key': public_key,
-                'role': 'Contract Founder'
-            },
-            'constitution': {
-                'voting_thresholds': {
-                    'contract_elder_veto': 0.60,
-                    'founder_consensus': 0.75,
-                    'constitutional_amendment': 0.60,
-                    'citizen_recall': 0.55
-                },
-                'authority_hierarchy': [
-                    'Contract Founders',
-                    'Contract Elders', 
-                    'Contract Representatives',
-                    'Contract Senators',
-                    'Contract Citizens'
-                ],
-                'checks_and_balances': {
-                    'elder_veto_power': True,
-                    'bicameral_legislature': True,
-                    'citizen_recall_rights': True,
-                    'constitutional_review': True
-                }
-            },
-            'network_parameters': {
-                'consensus_mechanism': 'proof_of_authority',
-                'block_time': 'immediate',
-                'validator_selection': 'democratic_election',
-                'max_validators': 100,
-                'min_validators': 1
-            },
-            'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
-            'message': 'Genesis block for Civic Engagement Platform - Democratic Blockchain Governance',
-            'genesis_hash': None  # Will be computed
+        # Create user record
+        user_id = self._generate_user_id()
+        password_hash = self._hash_password(user_data['password'])
+        
+        new_user = {
+            'user_id': user_id,
+            'first_name': DataValidator.sanitize_input(user_data['first_name']),
+            'last_name': DataValidator.sanitize_input(user_data['last_name']),
+            'email': user_data['email'].lower().strip(),
+            'password_hash': password_hash,
+            'city': DataValidator.sanitize_input(user_data['city']),
+            'state': DataValidator.sanitize_input(user_data['state']),
+            'country': DataValidator.sanitize_input(user_data['country']),
+            'role': user_role,  # Founder role if key validated, otherwise contract_member
+            'verification_status': 'pending',  # ID verification pending
+            'created_at': datetime.now().isoformat(),
+            'last_login': None,
+            'login_attempts': 0,
+            'locked_until': None,
+            'rsa_public_key': None,  # Will be set during key generation
+            'blockchain_address': None,  # Generated from public key
+            'profile_completed': False,
+            'terms_accepted': user_data.get('terms_accepted', False),
+            'id_document_path': user_data.get('id_document_path'),
+            'metadata': {
+                'registration_ip': user_data.get('registration_ip'),
+                'user_agent': user_data.get('user_agent'),
+                'registration_method': 'web_form',
+                'founder_info': founder_info  # Founder key info if applicable
+            }
         }
         
-        # Compute genesis hash for integrity
-        import hashlib
-        genesis_string = json.dumps(genesis, sort_keys=True).encode()
-        genesis['genesis_hash'] = hashlib.sha256(genesis_string).hexdigest()
+        # Add user to database
+        users_data['users'].append(new_user)
+        users_data['metadata']['total_users'] = len(users_data['users'])
+        users_data['metadata']['last_updated'] = datetime.now().isoformat()
         
-        # Save enhanced genesis block
-        with open(genesis_path, 'w', encoding='utf-8') as f:
-            json.dump(genesis, f, indent=2)
-            
-        # Now create actual genesis block in blockchain as block 0
-        UserBackend._ensure_genesis_block_first(founder_user, genesis)
-
-    @staticmethod
-    def _ensure_genesis_block_first(founder_user: Dict[str, Any], genesis_data: Dict[str, Any]) -> None:
-        """Ensure genesis block is the first block in the blockchain"""
-        from ..blockchain.blockchain import Blockchain
+        self._save_users_db(users_data)
         
-        # Load existing chain
-        chain = Blockchain.load_chain()
-        pages = chain.get('pages', [])
-        
-        # Check if genesis block already exists as first block
-        if pages and pages[0].get('data', {}).get('action') == 'genesis_creation':
-            print("Genesis block already exists as first block")
-            return
-            
-        # Create genesis block data for blockchain
-        genesis_block_data = {
-            'action': 'genesis_creation',
-            'type': 'genesis',
-            'founder_email': founder_user['email'],
-            'founder_name': f"{founder_user['first_name']} {founder_user['last_name']}",
-            'genesis_metadata': genesis_data,
-            'timestamp': genesis_data['timestamp']
-        }
-        
-        if pages:
-            # Blockchain already has blocks - reset it for clean genesis start
-            print("Blockchain contains blocks. Resetting for clean genesis start.")
-            if Blockchain.reset_blockchain_for_genesis():
-                print("Blockchain reset successful. Creating genesis block.")
-                Blockchain.add_page(
-                    data=genesis_block_data,
-                    validator=founder_user['email'],
-                    signature='GENESIS'
+        # Register contract role if Founder system available
+        if FOUNDER_SYSTEM_AVAILABLE:
+            try:
+                role_manager = ContractRoleManager(self.config_path)
+                contract_role = ContractRole.CONTRACT_FOUNDER if user_role == 'contract_founder' else ContractRole.CONTRACT_MEMBER
+                assignment_method = 'founder_key' if user_role == 'contract_founder' else 'initial_setup'
+                
+                role_success, role_message, role_info = role_manager.assign_contract_role(
+                    user_data['email'].lower().strip(),
+                    contract_role,
+                    assignment_method,
+                    'system'
                 )
+                
+                if role_success:
+                    print(f"✅ Contract role assigned: {contract_role.value}")
+                else:
+                    print(f"⚠️ Contract role assignment failed: {role_message}")
+                    
+            except Exception as e:
+                print(f"⚠️ Error assigning contract role: {e}")
+        
+        # Generate RSA keys for user
+        try:
+            from users.keys import RSAKeyManager
+            key_manager = RSAKeyManager(self.private_keys_dir)
+            
+            key_success, key_message, key_info = key_manager.generate_key_pair(user_id)
+            
+            if key_success:
+                # Update user record with key information
+                new_user['rsa_public_key'] = key_info['public_key_pem']
+                new_user['blockchain_address'] = key_info['blockchain_address']
+                new_user['key_fingerprint'] = key_info['key_fingerprint']
+                
+                print(f"🔑 RSA keys generated: {key_info['key_fingerprint'][:16]}...")
             else:
-                print("Blockchain reset failed. Adding genesis as regular block.")
-                Blockchain.add_page(
-                    data=genesis_block_data,
-                    validator=founder_user['email'],
-                    signature='GENESIS'
-                )
-        else:
-            # Empty blockchain - add genesis as first block
-            print("Creating genesis block as first block in empty blockchain.")
-            Blockchain.add_page(
-                data=genesis_block_data,
-                validator=founder_user['email'],
-                signature='GENESIS'
-            )
-
-
-    @staticmethod
-    def update_profile(user_email: str, updates: Dict[str, Any]) -> bool:
-        """Update user profile using blockchain as primary storage"""
-        users = UserBackend.load_users()
-        user_exists = any(user['email'] == user_email for user in users)
-        
-        if not user_exists:
-            return False
-            
-        # Record profile update in blockchain (primary storage)
-        try:
-            Blockchain.add_page(
-                data={
-                    'action': 'update_profile',
-                    'user_email': user_email,
-                    'updates': updates,
-                    'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
-                },
-                validator=user_email if ValidatorRegistry.is_validator(user_email) else "SYSTEM"
-            )
-            return True
+                print(f"⚠️ Key generation failed: {key_message}")
+                key_info = None
         except Exception as e:
-            print(f"Failed to record profile update in blockchain: {e}")
-            return False
-
-    @staticmethod
-    def get_user(email: str) -> Optional[Dict[str, Any]]:
-        """Get user by email (alias for get_user_by_email for consistency)"""
-        return UserBackend.get_user_by_email(email)
-
-    @staticmethod
-    def get_all_users() -> List[Dict[str, Any]]:
-        """Get all users"""
-        return UserBackend.load_users()
-
-    @staticmethod
-    def update_user_role(user_email: str, new_role: str) -> bool:
-        """Update user role and record in blockchain (primary storage)"""
-        users = UserBackend.load_users()
-        user_exists = False
-        old_role = 'Unknown'
+            print(f"⚠️ Error generating RSA keys: {e}")
+            key_info = None
         
-        # Find user to get current role
-        for user in users:
-            if user['email'] == user_email:
-                old_role = user.get('role', 'Unknown')
-                user_exists = True
-                break
-        
-        if not user_exists:
-            return False
-        
-        # Record role change in blockchain (primary storage)
-        try:
-            Blockchain.add_page(
-                data={
-                    'action': 'role_update',
-                    'user_email': user_email,
-                    'old_role': old_role,
-                    'new_role': new_role,
-                    'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
-                    'updates': {
-                        'role': new_role,
-                        'roles': [new_role],  # Will be merged with existing roles by load_users
-                        'rank_history': [{
-                            'rank': new_role,
-                            'assigned_date': datetime.now(timezone.utc).isoformat(),
-                            'reason': 'Role promotion',
-                            'previous_rank': old_role
-                        }]
-                    }
-                },
-                validator=user_email if ValidatorRegistry.is_validator(user_email) else "SYSTEM"
-            )
-            return True
-        except Exception as e:
-            print(f"Failed to record role change in blockchain: {e}")
-            return False
-
-    @staticmethod
-    def update_verification_status(user_email: str, verification_type: str, status: bool) -> bool:
-        """Update verification status for identity, address, or email"""
-        users = UserBackend.load_users()
-        updated = False
-        
-        valid_types = ['identity', 'address', 'email']
-        if verification_type not in valid_types:
-            return False
-        
-        for user in users:
-            if user['email'] == user_email:
-                field_name = f'{verification_type}_verified'
-                user[field_name] = status
+        # Generate user PDF documents
+        pdf_paths = {}
+        if PDF_GENERATION_AVAILABLE and key_info:
+            try:
+                pdf_generator = UserPDFGenerator(self.config_path)
                 
-                # Update overall verification status
-                if 'verification_status' not in user:
-                    user['verification_status'] = 'pending'
-                
-                # Check if all verifications are complete
-                all_verified = (
-                    user.get('identity_verified', False) and
-                    user.get('address_verified', False) and
-                    user.get('email_verified', False)
+                pdf_success, pdf_message, pdf_paths = pdf_generator.generate_user_pdfs(
+                    new_user, key_info
                 )
                 
-                if all_verified:
-                    user['verification_status'] = 'complete'
-                elif status:
-                    user['verification_status'] = 'in_progress'
-                
-                updated = True
-                
-                # Record verification update in blockchain
-                try:
-                    Blockchain.add_page(
-                        data={
-                            'action': 'verification_update',
-                            'user_email': user_email,
-                            'verification_type': verification_type,
-                            'status': status,
-                            'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
-                        },
-                        validator="SYSTEM"  # System-recorded verification
-                    )
-                except Exception as e:
-                    print(f"Failed to record verification update in blockchain: {e}")
-                
-                break
-        
-        if updated:
-            UserBackend.save_users(users)
-        
-        return updated
-
-    @staticmethod
-    def add_training_completion(user_email: str, course_name: str) -> bool:
-        """Add completed training course to user record using blockchain as primary storage"""
-        users = UserBackend.load_users()
-        user_exists = False
-        already_completed = False
-        
-        # Check if user exists and if they already completed this course
-        for user in users:
-            if user['email'] == user_email:
-                user_exists = True
-                training_completed = user.get('training_completed', [])
-                if course_name in training_completed:
-                    already_completed = True
-                break
-                
-        if not user_exists:
-            return False
-            
-        if already_completed:
-            return True  # Already completed, no need to record again
-        
-        # Record training completion in blockchain (primary storage)
-        try:
-            Blockchain.add_page(
-                data={
-                    'action': 'training_completion',
-                    'user_email': user_email,
-                    'course_name': course_name,
-                    'completion_date': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
-                    'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
-                    'updates': {
-                        'training_completed': [course_name]  # Will be appended to existing list by load_users
+                if pdf_success:
+                    pass  # User PDFs generated successfully
+                    
+                    # Add PDF paths to user metadata
+                    new_user['metadata']['pdf_documents'] = {
+                        'public_pdf_path': pdf_paths.get('public_pdf'),
+                        'private_pdf_path': pdf_paths.get('private_pdf'),
+                        'public_qr_path': pdf_paths.get('public_qr'),
+                        'private_qr_path': pdf_paths.get('private_qr'),
+                        'generated_at': datetime.now().isoformat()
                     }
-                },
-                validator=user_email if ValidatorRegistry.is_validator(user_email) else "SYSTEM"
+                else:
+                    print(f"⚠️ PDF generation failed: {pdf_message}")
+                    
+            except Exception as e:
+                print(f"⚠️ Error generating PDFs: {e}")
+        
+        # Remove sensitive data from returned record
+        safe_user_record = {k: v for k, v in new_user.items() if k != 'password_hash'}
+        
+        # Add PDF paths to safe record for return
+        if pdf_paths:
+            safe_user_record['pdf_documents'] = pdf_paths
+        
+        # Record registration on blockchain for transparency
+        try:
+            from blockchain.blockchain import add_user_action
+            blockchain_data = {
+                'user_id': new_user['user_id'],
+                'name': f"{new_user['first_name']} {new_user['last_name']}",
+                'location': f"{new_user['city']}, {new_user['state']}, {new_user['country']}",
+                'role': new_user['role'],
+                'registration_method': 'civic_platform_wizard',
+                'constitutional_rights': True,
+                'blockchain_address': new_user.get('blockchain_address', 'pending'),
+                'rsa_key_fingerprint': new_user.get('key_fingerprint', 'generated'),
+                'founder_info': {
+                    'is_founder': user_role == 'contract_founder',
+                    'founder_id': founder_info['founder_id'] if founder_info else None,
+                    'key_fingerprint': founder_info['key_fingerprint'] if founder_info else None
+                } if founder_info else {'is_founder': False},
+                'pdf_documents': {
+                    'public_pdf_generated': bool(pdf_paths.get('public_pdf')),
+                    'private_pdf_generated': bool(pdf_paths.get('private_pdf')),
+                    'qr_codes_generated': bool(pdf_paths.get('public_qr') and pdf_paths.get('private_qr')),
+                    'generation_timestamp': datetime.now().isoformat()
+                }
+            }
+            
+            blockchain_success, blockchain_message, page_id = add_user_action(
+                action_type='user_registration',
+                user_email=new_user['email'],
+                data=blockchain_data
             )
-            return True
+            
+            if blockchain_success:
+                print(f"📄 Registration recorded on blockchain: {page_id}")
+            else:
+                print(f"⚠️ Blockchain recording failed: {blockchain_message}")
+                
+        except ImportError:
+            print("⚠️ Blockchain system not available for registration recording")
         except Exception as e:
-            print(f"Failed to record training completion in blockchain: {e}")
-            return False
-
-
-    @staticmethod
-    def log_user_action(user_email: str, action: str, details: Optional[Dict[str, Any]] = None) -> None:
-        # General-purpose blockchain log for user actions
-        if ValidatorRegistry.is_validator(user_email):
-            Blockchain.add_page(
-                data={
-                    'action': action,
-                    'user_email': user_email,
-                    'details': details or {},
-                    'timestamp': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
-                },
-                validator=user_email
-                # signature will be generated automatically
+            print(f"⚠️ Blockchain recording error: {e}")
+        
+        # Create cryptocurrency wallet for the user
+        wallet_created = False
+        if CRYPTO_INTEGRATION_AVAILABLE and hasattr(self, 'crypto_integration') and self.crypto_integration:
+            # Determine initial balance based on role
+            from decimal import Decimal
+            initial_balance = Decimal('0')
+            if user_role == 'contract_founder':
+                initial_balance = Decimal('1000')  # Founders get substantial initial balance
+            elif user_role == 'contract_member':
+                initial_balance = Decimal('100')   # Regular members get welcome bonus
+            
+            # Create crypto wallet
+            wallet_success, wallet_message, wallet_id = self.crypto_integration.create_user_wallet(
+                user_email=new_user['email'],
+                user_name=f"{new_user['first_name']} {new_user['last_name']}",
+                initial_balance=initial_balance
             )
+            
+            if wallet_success:
+                # Update user record with wallet info
+                new_user['crypto_wallet_id'] = wallet_id
+                new_user['initial_crypto_balance'] = str(initial_balance)
+                safe_user_record['crypto_wallet_id'] = wallet_id
+                safe_user_record['initial_crypto_balance'] = str(initial_balance)
+                wallet_created = True
+                
+                # Re-save user data with wallet info
+                users_data = self._load_users_db()
+                for i, user in enumerate(users_data['users']):
+                    if user['user_id'] == new_user['user_id']:
+                        users_data['users'][i] = new_user
+                        break
+                self._save_users_db(users_data)
+                
+                print(f"✅ Crypto wallet created for {new_user['email']}: {wallet_id}")
+            else:
+                print(f"⚠️ Crypto wallet creation failed: {wallet_message}")
+        
+        success_message = "User registered successfully"
+        if wallet_created:
+            success_message += f" with crypto wallet ({initial_balance} CVC initial balance)"
+        
+        return True, success_message, safe_user_record
+    
+    def authenticate_user(self, email: str, password: str) -> Tuple[bool, str, Optional[Dict]]:
+        """
+        Authenticate user login with security checks
+        
+        Args:
+            email: User's email address
+            password: User's password
+        
+        Returns:
+            Tuple of (success: bool, message: str, user_record: Optional[Dict])
+        """
+        
+        # Validate input
+        email_valid, email_msg = DataValidator.validate_email(email)
+        if not email_valid:
+            return False, email_msg, None
+        
+        email = email.lower().strip()
+        
+        # Load users database
+        users_data = self._load_users_db()
+        user = next((u for u in users_data['users'] if u['email'] == email), None)
+        
+        if not user:
+            return False, "Invalid email or password", None
+        
+        # Check if account is locked
+        if user.get('locked_until'):
+            locked_until = datetime.fromisoformat(user['locked_until'])
+            if datetime.now() < locked_until:
+                remaining_time = (locked_until - datetime.now()).total_seconds() / 60
+                return False, f"Account locked. Try again in {remaining_time:.0f} minutes", None
+            else:
+                # Unlock account
+                user['locked_until'] = None
+                user['login_attempts'] = 0
+        
+        # Verify password
+        if not self._verify_password(password, user['password_hash']):
+            # Increment failed login attempts
+            user['login_attempts'] = user.get('login_attempts', 0) + 1
+            max_attempts = self.config.get('max_login_attempts', 5)
+            
+            if user['login_attempts'] >= max_attempts:
+                # Lock account
+                lockout_duration = self.config.get('lockout_duration_minutes', 30)
+                user['locked_until'] = (datetime.now() + timedelta(minutes=lockout_duration)).isoformat()
+                self._save_users_db(users_data)
+                return False, f"Too many failed attempts. Account locked for {lockout_duration} minutes", None
+            
+            self._save_users_db(users_data)
+            remaining_attempts = max_attempts - user['login_attempts']
+            return False, f"Invalid email or password. {remaining_attempts} attempts remaining", None
+        
+        # Successful login - reset failed attempts and update last login
+        user['login_attempts'] = 0
+        user['locked_until'] = None
+        user['last_login'] = datetime.now().isoformat()
+        self._save_users_db(users_data)
+        
+        # Remove sensitive data from returned record
+        safe_user_record = {k: v for k, v in user.items() if k != 'password_hash'}
+        
+        return True, "Login successful", safe_user_record
+    
+    def create_session(self, user_record: Dict[str, Any]) -> Tuple[bool, str, Optional[str]]:
+        """
+        Create user session after successful authentication
+        
+        Args:
+            user_record: User record from authentication
+        
+        Returns:
+            Tuple of (success: bool, message: str, session_id: Optional[str])
+        """
+        
+        session_id = self._generate_session_id()
+        
+        session_data = {
+            'session_id': session_id,
+            'user_id': user_record['user_id'],
+            'email': user_record['email'],
+            'role': user_record['role'],
+            'created_at': datetime.now().isoformat(),
+            'expires_at': (datetime.now() + timedelta(hours=self.config.get('session_timeout_hours', 24))).isoformat(),
+            'last_activity': datetime.now().isoformat(),
+            'ip_address': None,  # Would be set by web framework
+            'user_agent': None   # Would be set by web framework
+        }
+        
+        # Load sessions database
+        sessions_data = self._load_sessions_db()
+        sessions_data['active_sessions'][session_id] = session_data
+        sessions_data['metadata']['total_sessions'] = len(sessions_data['active_sessions'])
+        sessions_data['metadata']['last_updated'] = datetime.now().isoformat()
+        
+        self._save_sessions_db(sessions_data)
+        
+        return True, "Session created successfully", session_id
+    
+    def validate_session(self, session_id: str) -> Tuple[bool, str, Optional[Dict]]:
+        """
+        Validate active user session
+        
+        Args:
+            session_id: Session identifier
+        
+        Returns:
+            Tuple of (success: bool, message: str, session_data: Optional[Dict])
+        """
+        
+        if not session_id:
+            return False, "No session ID provided", None
+        
+        sessions_data = self._load_sessions_db()
+        session = sessions_data['active_sessions'].get(session_id)
+        
+        if not session:
+            return False, "Invalid session", None
+        
+        # Check if session has expired
+        expires_at = datetime.fromisoformat(session['expires_at'])
+        if datetime.now() > expires_at:
+            # Remove expired session
+            del sessions_data['active_sessions'][session_id]
+            self._save_sessions_db(sessions_data)
+            return False, "Session expired", None
+        
+        # Update last activity
+        session['last_activity'] = datetime.now().isoformat()
+        sessions_data['active_sessions'][session_id] = session
+        self._save_sessions_db(sessions_data)
+        
+        return True, "Valid session", session
+    
+    def logout_user(self, session_id: str) -> Tuple[bool, str]:
+        """
+        Logout user and invalidate session
+        
+        Args:
+            session_id: Session to invalidate
+        
+        Returns:
+            Tuple of (success: bool, message: str)
+        """
+        
+        sessions_data = self._load_sessions_db()
+        
+        if session_id in sessions_data['active_sessions']:
+            del sessions_data['active_sessions'][session_id]
+            self._save_sessions_db(sessions_data)
+            return True, "Logged out successfully"
+        
+        return False, "Session not found"
+    
+    def get_user_by_email(self, email: str) -> Optional[Dict[str, Any]]:
+        """Get user record by email (without password hash)"""
+        email_valid, _ = DataValidator.validate_email(email)
+        if not email_valid:
+            return None
+        
+        users_data = self._load_users_db()
+        user = next((u for u in users_data['users'] if u['email'] == email.lower().strip()), None)
+        
+        if user:
+            # Return copy without password hash
+            return {k: v for k, v in user.items() if k != 'password_hash'}
+        
+        return None
+    
+    def get_user_by_id(self, user_id: str) -> Optional[Dict[str, Any]]:
+        """Get user record by user ID (without password hash)"""
+        if not user_id:
+            return None
+        
+        users_data = self._load_users_db()
+        user = next((u for u in users_data['users'] if u['user_id'] == user_id), None)
+        
+        if user:
+            # Return copy without password hash
+            return {k: v for k, v in user.items() if k != 'password_hash'}
+        
+        return None
+    
+    def update_user_role(self, user_id: str, new_role: str, authorized_by: str) -> Tuple[bool, str]:
+        """
+        Update user role (requires proper authorization)
+        
+        Args:
+            user_id: User to update
+            new_role: New role to assign
+            authorized_by: User ID of authorizing user
+        
+        Returns:
+            Tuple of (success: bool, message: str)
+        """
+        
+        # Validate new role
+        role_valid, role_msg = DataValidator.validate_user_role(new_role)
+        if not role_valid:
+            return False, role_msg
+        
+        # Load users database
+        users_data = self._load_users_db()
+        user_index = next((i for i, u in enumerate(users_data['users']) if u['user_id'] == user_id), None)
+        
+        if user_index is None:
+            return False, "User not found"
+        
+        # Update role
+        old_role = users_data['users'][user_index]['role']
+        users_data['users'][user_index]['role'] = new_role
+        users_data['users'][user_index]['role_updated_at'] = datetime.now().isoformat()
+        users_data['users'][user_index]['role_updated_by'] = authorized_by
+        
+        self._save_users_db(users_data)
+        
+        return True, f"Role updated from {old_role} to {new_role}"
+    
+    def get_users_by_role(self, role: str) -> List[Dict[str, Any]]:
+        """Get all users with specific role"""
+        role_valid, _ = DataValidator.validate_user_role(role)
+        if not role_valid:
+            return []
+        
+        users_data = self._load_users_db()
+        users_with_role = [
+            {k: v for k, v in user.items() if k != 'password_hash'}
+            for user in users_data['users']
+            if user['role'] == role
+        ]
+        
+        return users_with_role
+    
+    def cleanup_expired_sessions(self) -> int:
+        """Clean up expired sessions and return count of removed sessions"""
+        sessions_data = self._load_sessions_db()
+        initial_count = len(sessions_data['active_sessions'])
+        
+        # Remove expired sessions
+        current_time = datetime.now()
+        active_sessions = {}
+        
+        for session_id, session in sessions_data['active_sessions'].items():
+            expires_at = datetime.fromisoformat(session['expires_at'])
+            if current_time <= expires_at:
+                active_sessions[session_id] = session
+        
+        sessions_data['active_sessions'] = active_sessions
+        sessions_data['metadata']['total_sessions'] = len(active_sessions)
+        sessions_data['metadata']['last_cleanup'] = datetime.now().isoformat()
+        
+        self._save_sessions_db(sessions_data)
+        
+        removed_count = initial_count - len(active_sessions)
+        return removed_count
+    
+    # Cryptocurrency integration methods
+    
+    def get_user_crypto_summary(self, user_email: str) -> Dict[str, Any]:
+        """Get cryptocurrency summary for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return {'error': 'Crypto system not available'}
+        
+        return self.crypto_integration.get_user_crypto_summary(user_email)
+    
+    def get_user_crypto_dashboard(self, user_email: str) -> Dict[str, Any]:
+        """Get full cryptocurrency dashboard for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return {'error': 'Crypto system not available'}
+        
+        return self.crypto_integration.get_user_crypto_dashboard(user_email)
+    
+    def execute_crypto_transaction(self, user_email: str, transaction_type: str, **kwargs) -> Tuple[bool, str, Optional[Dict]]:
+        """Execute a cryptocurrency transaction for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return False, "Crypto system not available", None
+        
+        return self.crypto_integration.execute_user_transaction(user_email, transaction_type, **kwargs)
+    
+    def get_crypto_wallet_id(self, user_email: str) -> Optional[str]:
+        """Get crypto wallet ID for a user"""
+        
+        if not CRYPTO_INTEGRATION_AVAILABLE or not hasattr(self, 'crypto_integration') or not self.crypto_integration:
+            return None
+        
+        return self.crypto_integration.get_user_wallet_id(user_email)
+    
+    def is_crypto_available(self) -> bool:
+        """Check if crypto system is available"""
+        
+        return (CRYPTO_INTEGRATION_AVAILABLE and 
+                hasattr(self, 'crypto_integration') and 
+                self.crypto_integration is not None)

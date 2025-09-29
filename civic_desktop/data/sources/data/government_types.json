@@ -1,0 +1,152 @@
+{
+  "democratic_republics": {
+    "Presidential Republic": {
+      "description": "President is head of state and government",
+      "examples": [
+        "United States",
+        "Brazil",
+        "France",
+        "South Africa"
+      ],
+      "characteristics": [
+        "Direct/indirect presidential election",
+        "Separation of powers",
+        "Presidential cabinet"
+      ]
+    },
+    "Parliamentary Republic": {
+      "description": "Parliament is supreme, Prime Minister leads government",
+      "examples": [
+        "Germany",
+        "India",
+        "Italy",
+        "Ireland"
+      ],
+      "characteristics": [
+        "Parliamentary sovereignty",
+        "Prime Minister from majority party",
+        "Cabinet responsibility"
+      ]
+    },
+    "Semi-presidential Republic": {
+      "description": "Both President and Prime Minister share executive power",
+      "examples": [
+        "France",
+        "Russia",
+        "Portugal",
+        "Romania"
+      ],
+      "characteristics": [
+        "Dual executive",
+        "President appoints PM",
+        "Shared powers"
+      ]
+    }
+  },
+  "monarchies": {
+    "Constitutional Monarchy": {
+      "description": "Monarch is ceremonial head, elected government rules",
+      "examples": [
+        "United Kingdom",
+        "Canada",
+        "Japan",
+        "Sweden"
+      ],
+      "characteristics": [
+        "Ceremonial monarch",
+        "Parliamentary democracy",
+        "Constitutional limits"
+      ]
+    },
+    "Absolute Monarchy": {
+      "description": "Monarch has unlimited political power",
+      "examples": [
+        "Saudi Arabia",
+        "Brunei",
+        "Vatican City",
+        "Oman"
+      ],
+      "characteristics": [
+        "Unlimited royal power",
+        "No constitution limits",
+        "Royal decrees"
+      ]
+    }
+  },
+  "federal_systems": {
+    "Federal Republic": {
+      "description": "Power divided between federal and state governments",
+      "examples": [
+        "United States",
+        "Germany",
+        "Australia",
+        "India"
+      ],
+      "characteristics": [
+        "Federal constitution",
+        "State autonomy",
+        "Shared sovereignty"
+      ]
+    },
+    "Federation": {
+      "description": "Union of partially self-governing regions",
+      "examples": [
+        "Russia",
+        "Canada",
+        "Brazil",
+        "Nigeria"
+      ],
+      "characteristics": [
+        "Federal structure",
+        "Regional governments",
+        "Central coordination"
+      ]
+    }
+  },
+  "one_party_systems": {
+    "One-party Socialist Republic": {
+      "description": "Single party controls government and state",
+      "examples": [
+        "China",
+        "Vietnam",
+        "Cuba",
+        "North Korea"
+      ],
+      "characteristics": [
+        "Single party rule",
+        "Socialist ideology",
+        "State control"
+      ]
+    }
+  },
+  "special_systems": {
+    "Military Government": {
+      "description": "Military controls civilian government",
+      "examples": [
+        "Myanmar"
+      ],
+      "characteristics": [
+        "Military rule",
+        "Suspended civilian government",
+        "Military leadership"
+      ]
+    },
+    "Theocracy": {
+      "description": "Religious authority governs state",
+      "examples": [
+        "Iran",
+        "Vatican City"
+      ],
+      "characteristics": [
+        "Religious law",
+        "Religious leaders",
+        "Spiritual authority"
+      ]
+    }
+  },
+  "metadata": {
+    "total_types": 10,
+    "last_updated": "2025-09-28T13:09:14.157827",
+    "data_source": "political_science_classification"
+  }
+}
