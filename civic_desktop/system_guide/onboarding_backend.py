@@ -11,7 +11,7 @@ from typing import Dict, List, Optional, Tuple, Any
 try:
     from main import ENV_CONFIG
     # from users.backend import UserBackend  # Commented out to avoid merge conflicts
-    from blockchain.blockchain import Blockchain
+    from blockchain.blockchain import CivicBlockchain
     from utils.validation import DataValidator
 except ImportError as e:
     print(f"Warning: Import error in onboarding backend: {e}")
@@ -49,6 +49,58 @@ class UserOnboardingSystem:
     
     def load_onboarding_pathways(self) -> Dict[str, Dict]:
         """Load role-based onboarding pathway configurations"""
+        
+        # Import the onboarding modules
+        try:
+            from system_guide.onboarding import ALL_ROLE_MODULES, COMPETENCY_THRESHOLDS
+            
+            # Build pathways from the modular system
+            pathways = {}
+            
+            for role, modules in ALL_ROLE_MODULES.items():
+                # Calculate total estimated duration
+                total_duration = sum(
+                    module_data.get('estimated_duration_minutes', 15) 
+                    for module_data in modules.values()
+                )
+                
+                # Determine complexity level based on role
+                complexity_levels = {
+                    'Contract Member': 'beginner',
+                    'Contract Representative': 'intermediate', 
+                    'Contract Senator': 'advanced',
+                    'Contract Elder': 'expert',
+                    'Contract Founder': 'master'
+                }
+                
+                pathways[role] = {
+                    'modules': list(modules.keys()),
+                    'estimated_duration_minutes': total_duration,
+                    'complexity_level': complexity_levels.get(role, 'beginner'),
+                    'interactive_elements': True,
+                    'prerequisites': self._get_role_prerequisites(role),
+                    'competency_threshold': COMPETENCY_THRESHOLDS.get(role, 70)
+                }
+                
+            return pathways
+            
+        except ImportError:
+            # Fallback to basic configuration if modules not available
+            return self._get_fallback_pathways()
+    
+    def _get_role_prerequisites(self, role: str) -> List[str]:
+        """Get prerequisites for each role"""
+        prerequisites = {
+            'Contract Member': [],
+            'Contract Representative': ['Contract Member'],
+            'Contract Senator': ['Contract Representative'],
+            'Contract Elder': ['Contract Member'],  # Elders can be appointed from any background
+            'Contract Founder': []  # Founders are hardcoded
+        }
+        return prerequisites.get(role, [])
+    
+    def _get_fallback_pathways(self) -> Dict[str, Dict]:
+        """Fallback pathway configuration if modules aren't available"""
         
         return {
             'Contract Member': {
@@ -312,7 +364,39 @@ class UserOnboardingSystem:
         if module_name in self.module_content_cache:
             return self.module_content_cache[module_name]
         
-        # Module content definitions
+        # Try to get content from the detailed modules first
+        try:
+            from system_guide.onboarding import ALL_ROLE_MODULES
+            
+            # Search through all role modules for this module name
+            for role, modules in ALL_ROLE_MODULES.items():
+                if module_name in modules:
+                    module_content = modules[module_name]
+                    
+                    # Enhance with standard structure
+                    content = {
+                        'title': module_content.get('title', module_name.replace('_', ' ').title()),
+                        'description': module_content.get('description', f'Module for {module_name}'),
+                        'interactive_elements': module_content.get('interactive_elements', []),
+                        'progress_checkpoints': module_content.get('progress_checkpoints', []),
+                        'competency_questions': module_content.get('competency_questions', []),
+                        'estimated_duration_minutes': module_content.get('estimated_duration_minutes', 15),
+                        'learning_objectives': [
+                            'Complete interactive tutorials',
+                            'Pass competency assessment', 
+                            'Demonstrate practical understanding'
+                        ],
+                        'role_context': role
+                    }
+                    
+                    # Cache the content
+                    self.module_content_cache[module_name] = content
+                    return content
+            
+        except ImportError:
+            pass
+        
+        # Fallback to default content
         module_content = self.get_default_module_content(module_name)
         
         # Cache the content

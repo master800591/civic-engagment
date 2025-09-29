@@ -1,0 +1,309 @@
+name: Remove Onboarding Module
+
+on:
+  workflow_dispatch:
+    inputs:
+      module_name:
+        description: 'Name of the onboarding module to remove'
+        required: true
+        type: string
+      role_target:
+        description: 'Role from which to remove the module'
+        required: true
+        type: choice
+        options:
+        - Contract Member
+        - Contract Representative
+        - Contract Senator
+        - Contract Elder
+        - Contract Founder
+      confirm_removal:
+        description: 'Type "CONFIRM" to proceed with removal'
+        required: true
+        type: string
+      backup_data:
+        description: 'Create backup before removal'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  validate-removal-request:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Validate removal confirmation
+      run: |
+        if [ "${{ github.event.inputs.confirm_removal }}" != "CONFIRM" ]; then
+          echo "❌ Removal not confirmed. You must type 'CONFIRM' to proceed."
+          echo "This is a safety measure to prevent accidental module removal."
+          exit 1
+        fi
+        echo "✅ Removal confirmed"
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install dependencies
+      run: |
+        cd civic_desktop
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Validate module exists
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        
+        module_name = '${{ github.event.inputs.module_name }}'
+        role_target = '${{ github.event.inputs.role_target }}'
+        
+        try:
+            from system_guide.onboarding import ALL_ROLE_MODULES
+            
+            if role_target not in ALL_ROLE_MODULES:
+                print(f'❌ Role {role_target} not found in available modules')
+                sys.exit(1)
+            
+            if module_name not in ALL_ROLE_MODULES[role_target]:
+                print(f'❌ Module {module_name} not found in {role_target} modules')
+                print(f'Available modules: {list(ALL_ROLE_MODULES[role_target].keys())}')
+                sys.exit(1)
+            
+            print(f'✅ Module {module_name} found in {role_target}')
+            
+            # Show module details
+            module_data = ALL_ROLE_MODULES[role_target][module_name]
+            print(f'Module details:')
+            print(f'  Title: {module_data.get(\"title\", \"No title\")}')
+            print(f'  Description: {module_data.get(\"description\", \"No description\")}')
+            print(f'  Duration: {module_data.get(\"estimated_duration_minutes\", 0)} minutes')
+            print(f'  Questions: {len(module_data.get(\"competency_questions\", []))}')
+            print(f'  Interactive elements: {len(module_data.get(\"interactive_elements\", []))}')
+            
+        except Exception as e:
+            print(f'❌ Error validating module: {e}')
+            sys.exit(1)
+        "
+
+  create-backup:
+    runs-on: ubuntu-latest
+    needs: validate-removal-request
+    if: ${{ github.event.inputs.backup_data == 'true' }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install dependencies
+      run: |
+        cd civic_desktop
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Create module backup
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        import json
+        import os
+        from datetime import datetime
+        sys.path.append('.')
+        
+        module_name = '${{ github.event.inputs.module_name }}'
+        role_target = '${{ github.event.inputs.role_target }}'
+        
+        from system_guide.onboarding import ALL_ROLE_MODULES
+        
+        if role_target in ALL_ROLE_MODULES and module_name in ALL_ROLE_MODULES[role_target]:
+            module_data = ALL_ROLE_MODULES[role_target][module_name]
+            
+            backup_data = {
+                'module_name': module_name,
+                'role_target': role_target,
+                'backup_timestamp': datetime.now().isoformat(),
+                'module_data': module_data,
+                'removal_metadata': {
+                    'requested_by': 'github_action',
+                    'reason': 'Manual removal via workflow'
+                }
+            }
+            
+            # Create backup directory
+            backup_dir = '/tmp/onboarding_backups'
+            os.makedirs(backup_dir, exist_ok=True)
+            
+            # Save backup
+            backup_filename = f'backup_{role_target}_{module_name}_{datetime.now().strftime(\"%Y%m%d_%H%M%S\")}.json'
+            backup_path = os.path.join(backup_dir, backup_filename)
+            
+            with open(backup_path, 'w') as f:
+                json.dump(backup_data, f, indent=2)
+            
+            print(f'✅ Backup created: {backup_filename}')
+            print(f'Backup contains {len(json.dumps(module_data))} characters of module data')
+        else:
+            print('❌ Module not found for backup')
+            sys.exit(1)
+        "
+    
+    - name: Upload backup
+      uses: actions/upload-artifact@v3
+      with:
+        name: onboarding-module-backup
+        path: /tmp/onboarding_backups/
+        retention-days: 90
+
+  remove-module:
+    runs-on: ubuntu-latest
+    needs: [validate-removal-request, create-backup]
+    if: always() && needs.validate-removal-request.result == 'success'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Configure Git
+      run: |
+        git config --local user.email 'action@github.com'
+        git config --local user.name 'GitHub Action'
+    
+    - name: Important Notice
+      run: |
+        echo "🚨 IMPORTANT NOTICE 🚨"
+        echo "This workflow is a PLACEHOLDER for module removal functionality."
+        echo "Actual module removal requires manual code changes to:"
+        echo "  - civic_desktop/system_guide/onboarding/[role]_modules.py"
+        echo "  - civic_desktop/system_guide/onboarding/__init__.py"
+        echo ""
+        echo "To remove module '${{ github.event.inputs.module_name }}' from '${{ github.event.inputs.role_target }}':"
+        echo "1. Edit the appropriate module file"
+        echo "2. Remove the module definition from the dictionary"
+        echo "3. Update any references in other files"
+        echo "4. Run tests to ensure no breaking changes"
+        echo "5. Update documentation"
+        echo ""
+        echo "⚠️  Manual intervention required - automated removal not implemented"
+    
+    - name: Generate removal instructions
+      run: |
+        cd civic_desktop
+        python -c "
+        import sys
+        sys.path.append('.')
+        
+        module_name = '${{ github.event.inputs.module_name }}'
+        role_target = '${{ github.event.inputs.role_target }}'
+        
+        # Map roles to their module files
+        role_file_map = {
+            'Contract Member': 'modules.py',
+            'Contract Representative': 'representative_modules.py',
+            'Contract Senator': 'senator_modules.py',
+            'Contract Elder': 'elder_modules.py',
+            'Contract Founder': 'founder_modules.py'
+        }
+        
+        target_file = role_file_map.get(role_target, 'unknown')
+        
+        print('📝 Removal Instructions:')
+        print(f'')
+        print(f'File to edit: civic_desktop/system_guide/onboarding/{target_file}')
+        print(f'Module to remove: {module_name}')
+        print(f'')
+        print(f'Steps:')
+        print(f'1. Open civic_desktop/system_guide/onboarding/{target_file}')
+        print(f'2. Find the {module_name} entry in the module dictionary')
+        print(f'3. Remove the entire module definition')
+        print(f'4. Save the file')
+        print(f'5. Test the changes with: python -c \"from system_guide.onboarding import ALL_ROLE_MODULES; print(ALL_ROLE_MODULES)\"')
+        print(f'6. Run the test workflow to validate changes')
+        print(f'')
+        print(f'⚠️  Remember to update tests and documentation after removal')
+        "
+    
+    - name: Create removal tracking issue
+      run: |
+        echo "📋 Creating tracking information for manual removal..."
+        
+        # Create tracking file
+        mkdir -p /tmp/removal_tracking
+        cat > /tmp/removal_tracking/removal_request.md << EOF
+        # Onboarding Module Removal Request
+        
+        **Date:** $(date)
+        **Module:** ${{ github.event.inputs.module_name }}
+        **Role:** ${{ github.event.inputs.role_target }}
+        **Requester:** GitHub Action Workflow
+        **Backup Created:** ${{ github.event.inputs.backup_data }}
+        
+        ## Status
+        - [x] Removal request validated
+        - [x] Backup created (if requested)
+        - [ ] Module manually removed from code
+        - [ ] Tests updated
+        - [ ] Documentation updated
+        - [ ] Changes reviewed and merged
+        
+        ## Files to modify:
+        - \`civic_desktop/system_guide/onboarding/[role]_modules.py\`
+        - \`civic_desktop/system_guide/onboarding/__init__.py\` (if needed)
+        - Test files referencing the module
+        - Documentation files
+        
+        ## Manual Steps Required:
+        1. Edit the module file to remove the module definition
+        2. Update any cross-references
+        3. Run tests to ensure no breaking changes
+        4. Update documentation
+        5. Review and merge changes
+        
+        **Note:** This is a manual process. The workflow cannot automatically modify source code.
+        EOF
+        
+        echo "✅ Removal tracking information created"
+    
+    - name: Upload removal instructions
+      uses: actions/upload-artifact@v3
+      with:
+        name: module-removal-instructions
+        path: /tmp/removal_tracking/
+        retention-days: 30
+
+  post-removal-validation:
+    runs-on: ubuntu-latest
+    needs: remove-module
+    if: always()
+    
+    steps:
+    - name: Summary
+      run: |
+        echo "📊 Module Removal Workflow Summary"
+        echo "================================="
+        echo "Module: ${{ github.event.inputs.module_name }}"
+        echo "Role: ${{ github.event.inputs.role_target }}"
+        echo "Backup: ${{ github.event.inputs.backup_data }}"
+        echo "Status: Instructions generated for manual removal"
+        echo ""
+        echo "⚠️  IMPORTANT: This workflow provides instructions only."
+        echo "Actual module removal must be done manually by editing source files."
+        echo ""
+        echo "Next steps:"
+        echo "1. Download the removal instructions artifact"
+        echo "2. Follow the manual steps to remove the module"
+        echo "3. Test the changes thoroughly"
+        echo "4. Update documentation"
+        echo "5. Create a PR with the changes"
