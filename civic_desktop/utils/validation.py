@@ -280,3 +280,282 @@ class SecurityValidator:
             return False, f"User role '{user_role}' lacks permission: '{required_permission}'"
         
         return True, f"User has required permission: {required_permission}"
+
+
+class AdvancedValidator:
+    """Advanced validation for complex civic engagement platform features"""
+    
+    @staticmethod
+    def validate_document_metadata(metadata: Dict) -> Tuple[bool, str]:
+        """Validate document metadata for the documents module"""
+        required_fields = ['title', 'document_type', 'classification', 'author', 'created_date']
+        
+        if not isinstance(metadata, dict):
+            return False, "Metadata must be a dictionary"
+        
+        for field in required_fields:
+            if field not in metadata:
+                return False, f"Missing required metadata field: {field}"
+        
+        # Validate document type
+        valid_doc_types = [
+            'legislative_bill', 'constitutional_amendment', 'policy_document',
+            'meeting_minutes', 'court_decision', 'administrative_order',
+            'public_notice', 'budget_document', 'audit_report'
+        ]
+        
+        if metadata['document_type'] not in valid_doc_types:
+            return False, f"Invalid document type. Must be one of: {', '.join(valid_doc_types)}"
+        
+        # Validate classification
+        valid_classifications = ['public', 'restricted', 'confidential', 'classified']
+        if metadata['classification'] not in valid_classifications:
+            return False, f"Invalid classification. Must be one of: {', '.join(valid_classifications)}"
+        
+        # Validate title length
+        title = metadata['title']
+        if not isinstance(title, str) or len(title.strip()) < 5:
+            return False, "Document title must be at least 5 characters"
+        
+        if len(title) > 200:
+            return False, "Document title cannot exceed 200 characters"
+        
+        return True, "Valid document metadata"
+    
+    @staticmethod
+    def validate_collaboration_agreement(agreement: Dict) -> Tuple[bool, str]:
+        """Validate inter-jurisdictional collaboration agreement data"""
+        required_fields = [
+            'title', 'participating_jurisdictions', 'project_type', 
+            'governance_model', 'resource_commitments', 'duration'
+        ]
+        
+        if not isinstance(agreement, dict):
+            return False, "Agreement must be a dictionary"
+        
+        for field in required_fields:
+            if field not in agreement:
+                return False, f"Missing required agreement field: {field}"
+        
+        # Validate participating jurisdictions
+        jurisdictions = agreement['participating_jurisdictions']
+        if not isinstance(jurisdictions, list) or len(jurisdictions) < 2:
+            return False, "Must have at least 2 participating jurisdictions"
+        
+        # Validate project type
+        valid_project_types = [
+            'resource_sharing', 'policy_coordination', 'infrastructure_development',
+            'emergency_response', 'research_collaboration', 'service_provision'
+        ]
+        
+        if agreement['project_type'] not in valid_project_types:
+            return False, f"Invalid project type. Must be one of: {', '.join(valid_project_types)}"
+        
+        # Validate governance model
+        valid_governance_models = ['consensus', 'majority', 'weighted', 'lead_authority']
+        if agreement['governance_model'] not in valid_governance_models:
+            return False, f"Invalid governance model. Must be one of: {', '.join(valid_governance_models)}"
+        
+        return True, "Valid collaboration agreement"
+    
+    @staticmethod
+    def validate_task_assignment(task_data: Dict) -> Tuple[bool, str]:
+        """Validate task assignment data for the tasks module"""
+        required_fields = ['task_type', 'assigned_to', 'title', 'deadline', 'priority']
+        
+        if not isinstance(task_data, dict):
+            return False, "Task data must be a dictionary"
+        
+        for field in required_fields:
+            if field not in task_data:
+                return False, f"Missing required task field: {field}"
+        
+        # Validate task type
+        valid_task_types = [
+            'blockchain_validation', 'voting_opportunity', 'contract_review',
+            'jury_duty', 'community_service', 'emergency_response',
+            'training_completion', 'research_assignment', 'outreach_activity',
+            'mediation_service', 'audit_participation', 'platform_testing'
+        ]
+        
+        if task_data['task_type'] not in valid_task_types:
+            return False, f"Invalid task type. Must be one of: {', '.join(valid_task_types)}"
+        
+        # Validate priority
+        valid_priorities = ['urgent', 'high', 'normal', 'low']
+        if task_data['priority'] not in valid_priorities:
+            return False, f"Invalid priority. Must be one of: {', '.join(valid_priorities)}"
+        
+        # Validate deadline format
+        try:
+            if isinstance(task_data['deadline'], str):
+                datetime.fromisoformat(task_data['deadline'])
+            elif not isinstance(task_data['deadline'], datetime):
+                return False, "Deadline must be a datetime object or ISO format string"
+        except ValueError:
+            return False, "Invalid deadline format"
+        
+        # Validate assigned_to email
+        email_valid, email_msg = DataValidator.validate_email(task_data['assigned_to'])
+        if not email_valid:
+            return False, f"Invalid assignee email: {email_msg}"
+        
+        return True, "Valid task assignment"
+    
+    @staticmethod
+    def validate_onboarding_progress(progress_data: Dict) -> Tuple[bool, str]:
+        """Validate user onboarding progress data"""
+        required_fields = ['user_email', 'pathway', 'current_module', 'completion_percentage']
+        
+        if not isinstance(progress_data, dict):
+            return False, "Progress data must be a dictionary"
+        
+        for field in required_fields:
+            if field not in progress_data:
+                return False, f"Missing required progress field: {field}"
+        
+        # Validate email
+        email_valid, email_msg = DataValidator.validate_email(progress_data['user_email'])
+        if not email_valid:
+            return False, f"Invalid user email: {email_msg}"
+        
+        # Validate completion percentage
+        completion = progress_data['completion_percentage']
+        try:
+            completion = float(completion)
+            if completion < 0 or completion > 100:
+                return False, "Completion percentage must be between 0 and 100"
+        except (ValueError, TypeError):
+            return False, "Completion percentage must be a number"
+        
+        # Validate pathway
+        valid_pathways = [
+            'contract_member', 'contract_representative', 'contract_senator',
+            'contract_elder', 'contract_founder'
+        ]
+        
+        if progress_data['pathway'] not in valid_pathways:
+            return False, f"Invalid pathway. Must be one of: {', '.join(valid_pathways)}"
+        
+        return True, "Valid onboarding progress"
+    
+    @staticmethod
+    def validate_geographic_data(geo_data: Dict) -> Tuple[bool, str]:
+        """Validate geographic/maps data"""
+        required_fields = ['jurisdiction', 'coordinates', 'boundary_type']
+        
+        if not isinstance(geo_data, dict):
+            return False, "Geographic data must be a dictionary"
+        
+        for field in required_fields:
+            if field not in geo_data:
+                return False, f"Missing required geographic field: {field}"
+        
+        # Validate coordinates
+        coordinates = geo_data['coordinates']
+        if not isinstance(coordinates, dict):
+            return False, "Coordinates must be a dictionary"
+        
+        if 'latitude' not in coordinates or 'longitude' not in coordinates:
+            return False, "Coordinates must include latitude and longitude"
+        
+        try:
+            lat = float(coordinates['latitude'])
+            lon = float(coordinates['longitude'])
+            
+            if lat < -90 or lat > 90:
+                return False, "Latitude must be between -90 and 90"
+            
+            if lon < -180 or lon > 180:
+                return False, "Longitude must be between -180 and 180"
+        except (ValueError, TypeError):
+            return False, "Latitude and longitude must be numbers"
+        
+        # Validate boundary type
+        valid_boundary_types = ['city', 'county', 'state', 'federal', 'district', 'ward']
+        if geo_data['boundary_type'] not in valid_boundary_types:
+            return False, f"Invalid boundary type. Must be one of: {', '.join(valid_boundary_types)}"
+        
+        return True, "Valid geographic data"
+
+
+class ComprehensiveValidator:
+    """Comprehensive validation framework combining all validators"""
+    
+    @staticmethod
+    def validate_complete_user_registration(registration_data: Dict) -> Tuple[bool, List[str], Dict[str, bool]]:
+        """Comprehensive validation for complete user registration"""
+        results = {}
+        errors = []
+        
+        # Basic user data validation
+        basic_fields = ['email', 'password', 'first_name', 'last_name', 'role']
+        for field in basic_fields:
+            if field not in registration_data:
+                errors.append(f"Missing required field: {field}")
+                results[field] = False
+                continue
+        
+        # Email validation
+        if 'email' in registration_data:
+            email_valid, email_msg = DataValidator.validate_email(registration_data['email'])
+            results['email'] = email_valid
+            if not email_valid:
+                errors.append(f"Email: {email_msg}")
+        
+        # Password validation
+        if 'password' in registration_data:
+            pass_valid, pass_msg = DataValidator.validate_password(registration_data['password'])
+            results['password'] = pass_valid
+            if not pass_valid:
+                errors.append(f"Password: {pass_msg}")
+        
+        # Name validation
+        for name_field in ['first_name', 'last_name']:
+            if name_field in registration_data:
+                name_valid, name_msg = DataValidator.validate_name(registration_data[name_field])
+                results[name_field] = name_valid
+                if not name_valid:
+                    errors.append(f"{name_field.replace('_', ' ').title()}: {name_msg}")
+        
+        # Role validation
+        if 'role' in registration_data:
+            role_valid, role_msg = DataValidator.validate_user_role(registration_data['role'])
+            results['role'] = role_valid
+            if not role_valid:
+                errors.append(f"Role: {role_msg}")
+        
+        # Location validation
+        if 'jurisdiction' in registration_data:
+            jurisdiction_valid, jurisdiction_msg = DataValidator.validate_required_string(
+                registration_data['jurisdiction'], 'jurisdiction', min_length=2, max_length=100
+            )
+            results['jurisdiction'] = jurisdiction_valid
+            if not jurisdiction_valid:
+                errors.append(f"Jurisdiction: {jurisdiction_msg}")
+        
+        # Document validation
+        if 'id_document' in registration_data:
+            doc_valid, doc_msg = DataValidator.validate_id_document(registration_data['id_document'])
+            results['id_document'] = doc_valid
+            if not doc_valid:
+                errors.append(f"ID Document: {doc_msg}")
+        
+        overall_valid = len(errors) == 0
+        return overall_valid, errors, results
+    
+    @staticmethod
+    def create_validation_summary(validation_results: Dict[str, bool]) -> Dict[str, Any]:
+        """Create summary of validation results"""
+        total_fields = len(validation_results)
+        valid_fields = sum(1 for valid in validation_results.values() if valid)
+        
+        return {
+            'total_fields': total_fields,
+            'valid_fields': valid_fields,
+            'invalid_fields': total_fields - valid_fields,
+            'success_rate': round((valid_fields / total_fields * 100) if total_fields > 0 else 0, 1),
+            'overall_status': 'passed' if valid_fields == total_fields else 'failed'
+        }
+        
+        return True, f"User has required permission: {required_permission}"
