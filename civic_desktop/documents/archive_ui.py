@@ -1483,32 +1483,311 @@ class DocumentsArchiveTab(QWidget):
     def search_archives(self):
         """Search document archives"""
         
-        QMessageBox.information(self, "Archive Search", 
-                               "Archive search interface would be displayed here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        # Create search dialog
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Archive Search")
+        dialog.resize(500, 400)
+        
+        layout = QVBoxLayout()
+        
+        # Search criteria
+        form = QFormLayout()
+        
+        search_text = QLineEdit()
+        search_text.setPlaceholderText("Search by title or content...")
+        form.addRow("Search:", search_text)
+        
+        date_from = QDateEdit()
+        date_from.setCalendarPopup(True)
+        date_from.setDate(QDate.currentDate().addYears(-1))
+        form.addRow("Date From:", date_from)
+        
+        date_to = QDateEdit()
+        date_to.setCalendarPopup(True)
+        date_to.setDate(QDate.currentDate())
+        form.addRow("Date To:", date_to)
+        
+        type_combo = QComboBox()
+        type_combo.addItems(["All Types", "Legislative Bill", "Policy Document", "Meeting Minutes", 
+                            "Budget Document", "Contract/Agreement", "Legal Opinion"])
+        form.addRow("Type:", type_combo)
+        
+        classification_combo = QComboBox()
+        classification_combo.addItems(["All Classifications", "Public", "Internal", "Confidential"])
+        form.addRow("Classification:", classification_combo)
+        
+        layout.addLayout(form)
+        
+        # Results area
+        results_label = QLabel("Search Results:")
+        layout.addWidget(results_label)
+        
+        results_list = QListWidget()
+        layout.addWidget(results_list)
+        
+        # Buttons
+        button_layout = QHBoxLayout()
+        
+        search_btn = QPushButton("🔍 Search")
+        def perform_search():
+            filters = {
+                'date_from': date_from.date().toString("yyyy-MM-dd"),
+                'date_to': date_to.date().toString("yyyy-MM-dd"),
+                'type': type_combo.currentText() if type_combo.currentText() != "All Types" else None,
+                'classification': classification_combo.currentText() if classification_combo.currentText() != "All Classifications" else None
+            }
+            
+            archived_docs = self.document_manager.get_archived_documents(filters)
+            
+            # Filter by search text if provided
+            search_query = search_text.text().strip().lower()
+            if search_query:
+                archived_docs = [d for d in archived_docs if search_query in d.get('title', '').lower()]
+            
+            # Update results
+            results_list.clear()
+            for doc in archived_docs:
+                results_list.addItem(f"{doc.get('title', 'N/A')} - {doc.get('created_at', 'N/A')[:10]}")
+            
+            results_label.setText(f"Search Results: {len(archived_docs)} document(s) found")
+        
+        search_btn.clicked.connect(perform_search)
+        button_layout.addWidget(search_btn)
+        
+        close_btn = QPushButton("Close")
+        close_btn.clicked.connect(dialog.accept)
+        button_layout.addWidget(close_btn)
+        
+        layout.addLayout(button_layout)
+        dialog.setLayout(layout)
+        
+        dialog.exec_()
     
     def generate_archive_report(self):
         """Generate archive report"""
         
-        QMessageBox.information(self, "Archive Report", 
-                               "Archive report generation would start here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        try:
+            report = self.document_manager.generate_archive_report()
+            
+            if not report:
+                QMessageBox.warning(self, "Error", "Failed to generate report.")
+                return
+            
+            # Format report
+            report_text = "=== ARCHIVE STATISTICS REPORT ===\n\n"
+            report_text += f"Generated: {report.get('generated_at', 'N/A')[:19]}\n\n"
+            
+            report_text += "=== Document Counts ===\n"
+            report_text += f"Total Documents: {report.get('total_documents', 0)}\n"
+            report_text += f"Archived Documents: {report.get('archived_documents', 0)}\n"
+            report_text += f"Active Documents: {report.get('active_documents', 0)}\n\n"
+            
+            report_text += "=== By Document Type ===\n"
+            for doc_type, count in report.get('by_type', {}).items():
+                report_text += f"{doc_type}: {count}\n"
+            report_text += "\n"
+            
+            report_text += "=== By Classification ===\n"
+            for classification, count in report.get('by_classification', {}).items():
+                report_text += f"{classification}: {count}\n"
+            report_text += "\n"
+            
+            report_text += "=== By Year ===\n"
+            for year, count in sorted(report.get('by_year', {}).items()):
+                report_text += f"{year}: {count}\n"
+            report_text += "\n"
+            
+            # Storage size
+            storage_size = report.get('storage_size', 0)
+            if storage_size > 1024*1024*1024:
+                size_str = f"{storage_size / (1024*1024*1024):.2f} GB"
+            elif storage_size > 1024*1024:
+                size_str = f"{storage_size / (1024*1024):.2f} MB"
+            else:
+                size_str = f"{storage_size / 1024:.2f} KB"
+            
+            report_text += f"Total Storage Size: {size_str}\n"
+            
+            # Display report
+            dialog = QDialog(self)
+            dialog.setWindowTitle("Archive Statistics Report")
+            dialog.resize(600, 500)
+            
+            layout = QVBoxLayout()
+            text_browser = QTextBrowser()
+            text_browser.setPlainText(report_text)
+            layout.addWidget(text_browser)
+            
+            button_layout = QHBoxLayout()
+            
+            # Export button
+            export_btn = QPushButton("💾 Export Report")
+            def export_report():
+                file_path, _ = QFileDialog.getSaveFileName(
+                    dialog, "Export Report", 
+                    f"archive_report_{datetime.now().strftime('%Y%m%d')}.txt",
+                    "Text Files (*.txt)"
+                )
+                if file_path:
+                    with open(file_path, 'w') as f:
+                        f.write(report_text)
+                    QMessageBox.information(dialog, "Success", f"Report exported to:\n{file_path}")
+            
+            export_btn.clicked.connect(export_report)
+            button_layout.addWidget(export_btn)
+            
+            close_btn = QPushButton("Close")
+            close_btn.clicked.connect(dialog.accept)
+            button_layout.addWidget(close_btn)
+            
+            layout.addLayout(button_layout)
+            dialog.setLayout(layout)
+            
+            dialog.exec_()
+            
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to generate archive report: {e}")
     
     def manage_retention_policies(self):
         """Manage document retention policies"""
         
-        QMessageBox.information(self, "Retention Policies", 
-                               "Retention policy management interface would be displayed here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        # Display retention policies
+        retention_policies = self.document_manager.load_retention_policies()
+        
+        policy_text = "=== DOCUMENT RETENTION POLICIES ===\n\n"
+        
+        for category, policy in retention_policies.items():
+            policy_text += f"Category: {category.replace('_', ' ').title()}\n"
+            policy_text += f"  Retention Period: {policy.get('retention_period', 'N/A')}\n"
+            policy_text += f"  Archive After: {policy.get('archive_after_years', 'N/A')} years\n"
+            policy_text += f"  Destroy After: {policy.get('destroy_after_years', 'N/A')} years\n"
+            policy_text += f"  Legal Hold Required: {policy.get('legal_hold_required', False)}\n"
+            policy_text += "\n"
+        
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Retention Policy Management")
+        dialog.resize(600, 500)
+        
+        layout = QVBoxLayout()
+        text_browser = QTextBrowser()
+        text_browser.setPlainText(policy_text)
+        layout.addWidget(text_browser)
+        
+        close_btn = QPushButton("Close")
+        close_btn.clicked.connect(dialog.accept)
+        layout.addWidget(close_btn)
+        
+        dialog.setLayout(layout)
+        dialog.exec_()
     
     def backup_archives(self):
         """Backup document archives"""
         
-        QMessageBox.information(self, "Archive Backup", 
-                               "Archive backup process would start here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        # Ask for backup location
+        backup_dir = QFileDialog.getExistingDirectory(
+            self, "Select Backup Location", 
+            os.path.expanduser("~")
+        )
+        
+        if not backup_dir:
+            return
+        
+        try:
+            import shutil
+            from pathlib import Path
+            
+            # Create backup directory with timestamp
+            backup_name = f"civic_documents_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            backup_path = os.path.join(backup_dir, backup_name)
+            os.makedirs(backup_path, exist_ok=True)
+            
+            # Copy database
+            db_path = self.document_manager.db_path
+            if os.path.exists(db_path):
+                shutil.copy2(db_path, os.path.join(backup_path, 'documents_db.json'))
+            
+            # Copy storage directory
+            storage_path = self.document_manager.storage_path
+            if os.path.exists(storage_path):
+                shutil.copytree(storage_path, os.path.join(backup_path, 'storage'))
+            
+            QMessageBox.information(self, "Backup Complete", 
+                                   f"Archive backup completed successfully.\n\n"
+                                   f"Backup location:\n{backup_path}")
+            
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to backup archives: {e}")
     
     def archive_maintenance(self):
         """Perform archive maintenance"""
         
-        QMessageBox.information(self, "Archive Maintenance", 
-                               "Archive maintenance tasks would be performed here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        # Show maintenance options
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Archive Maintenance")
+        dialog.resize(400, 300)
+        
+        layout = QVBoxLayout()
+        
+        label = QLabel("Select maintenance task:")
+        layout.addWidget(label)
+        
+        # Maintenance options
+        check_integrity_btn = QPushButton("🔍 Check Data Integrity")
+        check_integrity_btn.clicked.connect(lambda: QMessageBox.information(
+            dialog, "Integrity Check", 
+            "Data integrity check would verify all document hashes and file existence."
+        ))
+        layout.addWidget(check_integrity_btn)
+        
+        cleanup_btn = QPushButton("🧹 Clean Up Temporary Files")
+        cleanup_btn.clicked.connect(lambda: QMessageBox.information(
+            dialog, "Cleanup", 
+            "Temporary file cleanup would remove orphaned and temporary files."
+        ))
+        layout.addWidget(cleanup_btn)
+        
+        reindex_btn = QPushButton("📇 Rebuild Search Index")
+        def rebuild_index():
+            try:
+                data = self.document_manager.load_data()
+                # Rebuild search index for all documents
+                for doc in data['documents']:
+                    self.document_manager.update_search_index(doc)
+                QMessageBox.information(dialog, "Success", "Search index rebuilt successfully.")
+            except Exception as e:
+                QMessageBox.critical(dialog, "Error", f"Failed to rebuild index: {e}")
+        
+        reindex_btn.clicked.connect(rebuild_index)
+        layout.addWidget(reindex_btn)
+        
+        layout.addStretch()
+        
+        close_btn = QPushButton("Close")
+        close_btn.clicked.connect(dialog.accept)
+        layout.addWidget(close_btn)
+        
+        dialog.setLayout(layout)
+        dialog.exec_()
     
     def refresh_documents_table(self):
         """Refresh the documents table from database"""

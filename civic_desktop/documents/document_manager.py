@@ -804,6 +804,127 @@ class DocumentManager:
             print(f"Error getting public documents: {e}")
             return []
     
+    def get_archived_documents(self, filters: Dict = None) -> List[Dict]:
+        """Get archived documents with optional filters"""
+        
+        try:
+            data = self.load_data()
+            archived = [d for d in data['documents'] if d.get('metadata', {}).get('status') == 'archived']
+            
+            if not filters:
+                return archived
+            
+            # Apply filters
+            filtered = []
+            for doc in archived:
+                # Date range filter
+                if filters.get('date_from'):
+                    doc_date = doc.get('created_at', '')
+                    if doc_date < filters['date_from']:
+                        continue
+                
+                if filters.get('date_to'):
+                    doc_date = doc.get('created_at', '')
+                    if doc_date > filters['date_to']:
+                        continue
+                
+                # Type filter
+                if filters.get('type') and doc.get('type') != filters['type']:
+                    continue
+                
+                # Classification filter
+                if filters.get('classification') and doc.get('classification') != filters['classification']:
+                    continue
+                
+                filtered.append(doc)
+            
+            return filtered
+            
+        except Exception as e:
+            print(f"Error getting archived documents: {e}")
+            return []
+    
+    def archive_document(self, document_id: str, archived_by: str) -> Tuple[bool, str]:
+        """Archive a document"""
+        
+        try:
+            document = self.get_document(document_id)
+            
+            if not document:
+                return False, "Document not found"
+            
+            # Update document status
+            document['metadata']['status'] = 'archived'
+            document['metadata']['archived_at'] = datetime.now().isoformat()
+            document['metadata']['archived_by'] = archived_by
+            
+            # Save updated document
+            self.save_document(document, update=True)
+            
+            # Record on blockchain
+            try:
+                add_user_action(
+                    action_type="document_archived",
+                    data={
+                        'document_id': document_id,
+                        'title': document['title'],
+                        'archived_by': archived_by
+                    },
+                    user_email=archived_by
+                )
+            except Exception as e:
+                print(f"Warning: Failed to record document archival on blockchain: {e}")
+            
+            return True, "Document archived successfully"
+            
+        except Exception as e:
+            return False, f"Error archiving document: {e}"
+    
+    def generate_archive_report(self) -> Dict:
+        """Generate comprehensive archive statistics report"""
+        
+        try:
+            data = self.load_data()
+            all_docs = data['documents']
+            archived = [d for d in all_docs if d.get('metadata', {}).get('status') == 'archived']
+            
+            # Calculate statistics
+            report = {
+                'total_documents': len(all_docs),
+                'archived_documents': len(archived),
+                'active_documents': len([d for d in all_docs if d.get('metadata', {}).get('status') == 'active']),
+                'by_type': {},
+                'by_classification': {},
+                'by_year': {},
+                'storage_size': 0,
+                'generated_at': datetime.now().isoformat()
+            }
+            
+            # Aggregate by type
+            for doc in archived:
+                doc_type = doc.get('type', 'Unknown')
+                report['by_type'][doc_type] = report['by_type'].get(doc_type, 0) + 1
+                
+                # By classification
+                classification = doc.get('classification', 'Unknown')
+                report['by_classification'][classification] = report['by_classification'].get(classification, 0) + 1
+                
+                # By year
+                created = doc.get('created_at', '')[:4]
+                if created:
+                    report['by_year'][created] = report['by_year'].get(created, 0) + 1
+                
+                # Storage size
+                file_size = doc.get('file_info', {}).get('file_size', 0)
+                if isinstance(file_size, (int, float)):
+                    report['storage_size'] += file_size
+            
+            return report
+            
+        except Exception as e:
+            print(f"Error generating archive report: {e}")
+            return {}
+    
     def save_document(self, document: Dict, update: bool = False):
         """Save document to database"""
         
