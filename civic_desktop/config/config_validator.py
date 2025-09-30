@@ -14,335 +14,248 @@ class ConfigurationValidator:
     
     def __init__(self):
         self.valid_environments = ['development', 'testing', 'production']
-        self.required_sections = [
-            'environment',
-            'db_paths', 
-            'security',
-            'ui',
-            'logging',
-            'blockchain',
-            'crypto',
-            'features'
+        # Required top-level keys for flat configuration structure
+        self.required_db_paths = [
+            'users_db_path', 'blockchain_db_path', 'debates_db_path',
+            'moderation_db_path', 'contracts_db_path', 'training_db_path',
+            'crypto_db_path', 'tasks_db_path', 'notifications_db_path',
+            'analytics_db_path', 'events_db_path', 'communications_db_path',
+            'surveys_db_path', 'petitions_db_path', 'documents_db_path',
+            'transparency_db_path', 'collaboration_db_path'
+        ]
+        self.required_settings = [
+            'debug_mode', 'auto_backup', 'blockchain_auto_sync',
+            'task_auto_creation', 'task_notifications_enabled'
         ]
         
     def validate_configuration(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Comprehensive configuration validation"""
+        """Comprehensive configuration validation for flat config structure"""
         errors = []
         
-        # Check required sections
-        for section in self.required_sections:
-            if section not in config:
-                errors.append(f"Missing required section: {section}")
-                continue
-                
-            # Validate each section
-            section_errors = self._validate_section(section, config[section])
-            errors.extend(section_errors)
-        
-        # Environment-specific validation
+        # Validate environment
         environment = config.get('environment', 'production')
         if environment not in self.valid_environments:
             errors.append(f"Invalid environment: {environment}. Must be one of {self.valid_environments}")
         
-        # Cross-section validation
-        cross_errors = self._validate_cross_sections(config)
-        errors.extend(cross_errors)
+        # Validate required database paths
+        for db_path_key in self.required_db_paths:
+            if db_path_key not in config:
+                errors.append(f"Missing required database path: {db_path_key}")
+        
+        # Validate required settings
+        for setting_key in self.required_settings:
+            if setting_key not in config:
+                errors.append(f"Missing required setting: {setting_key}")
+        
+        # Validate security settings
+        errors.extend(self._validate_security_settings(config))
+        
+        # Validate task management settings
+        errors.extend(self._validate_task_settings(config))
+        
+        # Environment-specific validation
+        if environment == 'production':
+            errors.extend(self._validate_production_requirements(config))
         
         return len(errors) == 0, errors
     
-    def _validate_section(self, section_name: str, section_data: Any) -> List[str]:
-        """Validate individual configuration section"""
+    def _validate_security_settings(self, config: Dict[str, Any]) -> List[str]:
+        """Validate security-related settings in flat config"""
         errors = []
         
-        if section_name == 'security':
-            errors.extend(self._validate_security_section(section_data))
-        elif section_name == 'db_paths':
-            errors.extend(self._validate_db_paths_section(section_data))
-        elif section_name == 'ui':
-            errors.extend(self._validate_ui_section(section_data))
-        elif section_name == 'logging':
-            errors.extend(self._validate_logging_section(section_data))
-        elif section_name == 'blockchain':
-            errors.extend(self._validate_blockchain_section(section_data))
-        elif section_name == 'crypto':
-            errors.extend(self._validate_crypto_section(section_data))
-        elif section_name == 'features':
-            errors.extend(self._validate_features_section(section_data))
-            
-        return errors
-    
-    def _validate_security_section(self, security: Dict[str, Any]) -> List[str]:
-        """Validate security configuration"""
-        errors = []
-        
-        required_fields = ['password_min_length', 'session_timeout_minutes', 'max_login_attempts']
-        for field in required_fields:
-            if field not in security:
-                errors.append(f"Security section missing required field: {field}")
-        
-        # Validate password requirements
-        if security.get('password_min_length', 0) < 8:
+        # Password minimum length validation
+        password_min_length = config.get('password_min_length', 0)
+        if password_min_length < 8:
             errors.append("Password minimum length must be at least 8 characters")
         
-        # Validate session timeout
-        session_timeout = security.get('session_timeout_minutes', 0)
+        # Session timeout validation
+        session_timeout = config.get('session_timeout_minutes', 0)
         if session_timeout < 15 or session_timeout > 1440:  # 15 minutes to 24 hours
             errors.append("Session timeout must be between 15 and 1440 minutes")
         
-        # Validate login attempts
-        max_attempts = security.get('max_login_attempts', 0)
+        # Max login attempts validation
+        max_attempts = config.get('max_login_attempts', 0)
         if max_attempts < 3 or max_attempts > 10:
             errors.append("Max login attempts must be between 3 and 10")
         
         return errors
     
-    def _validate_db_paths_section(self, db_paths: Dict[str, Any]) -> List[str]:
-        """Validate database paths configuration"""
+    def _validate_task_settings(self, config: Dict[str, Any]) -> List[str]:
+        """Validate task management settings"""
         errors = []
         
-        required_paths = [
-            'users_db', 'debates_db', 'moderation_db', 'blockchain_db',
-            'contracts_db', 'training_db', 'crypto_db', 'tasks_db'
-        ]
+        # Validate task reminder intervals if present
+        if 'task_reminder_intervals' in config:
+            intervals = config['task_reminder_intervals']
+            if not isinstance(intervals, dict):
+                errors.append("task_reminder_intervals must be a dictionary")
+            else:
+                required_priorities = ['low', 'normal', 'high', 'urgent', 'critical']
+                for priority in required_priorities:
+                    if priority not in intervals:
+                        errors.append(f"Missing reminder interval for priority: {priority}")
+                    elif not isinstance(intervals[priority], (int, float)) or intervals[priority] <= 0:
+                        errors.append(f"Reminder interval for {priority} must be a positive number")
         
-        for path_key in required_paths:
-            if path_key not in db_paths:
-                errors.append(f"Database paths missing required path: {path_key}")
-                continue
-                
-            path = db_paths[path_key]
-            if not isinstance(path, str) or not path:
-                errors.append(f"Database path '{path_key}' must be a non-empty string")
-                continue
-                
-            # Validate path format
-            if not path.endswith('.json'):
-                errors.append(f"Database path '{path_key}' must end with .json")
+        # Validate validation thresholds if present
+        if 'validation_thresholds' in config:
+            thresholds = config['validation_thresholds']
+            if not isinstance(thresholds, dict):
+                errors.append("validation_thresholds must be a dictionary")
+            else:
+                required_levels = ['city', 'state', 'country', 'founder']
+                for level in required_levels:
+                    if level not in thresholds:
+                        errors.append(f"Missing validation threshold for level: {level}")
+                    elif not isinstance(thresholds[level], (int, float)) or not (0 < thresholds[level] <= 1):
+                        errors.append(f"Validation threshold for {level} must be between 0 and 1")
         
         return errors
     
-    def _validate_ui_section(self, ui: Dict[str, Any]) -> List[str]:
-        """Validate UI configuration"""
+    def _validate_production_requirements(self, config: Dict[str, Any]) -> List[str]:
+        """Validate production environment requirements"""
         errors = []
         
-        required_fields = ['window_width', 'window_height', 'theme']
-        for field in required_fields:
-            if field not in ui:
-                errors.append(f"UI section missing required field: {field}")
+        # Production should have stricter password requirements
+        password_min_length = config.get('password_min_length', 0)
+        if password_min_length < 12:
+            errors.append("Production environment requires minimum password length of 12")
         
-        # Validate window dimensions
-        width = ui.get('window_width', 0)
-        height = ui.get('window_height', 0)
+        # Production should have shorter session timeouts
+        session_timeout = config.get('session_timeout_minutes', 0)
+        if session_timeout > 480:  # 8 hours
+            errors.append("Production environment should have session timeout <= 8 hours (480 minutes)")
         
-        if not isinstance(width, int) or width < 800:
-            errors.append("Window width must be an integer >= 800")
-        
-        if not isinstance(height, int) or height < 600:
-            errors.append("Window height must be an integer >= 600")
-        
-        # Validate theme
-        valid_themes = ['light', 'dark', 'auto']
-        theme = ui.get('theme', '')
-        if theme not in valid_themes:
-            errors.append(f"Theme must be one of: {valid_themes}")
-        
-        return errors
-    
-    def _validate_logging_section(self, logging_config: Dict[str, Any]) -> List[str]:
-        """Validate logging configuration"""
-        errors = []
-        
-        required_fields = ['level', 'file_path', 'max_file_size_mb']
-        for field in required_fields:
-            if field not in logging_config:
-                errors.append(f"Logging section missing required field: {field}")
-        
-        # Validate log level
-        valid_levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
-        level = logging_config.get('level', '')
-        if level not in valid_levels:
-            errors.append(f"Log level must be one of: {valid_levels}")
-        
-        # Validate file size
-        max_size = logging_config.get('max_file_size_mb', 0)
-        if not isinstance(max_size, (int, float)) or max_size <= 0:
-            errors.append("Max file size must be a positive number")
-        
-        return errors
-    
-    def _validate_blockchain_section(self, blockchain: Dict[str, Any]) -> List[str]:
-        """Validate blockchain configuration"""
-        errors = []
-        
-        required_fields = ['enabled', 'block_time_seconds', 'validator_count']
-        for field in required_fields:
-            if field not in blockchain:
-                errors.append(f"Blockchain section missing required field: {field}")
-        
-        # Validate block time
-        block_time = blockchain.get('block_time_seconds', 0)
-        if not isinstance(block_time, (int, float)) or block_time < 1:
-            errors.append("Block time must be a positive number >= 1 second")
-        
-        # Validate validator count
-        validator_count = blockchain.get('validator_count', 0)
-        if not isinstance(validator_count, int) or validator_count < 1:
-            errors.append("Validator count must be a positive integer")
-        
-        return errors
-    
-    def _validate_crypto_section(self, crypto: Dict[str, Any]) -> List[str]:
-        """Validate cryptocurrency configuration"""
-        errors = []
-        
-        required_fields = ['enabled', 'initial_founder_balance', 'initial_member_balance']
-        for field in required_fields:
-            if field not in crypto:
-                errors.append(f"Crypto section missing required field: {field}")
-        
-        # Validate balances
-        founder_balance = crypto.get('initial_founder_balance', 0)
-        member_balance = crypto.get('initial_member_balance', 0)
-        
-        if not isinstance(founder_balance, (int, float)) or founder_balance < 0:
-            errors.append("Initial founder balance must be a non-negative number")
-        
-        if not isinstance(member_balance, (int, float)) or member_balance < 0:
-            errors.append("Initial member balance must be a non-negative number")
-        
-        return errors
-    
-    def _validate_features_section(self, features: Dict[str, Any]) -> List[str]:
-        """Validate features configuration"""
-        errors = []
-        
-        feature_keys = [
-            'debates_enabled', 'moderation_enabled', 'blockchain_enabled',
-            'crypto_enabled', 'contracts_enabled', 'training_enabled'
-        ]
-        
-        for feature in feature_keys:
-            if feature in features:
-                if not isinstance(features[feature], bool):
-                    errors.append(f"Feature '{feature}' must be a boolean value")
-        
-        return errors
-    
-    def _validate_cross_sections(self, config: Dict[str, Any]) -> List[str]:
-        """Validate relationships between configuration sections"""
-        errors = []
-        
-        # If crypto is enabled, blockchain must be enabled
-        crypto_enabled = config.get('crypto', {}).get('enabled', False)
-        blockchain_enabled = config.get('blockchain', {}).get('enabled', False)
-        
-        if crypto_enabled and not blockchain_enabled:
-            errors.append("Crypto features require blockchain to be enabled")
-        
-        # Production environment should have stricter security
-        environment = config.get('environment', 'production')
-        if environment == 'production':
-            security = config.get('security', {})
-            
-            if security.get('password_min_length', 0) < 12:
-                errors.append("Production environment requires minimum password length of 12")
-            
-            if security.get('session_timeout_minutes', 0) > 480:  # 8 hours
-                errors.append("Production environment should have session timeout <= 8 hours")
+        # Production should have debug mode disabled
+        if config.get('debug_mode', False):
+            errors.append("Production environment should have debug_mode set to false")
         
         return errors
     
     def generate_default_config(self, environment: str = 'development') -> Dict[str, Any]:
-        """Generate default configuration for specified environment"""
+        """Generate default flat configuration matching main.py structure"""
+        from pathlib import Path
+        
+        # Determine base paths based on environment
+        env_prefix = '' if environment == 'production' else f'{environment}_'
         
         base_config = {
+            # Environment identifier
             'environment': environment,
-            'db_paths': {
-                'users_db': 'data/users_db.json',
-                'debates_db': 'data/debates_db.json',
-                'moderation_db': 'data/moderation_db.json',
-                'blockchain_db': 'data/blockchain_db.json',
-                'contracts_db': 'data/contracts_db.json',
-                'training_db': 'data/training_db.json',
-                'crypto_db': 'data/crypto_db.json',
-                'tasks_db': 'data/tasks_db.json',
-                'collaboration_db': 'data/collaboration_db.json',
-                'documents_db': 'data/documents_db.json',
-                'maps_db': 'data/maps_db.json',
-                'system_guide_db': 'data/system_guide_db.json'
+            
+            # Database paths (flat structure matching main.py)
+            'users_db_path': f'users/{env_prefix}users_db.json',
+            'blockchain_db_path': f'blockchain/{env_prefix}blockchain_db.json',
+            'debates_db_path': f'debates/{env_prefix}debates_db.json',
+            'moderation_db_path': f'moderation/{env_prefix}moderation_db.json',
+            'contracts_db_path': f'contracts/{env_prefix}contracts_db.json',
+            'training_db_path': f'training/{env_prefix}training_db.json',
+            'crypto_db_path': f'crypto/{env_prefix}crypto_db.json',
+            'tasks_db_path': f'tasks/{env_prefix}tasks_db.json',
+            'notifications_db_path': f'tasks/{env_prefix}notifications_db.json',
+            'task_integration_config_path': f'tasks/{env_prefix}integration_config.json',
+            'analytics_db_path': f'analytics/{env_prefix}analytics_db.json',
+            'events_db_path': f'events/{env_prefix}events_db.json',
+            'communications_db_path': f'communications/{env_prefix}messages_db.json',
+            'surveys_db_path': f'surveys/{env_prefix}surveys_db.json',
+            'petitions_db_path': f'petitions/{env_prefix}petitions_db.json',
+            'documents_db_path': f'documents/{env_prefix}documents_db.json',
+            'transparency_db_path': f'transparency/{env_prefix}transparency_db.json',
+            'collaboration_db_path': f'collaboration/{env_prefix}collaboration_db.json',
+            
+            # Key storage
+            'private_keys_path': f'users/{env_prefix}private_keys',
+            
+            # Security settings (flat keys)
+            'password_min_length': 8 if environment != 'production' else 12,
+            'session_timeout_minutes': 480 if environment != 'production' else 240,
+            'max_login_attempts': 5,
+            'require_special_chars': environment == 'production',
+            'lockout_duration_minutes': 30 if environment == 'production' else 5,
+            
+            # System settings
+            'debug_mode': environment == 'development',
+            'auto_backup': environment == 'production',
+            'blockchain_auto_sync': True,
+            'auto_update_check': environment == 'production',
+            
+            # Task management settings
+            'task_auto_creation': True,
+            'task_notifications_enabled': True,
+            'validation_auto_assignment': True,
+            'voting_auto_assignment': True,
+            'contract_auto_assignment': True,
+            'task_expiration_enabled': environment == 'production',
+            'reminder_system_enabled': True,
+            
+            # Task reminder intervals (hours)
+            'task_reminder_intervals': {
+                'low': 48 if environment == 'production' else 2,
+                'normal': 24 if environment == 'production' else 1,
+                'high': 12 if environment == 'production' else 0.5,
+                'urgent': 6 if environment == 'production' else 0.25,
+                'critical': 2 if environment == 'production' else 0.1
             },
-            'security': {
-                'password_min_length': 8 if environment != 'production' else 12,
-                'session_timeout_minutes': 480 if environment != 'production' else 240,
-                'max_login_attempts': 5,
-                'require_2fa': environment == 'production',
-                'encryption_algorithm': 'AES-256',
-                'key_rotation_days': 90
+            
+            # Validation thresholds
+            'validation_thresholds': {
+                'city': 0.33 if environment == 'production' else 0.20,
+                'state': 0.25 if environment == 'production' else 0.15,
+                'country': 0.20 if environment == 'production' else 0.10,
+                'founder': 0.10 if environment == 'production' else 0.05
             },
-            'ui': {
-                'window_width': 1200,
-                'window_height': 800,
-                'theme': 'light',
-                'auto_save_interval_seconds': 30,
-                'animation_enabled': True,
-                'accessibility_mode': False
-            },
-            'logging': {
-                'level': 'DEBUG' if environment == 'development' else 'INFO',
-                'file_path': f'logs/{environment}.log',
-                'max_file_size_mb': 10,
-                'backup_count': 5,
-                'console_output': environment == 'development'
-            },
-            'blockchain': {
-                'enabled': True,
-                'block_time_seconds': 10 if environment != 'production' else 30,
-                'validator_count': 3 if environment != 'production' else 7,
-                'consensus_algorithm': 'PoA',
-                'auto_backup': True,
-                'backup_interval_hours': 6
-            },
-            'crypto': {
-                'enabled': True,
-                'initial_founder_balance': 1000,
-                'initial_member_balance': 100,
-                'token_symbol': 'CVC',
-                'exchange_enabled': True,
-                'staking_enabled': True,
-                'reward_multiplier': 1.0
-            },
-            'features': {
-                'debates_enabled': True,
-                'moderation_enabled': True,
-                'blockchain_enabled': True,
-                'crypto_enabled': True,
-                'contracts_enabled': True,
-                'training_enabled': True,
-                'collaboration_enabled': True,
-                'documents_enabled': True,
-                'maps_enabled': True,
-                'tasks_enabled': True,
-                'system_guide_enabled': True,
-                'analytics_enabled': True
-            },
-            'network': {
-                'p2p_enabled': environment == 'production',
-                'p2p_port': 8080,
-                'discovery_enabled': environment == 'production',
-                'max_peers': 10,
-                'connection_timeout_seconds': 30
-            },
-            'backup': {
-                'enabled': True,
-                'interval_hours': 24,
-                'max_backups': 7,
-                'backup_path': 'backups/',
-                'compress_backups': True
-            }
+            
+            # Notification settings
+            'email_enabled': False,
+            'sms_enabled': False,
+            'push_enabled': False,
+            'in_app_enabled': True,
+            'quiet_hours_enabled': environment == 'production',
+            'quiet_start': '22:00' if environment == 'production' else '23:00',
+            'quiet_end': '07:00' if environment == 'production' else '06:00',
+            'batch_notifications': environment == 'production',
+            'max_daily_notifications': 10 if environment == 'production' else 100,
+            
+            # Blockchain settings
+            'validator_rotation_enabled': environment == 'production',
+            'consensus_threshold': 0.67 if environment == 'production' else 0.51,
+            'block_creation_interval': 300 if environment == 'production' else 60,
+            'max_block_size': 1048576 if environment == 'production' else 2097152,
+            'auto_validator_assignment': True,
+            'backup_frequency_hours': 24 if environment == 'production' else 1,
+            
+            # UI settings
+            'theme': 'civic_light' if environment == 'production' else 'civic_debug',
+            'default_tab': 'tasks',
+            'show_task_counter': True,
+            'show_urgent_notifications': True,
+            'auto_refresh_interval': 30 if environment == 'production' else 10,
+            'compact_mode': False,
+            
+            # Integration settings
+            'cross_module_sync': True,
+            'auto_task_generation': True,
+            'real_time_updates': True,
+            'batch_processing': False,
+            'integration_retry_attempts': 3 if environment == 'production' else 5,
+            'integration_timeout_seconds': 30 if environment == 'production' else 10,
         }
+        
+        # Add testing-specific settings
+        if environment == 'testing':
+            base_config.update({
+                'mock_external_services': True,
+                'generate_test_data': True,
+                'enable_test_users': True,
+                'fast_task_creation': True,
+                'skip_blockchain_verification': False,
+                'verbose_logging': True
+            })
         
         return base_config
     
+    def create_environment_configs(self, base_path: str = 'config/') -> Dict[str, bool]:
+        """Create configuration files for all environments"""
     def create_environment_configs(self, base_path: str = 'config/') -> Dict[str, bool]:
         """Create configuration files for all environments"""
         
