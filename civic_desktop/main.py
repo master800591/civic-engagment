@@ -14,7 +14,9 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 def load_environment_config():
     """Load environment-specific configuration"""
     
-    config_path = os.environ.get('CIVIC_CONFIG', 'config/prod_config.json')
+    # Default to production config in civic_desktop/config/
+    default_config_path = os.path.join(os.path.dirname(__file__), 'config', 'production_config.json')
+    config_path = os.environ.get('CIVIC_CONFIG', default_config_path)
     
     try:
         with open(config_path, 'r') as f:
