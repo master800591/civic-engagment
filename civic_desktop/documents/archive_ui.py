@@ -969,11 +969,13 @@ class DocumentsArchiveTab(QWidget):
         """Initialize backend management systems"""
         
         try:
-            # self.document_manager = DocumentManager()
-            # self.foia_processor = FOIARequestProcessor()
-            print("Document managers would be initialized here")
+            self.document_manager = DocumentManager()
+            self.foia_processor = FOIARequestProcessor()
+            print("Document managers initialized successfully")
         except Exception as e:
             print(f"Error initializing document managers: {e}")
+            self.document_manager = None
+            self.foia_processor = None
     
     def upload_document(self):
         """Upload a new document"""
@@ -983,22 +985,30 @@ class DocumentsArchiveTab(QWidget):
                                "Please log in to upload documents.")
             return
         
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", 
+                               "Document manager not initialized.")
+            return
+        
         dialog = DocumentUploadDialog(self)
         
         if dialog.exec_() == QDialog.Accepted:
             document_data = dialog.document_data
             document_data['uploaded_by'] = self.current_user.get('email')
+            file_path = dialog.selected_file_path
+            
+            if not file_path:
+                QMessageBox.warning(self, "Error", "No file selected.")
+                return
             
             try:
-                # TODO: Use actual document manager
-                # success, message = self.document_manager.upload_document(document_data)
-                success, message = True, "Document uploaded successfully"
+                success, message = self.document_manager.upload_document(document_data, file_path)
                 
                 if success:
                     QMessageBox.information(self, "Success", 
-                                          f"Document '{document_data['title']}' uploaded successfully!")
+                                          f"Document '{document_data['title']}' uploaded successfully!\n\n{message}")
                     # Refresh documents table
-                    # self.refresh_documents_table()
+                    self.refresh_documents_table()
                 else:
                     QMessageBox.warning(self, "Error", message)
                     
@@ -1007,6 +1017,11 @@ class DocumentsArchiveTab(QWidget):
     
     def submit_foia_request(self):
         """Submit a new FOIA request"""
+        
+        if not self.foia_processor:
+            QMessageBox.warning(self, "Error", 
+                               "FOIA processor not initialized.")
+            return
         
         dialog = FOIARequestDialog(self)
         
@@ -1017,19 +1032,17 @@ class DocumentsArchiveTab(QWidget):
                 request_data['submitted_by'] = self.current_user.get('email')
             
             try:
-                # TODO: Use actual FOIA processor
-                # success, request_id = self.foia_processor.submit_request(request_data)
-                success, request_id = True, "FOIA-2024-004"
+                success, message = self.foia_processor.submit_request(request_data)
                 
                 if success:
                     QMessageBox.information(self, "FOIA Request Submitted", 
-                                          f"Your FOIA request has been submitted.\n\n"
-                                          f"Request ID: {request_id}\n"
+                                          f"Your FOIA request has been submitted successfully.\n\n"
+                                          f"{message}\n\n"
                                           f"You will receive updates via email.")
                     # Refresh FOIA table
-                    # self.refresh_foia_table()
+                    self.refresh_foia_table()
                 else:
-                    QMessageBox.warning(self, "Error", "Failed to submit FOIA request.")
+                    QMessageBox.warning(self, "Error", f"Failed to submit FOIA request: {message}")
                     
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Failed to submit FOIA request: {e}")
@@ -1042,17 +1055,125 @@ class DocumentsArchiveTab(QWidget):
             QMessageBox.information(self, "Search", "Please enter a search term.")
             return
         
-        # TODO: Implement actual search
-        QMessageBox.information(self, "Search Results", 
-                               f"Searching for: '{query}'\n\n"
-                               "Search results would be displayed here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        try:
+            # Get filter values
+            filters = {
+                'type': self.type_filter.currentText() if self.type_filter.currentText() != "All Types" else None,
+                'classification': self.classification_filter.currentText() if self.classification_filter.currentText() != "All Classifications" else None,
+                'jurisdiction': self.jurisdiction_filter.currentText() if self.jurisdiction_filter.currentText() != "All Jurisdictions" else None
+            }
+            
+            results = self.document_manager.search_documents(query, filters)
+            
+            if results:
+                # Update document table with search results
+                self.documents_table.setRowCount(len(results))
+                
+                for i, doc in enumerate(results):
+                    self.documents_table.setItem(i, 0, QTableWidgetItem(doc.get('title', 'N/A')))
+                    self.documents_table.setItem(i, 1, QTableWidgetItem(doc.get('type', 'N/A')))
+                    self.documents_table.setItem(i, 2, QTableWidgetItem(doc.get('uploaded_by', 'N/A')))
+                    self.documents_table.setItem(i, 3, QTableWidgetItem(doc.get('department', 'N/A')))
+                    self.documents_table.setItem(i, 4, QTableWidgetItem(doc.get('created_at', 'N/A')[:10]))
+                    self.documents_table.setItem(i, 5, QTableWidgetItem(doc.get('classification', 'N/A')))
+                    
+                    # Action buttons
+                    actions_widget = QWidget()
+                    actions_layout = QHBoxLayout()
+                    actions_layout.setContentsMargins(2, 2, 2, 2)
+                    
+                    view_btn = QPushButton("👁️ View")
+                    view_btn.clicked.connect(lambda checked, title=doc['title']: self.view_document(title))
+                    actions_layout.addWidget(view_btn)
+                    
+                    download_btn = QPushButton("💾 Download")
+                    download_btn.clicked.connect(lambda checked, title=doc['title']: self.download_document(title))
+                    actions_layout.addWidget(download_btn)
+                    
+                    actions_widget.setLayout(actions_layout)
+                    self.documents_table.setCellWidget(i, 6, actions_widget)
+                
+                self.documents_table.resizeColumnsToContents()
+                
+                QMessageBox.information(self, "Search Results", 
+                                       f"Found {len(results)} document(s) matching '{query}'")
+            else:
+                QMessageBox.information(self, "Search Results", 
+                                       f"No documents found matching '{query}'")
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Search failed: {e}")
     
     def apply_filters(self):
         """Apply filters to document list"""
         
-        # TODO: Implement actual filtering
-        QMessageBox.information(self, "Filters Applied", 
-                               "Document list filtered based on selected criteria.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        try:
+            # Get all documents and apply filters
+            all_documents = self.document_manager.get_public_documents()
+            
+            # Get filter values
+            type_filter = self.type_filter.currentText()
+            classification_filter = self.classification_filter.currentText()
+            jurisdiction_filter = self.jurisdiction_filter.currentText()
+            
+            filtered_docs = []
+            for doc in all_documents:
+                # Apply type filter
+                if type_filter != "All Types" and doc.get('type') != type_filter:
+                    continue
+                
+                # Apply classification filter
+                if classification_filter != "All Classifications" and doc.get('classification') != classification_filter:
+                    continue
+                
+                # Apply jurisdiction filter
+                if jurisdiction_filter != "All Jurisdictions" and doc.get('jurisdiction') != jurisdiction_filter:
+                    continue
+                
+                filtered_docs.append(doc)
+            
+            # Update table with filtered results
+            self.documents_table.setRowCount(len(filtered_docs))
+            
+            for i, doc in enumerate(filtered_docs):
+                self.documents_table.setItem(i, 0, QTableWidgetItem(doc.get('title', 'N/A')))
+                self.documents_table.setItem(i, 1, QTableWidgetItem(doc.get('type', 'N/A')))
+                self.documents_table.setItem(i, 2, QTableWidgetItem(doc.get('uploaded_by', 'N/A')))
+                self.documents_table.setItem(i, 3, QTableWidgetItem(doc.get('department', 'N/A')))
+                self.documents_table.setItem(i, 4, QTableWidgetItem(doc.get('created_at', 'N/A')[:10]))
+                self.documents_table.setItem(i, 5, QTableWidgetItem(doc.get('classification', 'N/A')))
+                
+                # Action buttons
+                actions_widget = QWidget()
+                actions_layout = QHBoxLayout()
+                actions_layout.setContentsMargins(2, 2, 2, 2)
+                
+                view_btn = QPushButton("👁️ View")
+                view_btn.clicked.connect(lambda checked, title=doc['title']: self.view_document(title))
+                actions_layout.addWidget(view_btn)
+                
+                download_btn = QPushButton("💾 Download")
+                download_btn.clicked.connect(lambda checked, title=doc['title']: self.download_document(title))
+                actions_layout.addWidget(download_btn)
+                
+                actions_widget.setLayout(actions_layout)
+                self.documents_table.setCellWidget(i, 6, actions_widget)
+            
+            self.documents_table.resizeColumnsToContents()
+            
+            QMessageBox.information(self, "Filters Applied", 
+                                   f"Showing {len(filtered_docs)} document(s) matching selected filters.")
+            
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to apply filters: {e}")
     
     def view_document(self, title):
         """View document details"""
@@ -1105,16 +1226,94 @@ class DocumentsArchiveTab(QWidget):
     def track_legislation(self, bill_number):
         """Track legislation progress"""
         
-        QMessageBox.information(self, "Track Legislation", 
-                               f"Tracking bill: {bill_number}\n\n"
-                               "Legislative tracking details would be displayed here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        try:
+            history = self.document_manager.get_legislative_history(bill_number)
+            
+            if history:
+                tracking = history['tracking']
+                actions_text = "\n".join([f"• {a['date'][:10]}: {a['action']}" for a in tracking.get('actions', [])])
+                
+                QMessageBox.information(self, "Legislative Tracking", 
+                                       f"Bill: {bill_number}\n"
+                                       f"Title: {tracking['title']}\n"
+                                       f"Sponsor: {tracking['sponsor']}\n"
+                                       f"Status: {tracking['status']}\n"
+                                       f"Current Stage: {tracking['stage']}\n\n"
+                                       f"Recent Actions:\n{actions_text}")
+            else:
+                QMessageBox.warning(self, "Not Found", 
+                                   f"Bill {bill_number} not found in tracking system.")
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to track legislation: {e}")
     
     def view_legislative_history(self, bill_number):
         """View legislative history"""
         
-        QMessageBox.information(self, "Legislative History", 
-                               f"History for bill: {bill_number}\n\n"
-                               "Complete legislative history would be displayed here.")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        try:
+            history = self.document_manager.get_legislative_history(bill_number)
+            
+            if history:
+                tracking = history['tracking']
+                
+                # Build comprehensive history display
+                history_text = f"Bill Number: {bill_number}\n"
+                history_text += f"Title: {tracking['title']}\n"
+                history_text += f"Sponsor: {tracking['sponsor']}\n"
+                history_text += f"Status: {tracking['status']}\n"
+                history_text += f"Current Stage: {tracking['stage']}\n\n"
+                
+                # Actions
+                if tracking.get('actions'):
+                    history_text += "=== Actions ===\n"
+                    for action in tracking['actions']:
+                        history_text += f"{action['date'][:10]}: {action['action']}\n"
+                    history_text += "\n"
+                
+                # Votes
+                if tracking.get('votes'):
+                    history_text += "=== Votes ===\n"
+                    for vote in tracking['votes']:
+                        history_text += f"{vote['date'][:10]} - {vote['stage']}: {vote.get('result', 'N/A')}\n"
+                        history_text += f"  For: {vote.get('votes_for', 0)}, Against: {vote.get('votes_against', 0)}, Abstentions: {vote.get('abstentions', 0)}\n"
+                    history_text += "\n"
+                
+                # Amendments
+                if tracking.get('amendments'):
+                    history_text += "=== Amendments ===\n"
+                    for amendment in tracking['amendments']:
+                        history_text += f"{amendment['date'][:10]}: {amendment.get('description', 'N/A')} ({amendment.get('status', 'N/A')})\n"
+                
+                # Display in a dialog with scrollable text
+                dialog = QDialog(self)
+                dialog.setWindowTitle(f"Legislative History - {bill_number}")
+                dialog.resize(600, 500)
+                
+                layout = QVBoxLayout()
+                text_browser = QTextBrowser()
+                text_browser.setPlainText(history_text)
+                layout.addWidget(text_browser)
+                
+                close_btn = QPushButton("Close")
+                close_btn.clicked.connect(dialog.accept)
+                layout.addWidget(close_btn)
+                
+                dialog.setLayout(layout)
+                dialog.exec_()
+            else:
+                QMessageBox.warning(self, "Not Found", 
+                                   f"Bill {bill_number} not found in tracking system.")
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to view legislative history: {e}")
     
     def search_archives(self):
         """Search document archives"""
@@ -1145,6 +1344,154 @@ class DocumentsArchiveTab(QWidget):
         
         QMessageBox.information(self, "Archive Maintenance", 
                                "Archive maintenance tasks would be performed here.")
+    
+    def refresh_documents_table(self):
+        """Refresh the documents table from database"""
+        
+        if not self.document_manager:
+            return
+        
+        try:
+            # Get all public documents
+            documents = self.document_manager.get_public_documents()
+            
+            # Clear and repopulate table
+            self.documents_table.setRowCount(len(documents))
+            
+            for i, doc in enumerate(documents):
+                self.documents_table.setItem(i, 0, QTableWidgetItem(doc.get('title', 'N/A')))
+                self.documents_table.setItem(i, 1, QTableWidgetItem(doc.get('type', 'N/A')))
+                self.documents_table.setItem(i, 2, QTableWidgetItem(doc.get('uploaded_by', 'N/A')))
+                self.documents_table.setItem(i, 3, QTableWidgetItem(doc.get('department', 'N/A')))
+                self.documents_table.setItem(i, 4, QTableWidgetItem(doc.get('created_at', 'N/A')[:10]))
+                self.documents_table.setItem(i, 5, QTableWidgetItem(doc.get('classification', 'N/A')))
+                
+                # Action buttons
+                actions_widget = QWidget()
+                actions_layout = QHBoxLayout()
+                actions_layout.setContentsMargins(2, 2, 2, 2)
+                
+                view_btn = QPushButton("👁️ View")
+                view_btn.clicked.connect(lambda checked, title=doc['title']: self.view_document(title))
+                actions_layout.addWidget(view_btn)
+                
+                download_btn = QPushButton("💾 Download")
+                download_btn.clicked.connect(lambda checked, title=doc['title']: self.download_document(title))
+                actions_layout.addWidget(download_btn)
+                
+                actions_widget.setLayout(actions_layout)
+                self.documents_table.setCellWidget(i, 6, actions_widget)
+            
+            self.documents_table.resizeColumnsToContents()
+                
+        except Exception as e:
+            print(f"Error refreshing documents: {e}")
+    
+    def refresh_foia_table(self):
+        """Refresh the FOIA requests table from database"""
+        
+        if not self.foia_processor:
+            return
+        
+        try:
+            data = self.foia_processor.load_data()
+            foia_requests = data.get('foia_requests', [])
+            
+            # Clear and repopulate table
+            self.foia_table.setRowCount(len(foia_requests))
+            
+            for i, request in enumerate(foia_requests):
+                self.foia_table.setItem(i, 0, QTableWidgetItem(request.get('request_id', 'N/A')))
+                self.foia_table.setItem(i, 1, QTableWidgetItem(request.get('subject', 'N/A')))
+                
+                requester_name = request.get('requester_info', {}).get('name', 'N/A')
+                self.foia_table.setItem(i, 2, QTableWidgetItem(requester_name))
+                
+                submitted_date = request.get('submitted_at', 'N/A')
+                if submitted_date != 'N/A':
+                    submitted_date = submitted_date[:10]
+                self.foia_table.setItem(i, 3, QTableWidgetItem(submitted_date))
+                
+                self.foia_table.setItem(i, 4, QTableWidgetItem(request.get('status', 'N/A')))
+                
+                due_date = request.get('due_date', 'N/A')
+                if due_date != 'N/A' and hasattr(due_date, 'isoformat'):
+                    due_date = due_date.isoformat()[:10]
+                self.foia_table.setItem(i, 5, QTableWidgetItem(str(due_date)[:10] if due_date != 'N/A' else 'N/A'))
+                
+                # Action buttons
+                actions_widget = QWidget()
+                actions_layout = QHBoxLayout()
+                actions_layout.setContentsMargins(2, 2, 2, 2)
+                
+                view_btn = QPushButton("👁️ View")
+                req_id = request.get('request_id')
+                view_btn.clicked.connect(lambda checked, r=req_id: self.view_foia_request(r))
+                actions_layout.addWidget(view_btn)
+                
+                process_btn = QPushButton("⚙️ Process")
+                process_btn.clicked.connect(lambda checked, r=req_id: self.process_foia_request(r))
+                actions_layout.addWidget(process_btn)
+                
+                actions_widget.setLayout(actions_layout)
+                self.foia_table.setCellWidget(i, 6, actions_widget)
+            
+            self.foia_table.resizeColumnsToContents()
+                
+        except Exception as e:
+            print(f"Error refreshing FOIA requests: {e}")
+    
+    def refresh_legislative_table(self):
+        """Refresh the legislative documents table from database"""
+        
+        if not self.document_manager:
+            return
+        
+        try:
+            legislative_docs = self.document_manager.get_legislative_documents()
+            
+            # Clear and repopulate table
+            self.legislative_table.setRowCount(len(legislative_docs))
+            
+            for i, doc in enumerate(legislative_docs):
+                tracking = doc.get('tracking', {})
+                
+                self.legislative_table.setItem(i, 0, QTableWidgetItem(tracking.get('bill_number', 'N/A')))
+                self.legislative_table.setItem(i, 1, QTableWidgetItem(doc.get('title', 'Untitled')))
+                self.legislative_table.setItem(i, 2, QTableWidgetItem(tracking.get('sponsor', 'N/A')))
+                self.legislative_table.setItem(i, 3, QTableWidgetItem(tracking.get('status', 'N/A')))
+                
+                # Last action
+                actions = tracking.get('actions', [])
+                if actions:
+                    last_action = actions[-1]
+                    action_text = f"{last_action['date'][:10]} - {last_action['action']}"
+                else:
+                    action_text = 'No actions'
+                self.legislative_table.setItem(i, 4, QTableWidgetItem(action_text))
+                
+                # Action buttons
+                actions_widget = QWidget()
+                actions_layout = QHBoxLayout()
+                actions_layout.setContentsMargins(2, 2, 2, 2)
+                
+                bill_num = tracking.get('bill_number')
+                
+                track_btn = QPushButton("📊 Track")
+                track_btn.clicked.connect(lambda checked, b=bill_num: self.track_legislation(b))
+                actions_layout.addWidget(track_btn)
+                
+                history_btn = QPushButton("📜 History")
+                history_btn.clicked.connect(lambda checked, b=bill_num: self.view_legislative_history(b))
+                actions_layout.addWidget(history_btn)
+                
+                actions_widget.setLayout(actions_layout)
+                self.legislative_table.setCellWidget(i, 5, actions_widget)
+            
+            self.legislative_table.resizeColumnsToContents()
+                
+        except Exception as e:
+            print(f"Error refreshing legislative documents: {e}")
 
 
 if __name__ == '__main__':
