@@ -1,0 +1,191 @@
+{
+  "validation_requests": {},
+  "validator_registry": {
+    "members": {},
+    "representatives": {
+      "rep@civic.platform": {
+        "user_email": "rep@civic.platform",
+        "role": "contract_representative",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.216986",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "test_public_key_123",
+        "validator_id": "2a293cdaef297cbe"
+      },
+      "val1@civic.platform": {
+        "user_email": "val1@civic.platform",
+        "role": "contract_representative",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.220896",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "key_val1@civic.platform",
+        "validator_id": "3c1349c46145b36f"
+      },
+      "lifecycle_test@civic.platform": {
+        "user_email": "lifecycle_test@civic.platform",
+        "role": "contract_representative",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.228638",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "test_key",
+        "validator_id": "1605ddd6d9b3d010"
+      },
+      "poa1@civic.platform": {
+        "user_email": "poa1@civic.platform",
+        "role": "contract_representative",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.234951",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "key_poa1@civic.platform",
+        "validator_id": "7d618ae5eed4d978"
+      }
+    },
+    "senators": {
+      "senator@civic.platform": {
+        "user_email": "senator@civic.platform",
+        "role": "contract_senator",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.218170",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "test_public_key_sen",
+        "validator_id": "1d0f60927d4b62e3"
+      },
+      "val2@civic.platform": {
+        "user_email": "val2@civic.platform",
+        "role": "contract_senator",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.222158",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "key_val2@civic.platform",
+        "validator_id": "353b3b6d6c336151"
+      },
+      "poa2@civic.platform": {
+        "user_email": "poa2@civic.platform",
+        "role": "contract_senator",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.236443",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "key_poa2@civic.platform",
+        "validator_id": "eb8dece9248332aa"
+      }
+    },
+    "elders": {
+      "elder@civic.platform": {
+        "user_email": "elder@civic.platform",
+        "role": "contract_elder",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.219357",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "test_public_key_elder",
+        "validator_id": "cdce12d231eae7c2"
+      },
+      "val3@civic.platform": {
+        "user_email": "val3@civic.platform",
+        "role": "contract_elder",
+        "city": "",
+        "state": "",
+        "country": "",
+        "registered_at": "2025-09-30T14:08:46.223510",
+        "status": "active",
+        "validation_count": 0,
+        "last_validation": null,
+        "public_key": "key_val3@civic.platform",
+        "validator_id": "779bdc357f9b16f5"
+      }
+    },
+    "founders": {}
+  },
+  "validation_history": [],
+  "geographic_structure": {
+    "cities": {},
+    "states": {},
+    "countries": {
+      "": {
+        "states": {
+          "": {
+            "cities": {
+              "": {
+                "total_members": 9,
+                "active_validators": [
+                  "rep@civic.platform",
+                  "senator@civic.platform",
+                  "elder@civic.platform",
+                  "val1@civic.platform",
+                  "val2@civic.platform",
+                  "val3@civic.platform",
+                  "lifecycle_test@civic.platform",
+                  "poa1@civic.platform",
+                  "poa2@civic.platform"
+                ]
+              }
+            },
+            "total_members": 9,
+            "active_validators": [
+              "rep@civic.platform",
+              "senator@civic.platform",
+              "elder@civic.platform",
+              "val1@civic.platform",
+              "val2@civic.platform",
+              "val3@civic.platform",
+              "lifecycle_test@civic.platform",
+              "poa1@civic.platform",
+              "poa2@civic.platform"
+            ]
+          }
+        },
+        "total_members": 9,
+        "active_validators": [
+          "rep@civic.platform",
+          "senator@civic.platform",
+          "elder@civic.platform",
+          "val1@civic.platform",
+          "val2@civic.platform",
+          "val3@civic.platform",
+          "lifecycle_test@civic.platform",
+          "poa1@civic.platform",
+          "poa2@civic.platform"
+        ]
+      }
+    }
+  },
+  "validation_rules": {
+    "member_validation_enabled": true,
+    "geographic_validation_required": true,
+    "minimum_validation_levels": 2,
+    "consensus_threshold": 0.51
+  },
+  "created_at": "2025-09-30T14:08:46.216825",
+  "last_updated": "2025-09-30T14:08:46.236455"
+}
