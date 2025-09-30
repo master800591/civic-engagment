@@ -12,11 +12,15 @@ from typing import Dict, List, Optional, Tuple, Any
 # Import application components
 try:
     from main import ENV_CONFIG
-    from blockchain.blockchain import Blockchain
+    from blockchain.blockchain import add_user_action
     from utils.validation import DataValidator
 except ImportError as e:
     print(f"Warning: Import error in document manager: {e}")
     ENV_CONFIG = {}
+    # Fallback for blockchain if import fails
+    def add_user_action(action_type, user_email, data):
+        print(f"Blockchain recording (fallback): {action_type} by {user_email}")
+        return (True, "Recorded", None)
 
 
 class DocumentManager:
@@ -292,7 +296,7 @@ class DocumentManager:
             
             # Record document upload on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="document_uploaded",
                     data={
                         'document_id': document_id,
@@ -668,7 +672,7 @@ class DocumentManager:
                     
                     # Record access on blockchain
                     try:
-                        Blockchain.add_page(
+                        add_user_action(
                             action_type="document_accessed",
                             data={
                                 'document_id': document_id,
@@ -743,7 +747,7 @@ class DocumentManager:
             
             # Record version creation on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="document_version_created",
                     data={
                         'document_id': document_id,
@@ -799,6 +803,127 @@ class DocumentManager:
         except Exception as e:
             print(f"Error getting public documents: {e}")
             return []
+    
+    def get_archived_documents(self, filters: Dict = None) -> List[Dict]:
+        """Get archived documents with optional filters"""
+        
+        try:
+            data = self.load_data()
+            archived = [d for d in data['documents'] if d.get('metadata', {}).get('status') == 'archived']
+            
+            if not filters:
+                return archived
+            
+            # Apply filters
+            filtered = []
+            for doc in archived:
+                # Date range filter
+                if filters.get('date_from'):
+                    doc_date = doc.get('created_at', '')
+                    if doc_date < filters['date_from']:
+                        continue
+                
+                if filters.get('date_to'):
+                    doc_date = doc.get('created_at', '')
+                    if doc_date > filters['date_to']:
+                        continue
+                
+                # Type filter
+                if filters.get('type') and doc.get('type') != filters['type']:
+                    continue
+                
+                # Classification filter
+                if filters.get('classification') and doc.get('classification') != filters['classification']:
+                    continue
+                
+                filtered.append(doc)
+            
+            return filtered
+            
+        except Exception as e:
+            print(f"Error getting archived documents: {e}")
+            return []
+    
+    def archive_document(self, document_id: str, archived_by: str) -> Tuple[bool, str]:
+        """Archive a document"""
+        
+        try:
+            document = self.get_document(document_id)
+            
+            if not document:
+                return False, "Document not found"
+            
+            # Update document status
+            document['metadata']['status'] = 'archived'
+            document['metadata']['archived_at'] = datetime.now().isoformat()
+            document['metadata']['archived_by'] = archived_by
+            
+            # Save updated document
+            self.save_document(document, update=True)
+            
+            # Record on blockchain
+            try:
+                add_user_action(
+                    action_type="document_archived",
+                    data={
+                        'document_id': document_id,
+                        'title': document['title'],
+                        'archived_by': archived_by
+                    },
+                    user_email=archived_by
+                )
+            except Exception as e:
+                print(f"Warning: Failed to record document archival on blockchain: {e}")
+            
+            return True, "Document archived successfully"
+            
+        except Exception as e:
+            return False, f"Error archiving document: {e}"
+    
+    def generate_archive_report(self) -> Dict:
+        """Generate comprehensive archive statistics report"""
+        
+        try:
+            data = self.load_data()
+            all_docs = data['documents']
+            archived = [d for d in all_docs if d.get('metadata', {}).get('status') == 'archived']
+            
+            # Calculate statistics
+            report = {
+                'total_documents': len(all_docs),
+                'archived_documents': len(archived),
+                'active_documents': len([d for d in all_docs if d.get('metadata', {}).get('status') == 'active']),
+                'by_type': {},
+                'by_classification': {},
+                'by_year': {},
+                'storage_size': 0,
+                'generated_at': datetime.now().isoformat()
+            }
+            
+            # Aggregate by type
+            for doc in archived:
+                doc_type = doc.get('type', 'Unknown')
+                report['by_type'][doc_type] = report['by_type'].get(doc_type, 0) + 1
+                
+                # By classification
+                classification = doc.get('classification', 'Unknown')
+                report['by_classification'][classification] = report['by_classification'].get(classification, 0) + 1
+                
+                # By year
+                created = doc.get('created_at', '')[:4]
+                if created:
+                    report['by_year'][created] = report['by_year'].get(created, 0) + 1
+                
+                # Storage size
+                file_size = doc.get('file_info', {}).get('file_size', 0)
+                if isinstance(file_size, (int, float)):
+                    report['storage_size'] += file_size
+            
+            return report
+            
+        except Exception as e:
+            print(f"Error generating archive report: {e}")
+            return {}
     
     def save_document(self, document: Dict, update: bool = False):
         """Save document to database"""
@@ -857,6 +982,140 @@ class DocumentManager:
                 json.dump(data, f, indent=2)
         except Exception as e:
             print(f"Error saving documents data: {e}")
+    
+    def get_legislative_documents(self) -> List[Dict]:
+        """Get all legislative documents with tracking info"""
+        
+        try:
+            data = self.load_data()
+            legislative_docs = []
+            
+            # Get all legislative tracking records
+            for tracking in data.get('legislative_tracking', []):
+                # Find corresponding document
+                document = next((d for d in data['documents'] if d['id'] == tracking['document_id']), None)
+                if document:
+                    # Merge document and tracking data
+                    legislative_docs.append({
+                        **document,
+                        'tracking': tracking
+                    })
+            
+            return legislative_docs
+            
+        except Exception as e:
+            print(f"Error getting legislative documents: {e}")
+            return []
+    
+    def get_legislative_history(self, bill_number: str) -> Optional[Dict]:
+        """Get complete legislative history for a bill"""
+        
+        try:
+            data = self.load_data()
+            
+            # Find tracking record by bill number
+            tracking = next((t for t in data.get('legislative_tracking', []) 
+                           if t.get('bill_number') == bill_number), None)
+            
+            if not tracking:
+                return None
+            
+            # Find corresponding document
+            document = next((d for d in data['documents'] if d['id'] == tracking['document_id']), None)
+            
+            return {
+                'document': document,
+                'tracking': tracking,
+                'actions': tracking.get('actions', []),
+                'amendments': tracking.get('amendments', []),
+                'votes': tracking.get('votes', []),
+                'committees': tracking.get('committees', [])
+            }
+            
+        except Exception as e:
+            print(f"Error getting legislative history: {e}")
+            return None
+    
+    def update_legislative_stage(self, bill_number: str, stage_data: Dict, updated_by: str) -> Tuple[bool, str]:
+        """Update legislative stage for a bill"""
+        
+        try:
+            data = self.load_data()
+            
+            # Find tracking record
+            tracking = next((t for t in data.get('legislative_tracking', []) 
+                           if t.get('bill_number') == bill_number), None)
+            
+            if not tracking:
+                return False, f"Bill {bill_number} not found"
+            
+            # Update stage
+            old_stage = tracking.get('stage', 'unknown')
+            new_stage = stage_data.get('stage')
+            
+            if new_stage:
+                tracking['stage'] = new_stage
+                tracking['status'] = stage_data.get('status', tracking['status'])
+            
+            # Add action record
+            action = {
+                'date': datetime.now().isoformat(),
+                'action': stage_data.get('action', f"Stage changed from {old_stage} to {new_stage}"),
+                'actor': updated_by,
+                'details': stage_data.get('details', {})
+            }
+            
+            if 'actions' not in tracking:
+                tracking['actions'] = []
+            tracking['actions'].append(action)
+            
+            # Add vote record if provided
+            if 'vote' in stage_data:
+                if 'votes' not in tracking:
+                    tracking['votes'] = []
+                tracking['votes'].append({
+                    'date': datetime.now().isoformat(),
+                    'stage': new_stage,
+                    'result': stage_data['vote'].get('result'),
+                    'votes_for': stage_data['vote'].get('votes_for', 0),
+                    'votes_against': stage_data['vote'].get('votes_against', 0),
+                    'abstentions': stage_data['vote'].get('abstentions', 0)
+                })
+            
+            # Add amendment if provided
+            if 'amendment' in stage_data:
+                if 'amendments' not in tracking:
+                    tracking['amendments'] = []
+                tracking['amendments'].append({
+                    'date': datetime.now().isoformat(),
+                    'proposed_by': stage_data['amendment'].get('proposed_by'),
+                    'description': stage_data['amendment'].get('description'),
+                    'status': stage_data['amendment'].get('status', 'proposed')
+                })
+            
+            # Save changes
+            self.save_data(data)
+            
+            # Record on blockchain
+            try:
+                add_user_action(
+                    action_type="legislative_progress_updated",
+                    data={
+                        'bill_number': bill_number,
+                        'old_stage': old_stage,
+                        'new_stage': new_stage,
+                        'action': action['action'],
+                        'updated_by': updated_by
+                    },
+                    user_email=updated_by
+                )
+            except Exception as e:
+                print(f"Warning: Failed to record legislative update on blockchain: {e}")
+            
+            return True, f"Legislative stage updated to {new_stage}"
+            
+        except Exception as e:
+            return False, f"Error updating legislative stage: {e}"
 
 
 class FOIARequestProcessor:
@@ -953,7 +1212,7 @@ class FOIARequestProcessor:
             
             # Record FOIA submission on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="foia_request_submitted",
                     data={
                         'request_id': request_id,
@@ -1141,7 +1400,7 @@ class FOIARequestProcessor:
             
             # Record processing on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="foia_request_processed",
                     data={
                         'request_id': request_id,
