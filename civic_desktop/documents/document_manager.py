@@ -342,15 +342,15 @@ class DocumentManager:
         if document_data.get('classification', '').lower() not in valid_classifications:
             errors.append("Invalid classification level")
         
-        # Validate email format for uploader
+        # Validate email format for uploader using centralized validation
         if document_data.get('uploaded_by'):
             try:
-                # Basic email validation
-                email = document_data['uploaded_by']
-                if '@' not in email or '.' not in email.split('@')[1]:
-                    errors.append("Invalid uploader email format")
-            except:
-                errors.append("Invalid uploader email")
+                from civic_desktop.utils.validation import DataValidator
+                email_valid, email_msg = DataValidator.validate_email(document_data['uploaded_by'])
+                if not email_valid:
+                    errors.append(f"Invalid uploader email: {email_msg}")
+            except Exception as e:
+                errors.append(f"Email validation error: {str(e)}")
         
         return {
             'valid': len(errors) == 0,
@@ -986,11 +986,15 @@ class FOIARequestProcessor:
             if not request_data.get(field):
                 errors.append(f"Missing required field: {field}")
         
-        # Validate email format
+        # Validate email format using centralized validation
         if request_data.get('requester_email'):
-            email = request_data['requester_email']
-            if '@' not in email or '.' not in email.split('@')[1]:
-                errors.append("Invalid email format")
+            try:
+                from civic_desktop.utils.validation import DataValidator
+                email_valid, email_msg = DataValidator.validate_email(request_data['requester_email'])
+                if not email_valid:
+                    errors.append(f"Invalid email: {email_msg}")
+            except Exception as e:
+                errors.append(f"Email validation error: {str(e)}")
         
         # Validate date range
         if request_data.get('date_range_start') and request_data.get('date_range_end'):
