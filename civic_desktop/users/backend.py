@@ -43,6 +43,14 @@ except ImportError:
     print("Warning: Crypto integration not available")
     CRYPTO_INTEGRATION_AVAILABLE = False
 
+# Import security auditing
+try:
+    from users.security_audit import SecurityAuditor
+    SECURITY_AUDIT_AVAILABLE = True
+except ImportError:
+    print("Warning: Security audit not available")
+    SECURITY_AUDIT_AVAILABLE = False
+
 class UserBackend:
     """Core user management backend with security and validation"""
     
@@ -71,6 +79,14 @@ class UserBackend:
         else:
             self.crypto_integration = None
             print("⚠️ Crypto integration not available")
+        
+        # Initialize security auditor
+        if SECURITY_AUDIT_AVAILABLE:
+            self.security_auditor = SecurityAuditor(self.config_path)
+            print("✅ Security auditor initialized in user backend")
+        else:
+            self.security_auditor = None
+            print("⚠️ Security auditor not available")
     
     def _load_config(self) -> Dict[str, Any]:
         """Load environment-specific configuration"""
@@ -229,16 +245,56 @@ class UserBackend:
                     user_data['founder_private_key']
                 )
                 
+                # Log founder key validation attempt
+                if self.security_auditor:
+                    self.security_auditor.log_security_event(
+                        event_type='founder_key_validation',
+                        user_email=user_data['email'].lower().strip(),
+                        details={
+                            'validation_result': is_valid_founder,
+                            'message': founder_message,
+                            'founder_id': founder_data.get('founder_id') if founder_data else None,
+                            'key_fingerprint': founder_data.get('key_fingerprint') if founder_data else None,
+                            'timestamp': datetime.now().isoformat()
+                        },
+                        severity='info' if is_valid_founder else 'warning'
+                    )
+                
                 if is_valid_founder:
                     user_role = 'contract_founder'
                     founder_info = founder_data
                     # Key marked as used automatically by HardcodedFounderKeys.validate_founder_key
+                    
+                    # Log successful founder promotion
+                    if self.security_auditor:
+                        self.security_auditor.log_security_event(
+                            event_type='founder_promotion',
+                            user_email=user_data['email'].lower().strip(),
+                            details={
+                                'founder_id': founder_data.get('founder_id'),
+                                'key_fingerprint': founder_data.get('key_fingerprint'),
+                                'blockchain_address': founder_data.get('blockchain_address'),
+                                'promotion_timestamp': datetime.now().isoformat()
+                            },
+                            severity='info'
+                        )
                 else:
                     # Invalid founder key - continue with regular citizen registration
                     pass
                     
             except Exception as e:
-                # Error validating founder key - continue with regular citizen registration
+                # Error validating founder key - log for investigation
+                if self.security_auditor:
+                    self.security_auditor.log_security_event(
+                        event_type='founder_key_validation_error',
+                        user_email=user_data['email'].lower().strip(),
+                        details={
+                            'error': str(e),
+                            'timestamp': datetime.now().isoformat()
+                        },
+                        severity='warning'
+                    )
+                # Continue with regular citizen registration
                 pass
         
         # Create user record
@@ -485,11 +541,39 @@ class UserBackend:
             user['login_attempts'] = user.get('login_attempts', 0) + 1
             max_attempts = self.config.get('max_login_attempts', 5)
             
+            # Log failed login attempt
+            if self.security_auditor:
+                self.security_auditor.log_security_event(
+                    event_type='failed_login_attempt',
+                    user_email=email,
+                    details={
+                        'attempt_number': user['login_attempts'],
+                        'max_attempts': max_attempts,
+                        'timestamp': datetime.now().isoformat()
+                    },
+                    severity='warning' if user['login_attempts'] >= max_attempts - 1 else 'info'
+                )
+            
             if user['login_attempts'] >= max_attempts:
                 # Lock account
                 lockout_duration = self.config.get('lockout_duration_minutes', 30)
                 user['locked_until'] = (datetime.now() + timedelta(minutes=lockout_duration)).isoformat()
                 self._save_users_db(users_data)
+                
+                # Log account lockout
+                if self.security_auditor:
+                    self.security_auditor.log_security_event(
+                        event_type='account_locked',
+                        user_email=email,
+                        details={
+                            'reason': 'too_many_failed_attempts',
+                            'lockout_duration_minutes': lockout_duration,
+                            'locked_until': user['locked_until'],
+                            'timestamp': datetime.now().isoformat()
+                        },
+                        severity='critical'
+                    )
+                
                 return False, f"Too many failed attempts. Account locked for {lockout_duration} minutes", None
             
             self._save_users_db(users_data)
@@ -501,6 +585,20 @@ class UserBackend:
         user['locked_until'] = None
         user['last_login'] = datetime.now().isoformat()
         self._save_users_db(users_data)
+        
+        # Log successful login
+        if self.security_auditor:
+            self.security_auditor.log_security_event(
+                event_type='successful_login',
+                user_email=email,
+                details={
+                    'user_id': user['user_id'],
+                    'role': user['role'],
+                    'last_login': user['last_login'],
+                    'timestamp': datetime.now().isoformat()
+                },
+                severity='info'
+            )
         
         # Remove sensitive data from returned record
         safe_user_record = {k: v for k, v in user.items() if k != 'password_hash'}
