@@ -12,11 +12,15 @@ from typing import Dict, List, Optional, Tuple, Any
 # Import application components
 try:
     from main import ENV_CONFIG
-    from blockchain.blockchain import Blockchain
+    from blockchain.blockchain import add_user_action
     from utils.validation import DataValidator
 except ImportError as e:
     print(f"Warning: Import error in document manager: {e}")
     ENV_CONFIG = {}
+    # Fallback for blockchain if import fails
+    def add_user_action(action_type, user_email, data):
+        print(f"Blockchain recording (fallback): {action_type} by {user_email}")
+        return (True, "Recorded", None)
 
 
 class DocumentManager:
@@ -292,7 +296,7 @@ class DocumentManager:
             
             # Record document upload on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="document_uploaded",
                     data={
                         'document_id': document_id,
@@ -668,7 +672,7 @@ class DocumentManager:
                     
                     # Record access on blockchain
                     try:
-                        Blockchain.add_page(
+                        add_user_action(
                             action_type="document_accessed",
                             data={
                                 'document_id': document_id,
@@ -743,7 +747,7 @@ class DocumentManager:
             
             # Record version creation on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="document_version_created",
                     data={
                         'document_id': document_id,
@@ -973,7 +977,7 @@ class DocumentManager:
             
             # Record on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="legislative_progress_updated",
                     data={
                         'bill_number': bill_number,
@@ -1087,7 +1091,7 @@ class FOIARequestProcessor:
             
             # Record FOIA submission on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="foia_request_submitted",
                     data={
                         'request_id': request_id,
@@ -1275,7 +1279,7 @@ class FOIARequestProcessor:
             
             # Record processing on blockchain
             try:
-                Blockchain.add_page(
+                add_user_action(
                     action_type="foia_request_processed",
                     data={
                         'request_id': request_id,

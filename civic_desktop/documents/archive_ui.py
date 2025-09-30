@@ -23,9 +23,13 @@ from PyQt5.QtGui import QFont, QIcon, QPixmap, QPalette, QColor
 try:
     from documents.document_manager import DocumentManager, FOIARequestProcessor
     from users.session import SessionManager
-    from blockchain.blockchain import Blockchain
+    from blockchain.blockchain import add_user_action
 except ImportError as e:
     print(f"Warning: Import error in documents UI: {e}")
+    # Fallback for blockchain if import fails
+    def add_user_action(action_type, user_email, data):
+        print(f"Blockchain recording (fallback): {action_type} by {user_email}")
+        return (True, "Recorded", None)
 
 
 class DocumentUploadDialog(QDialog):
@@ -1178,50 +1182,211 @@ class DocumentsArchiveTab(QWidget):
     def view_document(self, title):
         """View document details"""
         
-        # Mock document data
-        document_data = {
-            'title': title,
-            'type': 'Policy Document',
-            'author': 'Planning Department',
-            'department': 'Planning',
-            'classification': 'Public',
-            'jurisdiction': 'City',
-            'created_at': '2024-01-15',
-            'file_size': '2.4 MB',
-            'file_format': 'PDF',
-            'description': 'This document outlines the city\'s transportation policy updates for 2024.',
-            'tags': ['transportation', 'policy', '2024', 'planning'],
-            'versions': [
-                {
-                    'version': '1.0',
-                    'date': '2024-01-15',
-                    'author': 'Planning Department',
-                    'changes': 'Initial version'
-                }
-            ]
-        }
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
         
-        dialog = DocumentViewerDialog(document_data, self)
-        dialog.exec_()
+        try:
+            # Find document by title
+            data = self.document_manager.load_data()
+            document = next((d for d in data['documents'] if d['title'] == title), None)
+            
+            if not document:
+                QMessageBox.warning(self, "Not Found", f"Document '{title}' not found.")
+                return
+            
+            # Get document versions
+            versions = self.document_manager.get_document_versions(document['id'])
+            
+            # Prepare document data for viewer
+            document_data = {
+                'title': document.get('title', 'N/A'),
+                'type': document.get('type', 'N/A'),
+                'author': document.get('uploaded_by', 'N/A'),
+                'department': document.get('department', 'N/A'),
+                'classification': document.get('classification', 'N/A'),
+                'jurisdiction': document.get('jurisdiction', 'N/A'),
+                'created_at': document.get('created_at', 'N/A')[:10] if document.get('created_at') else 'N/A',
+                'file_size': document.get('file_info', {}).get('file_size', 'N/A'),
+                'file_format': document.get('file_info', {}).get('mime_type', 'N/A'),
+                'description': document.get('description', 'No description available'),
+                'tags': document.get('tags', []),
+                'versions': [
+                    {
+                        'version': v.get('version_number', 'N/A'),
+                        'date': v.get('created_at', 'N/A')[:10] if v.get('created_at') else 'N/A',
+                        'author': v.get('modified_by', 'N/A'),
+                        'changes': v.get('changes_description', 'N/A')
+                    }
+                    for v in versions
+                ]
+            }
+            
+            dialog = DocumentViewerDialog(document_data, self)
+            dialog.exec_()
+            
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to view document: {e}")
     
     def download_document(self, title):
         """Download a document"""
         
-        QMessageBox.information(self, "Download", f"Downloading document: {title}")
+        if not self.document_manager:
+            QMessageBox.warning(self, "Error", "Document manager not initialized.")
+            return
+        
+        try:
+            # Find document by title
+            data = self.document_manager.load_data()
+            document = next((d for d in data['documents'] if d['title'] == title), None)
+            
+            if not document:
+                QMessageBox.warning(self, "Not Found", f"Document '{title}' not found.")
+                return
+            
+            # Get file info
+            file_info = document.get('file_info', {})
+            stored_path = file_info.get('stored_path')
+            original_filename = file_info.get('original_filename', 'document.pdf')
+            
+            if not stored_path or not os.path.exists(stored_path):
+                QMessageBox.warning(self, "Error", "Document file not found on disk.")
+                return
+            
+            # Ask user where to save
+            save_path, _ = QFileDialog.getSaveFileName(
+                self, 
+                "Save Document", 
+                original_filename,
+                "All Files (*.*)"
+            )
+            
+            if save_path:
+                import shutil
+                shutil.copy2(stored_path, save_path)
+                
+                # Record access on blockchain
+                try:
+                    if self.current_user:
+                        add_user_action(
+                            action_type="document_accessed",
+                            data={
+                                'document_id': document['id'],
+                                'title': document['title'],
+                                'action': 'download'
+                            },
+                            user_email=self.current_user.get('email')
+                        )
+                except Exception as e:
+                    print(f"Warning: Failed to record document access on blockchain: {e}")
+                
+                QMessageBox.information(self, "Success", f"Document downloaded to:\n{save_path}")
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to download document: {e}")
     
     def view_foia_request(self, request_id):
         """View FOIA request details"""
         
-        QMessageBox.information(self, "FOIA Request", 
-                               f"Viewing FOIA request: {request_id}\n\n"
-                               "Request details would be displayed here.")
+        if not self.foia_processor:
+            QMessageBox.warning(self, "Error", "FOIA processor not initialized.")
+            return
+        
+        try:
+            foia_request = self.foia_processor.get_foia_request(request_id)
+            
+            if not foia_request:
+                QMessageBox.warning(self, "Not Found", f"FOIA request {request_id} not found.")
+                return
+            
+            # Build detailed view
+            details_text = f"Request ID: {request_id}\n"
+            details_text += f"Status: {foia_request.get('status', 'N/A')}\n"
+            details_text += f"Complexity: {foia_request.get('complexity', 'N/A')}\n\n"
+            
+            # Requester info
+            requester_info = foia_request.get('requester_info', {})
+            details_text += "=== Requester Information ===\n"
+            details_text += f"Name: {requester_info.get('name', 'N/A')}\n"
+            details_text += f"Email: {requester_info.get('email', 'N/A')}\n"
+            details_text += f"Phone: {requester_info.get('phone', 'N/A')}\n\n"
+            
+            # Request details
+            details_text += "=== Request Details ===\n"
+            details_text += f"Subject: {foia_request.get('subject', 'N/A')}\n"
+            details_text += f"Description: {foia_request.get('description', 'N/A')}\n"
+            details_text += f"Submitted: {foia_request.get('submitted_at', 'N/A')[:10]}\n"
+            
+            due_date = foia_request.get('due_date', 'N/A')
+            if hasattr(due_date, 'isoformat'):
+                due_date = due_date.isoformat()
+            details_text += f"Due Date: {str(due_date)[:10] if due_date != 'N/A' else 'N/A'}\n\n"
+            
+            # Processing info
+            if foia_request.get('processing_info'):
+                processing = foia_request['processing_info']
+                details_text += "=== Processing Information ===\n"
+                details_text += f"Assigned To: {processing.get('assigned_to', 'N/A')}\n"
+                details_text += f"Estimated Hours: {processing.get('estimated_hours', 'N/A')}\n"
+                details_text += f"Cost Estimate: ${processing.get('cost_estimate', 0):.2f}\n"
+            
+            # Display in scrollable dialog
+            dialog = QDialog(self)
+            dialog.setWindowTitle(f"FOIA Request Details - {request_id}")
+            dialog.resize(600, 500)
+            
+            layout = QVBoxLayout()
+            text_browser = QTextBrowser()
+            text_browser.setPlainText(details_text)
+            layout.addWidget(text_browser)
+            
+            close_btn = QPushButton("Close")
+            close_btn.clicked.connect(dialog.accept)
+            layout.addWidget(close_btn)
+            
+            dialog.setLayout(layout)
+            dialog.exec_()
+            
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to view FOIA request: {e}")
     
     def process_foia_request(self, request_id):
         """Process a FOIA request"""
         
-        QMessageBox.information(self, "Process FOIA", 
-                               f"Processing FOIA request: {request_id}\n\n"
-                               "Processing workflow would be displayed here.")
+        if not self.foia_processor:
+            QMessageBox.warning(self, "Error", "FOIA processor not initialized.")
+            return
+        
+        if not self.current_user:
+            QMessageBox.warning(self, "Authentication Required", 
+                               "Please log in to process FOIA requests.")
+            return
+        
+        try:
+            # Get FOIA request
+            foia_request = self.foia_processor.get_foia_request(request_id)
+            
+            if not foia_request:
+                QMessageBox.warning(self, "Not Found", f"FOIA request {request_id} not found.")
+                return
+            
+            # Call backend processor
+            success, message = self.foia_processor.process_foia_request(
+                request_id, 
+                self.current_user.get('email')
+            )
+            
+            if success:
+                QMessageBox.information(self, "FOIA Processing", 
+                                       f"FOIA request {request_id} processed successfully.\n\n{message}")
+                # Refresh FOIA table
+                self.refresh_foia_table()
+            else:
+                QMessageBox.warning(self, "Processing Failed", 
+                                   f"Failed to process FOIA request:\n{message}")
+                
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to process FOIA request: {e}")
     
     def track_legislation(self, bill_number):
         """Track legislation progress"""
