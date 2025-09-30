@@ -1,0 +1,28 @@
+{
+  "report_id": "75fcab7f2bab1b26",
+  "timestamp": "2025-09-30T12:43:37.226891",
+  "audits": {
+    "founder_keys": {
+      "status": "error",
+      "error": "No module named 'users'",
+      "timestamp": "2025-09-30T12:43:37.226982"
+    },
+    "authentication": {
+      "status": "error",
+      "error": "Users database not found",
+      "timestamp": "2025-09-30T12:43:37.227011"
+    },
+    "sessions": {
+      "status": "no_sessions",
+      "message": "No active sessions found",
+      "timestamp": "2025-09-30T12:43:37.227029"
+    }
+  },
+  "overall_status": "failed",
+  "summary": {
+    "total_issues": 0,
+    "total_warnings": 0,
+    "issues": [],
+    "warnings": []
+  }
+}
