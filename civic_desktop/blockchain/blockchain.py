@@ -41,9 +41,14 @@ class BlockchainPage:
     validator: Optional[str] = None
     block_hash: Optional[str] = None
     previous_hash: Optional[str] = None
+    validator_signatures: Optional[List[Dict[str, str]]] = None
 
     def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
+        result = asdict(self)
+        # Ensure validator_signatures is always a list
+        if result['validator_signatures'] is None:
+            result['validator_signatures'] = []
+        return result
     
     def calculate_hash(self) -> str:
         """Calculate SHA-256 hash of page content"""
@@ -232,6 +237,11 @@ class CivicBlockchain:
             # Calculate hash
             page.block_hash = page.calculate_hash()
             
+            # Collect validator signatures for PoA consensus (skip for validator registration to avoid recursion)
+            validator_signatures = []
+            if action_type != 'validator_registered':
+                validator_signatures = self.collect_validator_signatures(page.block_hash, 'page')
+            
             # Sign page if crypto available
             if self.key_manager and CRYPTO_AVAILABLE:
                 # Extract user ID from email for key lookup
@@ -243,8 +253,12 @@ class CivicBlockchain:
                 if sign_success:
                     page.signature = signature
             
+            # Convert to dict and add validator signatures
+            page_dict = page.to_dict()
+            page_dict['validator_signatures'] = validator_signatures
+            
             # Add to active pages
-            pages_data['active_pages'].append(page.to_dict())
+            pages_data['active_pages'].append(page_dict)
             
             # Update blockchain totals
             blockchain_data = self._load_blockchain_data()
@@ -304,6 +318,9 @@ class CivicBlockchain:
         chapter_content = f"{chapter_id}{start_time}{end_time}{len(pages)}"
         chapter_hash = hashlib.sha256(chapter_content.encode()).hexdigest()
         
+        # Collect validator signatures for chapter (PoA consensus)
+        validator_signatures = self.collect_validator_signatures(chapter_hash, 'chapter')
+        
         # Create chapter
         chapter = BlockchainChapter(
             chapter_id=chapter_id,
@@ -311,7 +328,7 @@ class CivicBlockchain:
             end_time=end_time,
             pages=pages,
             chapter_hash=chapter_hash,
-            validator_signatures=[],
+            validator_signatures=validator_signatures,
             page_count=len(pages),
             summary=summary
         )
@@ -354,12 +371,17 @@ class CivicBlockchain:
         end = datetime.fromisoformat(end_time)
         return (end - start).total_seconds() / 3600
     
-    def register_validator(self, user_email: str, public_key: str, role: str) -> Tuple[bool, str]:
-        """Register a user as a blockchain validator - now includes Contract Members"""
+    def register_validator(self, user_email: str, public_key: str, role: str, elected_status: bool = False) -> Tuple[bool, str]:
+        """Register a user as a blockchain validator (PoA system - elected representatives only)"""
         
-        # Updated to allow Contract Members to validate blockchain
-        if role not in ['contract_member', 'contract_representative', 'contract_senator', 'contract_elder', 'contract_founder']:
-            return False, "Contract Members and elected representatives can serve as validators"
+        # PoA Requirement: Only elected representatives and elders can be validators
+        # This enforces the Proof of Authority consensus mechanism
+        if role not in ['contract_representative', 'contract_senator', 'contract_elder', 'contract_founder']:
+            return False, "Only elected representatives and elders can serve as validators (PoA requirement)"
+        
+        # Verify elected status for representatives and senators
+        if role in ['contract_representative', 'contract_senator'] and not elected_status:
+            return False, "Must be currently elected to serve as validator"
         
         validators = self._load_validators()
         
@@ -368,21 +390,27 @@ class CivicBlockchain:
             if validator['user_email'] == user_email:
                 return False, "User is already registered as validator"
         
-        # Add new validator
+        # Add new validator with PoA metadata
         validator_data = {
             'user_email': user_email,
             'public_key': public_key,
             'role': role,
+            'elected_status': elected_status,
             'registered_at': datetime.now().isoformat(),
             'status': 'active',
             'blocks_validated': 0,
-            'validator_id': str(uuid.uuid4())
+            'validator_id': str(uuid.uuid4()),
+            'auto_sign': True,  # PoA validators auto-sign by default
+            'reputation_score': 100
         }
         
         validators.append(validator_data)
         self._save_validators(validators)
         
         print(f"⚡ Validator registered: {user_email} ({role})")
+        
+        # Record validator registration on blockchain
+        self.add_page('validator_registered', user_email, validator_data)
         
         # Also register with multi-level validation system if available
         if MULTI_LEVEL_VALIDATION_AVAILABLE:
@@ -402,6 +430,126 @@ class CivicBlockchain:
                 print(f"⚠️ Warning: Could not register for multi-level validation: {e}")
         
         return True, "Validator registered successfully"
+    
+    def collect_validator_signatures(self, block_hash: str, block_type: str = 'page') -> List[Dict[str, str]]:
+        """Collect signatures from active validators for PoA consensus"""
+        
+        validators = self._load_validators()
+        active_validators = [v for v in validators if v.get('status') == 'active']
+        
+        if not active_validators:
+            print("⚠️ No active validators available for signing")
+            return []
+        
+        signatures = []
+        required_signatures = self._calculate_required_signatures(len(active_validators))
+        
+        print(f"🔐 Collecting signatures from {len(active_validators)} validators (need {required_signatures})")
+        
+        for validator in active_validators:
+            # In PoA, validators auto-sign by default (can be overridden)
+            if validator.get('auto_sign', True):
+                # Create validator signature using the consensus manager
+                try:
+                    from blockchain.signatures import BlockchainSigner
+                    
+                    signer = BlockchainSigner()
+                    # Note: In production, this would use the validator's private key
+                    # For now, we create a signature record
+                    signature_data = {
+                        'validator_id': validator['validator_id'],
+                        'validator_email': validator['user_email'],
+                        'block_hash': block_hash,
+                        'timestamp': datetime.now().isoformat(),
+                        'block_type': block_type
+                    }
+                    signatures.append(signature_data)
+                    
+                    # Update validator statistics
+                    validator['blocks_validated'] = validator.get('blocks_validated', 0) + 1
+                    
+                    if len(signatures) >= required_signatures:
+                        break
+                        
+                except Exception as e:
+                    print(f"⚠️ Error collecting signature from validator {validator['user_email']}: {e}")
+        
+        # Save updated validator stats
+        self._save_validators(validators)
+        
+        print(f"✅ Collected {len(signatures)} signatures for {block_type}")
+        return signatures
+    
+    def _calculate_required_signatures(self, total_validators: int) -> int:
+        """Calculate required signatures for PoA consensus (majority)"""
+        if total_validators == 0:
+            return 0
+        # Require majority (>50%) for consensus
+        return (total_validators // 2) + 1
+    
+    def deactivate_validator(self, user_email: str, reason: str = '') -> Tuple[bool, str]:
+        """Deactivate a validator (e.g., when term ends or role changes)"""
+        
+        validators = self._load_validators()
+        
+        for validator in validators:
+            if validator['user_email'] == user_email:
+                if validator['status'] == 'inactive':
+                    return False, "Validator is already inactive"
+                
+                validator['status'] = 'inactive'
+                validator['deactivated_at'] = datetime.now().isoformat()
+                validator['deactivation_reason'] = reason
+                
+                self._save_validators(validators)
+                
+                # Record deactivation on blockchain
+                self.add_page('validator_deactivated', user_email, {
+                    'validator_id': validator['validator_id'],
+                    'reason': reason,
+                    'blocks_validated': validator.get('blocks_validated', 0)
+                })
+                
+                print(f"⚠️ Validator deactivated: {user_email} - {reason}")
+                return True, "Validator deactivated successfully"
+        
+        return False, "Validator not found"
+    
+    def reactivate_validator(self, user_email: str) -> Tuple[bool, str]:
+        """Reactivate a validator (e.g., after re-election)"""
+        
+        validators = self._load_validators()
+        
+        for validator in validators:
+            if validator['user_email'] == user_email:
+                if validator['status'] == 'active':
+                    return False, "Validator is already active"
+                
+                validator['status'] = 'active'
+                validator['reactivated_at'] = datetime.now().isoformat()
+                
+                self._save_validators(validators)
+                
+                # Record reactivation on blockchain
+                self.add_page('validator_reactivated', user_email, {
+                    'validator_id': validator['validator_id']
+                })
+                
+                print(f"✅ Validator reactivated: {user_email}")
+                return True, "Validator reactivated successfully"
+        
+        return False, "Validator not found"
+    
+    def get_validator_info(self, user_email: str) -> Tuple[bool, str, Optional[Dict[str, Any]]]:
+        """Get detailed validator information"""
+        
+        validators = self._load_validators()
+        
+        for validator in validators:
+            if validator['user_email'] == user_email:
+                return True, "Validator found", validator
+        
+        return False, "Validator not found", None
     
     def get_blockchain_stats(self) -> Dict[str, Any]:
         """Get comprehensive blockchain statistics"""
@@ -503,7 +651,9 @@ class CivicBlockchain:
                     errors.append(f"Hash chain broken at page {i}")
                 
                 # Verify page hash
-                page_obj = BlockchainPage(**page)
+                # Create BlockchainPage object, excluding validator_signatures for hash calculation
+                page_data = {k: v for k, v in page.items() if k != 'validator_signatures'}
+                page_obj = BlockchainPage(**page_data)
                 calculated_hash = page_obj.calculate_hash()
                 if page.get('block_hash') != calculated_hash:
                     errors.append(f"Invalid hash for page {page.get('page_id')}")
