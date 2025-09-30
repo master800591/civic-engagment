@@ -14,18 +14,42 @@ from PyQt5.QtWidgets import (
     QComboBox, QCheckBox, QSpinBox, QSlider, QMessageBox,
     QDialog, QDialogButtonBox, QTreeWidget, QTreeWidgetItem,
     QTableWidget, QTableWidgetItem, QLineEdit, QDateEdit,
-    QFormLayout, QGridLayout, QWebEngineView
+    QFormLayout, QGridLayout
 )
+
+# Try to import QWebEngineView - it's optional
+try:
+    from PyQt5.QtWidgets import QWebEngineView
+    WEBENGINE_AVAILABLE = True
+except ImportError:
+    try:
+        from PyQt5.QtWebEngineWidgets import QWebEngineView
+        WEBENGINE_AVAILABLE = True
+    except ImportError:
+        WEBENGINE_AVAILABLE = False
+        QWebEngineView = None
+
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QThread, pyqtSlot, QDate, QUrl
 from PyQt5.QtGui import QFont, QIcon, QPixmap, QPalette, QColor
 
 # Import backend components
 try:
-    from maps.geographic_manager import GeographicManager, JurisdictionManager
+    from maps.location_services import (
+        GeographicCivicEngagementSystem,
+        JurisdictionalBoundaryManager,
+        EventLocationCoordinator
+    )
     from users.session import SessionManager
-    from blockchain.blockchain import Blockchain
+    from blockchain.blockchain import add_user_action
+    BACKEND_AVAILABLE = True
 except ImportError as e:
     print(f"Warning: Import error in map view: {e}")
+    GeographicCivicEngagementSystem = None
+    JurisdictionalBoundaryManager = None
+    EventLocationCoordinator = None
+    SessionManager = None
+    add_user_action = None
+    BACKEND_AVAILABLE = False
 
 
 class LocationEventDialog(QDialog):
@@ -343,8 +367,15 @@ class MapView(QWidget):
     def __init__(self):
         super().__init__()
         self.current_user = None
-        self.geographic_manager = None
-        self.jurisdiction_manager = None
+        # Initialize location services backend
+        if BACKEND_AVAILABLE:
+            self.geographic_system = GeographicCivicEngagementSystem()
+            self.boundary_manager = JurisdictionalBoundaryManager()
+            self.event_coordinator = EventLocationCoordinator()
+        else:
+            self.geographic_system = None
+            self.boundary_manager = None
+            self.event_coordinator = None
         self.init_ui()
         self.load_user_session()
     
@@ -409,12 +440,19 @@ class MapView(QWidget):
         map_layout.addLayout(map_controls)
         
         # Map display (using web view for interactive maps)
-        try:
-            self.map_view = QWebEngineView()
-            # Load a simple OpenStreetMap view
-            self.map_view.setHtml(self.generate_map_html())
-            map_layout.addWidget(self.map_view)
-        except ImportError:
+        if WEBENGINE_AVAILABLE:
+            try:
+                self.map_view = QWebEngineView()
+                # Load a simple OpenStreetMap view
+                self.map_view.setHtml(self.generate_map_html())
+                map_layout.addWidget(self.map_view)
+            except Exception as e:
+                # Fallback if QWebEngineView fails
+                map_placeholder = QLabel(f"🗺️ Interactive Map\n\n(Map visualization error: {e})")
+                map_placeholder.setAlignment(Qt.AlignCenter)
+                map_placeholder.setStyleSheet("QLabel { padding: 40px; background-color: #f0f0f0; }")
+                map_layout.addWidget(map_placeholder)
+        else:
             # Fallback if QWebEngineView not available
             map_placeholder = QLabel("🗺️ Interactive Map\n\n(Map visualization would appear here)")
             map_placeholder.setAlignment(Qt.AlignCenter)
