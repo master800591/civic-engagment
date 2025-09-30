@@ -235,6 +235,264 @@ class DataValidator:
             return False, f"Invalid role in session: {role_msg}"
         
         return True, "Valid session data"
+    
+    @staticmethod
+    def validate_birth_date(birth_date: str) -> Tuple[bool, str, Optional[int]]:
+        """Validate birth date and calculate age
+        
+        Args:
+            birth_date: Birth date in ISO format (YYYY-MM-DD)
+            
+        Returns:
+            Tuple of (is_valid, message, age)
+        """
+        if not birth_date or not isinstance(birth_date, str):
+            return False, "Birth date must be provided", None
+        
+        try:
+            # Parse the birth date
+            birth_datetime = datetime.fromisoformat(birth_date.replace('Z', '+00:00').split('T')[0])
+        except ValueError:
+            return False, "Invalid birth date format (use YYYY-MM-DD)", None
+        
+        # Check if date is in reasonable range
+        min_date = datetime(1900, 1, 1)
+        max_date = datetime.now()
+        
+        if birth_datetime < min_date:
+            return False, "Birth date cannot be before 1900", None
+        
+        if birth_datetime > max_date:
+            return False, "Birth date cannot be in the future", None
+        
+        # Calculate age
+        today = datetime.now()
+        age = today.year - birth_datetime.year
+        
+        # Adjust if birthday hasn't occurred this year yet
+        if (today.month, today.day) < (birth_datetime.month, birth_datetime.day):
+            age -= 1
+        
+        # Validate age is reasonable (0-150 years)
+        if age < 0 or age > 150:
+            return False, f"Invalid age calculated: {age}", None
+        
+        return True, f"Valid birth date (age: {age})", age
+    
+    @staticmethod
+    def validate_required_string(value: str, field_name: str = "Field", 
+                                 min_length: int = 1, max_length: int = 1000) -> Tuple[bool, str]:
+        """Validate required string field with length constraints
+        
+        Args:
+            value: String value to validate
+            field_name: Name of the field for error messages
+            min_length: Minimum required length
+            max_length: Maximum allowed length
+            
+        Returns:
+            Tuple of (is_valid, message)
+        """
+        if value is None or not isinstance(value, str):
+            return False, f"{field_name} must be a string"
+        
+        value = value.strip()
+        
+        if len(value) < min_length:
+            return False, f"{field_name} must be at least {min_length} character{'s' if min_length > 1 else ''}"
+        
+        if len(value) > max_length:
+            return False, f"{field_name} must be no more than {max_length} characters"
+        
+        # Check for dangerous content
+        dangerous_patterns = ['<script', 'javascript:', 'data:', 'vbscript:', 'onload=', 'onerror=']
+        value_lower = value.lower()
+        for pattern in dangerous_patterns:
+            if pattern in value_lower:
+                return False, f"{field_name} contains potentially dangerous content"
+        
+        return True, f"Valid {field_name.lower()}"
+    
+    @staticmethod
+    def validate_id_document(document_data: Any) -> Tuple[bool, str]:
+        """Validate ID document data
+        
+        Args:
+            document_data: Document data (can be file path string or dict with metadata)
+            
+        Returns:
+            Tuple of (is_valid, message)
+        """
+        if not document_data:
+            return False, "ID document is required"
+        
+        # If it's a string, treat as file path
+        if isinstance(document_data, str):
+            return DataValidator.validate_file_upload(document_data)
+        
+        # If it's a dict, validate metadata
+        if isinstance(document_data, dict):
+            required_fields = ['document_type', 'document_number']
+            
+            for field in required_fields:
+                if field not in document_data:
+                    return False, f"Missing required ID document field: {field}"
+            
+            # Validate document type
+            valid_types = ['passport', 'drivers_license', 'national_id', 'state_id', 'military_id']
+            doc_type = document_data.get('document_type', '').lower()
+            
+            if doc_type not in valid_types:
+                return False, f"Invalid document type. Must be one of: {', '.join(valid_types)}"
+            
+            # Validate document number
+            doc_number = document_data.get('document_number', '').strip()
+            if len(doc_number) < 5:
+                return False, "Document number must be at least 5 characters"
+            
+            if len(doc_number) > 50:
+                return False, "Document number is too long"
+            
+            # Check for valid characters (alphanumeric, hyphens, spaces)
+            if not re.match(r'^[A-Za-z0-9\s\-]+$', doc_number):
+                return False, "Document number contains invalid characters"
+            
+            return True, "Valid ID document"
+        
+        return False, "ID document must be a file path or document metadata"
+    
+    @staticmethod
+    def validate_civic_content(content: str, content_type: str = "content") -> Tuple[bool, str]:
+        """Validate civic debate content, arguments, and proposals
+        
+        Args:
+            content: The content to validate
+            content_type: Type of content (argument, topic_title, etc.)
+            
+        Returns:
+            Tuple of (is_valid, message)
+        """
+        if not content or not isinstance(content, str):
+            return False, f"{content_type} must be a non-empty string"
+        
+        # Length constraints based on content type
+        LENGTH_LIMITS = {
+            'argument': {'min': 50, 'max': 5000},
+            'topic_title': {'min': 10, 'max': 200},
+            'topic_description': {'min': 100, 'max': 2000},
+            'comment': {'min': 10, 'max': 1000},
+            'proposal': {'min': 200, 'max': 10000},
+            'content': {'min': 1, 'max': 5000}  # Default
+        }
+        
+        limits = LENGTH_LIMITS.get(content_type, LENGTH_LIMITS['content'])
+        content_length = len(content.strip())
+        
+        if content_length < limits['min']:
+            return False, f"{content_type} too short (minimum {limits['min']} characters)"
+        
+        if content_length > limits['max']:
+            return False, f"{content_type} too long (maximum {limits['max']} characters)"
+        
+        # Content quality checks
+        quality_issues = DataValidator._check_content_quality(content, content_type)
+        if quality_issues:
+            return False, f"Content quality issues: {', '.join(quality_issues)}"
+        
+        # Prohibited content detection
+        prohibited_check = DataValidator._check_prohibited_content(content)
+        if not prohibited_check[0]:
+            return False, prohibited_check[1]
+        
+        return True, f"Valid {content_type}"
+    
+    @staticmethod
+    def _check_content_quality(content: str, content_type: str) -> List[str]:
+        """Check content quality and provide improvement suggestions
+        
+        Args:
+            content: Content to check
+            content_type: Type of content
+            
+        Returns:
+            List of quality issues found
+        """
+        issues = []
+        
+        # Basic quality checks
+        words = content.split()
+        if len(words) < 5:
+            issues.append("content too brief, needs more detail")
+        
+        # Repetition check
+        if len(words) > 10:
+            unique_words = set(word.lower() for word in words)
+            if len(unique_words) < len(words) * 0.5:  # 50% unique words minimum
+                issues.append("excessive word repetition")
+        
+        # All caps check
+        if content.isupper() and len(content) > 20:
+            issues.append("excessive use of capital letters")
+        
+        # Excessive punctuation
+        punctuation_count = sum(1 for char in content if char in '!?.')
+        if punctuation_count > len(words) * 0.5:
+            issues.append("excessive punctuation")
+        
+        # Check for constructive language in debates/arguments
+        if content_type in ['argument', 'proposal']:
+            # Ensure content has some substance beyond just negatives
+            negative_words = ['no', 'not', 'never', 'wrong', 'bad', 'terrible', 'awful']
+            negative_count = sum(1 for word in words if word.lower() in negative_words)
+            
+            if negative_count > len(words) * 0.3:  # More than 30% negative words
+                issues.append("content appears overly negative, consider constructive framing")
+        
+        return issues
+    
+    @staticmethod
+    def _check_prohibited_content(content: str) -> Tuple[bool, str]:
+        """Check for prohibited content types
+        
+        Args:
+            content: Content to check
+            
+        Returns:
+            Tuple of (is_allowed, message)
+        """
+        content_lower = content.lower()
+        
+        # Prohibited content categories with patterns
+        PROHIBITED_PATTERNS = {
+            'personal_attacks': ['you are stupid', 'you\'re an idiot', 'shut up', 'you suck'],
+            'spam_indicators': ['click here now', 'buy now', 'limited time offer', 'act fast', 'visit my website'],
+            'security_threats': ['send me your password', 'give me your login', 'share your credentials'],
+            'explicit_content': ['(blocked)', '(censored)'],  # Placeholder for actual patterns
+        }
+        
+        for category, patterns in PROHIBITED_PATTERNS.items():
+            for pattern in patterns:
+                if pattern in content_lower:
+                    return False, f"Content may contain {category.replace('_', ' ')}"
+        
+        # XSS and injection attack patterns
+        dangerous_patterns = [
+            '<script', 'javascript:', 'data:text/html', 'vbscript:',
+            'onload=', 'onclick=', 'onerror=', 'eval(', 'exec(',
+            '<iframe', '<object', '<embed'
+        ]
+        
+        for pattern in dangerous_patterns:
+            if pattern in content_lower:
+                return False, "Content contains potentially dangerous code"
+        
+        # SQL injection patterns
+        sql_patterns = ["'; drop table", "' or '1'='1", "'; delete from", "union select"]
+        for pattern in sql_patterns:
+            if pattern in content_lower:
+                return False, "Content contains potentially dangerous SQL patterns"
+        
+        return True, "Content passes security checks"
 
 class SecurityValidator:
     """Security-focused validation for authentication and authorization"""
@@ -557,5 +815,187 @@ class ComprehensiveValidator:
             'success_rate': round((valid_fields / total_fields * 100) if total_fields > 0 else 0, 1),
             'overall_status': 'passed' if valid_fields == total_fields else 'failed'
         }
+
+
+# Validation decorators for function parameters
+def validate_email_param(func):
+    """Decorator to validate email parameters in function calls
+    
+    Usage:
+        @validate_email_param
+        def my_function(email, other_param):
+            # email will be validated automatically
+            pass
+    """
+    def wrapper(*args, **kwargs):
+        # Check for email parameter
+        if 'email' in kwargs:
+            valid, msg = DataValidator.validate_email(kwargs['email'])
+            if not valid:
+                raise ValueError(f"Email validation failed: {msg}")
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def validate_required_params(*required_params):
+    """Decorator to validate required parameters are present
+    
+    Usage:
+        @validate_required_params('email', 'name', 'password')
+        def my_function(email, name, password, optional_param=None):
+            # All required params will be validated automatically
+            pass
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for param in required_params:
+                if param not in kwargs or not kwargs[param]:
+                    raise ValueError(f"Required parameter missing: {param}")
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
+# Utility functions for common operations
+class PlatformUtils:
+    """General utility functions for platform operations"""
+    
+    @staticmethod
+    def generate_unique_id(prefix: str = '') -> str:
+        """Generate unique identifier with optional prefix
+        
+        Args:
+            prefix: Optional prefix for the ID
+            
+        Returns:
+            Unique identifier string
+        """
+        import uuid
+        unique_part = str(uuid.uuid4()).replace('-', '')[:16]
+        return f"{prefix}{unique_part}" if prefix else unique_part
+    
+    @staticmethod
+    def calculate_age_from_date(birth_date: str) -> Optional[int]:
+        """Calculate age from birth date string
+        
+        Args:
+            birth_date: Birth date in ISO format (YYYY-MM-DD)
+            
+        Returns:
+            Age in years or None if invalid date
+        """
+        try:
+            birth = datetime.fromisoformat(birth_date.split('T')[0])
+            today = datetime.now()
+            age = today.year - birth.year
+            
+            # Adjust if birthday hasn't occurred this year yet
+            if (today.month, today.day) < (birth.month, birth.day):
+                age -= 1
+            
+            return age if 0 <= age <= 150 else None
+        except (ValueError, AttributeError):
+            return None
+    
+    @staticmethod
+    def format_date_for_display(date_str: str, format_type: str = 'short') -> str:
+        """Format date string for user-friendly display
+        
+        Args:
+            date_str: Date in ISO format
+            format_type: 'short', 'long', or 'relative'
+            
+        Returns:
+            Formatted date string
+        """
+        try:
+            date_obj = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+            
+            if format_type == 'short':
+                return date_obj.strftime('%Y-%m-%d')
+            elif format_type == 'long':
+                return date_obj.strftime('%B %d, %Y at %I:%M %p')
+            elif format_type == 'relative':
+                delta = datetime.now() - date_obj.replace(tzinfo=None)
+                
+                if delta.days == 0:
+                    if delta.seconds < 3600:
+                        return f"{delta.seconds // 60} minutes ago"
+                    else:
+                        return f"{delta.seconds // 3600} hours ago"
+                elif delta.days == 1:
+                    return "yesterday"
+                elif delta.days < 7:
+                    return f"{delta.days} days ago"
+                elif delta.days < 30:
+                    return f"{delta.days // 7} weeks ago"
+                else:
+                    return date_obj.strftime('%B %d, %Y')
+            
+            return date_str
+        except (ValueError, AttributeError):
+            return date_str
+    
+    @staticmethod
+    def sanitize_filename(filename: str) -> str:
+        """Sanitize filename for safe file system storage
+        
+        Args:
+            filename: Original filename
+            
+        Returns:
+            Sanitized filename safe for file system
+        """
+        # Remove potentially dangerous characters
+        safe_filename = re.sub(r'[<>:"/\\|?*\x00-\x1f]', '', filename)
+        
+        # Replace spaces with underscores
+        safe_filename = safe_filename.replace(' ', '_')
+        
+        # Limit length
+        if len(safe_filename) > 255:
+            name, ext = os.path.splitext(safe_filename)
+            safe_filename = name[:255 - len(ext)] + ext
+        
+        return safe_filename or 'unnamed_file'
+    
+    @staticmethod
+    def hash_sensitive_data(data: str, algorithm: str = 'sha256') -> str:
+        """Hash sensitive data for secure storage
+        
+        Args:
+            data: Data to hash
+            algorithm: Hash algorithm to use (sha256, sha512, md5)
+            
+        Returns:
+            Hexadecimal hash string
+        """
+        import hashlib
+        
+        if algorithm == 'sha256':
+            return hashlib.sha256(data.encode()).hexdigest()
+        elif algorithm == 'sha512':
+            return hashlib.sha512(data.encode()).hexdigest()
+        elif algorithm == 'md5':
+            return hashlib.md5(data.encode()).hexdigest()
+        else:
+            return hashlib.sha256(data.encode()).hexdigest()
+    
+    @staticmethod
+    def truncate_text(text: str, max_length: int = 100, suffix: str = '...') -> str:
+        """Truncate text to specified length with suffix
+        
+        Args:
+            text: Text to truncate
+            max_length: Maximum length including suffix
+            suffix: Suffix to append to truncated text
+            
+        Returns:
+            Truncated text
+        """
+        if not text or len(text) <= max_length:
+            return text
+        
+        return text[:max_length - len(suffix)].strip() + suffix
         
         return True, f"User has required permission: {required_permission}"
