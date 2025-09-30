@@ -414,6 +414,10 @@ class AmendmentManager:
         if not amendment:
             return False, "Amendment not found"
         
+        # Prevent Double Voting (check first, before user backend)
+        if self.has_voted_on_amendment(amendment_id, voter_email):
+            return False, "You have already voted on this amendment"
+        
         if self.user_backend:
             voter = self.user_backend.get_user(voter_email)
             if not voter:
@@ -422,10 +426,6 @@ class AmendmentManager:
             # Voting Eligibility Check
             if not self.eligible_to_vote_on_amendment(voter, amendment):
                 return False, "Not eligible to vote on this amendment"
-            
-            # Prevent Double Voting
-            if self.has_voted_on_amendment(amendment_id, voter_email):
-                return False, "You have already voted on this amendment"
             
             voter_role = voter.get('role', '')
         else:
