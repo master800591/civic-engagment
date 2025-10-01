@@ -945,4 +945,3 @@ class ContextualHelpSystem:
 # Export the main classes
 HelpSystem = ContextualHelpSystem
 __all__ = ['ContextualHelpSystem', 'HelpSystem']
-__all__ = ['ContextualHelpSystem']
